@@ -12,15 +12,12 @@ class App extends React.Component {
     const { cookies } = this.props.cookies;
 
     if (!cookies.isSignedIn){
-      console.log("1")
       return <Login cookies={this.props.cookies} />;
     }
     if (!this.props.userAuth.isSignedIn) {
-      console.log("2");
       this.props.setUserAuthValue(cookies);
     }
     if (cookies.isSignedIn && this.props.userAuth.isSignedIn){
-      console.log("3");
       return <TrackList />;
     }
 
