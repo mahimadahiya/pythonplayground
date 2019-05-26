@@ -1,54 +1,34 @@
 import React from "react";
-import Login from "./Login";
 import history from "../history";
-import TrackList from "./ModuleTracks/TrackList";
-import { Route, Router, Switch } from "react-router-dom";
+import { Route, Router } from "react-router-dom";
+import Routing from "./HOC/Routing";
 import { connect } from "react-redux";
 import { withCookies } from "react-cookie";
 import { setUserAuthValue } from "../actions";
+
 class App extends React.Component {
-
-  AuthCheck = () => {
+  constructor(props) {
+    super(props);
     const { cookies } = this.props.cookies;
-
-    if (!cookies.isSignedIn){
-      return <Login cookies={this.props.cookies} />;
-    }
-    if (!this.props.userAuth.isSignedIn) {
+    if (cookies.isSignedIn) {
       this.props.setUserAuthValue(cookies);
     }
-    if (cookies.isSignedIn && this.props.userAuth.isSignedIn){
-      return <TrackList />;
-    }
-
-  };
+  }
 
   render() {
     return (
       <div className="ui container">
         <Router history={history}>
-          <div>
-            <Switch>
-              <Route
-                path="/login"
-                exact
-                render={() => <Login cookies={this.props.cookies} />}
-              />
-              <Route path="/" exact render={() => this.AuthCheck()} />
-            </Switch>
-          </div>
+    <Route path="/*" render={() => <Routing cookies={this.props.cookies} />} />
         </Router>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return { userAuth: state.userAuth, cookies: ownProps.cookies };
-};
-
 const wrappedApp = connect(
-  mapStateToProps,
+  null,
   { setUserAuthValue }
 )(App);
+
 export default withCookies(wrappedApp);

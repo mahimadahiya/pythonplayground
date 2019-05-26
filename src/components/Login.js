@@ -16,35 +16,30 @@ class Login extends React.Component {
   }
 
   setCookies = () => {
-    console.log(this.props);
-    const { cookies } = this.props;
-    const {
-      Authorization,
-      isSignedIn,
-      userId,
-      userEmail,
-      userName
-    } = this.props.userAuth;
-    cookies.set("Authorization", Authorization, { path: "/" });
-    cookies.set("isSignedIn", isSignedIn, { path: "/" });
-    cookies.set("userId", userId, { path: "/" });
-    cookies.set("userEmail", userEmail, { path: "/" });
-    cookies.set("userName", userName, { path: "/" });
-  };
-  
-  componentWillMount() {
-    console.log(this.props);
     if (this.props.userAuth.isSignedIn) {
-      this.setCookies();
-      history.push("/");
+      const { cookies } = this.props;
+      const {
+        Authorization,
+        isSignedIn,
+        userId,
+        userEmail,
+        userName
+      } = this.props.userAuth;
+      cookies.set("Authorization", Authorization, { path: "/" });
+      cookies.set("isSignedIn", isSignedIn, { path: "/" });
+      cookies.set("userId", userId, { path: "/" });
+      cookies.set("userEmail", userEmail, { path: "/" });
+      cookies.set("userName", userName, { path: "/" });
+      history.push("/tracklist");
     }
+  };
+
+  componentWillMount() {
+    this.setCookies();
   }
 
   componentDidUpdate = () => {
-    if (this.props.userAuth.isSignedIn) {
-      this.setCookies();
-      history.push("/");
-    }
+    this.setCookies();
   };
 
   renderInput = ({ input, label, meta }) => {
