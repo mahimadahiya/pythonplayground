@@ -1,8 +1,16 @@
 import React from "react";
-import { loginUser } from "../actions";
+import { loginUser } from "../../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import history from "../history";
+import history from "../../../history";
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Segment,
+  Container
+} from "semantic-ui-react";
 
 class Login extends React.Component {
   renderError({ error, touched }) {
@@ -30,7 +38,7 @@ class Login extends React.Component {
       cookies.set("userId", userId, { path: "/" });
       cookies.set("userEmail", userEmail, { path: "/" });
       cookies.set("userName", userName, { path: "/" });
-      history.push("/tracklist");
+      history.push("/dashboard");
     }
   };
 
@@ -43,10 +51,16 @@ class Login extends React.Component {
   };
 
   renderInput = ({ input, label, meta }) => {
+    let icon = "user";
+    if (label === "Password") {
+      icon = "lock";
+    }
     return (
       <div className="field">
         <div className="ui labeled input">
-          <div className="ui black label label">{label}</div>
+          <div className="ui grey label label">
+            <i className={`${icon} icon`} />
+          </div>
           <input {...input} placeholder={label} />
           {this.renderError(meta)}
         </div>
@@ -60,20 +74,35 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="ui center aligned container">
-        <form
-          className="ui form error"
-          onSubmit={this.props.handleSubmit(this.onSubmit)}
-        >
-          <Field name="email" component={this.renderInput} label="Email" />
-          <Field
-            name="password"
-            component={this.renderInput}
-            label="Password"
-          />
-          <button className="ui black basic button">Login</button>
-        </form>
-      </div>
+      <Container>
+        <Grid centered columns={2}>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">
+              Login
+            </Header>
+            <Segment>
+              <Form
+                size="small"
+                onSubmit={this.props.handleSubmit(this.onSubmit)}
+              >
+                <Field
+                  name="email"
+                  component={this.renderInput}
+                  label="Email"
+                />
+                <Field
+                  name="password"
+                  component={this.renderInput}
+                  label="Password"
+                />
+                <Button color="black" fluid size="large">
+                  Login
+                </Button>
+              </Form>
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      </Container>
     );
   }
 }

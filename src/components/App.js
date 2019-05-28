@@ -17,7 +17,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="ui container">
+      <div>
         <Router history={history}>
     <Route path="/*" render={() => <Routing cookies={this.props.cookies} />} />
         </Router>
