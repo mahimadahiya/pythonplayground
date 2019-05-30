@@ -5,6 +5,7 @@ import Routing from "./HOC/Routing";
 import { connect } from "react-redux";
 import { withCookies } from "react-cookie";
 import { setUserAuthValue } from "../actions";
+import "./App.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -19,7 +20,10 @@ class App extends React.Component {
     return (
       <div>
         <Router history={history}>
-    <Route path="/*" render={() => <Routing cookies={this.props.cookies} />} />
+          <Route
+            path="/*"
+            render={() => <Routing cookies={this.props.cookies} />}
+          />
         </Router>
       </div>
     );

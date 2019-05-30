@@ -38,7 +38,7 @@ class Login extends React.Component {
       cookies.set("userId", userId, { path: "/" });
       cookies.set("userEmail", userEmail, { path: "/" });
       cookies.set("userName", userName, { path: "/" });
-      history.push("/dashboard");
+      history.push("/tracks");
     }
   };
 

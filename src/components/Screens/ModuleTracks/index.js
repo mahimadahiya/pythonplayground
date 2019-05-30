@@ -1,29 +1,85 @@
 import React from "react";
 import { connect } from "react-redux";
-
-import Table from "../../Elements/Tables"
+import { Link } from "react-router-dom";
+import { Table, Divider, Button } from "antd";
 import { fetchModuleTracks } from "../../../actions/";
 
 class TrackList extends React.Component {
-
   componentWillMount = () => {
-    this.props.fetchModuleTracks(this.props.user.Authorization)
-  }
+    this.props.fetchModuleTracks(this.props.user.Authorization);
+  };
 
-  transformTableData = () => {
-    const headers = ['ID', 'Name', 'Organization', 'Organization ID', 'Going Live At']
-    const data = this.props.tracks
-    return { tableHeaders: headers, tableRow: data}
-  }
+  tableColumnName = () => {
+    const column = [
+      {
+        title: "Name",
+        dataIndex: "name",
+        key: "name"
+      },
+      {
+        title: "ID",
+        dataIndex: "id",
+        key: "id"
+      },
+      {
+        title: "Organization ID",
+        dataIndex: "organization_id",
+        key: "organization_id"
+      },
+      {
+        title: "Organization",
+        dataIndex: "organization__name",
+        key: "organization__name"
+      },
+      {
+        title: "Going Live At",
+        dataIndex: "starts_at",
+        key: "starts_at"
+      },
+      {
+        title: "Actions",
+        key: "action",
+        width: 360,
+        render: record => (
+          <span>
+            <Link to={`/tracks/edit/${record.id}`}>Edit</Link>
+            <Divider type="vertical" />
+            <Link to={`/tracks/delete/${record.id}`}>Delete</Link>
+            <Divider type="vertical" />
+            <Link to={`/tracks/map/user`}>Map User</Link>
+            <Divider type="vertical" />
+          </span>
+        )
+      }
+    ];
+    return column;
+  };
 
   render() {
-    console.log(this.props);
-    return <div> <Table tableData={this.transformTableData()} /> </div>;
+    const columnName = this.tableColumnName();
+    const tableData = this.props.tracks;
+    return (
+      <div>
+        <Table
+          dataSource={tableData}
+          columns={columnName}
+          footer={() => (
+            <Button type="primary" shape="rounded">
+              <Link to="/tracks/create">Create Track</Link>
+            </Button>
+          )}
+        />
+      </div>
+    );
   }
 }
 
 const mapStateToProps = state => {
-  return { tracks: Object.values(state.moduleTrack)[0], user: state.userAuth };
+  console.log(state);
+  return {
+    tracks: Object.values(state.moduleTrack.moduleTracks),
+    user: state.userAuth
+  };
 };
 
 export default connect(

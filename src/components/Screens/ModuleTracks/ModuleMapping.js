@@ -3,36 +3,34 @@ import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { TextField } from "redux-form-antd";
 import { Form, Button } from "antd";
+import { createModuleTrackMapping } from "../../../actions";
 
-import { createModuleTrack } from "../../../actions/";
+class ModuleMapping extends React.Component {
 
-class CreateTrack extends React.Component {
-  onSubmit = fromValues => {
-    console.log(this.props.user);
-    this.props.createModuleTrack(this.props.user.Authorization, fromValues);
-  };
+  onSubmit = (fromValues) => {
+
+    this.props.createModuleTrackMapping(this.props.user.Authorization, fromValues)
+  }
+
   render() {
-    console.log(this.props);
+    console.log(this.props)
+    const track_id = this.props.match.params.id;
     return (
-      <Form
-        onSubmit={this.props.handleSubmit(this.onSubmit)}
-        className="login-form"
-      >
-        <Form.Item>
-          <Field name="name" component={TextField} placeholder="Track Name" />
-        </Form.Item>
+      <Form onSubmit={this.props.handleSubmit(this.onSubmit)} className="login-form" >
         <Form.Item>
           <Field
-            name="organization_id"
+            name="track_id"
             component={TextField}
-            placeholder="Organization ID"
+            placeholder={track_id}
+            value={track_id}
+            
           />
         </Form.Item>
         <Form.Item>
           <Field
-            name="going_live_at"
+            name="module_id_list"
             component={TextField}
-            placeholder="Going Live At"
+            placeholder="Module IDs"
           />
         </Form.Item>
         <Form.Item>
@@ -52,10 +50,9 @@ class CreateTrack extends React.Component {
 const mapStateToProps = state => {
   return { user: state.userAuth };
 };
-
-const formWrapped = reduxForm({ form: "createTrack" })(CreateTrack);
+const formWrapped = reduxForm({ form: "moduleTrack" })(ModuleMapping);
 
 export default connect(
   mapStateToProps,
-  { createModuleTrack }
+  { createModuleTrackMapping }
 )(formWrapped);
