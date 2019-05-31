@@ -64,7 +64,7 @@ class TrackList extends React.Component {
           dataSource={tableData}
           columns={columnName}
           footer={() => (
-            <Button type="primary" shape="rounded">
+            <Button type="primary">
               <Link to="/tracks/create">Create Track</Link>
             </Button>
           )}

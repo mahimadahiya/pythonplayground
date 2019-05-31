@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
-import { TextField } from "redux-form-antd";
-import { Form, Button } from "antd";
+import { TextField, DatePickerField } from "redux-form-antd";
+import { Form, Button, DatePicker } from "antd";
 
 import { createModuleTrack } from "../../../actions/";
 
@@ -11,15 +11,19 @@ class CreateTrack extends React.Component {
     console.log(this.props.user);
     this.props.createModuleTrack(this.props.user.Authorization, fromValues);
   };
+
   render() {
-    console.log(this.props);
     return (
       <Form
         onSubmit={this.props.handleSubmit(this.onSubmit)}
         className="login-form"
       >
         <Form.Item>
-          <Field name="name" component={TextField} placeholder="Track Name" />
+          <Field
+            name="name"
+            component={TextField}
+            placeholder="Track Name"
+          />
         </Form.Item>
         <Form.Item>
           <Field
@@ -31,7 +35,7 @@ class CreateTrack extends React.Component {
         <Form.Item>
           <Field
             name="going_live_at"
-            component={TextField}
+            component={DatePickerField}
             placeholder="Going Live At"
           />
         </Form.Item>
