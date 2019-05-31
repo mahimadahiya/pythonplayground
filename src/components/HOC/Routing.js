@@ -9,6 +9,7 @@ import TrackList from "../../components/Screens/ModuleTracks/";
 import CreateTrack from "../../components/Screens/ModuleTracks/create";
 import ModuleMapping from "../../components/Screens/ModuleTracks/ModuleMapping";
 import UserTrackMapping from "../../components/Screens/ModuleTracks/UserMapping";
+import HomeScreen from '../Screens/Dashboard/TrackList'
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   return (
@@ -16,8 +17,9 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => {
       {...rest}
       render={props =>
         user.isSignedIn ? (
-          // <Sidebar>
+          <Sidebar>
             <Component {...props} />
+          </Sidebar>
         ) : (
           <Redirect to={{ pathname: "/login" }} />
         )
@@ -33,7 +35,12 @@ class Routing extends React.Component {
       <div>
         <React.Fragment>
           <Switch>
-            <PrivateRoute path="/dashboard" component={TrackList} user={user} />
+            <PrivateRoute
+              path="/"
+              component={HomeScreen}
+              user={user}
+              exact
+            />
             <PrivateRoute
               path="/tracks"
               component={TrackList}

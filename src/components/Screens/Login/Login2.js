@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Icon, Input, Button, Checkbox, Card, Row, Col } from "antd";
+import { Form, Icon, Input, Button, Card, Row } from "antd";
 
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {

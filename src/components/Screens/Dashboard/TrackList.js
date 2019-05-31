@@ -1,8 +1,27 @@
-import React from 'react'
+import React from "react";
+import { connect } from "react-redux";
 
-export default class TrackList extends React.Component{
+import { Redirect } from 'react-router-dom'
+import Login from '../Login/Login'
+
+
+
+class HomeScreen extends React.Component {
   render() {
-    console.log("tracklist")
-    return <div> Try this out </div>
+    return (
+      <React.Fragment>
+        {this.props.user.isSignedIn ? (
+          <Redirect to="/tracks" />
+        ) : (
+          <Login />
+        )}
+      </React.Fragment>
+    );
   }
 }
+
+const mapStateToProps = (state) => {
+  return { user: state.userAuth}
+}
+
+export default connect(mapStateToProps, {})(HomeScreen)
