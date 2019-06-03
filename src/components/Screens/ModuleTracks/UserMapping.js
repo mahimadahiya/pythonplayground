@@ -113,9 +113,9 @@ class UserTrackMapping extends React.Component {
           />
         );
       }
-    } else if (this.state.mode == 2) {
+    } else if (this.state.mode === 2) {
       return <div>Entire org user will be mapped</div>;
-    } else if (this.state.mode == 3) {
+    } else if (this.state.mode === 3) {
       return <div>Mode 3</div>;
     } else {
       return <div />;

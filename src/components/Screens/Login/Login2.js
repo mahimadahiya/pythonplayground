@@ -12,10 +12,10 @@ class NormalLoginForm extends React.Component {
   };
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     const { getFieldDecorator } = this.props.form;
     return (
-      <Row type="flex" justify="center" align="middle">
+      <div className="center">
         <Card title="iAugmentor Login">
           <Form onSubmit={this.handleSubmit} className="login-form">
             <Form.Item>
@@ -26,10 +26,7 @@ class NormalLoginForm extends React.Component {
               })(
                 <Input
                   prefix={
-                    <Icon
-                      type="user"
-                      style={{ color: "rgba(0,0,0,.25)" }}
-                    />
+                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                   }
                   placeholder="Username"
                 />
@@ -43,10 +40,7 @@ class NormalLoginForm extends React.Component {
               })(
                 <Input
                   prefix={
-                    <Icon
-                      type="lock"
-                      style={{ color: "rgba(0,0,0,.25)" }}
-                    />
+                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
                   }
                   type="password"
                   placeholder="Password"
@@ -64,7 +58,7 @@ class NormalLoginForm extends React.Component {
             </Form.Item>
           </Form>
         </Card>
-      </Row>
+      </div>
     );
   }
 }

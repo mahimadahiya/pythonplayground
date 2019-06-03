@@ -69,7 +69,7 @@ class Routing extends React.Component {
         </React.Fragment>
         <Route
           path="/login"
-          render={() => <Login cookies={this.props.cookies} />}
+          render={() => <Login2 cookies={this.props.cookies} />}
         />
         <Route
           path="/logout"

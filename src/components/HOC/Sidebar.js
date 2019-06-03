@@ -1,12 +1,53 @@
 import React from "react";
 import { Layout, Menu, Icon, Breadcrumb } from "antd";
+import { Link } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
 class SideBar extends React.Component {
+  state = {
+    paths: []
+  };
+
+  componentWillMount() {
+    const path = window.location.href;
+    console.log(path);
+    this.addPath(path);
+  }
+
+  addPath = path => {
+    this.setState({
+      paths: [...this.state.paths, path]
+    });
+  };
+
+  removePath = path => {
+    const index = this.state.paths.indexOf(path);
+    const newPaths = this.state.paths.slice(0, index);
+
+    this.setState({
+      paths: newPaths
+    });
+  };
+
+  renderPaths = () => {
+    return this.state.paths.length > 0
+      ? this.state.paths.map(path => {
+          const i = path.lastIndexOf("/");
+          const pathName = path.substring(i + 1);
+          return (
+            <Breadcrumb.Item>
+              <Link to={path}>{pathName}</Link>
+            </Breadcrumb.Item>
+          );
+        })
+      : null;
+  };
+
   render() {
-    console.log(this.props)
+    console.log("sidebar", window.location);
+    console.log("state", this.state);
     return (
       <Layout>
         <Header className="header">
@@ -75,11 +116,12 @@ class SideBar extends React.Component {
             </Menu>
           </Sider>
           <Layout style={{ padding: "0 24px 24px" }}>
-            <Breadcrumb style={{ margin: "16px 0" }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
+            {/* <Breadcrumb style={{ margin: "16px 0" }}>
+              {this.renderPaths()}
+              {/* <Breadcrumb.Item>Home</Breadcrumb.Item>
               <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
+              <Breadcrumb.Item><Link to="" style={{ textTransform: 'capitalize'}}>{window.location.pathname.substring(1)}</Link></Breadcrumb.Item> */}
+
             <Content
               style={{
                 background: "#fff",
@@ -88,7 +130,7 @@ class SideBar extends React.Component {
                 minHeight: 280
               }}
             >
-              {(this.props.children)}
+              {this.props.children}
             </Content>
           </Layout>
         </Layout>
@@ -97,4 +139,4 @@ class SideBar extends React.Component {
   }
 }
 
-export default SideBar
+export default SideBar;
