@@ -5,17 +5,9 @@ import { connect } from "react-redux";
 import history from "../../../history";
 import { loginUser } from "../../../actions";
 import displayForm from "../Form/DisplayForm";
+import logo from "../../../assets/logo.png";
 
 class NormalLoginForm extends React.Component {
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   this.props.form.validateFields((err, values) => {
-  //     if (!err) {
-  //       console.log("Received values of form: ", values);
-  //     }
-  //   });
-  // };
-
   setCookies = () => {
     if (this.props.userAuth.isSignedIn) {
       const { cookies } = this.props;
@@ -52,48 +44,9 @@ class NormalLoginForm extends React.Component {
     console.log(this.props);
     return (
       <div className="center">
-        <Card title="iAugmentor Login">
+        <img src={logo} style={{ margin: "auto 0" }} />
+        <Card>
           <Formik onSubmit={this.onSubmit} render={displayForm} />
-          {/* <Form onSubmit={this.handleSubmit} className="login-form">
-            <Form.Item>
-              {getFieldDecorator("username", {
-                rules: [
-                  { required: true, message: "Please input your username!" }
-                ]
-              })(
-                <Input
-                  prefix={
-                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="Username"
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator("password", {
-                rules: [
-                  { required: true, message: "Please input your Password!" }
-                ]
-              })(
-                <Input
-                  prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  type="password"
-                  placeholder="Password"
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                Log in
-              </Button>
-            </Form.Item>
-          </Form> */}
         </Card>
       </div>
     );

@@ -43,3 +43,4 @@ const FontField = AntComponent => ({
 };
 
 export const AntInput = FontField(Input);
+export const AntInputPassword = FontField(Input.Password);

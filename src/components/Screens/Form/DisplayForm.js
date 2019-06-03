@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Field } from "formik";
-import { AntInput } from "./FormFields";
+import { AntInput, AntInputPassword } from "./FormFields";
+import { Icon } from "antd";
 import { validateEmail, isRequired, validatePassword } from "./ValidateFields";
 
 export default ({ handleSubmit, values, submitCount }) => (
@@ -9,15 +10,16 @@ export default ({ handleSubmit, values, submitCount }) => (
       component={AntInput}
       name="email"
       type="email"
-      label="Email"
       validate={validateEmail}
+      prefix={<Icon type="user" />}
       submitCount={submitCount}
       hasFeedback
     />
     <Field
-      component={AntInput}
+      component={AntInputPassword}
       name="password"
       type="password"
+      prefix={<Icon type="lock" />}
       validate={validatePassword}
       submitCount={submitCount}
       hasFeedback
