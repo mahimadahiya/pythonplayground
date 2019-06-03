@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Field } from "formik";
 import { AntInput, AntInputPassword } from "./FormFields";
 import { Icon } from "antd";
-import { validateEmail, isRequired, validatePassword } from "./ValidateFields";
+import { validateEmail, validatePassword } from "./ValidateFields";
 
 export default ({ handleSubmit, values, submitCount }) => (
   <Form className="form-container" onSubmit={handleSubmit}>

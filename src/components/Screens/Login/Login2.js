@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "antd";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import { connect } from "react-redux";
 import history from "../../../history";
 import { loginUser } from "../../../actions";
@@ -44,7 +44,7 @@ class NormalLoginForm extends React.Component {
     console.log(this.props);
     return (
       <div className="center">
-        <img src={logo} style={{ margin: "auto 0" }} />
+        <img src={logo} style={{ margin: "auto 0" }} alt="logo" />
         <Card>
           <Formik onSubmit={this.onSubmit} render={displayForm} />
         </Card>

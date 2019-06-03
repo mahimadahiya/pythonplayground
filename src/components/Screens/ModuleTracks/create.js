@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { TextField, DatePickerField } from "redux-form-antd";
-import { Form, Button, DatePicker } from "antd";
+import { Form, Button } from "antd";
 
 import { createModuleTrack } from "../../../actions/";
 

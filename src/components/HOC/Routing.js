@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Route, Redirect, Switch } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
-import Login from "../../components/Screens/Login/Login";
+// import Login from "../../components/Screens/Login/Login";
 import Login2 from "../../components/Screens/Login/Login2";
 import TrackList from "../../components/Screens/ModuleTracks/";
 import CreateTrack from "../../components/Screens/ModuleTracks/create";

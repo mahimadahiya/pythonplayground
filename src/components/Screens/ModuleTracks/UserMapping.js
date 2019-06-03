@@ -11,13 +11,13 @@ import {
   fetchOrganizationTracks,
   createUserTrackMapping
 } from "../../../actions";
-import { throwStatement } from "@babel/types";
+// import { throwStatement } from "@babel/types";
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
-const { Option } = Select;
-const { TextArea } = Input;
-const { RangePicker } = DatePicker;
+// const { Option } = Select;
+// const { TextArea } = Input;
+// const { RangePicker } = DatePicker;
 
 const makeField = Component => ({
   input,
@@ -40,15 +40,20 @@ const makeField = Component => ({
   );
 };
 
-const AInput = makeField(Input);
+// const AInput = makeField(Input);
 const ARadioGroup = makeField(RadioGroup);
-const ASelect = makeField(Select);
-const ACheckbox = makeField(Checkbox);
-const ATextarea = makeField(TextArea);
-const ARangePicker = makeField(RangePicker);
+// const ASelect = makeField(Select);
+// const ACheckbox = makeField(Checkbox);
+// const ATextarea = makeField(TextArea);
+// const ARangePicker = makeField(RangePicker);
 
 class UserTrackMapping extends React.Component {
-  state = { mode: null, organization_id: null, selectedTracks: [], selectedBatches: [] };
+  state = {
+    mode: null,
+    organization_id: null,
+    selectedTracks: [],
+    selectedBatches: []
+  };
 
   setMode = e => {
     this.setState({ mode: e.target.value });
@@ -97,7 +102,7 @@ class UserTrackMapping extends React.Component {
   };
 
   renderModeOptions = () => {
-    if (this.state.mode == 1) {
+    if (this.state.mode === 1) {
       const { organizationBatches } = this.props;
       if (organizationBatches.length > 0) {
         let options = [];
@@ -107,10 +112,7 @@ class UserTrackMapping extends React.Component {
           })
         );
         return (
-          <Checkbox.Group
-            options={options[0]}
-            onChange={this.onBatchSelect}
-          />
+          <Checkbox.Group options={options[0]} onChange={this.onBatchSelect} />
         );
       }
     } else if (this.state.mode === 2) {
@@ -122,13 +124,16 @@ class UserTrackMapping extends React.Component {
     }
   };
 
-  onSubmit = (e) => {
-    const formValues = this.state
-    this.props.createUserTrackMapping(this.props.user.Authorization, formValues);
-  }
+  onSubmit = e => {
+    const formValues = this.state;
+    this.props.createUserTrackMapping(
+      this.props.user.Authorization,
+      formValues
+    );
+  };
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     return (
       <div>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
@@ -149,10 +154,7 @@ class UserTrackMapping extends React.Component {
             <Radio value="3">Track-UserMapping</Radio>
           </Field>
           {this.renderModeOptions()}
-          <Button
-            type="primary"
-            htmlType="submit"
-          >
+          <Button type="primary" htmlType="submit">
             Submit
           </Button>
         </Form>
