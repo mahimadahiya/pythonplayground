@@ -129,15 +129,15 @@ class SideBar extends React.Component {
               style={{
                 background: "rgba(255,255,255,0.2)",
                 // margin: 0,
-                padding: "48px 48px",
-                // display: "flex",
-                // justifyContent: "center",
-                // alignItems: "center",
-                minHeight: 400
+
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+
                 // minWidth: 800
               }}
             >
-              <div style={{ backgroundColor: "white" }}>
+              <div style={{ backgroundColor: "white", minWidth: "90%" }}>
                 {this.props.children}
               </div>
             </Content>
