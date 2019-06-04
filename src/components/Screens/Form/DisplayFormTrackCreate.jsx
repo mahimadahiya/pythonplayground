@@ -21,8 +21,8 @@ const DisplayFormTrackCreate = ({
   submitCount,
   list
 }) => {
-  const ids = list.map(organization => organization.name);
-  console.log("display", handleSubmit, values, submitCount);
+
+  const selectOptionObject = list.map(({ id, name }) => { return({ name, id})})
   return (
     <Form className="form-container" onSubmit={handleSubmit}>
       <Field
@@ -39,7 +39,7 @@ const DisplayFormTrackCreate = ({
         component={AntSelect}
         name="orgId"
         prefix={<Icon type="lock" />}
-        selectOptions={ids}
+        selectOptionObject={selectOptionObject}
         validate={validateRequired}
         submitCount={submitCount}
         hasFeedback

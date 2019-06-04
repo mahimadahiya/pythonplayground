@@ -9,6 +9,7 @@ const CreateAntField = AntComponent => ({
   form,
   hasFeedback,
   selectOptions,
+  selectOptionObject,
   label,
   submitCount,
   type,
@@ -41,8 +42,12 @@ const CreateAntField = AntComponent => ({
           onBlur={onBlur}
           onChange={type ? onInputChange : onChange}
         >
-          {selectOptions &&
-            selectOptions.map(name => <Option key={name}>{name}</Option>)}
+          {/* {selectOptions &&
+            selectOptions.map((name) => <Option key={name}>{name}</Option>)} */}
+          {selectOptionObject &&
+            selectOptionObject.map(({ id, name }) => (
+              <Option key={id}>{name}</Option>
+            ))}
         </AntComponent>
       </FormItem>
     </div>
