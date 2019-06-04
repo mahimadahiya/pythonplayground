@@ -2,6 +2,7 @@ import React from "react";
 import { Layout, Menu, Icon, Breadcrumb, Button } from "antd";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import history from "../../history";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -89,7 +90,9 @@ class SideBar extends React.Component {
                   </span>
                 }
               >
-                <Menu.Item key="1">List</Menu.Item>
+                <Menu.Item key="1" onClick={() => history.push("/tracks")}>
+                  List
+                </Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>
