@@ -21,7 +21,6 @@ const CreateAntField = AntComponent => ({
   const submittedError = hasError && submitted;
   const touchedError = hasError && touched;
   const onInputChange = ({ target: { value } }) => {
-    console.log(value);
     form.setFieldValue(field.name, value);
   };
   const onChange = value => form.setFieldValue(field.name, value);

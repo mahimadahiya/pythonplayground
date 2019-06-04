@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { Route, Redirect, Switch } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
-// import Login from "../../components/Screens/Login/Login";
-import Login2 from "../../components/Screens/Login/Login2";
+import Login from "../../components/Screens/Login/Login";
 import TrackList from "../../components/Screens/ModuleTracks/";
 import CreateTrack from "../../components/Screens/ModuleTracks/create";
 import ModuleMapping from "../../components/Screens/ModuleTracks/ModuleMapping";
@@ -69,11 +68,7 @@ class Routing extends React.Component {
         </React.Fragment>
         <Route
           path="/login"
-          render={() => <Login2 cookies={this.props.cookies} />}
-        />
-        <Route
-          path="/logout"
-          render={() => <Login2 cookies={this.props.cookies} />}
+          render={() => <Login cookies={this.props.cookies} />}
         />
       </div>
     );

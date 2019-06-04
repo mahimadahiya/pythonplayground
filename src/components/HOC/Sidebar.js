@@ -13,7 +13,6 @@ class SideBar extends React.Component {
 
   componentWillMount() {
     const path = window.location.href;
-    console.log(path);
     this.addPath(path);
   }
 

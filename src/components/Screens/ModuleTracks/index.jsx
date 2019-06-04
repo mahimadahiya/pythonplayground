@@ -16,14 +16,14 @@ class TrackList extends React.Component {
   tableColumnName = () => {
     const column = [
       {
-        title: "Name",
-        dataIndex: "name",
-        key: "name"
-      },
-      {
         title: "ID",
         dataIndex: "id",
         key: "id"
+      },
+      {
+        title: "Name",
+        dataIndex: "name",
+        key: "name"
       },
       {
         title: "Organization ID",
@@ -81,7 +81,6 @@ class TrackList extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     tracks: Object.values(state.moduleTrack.moduleTracks),
     user: state.userAuth

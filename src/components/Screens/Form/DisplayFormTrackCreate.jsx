@@ -1,16 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 import { Form, Field } from "formik";
 import {
   AntInput,
-  AntInputPassword,
+  // AntInputPassword,
   AntDatePicker,
   AntSelect
 } from "./FormFields";
 import { Icon } from "antd";
 
 import {
-  validateEmail,
-  validatePassword,
+  // validateEmail,
+  // validatePassword,
   validateRequired
 } from "./ValidateFields";
 import { dateFormat } from "./FieldFormats";

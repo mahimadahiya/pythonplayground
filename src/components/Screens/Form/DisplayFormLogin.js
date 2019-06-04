@@ -5,14 +5,14 @@ import { Icon } from "antd";
 import { validateEmail, validatePassword } from "./ValidateFields";
 
 export default ({ handleSubmit, values, submitCount }) => {
-  console.log("login", handleSubmit, values, submitCount);
-  return (
+  return (  
     <Form className="form-container" onSubmit={handleSubmit}>
       <Field
         component={AntInput}
         className="input"
         name="email"
         type="email"
+        placeholder="Email"
         validate={validateEmail}
         prefix={<Icon type="user" />}
         submitCount={submitCount}
@@ -22,6 +22,7 @@ export default ({ handleSubmit, values, submitCount }) => {
         component={AntInputPassword}
         name="password"
         type="password"
+        placeholder="Password"
         prefix={<Icon type="lock" />}
         validate={validatePassword}
         submitCount={submitCount}
