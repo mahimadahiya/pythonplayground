@@ -31,14 +31,17 @@ class CreateTrack extends React.Component {
   };
 
   render() {
-    console.log(this.props.organizations);
+    // console.log(this.props.organizations);
     return (
       <div>
         <Card>
           <Formik
             onSubmit={this.onSubmit}
-            render={() => (
-              <DisplayFormTrackCreate list={this.props.organizations} />
+            render={formikProps => (
+              <DisplayFormTrackCreate
+                {...formikProps}
+                list={this.props.organizations}
+              />
             )}
           />
         </Card>

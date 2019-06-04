@@ -22,6 +22,7 @@ const DisplayFormTrackCreate = ({
   list
 }) => {
   const ids = list.map(organization => organization.name);
+  console.log("display", handleSubmit, values, submitCount);
   return (
     <Form className="form-container" onSubmit={handleSubmit}>
       <Field

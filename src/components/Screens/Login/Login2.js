@@ -36,7 +36,7 @@ class NormalLoginForm extends React.Component {
   };
 
   onSubmit = formValues => {
-    console.log("submit", formValues);
+    console.log("submitting", formValues);
     this.props.loginUser(formValues);
   };
 
