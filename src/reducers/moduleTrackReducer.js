@@ -1,5 +1,5 @@
 import * as ACTION_TYPE from "../actions/actionTypes";
-import _ from 'lodash'
+import _ from "lodash";
 
 const INTIAL_STATE = {
   moduleTracks: []
@@ -13,6 +13,6 @@ export default (state = INTIAL_STATE, action) => {
         moduleTracks: _.mapKeys(action.payload.result.track_list, "id")
       };
     default:
-      return state
+      return state;
   }
 };

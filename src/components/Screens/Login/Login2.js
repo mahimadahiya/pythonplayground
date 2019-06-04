@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { connect } from "react-redux";
 import history from "../../../history";
 import { loginUser } from "../../../actions";
-import displayForm from "../Form/DisplayForm";
+import displayForm from "../Form/DisplayFormLogin";
 import logo from "../../../assets/logo.png";
 
 class NormalLoginForm extends React.Component {

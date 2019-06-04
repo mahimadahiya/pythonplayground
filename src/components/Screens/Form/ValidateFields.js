@@ -20,4 +20,12 @@ export const validatePassword = value => {
   return errors;
 };
 
-export const isRequired = value => (!value ? "Required!" : "");
+export const validateRequired = value => {
+  let errors;
+  if (!value) {
+    errors = "Required!";
+  }
+  return errors;
+};
+
+// export const isRequired = value => (!value ? "Required!" : "");

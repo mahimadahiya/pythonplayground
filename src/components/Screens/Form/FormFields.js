@@ -1,12 +1,14 @@
 import React from "react";
-import { Form, Input } from "antd";
+import { Form, Input, Select, DatePicker } from "antd";
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
-const FontField = AntComponent => ({
+const CreateAntField = AntComponent => ({
   field,
   form,
   hasFeedback,
+  selectOptions,
   label,
   submitCount,
   type,
@@ -36,11 +38,16 @@ const FontField = AntComponent => ({
           {...props}
           onBlur={onBlur}
           onChange={type ? onInputChange : onChange}
-        />
+        >
+          {selectOptions &&
+            selectOptions.map(name => <Option key={name}>{name}</Option>)}
+        </AntComponent>
       </FormItem>
     </div>
   );
 };
 
-export const AntInput = FontField(Input);
-export const AntInputPassword = FontField(Input.Password);
+export const AntInput = CreateAntField(Input);
+export const AntInputPassword = CreateAntField(Input.Password);
+export const AntDatePicker = CreateAntField(DatePicker);
+export const AntSelect = CreateAntField(Select);

@@ -2,12 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Table, Divider, Button } from "antd";
-import { fetchModuleTracks } from "../../../actions/";
+import { fetchModuleTracks } from "../../../actions";
 
 class TrackList extends React.Component {
   componentWillMount = () => {
     this.props.fetchModuleTracks(this.props.user.Authorization);
   };
+
+  componentDidMount() {
+    this.props.heading("Tracks");
+  }
 
   tableColumnName = () => {
     const column = [
@@ -61,8 +65,10 @@ class TrackList extends React.Component {
     return (
       <div>
         <Table
+          className="bg-white"
           dataSource={tableData}
           columns={columnName}
+          pagination={false}
           footer={() => (
             <Button type="primary">
               <Link to="/tracks/create">Create Track</Link>

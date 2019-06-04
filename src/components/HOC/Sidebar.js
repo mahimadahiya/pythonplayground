@@ -28,8 +28,13 @@ class SideBar extends React.Component {
     const newPaths = this.state.paths.slice(0, index);
 
     this.setState({
-      paths: newPaths
+      paths: newPaths,
+      heading: null
     });
+  };
+
+  setHeading = text => {
+    this.setState({ heading: text });
   };
 
   renderPaths = () => {
@@ -56,13 +61,13 @@ class SideBar extends React.Component {
             <img src={logo} alt="logo" />
           </div>
           <span style={{ marginLeft: "auto" }}>
-            <Button type="link" size="large">
-              Logout
-            </Button>
             <Icon
               type="user"
               style={{ width: 20, height: 20, color: "black" }}
             />
+            <Button type="link" size="large">
+              Logout
+            </Button>
           </span>
         </Header>
         <Layout style={{ height: "93.5vh" }}>
@@ -102,14 +107,37 @@ class SideBar extends React.Component {
                 // margin: 0,
 
                 display: "flex",
+                flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center"
 
                 // minWidth: 800
               }}
             >
-              <div style={{ backgroundColor: "white", minWidth: "90%" }}>
-                {this.props.children}
+              {this.state.heading ? (
+                <div
+                  className="text-center bg-white"
+                  style={{
+                    width: "90%",
+                    padding: "10px",
+                    margin: "35px 0"
+                  }}
+                >
+                  <h2>{this.state.heading}</h2>
+                </div>
+              ) : null}
+
+              <div
+                style={{
+                  minWidth: "90%",
+                  padding: "10px 10px 0px 10px",
+                  maxHeight: "80%"
+                }}
+                className="overflow"
+              >
+                {React.cloneElement(this.props.children, {
+                  heading: this.setHeading
+                })}
               </div>
             </Content>
           </Layout>
