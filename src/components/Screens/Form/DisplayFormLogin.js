@@ -8,6 +8,7 @@ export default ({ handleSubmit, values, submitCount }) => (
   <Form className="form-container" onSubmit={handleSubmit}>
     <Field
       component={AntInput}
+      className="input"
       name="email"
       type="email"
       validate={validateEmail}

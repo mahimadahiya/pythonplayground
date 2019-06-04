@@ -105,7 +105,6 @@ class SideBar extends React.Component {
               style={{
                 background: "rgba(255,255,255,0.2)",
                 // margin: 0,
-
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",

@@ -8,10 +8,15 @@ import { Formik } from "formik";
 import { dateFormat } from "../Form/FieldFormats";
 import logo from "../../../assets/logo.png";
 
-import { createModuleTrack } from "../../../actions";
+import { createModuleTrack, fetchOrganizations } from "../../../actions";
 import moment from "moment";
 
 class CreateTrack extends React.Component {
+  componentDidMount() {
+    this.props.fetchOrganizations(this.props.user.Authorization);
+    this.props.heading("Create Track");
+  }
+
   onSubmit = formProps => {
     console.log(this.props.user);
     console.log(formProps);
@@ -26,13 +31,16 @@ class CreateTrack extends React.Component {
   };
 
   render() {
+    console.log(this.props.organizations);
     return (
-      <div className="center">
-        <div style={{ textAlign: "center", marginBottom: 20 }}>
-          <img src={logo} style={{ margin: "auto 0" }} alt="logo" />
-        </div>
+      <div>
         <Card>
-          <Formik onSubmit={this.onSubmit} render={DisplayFormTrackCreate} />
+          <Formik
+            onSubmit={this.onSubmit}
+            render={() => (
+              <DisplayFormTrackCreate list={this.props.organizations} />
+            )}
+          />
         </Card>
       </div>
     );
@@ -40,12 +48,13 @@ class CreateTrack extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { user: state.userAuth };
+  return {
+    organizations: Object.values(state.organization.organizationList),
+    user: state.userAuth
+  };
 };
-
-const formWrapped = reduxForm({ form: "createTrack" })(CreateTrack);
 
 export default connect(
   mapStateToProps,
-  { createModuleTrack }
-)(formWrapped);
+  { createModuleTrack, fetchOrganizations }
+)(CreateTrack);
