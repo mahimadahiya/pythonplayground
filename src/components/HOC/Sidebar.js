@@ -59,6 +59,10 @@ class SideBar extends React.Component {
             <Button type="link" size="large">
               Logout
             </Button>
+            <Icon
+              type="user"
+              style={{ width: 20, height: 20, color: "black" }}
+            />
           </span>
         </Header>
         <Layout style={{ height: "93.5vh" }}>
@@ -123,9 +127,9 @@ class SideBar extends React.Component {
 
             <Content
               style={{
-                background: "#fff",
+                background: "rgba(255,255,255,0.2)",
                 // margin: 0,
-                padding: "48px 24px",
+                padding: "48px 48px",
                 // display: "flex",
                 // justifyContent: "center",
                 // alignItems: "center",
@@ -133,7 +137,9 @@ class SideBar extends React.Component {
                 // minWidth: 800
               }}
             >
-              {this.props.children}
+              <div style={{ backgroundColor: "white" }}>
+                {this.props.children}
+              </div>
             </Content>
           </Layout>
         </Layout>

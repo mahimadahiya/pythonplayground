@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { Field, reduxForm, FieldArray } from "redux-form";
-import { Form, Input, Radio, Select, Checkbox, Button, DatePicker } from "antd";
+import { Field, reduxForm } from "redux-form";
+import { Form, Radio, Select, Checkbox, Button } from "antd";
 
 import {
   fetchModuleTracks,
