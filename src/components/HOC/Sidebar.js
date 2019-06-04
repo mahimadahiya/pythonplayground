@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Menu, Icon, Breadcrumb } from "antd";
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -51,8 +52,7 @@ class SideBar extends React.Component {
     return (
       <Layout>
         <Header className="header">
-          <div className="logo" />
-          <div className="" />
+          <img src={logo} alt="logo" />
         </Header>
         <Layout>
           <Sider width={200} style={{ background: "#fff" }}>

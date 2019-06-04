@@ -26,7 +26,7 @@ export default ({ handleSubmit, values, submitCount }) => (
     />
     <div className="submit-container">
       <button className="ant-btn ant-btn-primary" type="submit">
-        Submit
+        Login
       </button>
     </div>
   </Form>
