@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Icon, Breadcrumb } from "antd";
+import { Layout, Menu, Icon, Breadcrumb, Button } from "antd";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
@@ -47,16 +47,24 @@ class SideBar extends React.Component {
   };
 
   render() {
-    console.log("sidebar", window.location);
-    console.log("state", this.state);
+    // console.log("sidebar", window.location);
+    // console.log("state", this.state);
     return (
       <Layout>
         <Header className="header">
-          <img src={logo} alt="logo" />
+          <div>
+            <img src={logo} alt="logo" />
+          </div>
+          <span style={{ marginLeft: "auto" }}>
+            <Button type="link" size="large">
+              Logout
+            </Button>
+          </span>
         </Header>
-        <Layout>
-          <Sider width={200} style={{ background: "#fff" }}>
+        <Layout style={{ height: "93.5vh" }}>
+          <Sider>
             <Menu
+              className="menu"
               mode="inline"
               defaultSelectedKeys={["1"]}
               defaultOpenKeys={["sub1"]}
@@ -106,7 +114,7 @@ class SideBar extends React.Component {
               </SubMenu>
             </Menu>
           </Sider>
-          <Layout style={{ padding: "0 24px 24px" }}>
+          <Layout>
             {/* <Breadcrumb style={{ margin: "16px 0" }}>
               {this.renderPaths()}
               {/* <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -116,7 +124,6 @@ class SideBar extends React.Component {
             <Content
               style={{
                 background: "#fff",
-                padding: 24,
                 margin: 0,
                 minHeight: 280
               }}
