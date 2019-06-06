@@ -37,7 +37,7 @@ const makeField = Component => ({
   );
 };
 
-const ARadioGroup = makeField(RadioGroup);
+// const ARadioGroup = makeField(RadioGroup);
 class UserTrackMapping extends React.Component {
   state = {
     mode: null,
@@ -47,7 +47,7 @@ class UserTrackMapping extends React.Component {
   };
 
   setMode = e => {
-    this.setState({ mode: e.target.value });
+    this.setState({ mode: e });
   };
 
   componentWillMount = () => {
@@ -83,7 +83,10 @@ class UserTrackMapping extends React.Component {
         })
       );
       return (
-        <Checkbox.Group options={options[0]} onChange={this.onTrackSelect} />
+        <div>
+          <Checkbox.Group options={options[0]} onChange={this.onTrackSelect} />
+          <br />
+        </div>
       );
     }
   };
@@ -104,7 +107,13 @@ class UserTrackMapping extends React.Component {
           })
         );
         return (
-          <Checkbox.Group options={options[0]} onChange={this.onBatchSelect} />
+          <div>
+            <Checkbox.Group
+              options={options[0]}
+              onChange={this.onBatchSelect}
+            />
+            <br />
+          </div>
         );
       }
     } else if (this.state.mode === 2) {
@@ -133,13 +142,18 @@ class UserTrackMapping extends React.Component {
           render={props => (
             <DisplayFormMapUser
               {...props}
-              list={this.props.organizations}
+              listOrgs={this.props.organizations}
+              listTracks={this.props.organizationTracks}
               handlers={{
-                onOrgSelect: this.onOrgSelect
+                onOrgSelect: this.onOrgSelect,
+                renderTrackList: this.renderTrackList,
+                setMode: this.setMode,
+                renderModeOptions: this.renderModeOptions
               }}
             />
           )}
         />
+        {/* {this.renderTrackList()} */}
         {/* <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
           <Select onChange={this.onOrgSelect}>
             {this.props.organizations.map(({ id, name }) => {
