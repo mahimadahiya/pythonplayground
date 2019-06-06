@@ -1,21 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-// import { reduxForm, Field } from "redux-form";
-// import { TextField } from "redux-form-antd";
-// import { Form, Button } from "antd";
-import { fetchModuleTracks } from "../../../actions";
+import { Descriptions, Card } from "antd";
+import { fetchModuleTracks, createModuleTrackMapping } from "../../../actions";
 import { getOrganizationModules } from "../../../actions";
+import { Formik } from "formik";
+import DisplayFormModuleMapping from "../Form/DisplayFormModuleMapping";
 
 class ModuleMapping extends React.Component {
   state = {
     track: null
   };
 
-  onSubmit = fromValues => {
-    this.props.createModuleTrackMapping(
-      this.props.user.Authorization,
-      fromValues
-    );
+  onSubmit = formValues => {
+    const data = {
+      track_id: this.state.track.id,
+      module_id_list: `${formValues.modules}`
+    };
+    console.log("data", data);
+    this.props.createModuleTrackMapping(this.props.user.Authorization, data);
   };
 
   componentDidMount() {
@@ -45,36 +47,39 @@ class ModuleMapping extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    console.log("state", this.state);
+    if (this.state.track === null) return null;
     return (
-      <h4>{this.track_id}</h4>
-      // <Form onSubmit={this.props.handleSubmit(this.onSubmit)} className="login-form" >
-      //   <Form.Item>
-      //     <Field
-      //       name="track_id"
-      //       component={TextField}
-      //       placeholder={track_id}
-      //       value={track_id}
+      <div>
+        <Card title="Details">
+          <Descriptions bordered column="2">
+            <Descriptions.Item label="Name">
+              {this.state.track.name}
+            </Descriptions.Item>
+            <Descriptions.Item label="Organization Name">{`${
+              this.state.track.organization__name
+            } (${this.state.track.organization_id})`}</Descriptions.Item>
 
-      //     />
-      //   </Form.Item>
-      //   <Form.Item>
-      //     <Field
-      //       name="module_id_list"
-      //       component={TextField}
-      //       placeholder="Module IDs"
-      //     />
-      //   </Form.Item>
-      //   <Form.Item>
-      //     <Button
-      //       type="primary"
-      //       htmlType="submit"
-      //       className="login-form-button"
-      //     >
-      //       Create
-      //     </Button>
-      //   </Form.Item>
-      // </Form>
+            <Descriptions.Item label="Starts At">
+              {this.state.track.starts_at}
+            </Descriptions.Item>
+          </Descriptions>
+        </Card>
+
+        {this.props.modules ? (
+          <Card title="Select Modules" style={{ marginTop: "10px" }}>
+            <Formik
+              onSubmit={this.onSubmit}
+              render={formikProps => (
+                <DisplayFormModuleMapping
+                  {...formikProps}
+                  list={this.props.modules}
+                />
+              )}
+            />
+          </Card>
+        ) : null}
+      </div>
     );
   }
 }
@@ -83,12 +88,11 @@ const mapStateToProps = state => {
   return {
     user: state.userAuth,
     tracks: state.moduleTrack.moduleTracks,
-    modules: state.organization.organizationModules
+    modules: Object.values(state.organization.organizationModules)
   };
 };
-// const formWrapped = reduxForm({ form: "moduleTrack" })(ModuleMapping);
 
 export default connect(
   mapStateToProps,
-  { fetchModuleTracks, getOrganizationModules }
+  { fetchModuleTracks, getOrganizationModules, createModuleTrackMapping }
 )(ModuleMapping);
