@@ -45,7 +45,7 @@ class NormalLoginForm extends React.Component {
         <div style={{ textAlign: "center", marginBottom: 20 }}>
           <img src={logo} style={{ margin: "auto 0" }} alt="logo" />
         </div>
-        <Card>
+        <Card className="shadow">
           <Formik onSubmit={this.onSubmit} render={displayForm} />
         </Card>
       </div>
