@@ -4,7 +4,7 @@ import pyLearningApi from "../apis/pylearning";
 import qs from "querystring";
 import * as ACTION_TYPE from "./actionTypes";
 import history from "../history";
-
+import { getOrganizationModules } from "./organization";
 // USER
 export const loginUser = formValues => async dispatch => {
   const response = await authApi.post(
@@ -118,3 +118,5 @@ export const fetchOrganizationTracks = (
     payload: response.data
   });
 };
+
+export { getOrganizationModules };

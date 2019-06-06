@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const pyLearningApi = authToken => {
+const adminPanelApi = authToken => {
   return axios.create({
-    baseURL: "https://pylearning-api.iaugmentor.com",
+    baseURL: "http://203.110.86.43:8892",
     headers: {
       key: "TcS99L07QkDezB5n4Qdw",
       Authorization: `Bearer ${authToken}`
@@ -10,4 +10,4 @@ const pyLearningApi = authToken => {
   });
 };
 
-export default pyLearningApi;
+export default adminPanelApi;

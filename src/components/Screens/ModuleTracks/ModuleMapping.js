@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { reduxForm, Field } from "redux-form";
-import { TextField } from "redux-form-antd";
-import { Form, Button } from "antd";
+// import { reduxForm, Field } from "redux-form";
+// import { TextField } from "redux-form-antd";
+// import { Form, Button } from "antd";
 import { fetchModuleTracks } from "../../../actions";
+import { getOrganizationModules } from "../../../actions";
 
 class ModuleMapping extends React.Component {
   state = {
@@ -32,7 +33,15 @@ class ModuleMapping extends React.Component {
   };
 
   componentDidUpdate() {
-    this.fetchTrack();
+    if (this.state.track !== null) return;
+    new Promise((res, rej) => {
+      this.fetchTrack();
+      res();
+    }).then(() => {
+      console.log("update", this.state);
+      const orgId = this.state.track.organization_id;
+      this.props.getOrganizationModules(orgId, this.props.user.Authorization);
+    });
   }
 
   render() {
@@ -73,12 +82,13 @@ class ModuleMapping extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.userAuth,
-    tracks: state.moduleTrack.moduleTracks
+    tracks: state.moduleTrack.moduleTracks,
+    modules: state.organization.organizationModules
   };
 };
 // const formWrapped = reduxForm({ form: "moduleTrack" })(ModuleMapping);
 
 export default connect(
   mapStateToProps,
-  { fetchModuleTracks }
+  { fetchModuleTracks, getOrganizationModules }
 )(ModuleMapping);
