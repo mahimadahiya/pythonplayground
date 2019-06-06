@@ -68,7 +68,6 @@ class TrackList extends React.Component {
           className="bg-white"
           dataSource={tableData}
           columns={columnName}
-          pagination={false}
           footer={() => (
             <Button type="primary">
               <Link to="/tracks/create">Create Track</Link>

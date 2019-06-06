@@ -18,6 +18,7 @@ class ModuleMapping extends React.Component {
   };
 
   componentDidMount() {
+    this.props.heading("Map Module");
     this.props.fetchModuleTracks(this.props.user.Authorization);
   }
 
