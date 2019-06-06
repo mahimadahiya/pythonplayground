@@ -5,6 +5,17 @@ import qs from "querystring";
 import * as ACTION_TYPE from "./actionTypes";
 import history from "../history";
 import { getOrganizationModules } from "./organization";
+import {
+  fetchQuestionList,
+  fetchQuestionDetail,
+  updateQuestion
+} from "./question";
+
+export { fetchQuestionList, fetchQuestionDetail, updateQuestion };
+export { getOrganizationModules };
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 // USER
 export const loginUser = formValues => async dispatch => {
   const response = await authApi.post(
@@ -118,5 +129,3 @@ export const fetchOrganizationTracks = (
     payload: response.data
   });
 };
-
-export { getOrganizationModules };
