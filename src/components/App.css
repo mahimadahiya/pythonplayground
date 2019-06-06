@@ -118,3 +118,7 @@ img {
 .white-text:hover {
   color: white;
 }
+
+.input-height {
+  min-height: 4rem;
+}

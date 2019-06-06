@@ -5,11 +5,10 @@ import { Icon } from "antd";
 import { validateEmail, validatePassword } from "./ValidateFields";
 
 export default ({ handleSubmit, values, submitCount }) => {
-  return (  
+  return (
     <Form className="form-container" onSubmit={handleSubmit}>
       <Field
         component={AntInput}
-        className="input"
         name="email"
         type="email"
         placeholder="Email"

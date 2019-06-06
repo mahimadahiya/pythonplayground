@@ -38,6 +38,7 @@ const CreateAntField = AntComponent => ({
         <AntComponent
           {...field}
           {...props}
+          size="large"
           onBlur={onBlur}
           onChange={type ? onInputChange : onChange}
         >

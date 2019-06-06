@@ -21,8 +21,9 @@ const DisplayFormTrackCreate = ({
   submitCount,
   list
 }) => {
-
-  const selectOptionObject = list.map(({ id, name }) => { return({ name, id})})
+  const selectOptionObject = list.map(({ id, name }) => {
+    return { name, id };
+  });
   return (
     <Form className="form-container" onSubmit={handleSubmit}>
       <Field
