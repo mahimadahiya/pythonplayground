@@ -50,7 +50,7 @@ class TrackList extends React.Component {
             <Divider type="vertical" />
             <Link to={`/tracks/delete/${record.id}`}>Delete</Link>
             <Divider type="vertical" />
-            <Link to={`/tracks/map/user`}>Map User</Link>
+            <Link to={`/tracks/map/module/${record.id}`}>Map Module</Link>
             <Divider type="vertical" />
           </span>
         )
