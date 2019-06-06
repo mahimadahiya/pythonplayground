@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Field } from "formik";
 import { AntSelect, AntSwitch } from "./FormFields";
-import { Icon, Card, Button } from "antd";
+import { Icon, Card } from "antd";
 
 import { validateRequired } from "./ValidateFields";
 
@@ -70,9 +70,9 @@ const DisplayFormMapUser = ({
         ) : null}
 
         <div className="submit-container">
-          <Button shape="round" size="large" type="primary">
+          <button className="ant-btn ant-btn-primary" type="submit">
             Map User
-          </Button>
+          </button>
         </div>
       </Form>
     </Card>
