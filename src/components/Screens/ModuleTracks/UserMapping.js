@@ -40,7 +40,6 @@ class UserTrackMapping extends React.Component {
   };
 
   onOrgSelect = e => {
-    console.log(e);
     this.setState({ organization_id: e }, () => this.loadBatchTrackData());
   };
 
@@ -62,7 +61,6 @@ class UserTrackMapping extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <Formik

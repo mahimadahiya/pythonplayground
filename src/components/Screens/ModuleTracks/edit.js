@@ -8,11 +8,9 @@ import { createModuleTrack } from "../../../actions/";
 
 class CreateTrack extends React.Component {
   onSubmit = fromValues => {
-    console.log(this.props.user);
     this.props.createModuleTrack(this.props.user.Authorization, fromValues);
   };
   render() {
-    console.log(this.props);
     return (
       <Form
         onSubmit={this.props.handleSubmit(this.onSubmit)}

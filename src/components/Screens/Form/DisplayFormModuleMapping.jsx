@@ -11,7 +11,6 @@ const DisplayFormModuleMapping = ({
   submitCount,
   list
 }) => {
-  console.log("list", values);
   const selectOptionObject = list.map(({ module__name, module_id }) => {
     return { name: module__name, id: module_id };
   });

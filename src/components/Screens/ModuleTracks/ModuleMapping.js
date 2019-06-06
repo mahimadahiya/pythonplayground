@@ -16,7 +16,6 @@ class ModuleMapping extends React.Component {
       track_id: this.state.track.id,
       module_id_list: `${formValues.modules}`
     };
-    console.log("data", data);
     this.props.createModuleTrackMapping(this.props.user.Authorization, data);
   };
 
@@ -40,14 +39,12 @@ class ModuleMapping extends React.Component {
       this.fetchTrack();
       res();
     }).then(() => {
-      console.log("update", this.state);
       const orgId = this.state.track.organization_id;
       this.props.getOrganizationModules(orgId, this.props.user.Authorization);
     });
   }
 
   render() {
-    console.log("state", this.state);
     if (this.state.track === null) return null;
     return (
       <div>

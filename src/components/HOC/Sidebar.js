@@ -52,8 +52,6 @@ class SideBar extends React.Component {
   };
 
   render() {
-    // console.log("sidebar", window.location);
-    // console.log("state", this.state);
     return (
       <Layout>
         <Header className="header shadow" style={{ zIndex: 1 }}>
@@ -76,7 +74,7 @@ class SideBar extends React.Component {
           </span>
         </Header>
         <Layout style={{ height: "93.5vh" }}>
-          <Sider theme="dark" width="300px">
+          <Sider theme="dark" width="300px" style={{ paddingTop: "20px" }}>
             <Menu
               className="menu"
               mode="inline"
@@ -107,28 +105,22 @@ class SideBar extends React.Component {
             </Menu>
           </Sider>
           <Layout>
-            {/* <Breadcrumb style={{ margin: "16px 0" }}>
+            <Breadcrumb style={{ margin: "25px 15px 25px" }}>
               {this.renderPaths()}
-              {/* <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item><Link to="" style={{ textTransform: 'capitalize'}}>{window.location.pathname.substring(1)}</Link></Breadcrumb.Item> */}
-
-            <Content
-              style={{
-                background: "rgba(255,255,255,0.2)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
+              <Breadcrumb.Item key="1">Home</Breadcrumb.Item>
+              <Breadcrumb.Item key="2">List</Breadcrumb.Item>
+              <Breadcrumb.Item key="3">
+                <Link to="" style={{ textTransform: "capitalize" }}>
+                  {window.location.pathname.substring(1)}
+                </Link>
+              </Breadcrumb.Item>
+            </Breadcrumb>
+            <Content>
               <div
                 style={{
-                  minWidth: "90%",
-                  padding: "10px 10px 0px 10px",
-                  maxHeight: "80%"
+                  margin: "0px 15px 40px 15px"
                 }}
-                className="overflow"
+                className="overflow shadow"
               >
                 {React.cloneElement(this.props.children, {
                   heading: this.setHeading

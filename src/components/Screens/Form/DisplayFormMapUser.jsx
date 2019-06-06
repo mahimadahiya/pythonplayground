@@ -14,7 +14,6 @@ const DisplayFormMapUser = ({
   listBatches,
   handlers
 }) => {
-  console.log("values", values);
   const selectOptionObjectOrgs = listOrgs.map(({ id, name }) => {
     return { name, id };
   });
