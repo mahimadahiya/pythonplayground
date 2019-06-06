@@ -47,7 +47,7 @@ const CreateAntField = AntComponent => ({
         >
           {selectOptionObject &&
             selectOptionObject.map(({ id, name }) => (
-              <Option key={id}>{name}</Option>
+              <Option key={id}>{`${name} (${id})`}</Option>
             ))}
         </AntComponent>
       </FormItem>
