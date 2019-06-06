@@ -5,7 +5,6 @@ import { fetchModuleTracks, createModuleTrackMapping } from "../../../actions";
 import { getOrganizationModules } from "../../../actions";
 import { Formik } from "formik";
 import DisplayFormModuleMapping from "../Form/DisplayFormModuleMapping";
-import { fetchModuleTracks } from "../../../actions";
 
 class ModuleMapping extends React.Component {
   state = {
