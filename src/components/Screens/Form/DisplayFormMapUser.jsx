@@ -5,6 +5,10 @@ import { Icon } from "antd";
 
 import { validateRequired } from "./ValidateFields";
 
+const onOrgSelect = () => {
+  console.log("org elected");
+};
+
 const DisplayFormMapUser = ({
   handleSubmit,
   values,
@@ -12,7 +16,6 @@ const DisplayFormMapUser = ({
   list,
   handlers
 }) => {
-  console.log("list", values);
   const selectOptionObject = list.map(({ id, name }) => {
     return { name, id };
   });
@@ -26,7 +29,7 @@ const DisplayFormMapUser = ({
         selectOptionObject={selectOptionObject}
         validate={validateRequired}
         submitCount={submitCount}
-        onChange={e => handlers.onOrgSelect(e)}
+        onChange={handlers.onOrgSelect}
         hasFeedback
       />
 

@@ -63,7 +63,7 @@ class UserTrackMapping extends React.Component {
   };
 
   onOrgSelect = e => {
-    console.log("org elected");
+    console.log(e);
     this.setState({ organization_id: e }, () => this.loadBatchTrackData());
   };
 

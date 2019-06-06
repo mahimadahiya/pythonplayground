@@ -15,6 +15,7 @@ const CreateAntField = AntComponent => ({
   type,
   ...props
 }) => {
+  console.log(props);
   const touched = form.touched[field.name];
   const submitted = submitCount > 0;
   const hasError = form.errors[field.name];
@@ -23,7 +24,12 @@ const CreateAntField = AntComponent => ({
   const onInputChange = ({ target: { value } }) => {
     form.setFieldValue(field.name, value);
   };
-  const onChange = value => form.setFieldValue(field.name, value);
+  const onChange = value => {
+    form.setFieldValue(field.name, value);
+    if (props.onChange) {
+      props.onChange(value);
+    }
+  };
   const onBlur = () => form.setFieldTouched(field.name, true);
   return (
     <div className="field-container">
