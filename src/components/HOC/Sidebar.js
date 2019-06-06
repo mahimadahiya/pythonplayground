@@ -93,19 +93,8 @@ class SideBar extends React.Component {
                 <Menu.Item key="1" onClick={() => history.push("/tracks")}>
                   List
                 </Menu.Item>
-              </SubMenu>
-              <SubMenu
-                key="sub2"
-                // style={{ backgroundColor: "#000c17" }}
-                title={
-                  <span>
-                    <Icon type="user" />
-                    Users
-                  </span>
-                }
-              >
                 <Menu.Item
-                  key="1"
+                  key="2"
                   onClick={() => history.push("/tracks/map/user")}
                 >
                   Map User
