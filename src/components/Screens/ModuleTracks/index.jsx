@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Table, Divider, Button } from "antd";
+import { Table, Divider, Button, Card } from "antd";
 import { fetchModuleTracks } from "../../../actions";
 
 class TrackList extends React.Component {
@@ -64,16 +64,18 @@ class TrackList extends React.Component {
     const tableData = this.props.tracks;
     return (
       <div>
-        <Table
-          className="bg-white"
-          dataSource={tableData}
-          columns={columnName}
-          footer={() => (
-            <Button type="primary">
-              <Link to="/tracks/create">Create Track</Link>
-            </Button>
-          )}
-        />
+        <Card>
+          <Table
+            className="bg-white"
+            dataSource={tableData}
+            columns={columnName}
+            footer={() => (
+              <Button type="primary">
+                <Link to="/tracks/create">Create Track</Link>
+              </Button>
+            )}
+          />
+        </Card>
       </div>
     );
   }

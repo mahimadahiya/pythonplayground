@@ -56,10 +56,15 @@ class SideBar extends React.Component {
     // console.log("state", this.state);
     return (
       <Layout>
-        <Header className="header">
+        <Header className="header shadow" style={{ zIndex: 1 }}>
           <div>
             <img src={logo} alt="logo" />
           </div>
+          {this.state.heading ? (
+            <span className="text-center bg-white" style={{ margin: "0 auto" }}>
+              <h2>{this.state.heading}</h2>
+            </span>
+          ) : null}
           <span style={{ marginLeft: "auto" }}>
             <Icon
               type="user"
@@ -82,7 +87,6 @@ class SideBar extends React.Component {
             >
               <SubMenu
                 key="sub1"
-                // style={{ backgroundColor: "#000c17" }}
                 title={
                   <span>
                     <Icon type="user" />
@@ -112,28 +116,12 @@ class SideBar extends React.Component {
             <Content
               style={{
                 background: "rgba(255,255,255,0.2)",
-                // margin: 0,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center"
-
-                // minWidth: 800
               }}
             >
-              {this.state.heading ? (
-                <div
-                  className="text-center bg-white"
-                  style={{
-                    width: "90%",
-                    padding: "10px",
-                    margin: "35px 0"
-                  }}
-                >
-                  <h2>{this.state.heading}</h2>
-                </div>
-              ) : null}
-
               <div
                 style={{
                   minWidth: "90%",

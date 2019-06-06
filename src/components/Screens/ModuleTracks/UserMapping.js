@@ -27,6 +27,10 @@ class UserTrackMapping extends React.Component {
     this.props.fetchOrganizations(this.props.user.Authorization);
   };
 
+  componentDidMount() {
+    this.props.heading("Map Users");
+  }
+
   onTrackSelect = e => {
     this.setState({ selectedTracks: e });
   };
@@ -47,8 +51,6 @@ class UserTrackMapping extends React.Component {
   };
 
   onSubmit = values => {
-    // const formValues = this.state;
-    // console.log(e);
     const query = {
       organization_id: values.organization_id,
       mode: this.state.mode,
