@@ -48,20 +48,22 @@ class ModuleMapping extends React.Component {
     if (this.state.track === null) return null;
     return (
       <div>
-        <Card title="Details">
-          <Descriptions bordered column="2">
-            <Descriptions.Item label="Name">
-              {this.state.track.name}
-            </Descriptions.Item>
-            <Descriptions.Item label="Organization Name">{`${
-              this.state.track.organization__name
-            } (${this.state.track.organization_id})`}</Descriptions.Item>
+        {this.state.track ? (
+          <Card title="Details">
+            <Descriptions bordered column="2">
+              <Descriptions.Item label="Name">
+                {this.state.track.name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Organization Name">{`${
+                this.state.track.organization__name
+              } (${this.state.track.organization_id})`}</Descriptions.Item>
 
-            <Descriptions.Item label="Starts At">
-              {this.state.track.starts_at}
-            </Descriptions.Item>
-          </Descriptions>
-        </Card>
+              <Descriptions.Item label="Starts At">
+                {this.state.track.starts_at}
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
+        ) : null}
 
         {this.props.modules ? (
           <Card title="Select Modules" style={{ marginTop: "10px" }}>
