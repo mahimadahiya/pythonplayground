@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { Field, reduxForm } from "redux-form";
 import { Form, Radio, Select, Checkbox, Button } from "antd";
-
+import DisplayFormMapUser from "../Form/DisplayFormMapUser";
 import {
   fetchModuleTracks,
   fetchOrganizations,
@@ -11,13 +11,10 @@ import {
   fetchOrganizationTracks,
   createUserTrackMapping
 } from "../../../actions";
-// import { throwStatement } from "@babel/types";
+import { Formik } from "formik";
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
-// const { Option } = Select;
-// const { TextArea } = Input;
-// const { RangePicker } = DatePicker;
 
 const makeField = Component => ({
   input,
@@ -40,13 +37,7 @@ const makeField = Component => ({
   );
 };
 
-// const AInput = makeField(Input);
 const ARadioGroup = makeField(RadioGroup);
-// const ASelect = makeField(Select);
-// const ACheckbox = makeField(Checkbox);
-// const ATextarea = makeField(TextArea);
-// const ARangePicker = makeField(RangePicker);
-
 class UserTrackMapping extends React.Component {
   state = {
     mode: null,
@@ -72,6 +63,7 @@ class UserTrackMapping extends React.Component {
   };
 
   onOrgSelect = e => {
+    console.log("org elected");
     this.setState({ organization_id: e }, () => this.loadBatchTrackData());
   };
 
@@ -133,10 +125,22 @@ class UserTrackMapping extends React.Component {
   };
 
   render() {
-    console.log(this.props);
+    console.log(this.state);
     return (
       <div>
-        <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <Formik
+          onSubmit={this.onSubmit}
+          render={props => (
+            <DisplayFormMapUser
+              {...props}
+              list={this.props.organizations}
+              handlers={{
+                onOrgSelect: this.onOrgSelect
+              }}
+            />
+          )}
+        />
+        {/* <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
           <Select onChange={this.onOrgSelect}>
             {this.props.organizations.map(({ id, name }) => {
               return this.renderOrgOptions(id, name);
@@ -157,7 +161,7 @@ class UserTrackMapping extends React.Component {
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
-        </Form>
+        </Form> */}
       </div>
     );
   }
