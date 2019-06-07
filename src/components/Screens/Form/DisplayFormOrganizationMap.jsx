@@ -4,6 +4,7 @@ import { AntSelect } from "./FormFields";
 import { Card } from "antd";
 
 import { validateRequired } from "./ValidateFields";
+import MButton from "../../HOC/MButton";
 
 const DisplayFormMapUser = ({
   handleSubmit,
@@ -46,11 +47,7 @@ const DisplayFormMapUser = ({
           hasFeedback
         />
 
-        <div className="submit-container">
-          <button className="ant-btn ant-btn-primary" type="submit">
-            Map User
-          </button>
-        </div>
+        <MButton>Map User</MButton>
       </Form>
     </Card>
   );
