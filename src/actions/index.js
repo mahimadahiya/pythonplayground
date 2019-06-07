@@ -25,6 +25,12 @@ export const loginUser = formValues => async dispatch => {
   dispatch({ type: ACTION_TYPE.LOGIN_USER, payload: response.data });
 };
 
+export const logoutUser = () => {
+  return {
+    type: ACTION_TYPE.LOGOUT_USER
+  };
+};
+
 export const setUserAuthValue = formValues => {
   return {
     type: ACTION_TYPE.SET_USER_AUTH,
