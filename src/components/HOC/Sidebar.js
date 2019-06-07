@@ -73,14 +73,14 @@ class SideBar extends React.Component {
             <img src={logo} alt="logo" />
           </div>
           {this.state.heading ? (
-            <span className="text-center bg-white" style={{ margin: "0 auto" }}>
-              <h2>{this.state.heading}</h2>
+            <span>
+              <h1>{this.state.heading}</h1>
             </span>
           ) : null}
-          <span style={{ marginLeft: "auto" }} onClick={this.logout}>
+          <span onClick={this.logout}>
             <Icon
               type="user"
-              style={{ width: 20, height: 20, color: "black" }}
+              // style={{ width: 20, height: 20, color: "black" }}
             />
             <Button type="link" size="large">
               Logout
