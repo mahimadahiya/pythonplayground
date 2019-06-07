@@ -3,6 +3,8 @@ import { Form, Field } from "formik";
 import { AntInput, AntInputPassword } from "./FormFields";
 import { Icon } from "antd";
 import { validateEmail, validatePassword } from "./ValidateFields";
+import { Button } from "antd";
+import MButton from "../../HOC/MButton";
 
 export default ({ handleSubmit, values, submitCount }) => {
   return (
@@ -27,10 +29,8 @@ export default ({ handleSubmit, values, submitCount }) => {
         submitCount={submitCount}
         hasFeedback
       />
-      <div className="submit-container">
-        <button className="ant-btn ant-btn-primary" type="submit">
-          Login
-        </button>
+      <div className="submit-container text-center">
+        <MButton>Login</MButton>
       </div>
     </Form>
   );

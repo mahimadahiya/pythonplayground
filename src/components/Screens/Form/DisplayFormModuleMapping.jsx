@@ -4,6 +4,7 @@ import { AntSelect } from "./FormFields";
 import { Icon } from "antd";
 
 import { validateRequired } from "./ValidateFields";
+import MButton from "../../HOC/MButton";
 
 const DisplayFormModuleMapping = ({
   handleSubmit,
@@ -28,11 +29,7 @@ const DisplayFormModuleMapping = ({
         hasFeedback
       />
 
-      <div className="submit-container">
-        <button className="ant-btn ant-btn-primary" type="submit">
-          Create
-        </button>
-      </div>
+      <MButton>Map Module</MButton>
     </Form>
   );
 };

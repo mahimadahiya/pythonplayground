@@ -14,6 +14,7 @@ import {
   validateRequired
 } from "./ValidateFields";
 import { dateFormat } from "./FieldFormats";
+import MButton from "../../HOC/MButton";
 
 const DisplayFormTrackCreate = ({
   handleSubmit,
@@ -54,11 +55,7 @@ const DisplayFormTrackCreate = ({
         submitCount={submitCount}
         hasFeedback
       />
-      <div className="submit-container">
-        <button className="ant-btn ant-btn-primary" type="submit">
-          Create
-        </button>
-      </div>
+      <MButton>Create Track</MButton>
     </Form>
   );
 };

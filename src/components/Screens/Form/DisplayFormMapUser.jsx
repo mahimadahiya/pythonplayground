@@ -4,6 +4,7 @@ import { AntSelect, AntSwitch } from "./FormFields";
 import { Icon, Card } from "antd";
 
 import { validateRequired } from "./ValidateFields";
+import MButton from "../../HOC/MButton";
 
 const DisplayFormMapUser = ({
   handleSubmit,
@@ -47,15 +48,18 @@ const DisplayFormMapUser = ({
           submitCount={submitCount}
           hasFeedback
         />
-
-        <Field
-          label="Modes"
-          name="mode"
-          component={AntSwitch}
-          onChange={handlers.setMode}
-          unCheckedChildren="Batch Wise"
-          checkedChildren="Organization Wide"
-        />
+        <div style={{ textAlign: "center" }}>
+          <span>Modes:</span>
+          <div>
+            <Field
+              name="mode"
+              component={AntSwitch}
+              onChange={handlers.setMode}
+              unCheckedChildren="Batch Wise"
+              checkedChildren="Organization Wide"
+            />
+          </div>
+        </div>
         {handlers.showBatches ? (
           <Field
             label="Batches"
@@ -69,11 +73,7 @@ const DisplayFormMapUser = ({
           />
         ) : null}
 
-        <div className="submit-container">
-          <button className="ant-btn ant-btn-primary" type="submit">
-            Map User
-          </button>
-        </div>
+        <MButton>Map User</MButton>
       </Form>
     </Card>
   );
