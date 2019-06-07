@@ -1,8 +1,11 @@
 import React from "react";
 import { Layout, Menu, Icon, Breadcrumb, Button } from "antd";
 import { Link } from "react-router-dom";
+import { withCookies } from "react-cookie";
 import logo from "../../assets/logo.png";
 import history from "../../history";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -51,6 +54,17 @@ class SideBar extends React.Component {
       : null;
   };
 
+  logout = () => {
+    // console.log(this.props);
+    const { cookies } = this.props;
+    cookies.remove("Authorization", { path: "/" });
+    cookies.remove("isSignedIn", { path: "/" });
+    cookies.remove("userId", { path: "/" });
+    cookies.remove("userEmail", { path: "/" });
+    cookies.remove("userName", { path: "/" });
+    this.props.logoutUser();
+  };
+
   render() {
     return (
       <Layout>
@@ -63,7 +77,7 @@ class SideBar extends React.Component {
               <h2>{this.state.heading}</h2>
             </span>
           ) : null}
-          <span style={{ marginLeft: "auto" }}>
+          <span style={{ marginLeft: "auto" }} onClick={this.logout}>
             <Icon
               type="user"
               style={{ width: 20, height: 20, color: "black" }}
@@ -148,4 +162,9 @@ class SideBar extends React.Component {
   }
 }
 
-export default SideBar;
+export default withCookies(
+  connect(
+    null,
+    { logoutUser }
+  )(SideBar)
+);
