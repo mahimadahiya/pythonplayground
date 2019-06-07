@@ -8,7 +8,8 @@ import TrackList from "../../components/Screens/ModuleTracks/";
 import CreateTrack from "../../components/Screens/ModuleTracks/create";
 import ModuleMapping from "../../components/Screens/ModuleTracks/ModuleMapping";
 import UserTrackMapping from "../../components/Screens/ModuleTracks/UserMapping";
-import HomeScreen from '../Screens/Dashboard/TrackList'
+import OrganizationMap from "../../components/Screens/Organization/OrganizationMap";
+import HomeScreen from "../Screens/Dashboard/TrackList";
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   return (
@@ -34,12 +35,7 @@ class Routing extends React.Component {
       <div>
         <React.Fragment>
           <Switch>
-            <PrivateRoute
-              path="/"
-              component={HomeScreen}
-              user={user}
-              exact
-            />
+            <PrivateRoute path="/" component={HomeScreen} user={user} exact />
             <PrivateRoute
               path="/tracks"
               component={TrackList}
@@ -61,6 +57,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/tracks/map/user"
               component={UserTrackMapping}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/organization/map"
+              component={OrganizationMap}
               user={user}
               exact
             />
