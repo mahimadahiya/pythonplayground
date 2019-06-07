@@ -7,6 +7,7 @@ import { CookiesProvider } from "react-cookie";
 
 import reducers from "./reducers";
 import App from "./components/App";
+import ErrorBoundary from "./components/HOC/ErrorBoundary";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
@@ -14,7 +15,9 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 ReactDOM.render(
   <CookiesProvider>
     <Provider store={store}>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </Provider>
   </CookiesProvider>,
   document.getElementById("root")

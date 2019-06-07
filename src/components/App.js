@@ -17,6 +17,7 @@ class App extends React.Component {
   }
 
   render() {
+    // throw new Error("Test error boundary");
     return (
       <div>
         <Router history={history}>
