@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Field } from "formik";
 import { AntSelect } from "./FormFields";
-import { Icon, Card } from "antd";
+import { Card } from "antd";
 
 import { validateRequired } from "./ValidateFields";
 
@@ -13,7 +13,6 @@ const DisplayFormMapUser = ({
   listModules,
   handlers
 }) => {
-  console.log(listModules);
   const selectOptionObjectOrgs = listOrgs.map(({ id, name }) => {
     return { name, id };
   });

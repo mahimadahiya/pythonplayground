@@ -3,7 +3,6 @@ import { Form, Field } from "formik";
 import { AntInput, AntInputPassword } from "./FormFields";
 import { Icon } from "antd";
 import { validateEmail, validatePassword } from "./ValidateFields";
-import { Button } from "antd";
 import MButton from "../../HOC/MButton";
 
 export default ({ handleSubmit, values, submitCount }) => {

@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { Route, Redirect, Switch } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
-import Login from "../../components/Screens/Login/Login";
-import TrackList from "../../components/Screens/ModuleTracks/";
-import CreateTrack from "../../components/Screens/ModuleTracks/create";
-import ModuleMapping from "../../components/Screens/ModuleTracks/ModuleMapping";
-import UserTrackMapping from "../../components/Screens/ModuleTracks/UserMapping";
-import OrganizationMap from "../../components/Screens/Organization/OrganizationMap";
+import Login from "../Screens/Login/Login";
+import TrackList from "../Screens/ModuleTracks";
+import CreateTrack from "../Screens/ModuleTracks/create";
+import ModuleMapping from "../Screens/ModuleTracks/ModuleMapping";
+import UserTrackMapping from "../Screens/ModuleTracks/UserMapping";
+import OrganizationMap from "../Screens/Organization/OrganizationMap";
 import HomeScreen from "../Screens/Dashboard/TrackList";
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {

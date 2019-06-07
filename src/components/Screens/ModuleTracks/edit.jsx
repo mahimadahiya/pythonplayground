@@ -4,7 +4,7 @@ import { reduxForm, Field } from "redux-form";
 import { TextField } from "redux-form-antd";
 import { Form, Button } from "antd";
 
-import { createModuleTrack } from "../../../actions/";
+import { createModuleTrack } from "../../../actions";
 
 class CreateTrack extends React.Component {
   onSubmit = fromValues => {

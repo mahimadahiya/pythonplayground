@@ -3,7 +3,7 @@ import pyLearningApi from "../apis/pylearning";
 import qs from "querystring";
 import * as ACTION_TYPE from "./actionTypes";
 import history from "../history";
-import { getOrganizationModules } from "./organization";
+import { getOrganizationModules, fetchOrganizationBatches, fetchOrganizationTracks, fetchOrganizations } from "./organizationActions";
 import { loginUser, logoutUser } from "./authActions";
 import {
   fetchQuestionList,
@@ -12,7 +12,7 @@ import {
 } from "./question";
 
 export { fetchQuestionList, fetchQuestionDetail, updateQuestion };
-export { getOrganizationModules };
+export { getOrganizationModules, fetchOrganizationBatches, fetchOrganizationTracks, fetchOrganizations };
 export { loginUser, logoutUser };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -88,38 +88,3 @@ export const fetchModules = authToken => async dispatch => {
 };
 
 // ORGANIZATION
-
-export const fetchOrganizations = authToken => async dispatch => {
-  const response = await pyLearningApi(authToken).get(
-    "organization/list/react"
-  );
-  dispatch({ type: ACTION_TYPE.FETCH_ORGANIZATIONS, payload: response.data });
-};
-
-export const fetchOrganizationBatches = (
-  authToken,
-  formValues
-) => async dispatch => {
-  const response = await pyLearningApi(authToken).post(
-    "/react/organization/batch/list/",
-    qs.stringify(formValues)
-  );
-  dispatch({
-    type: ACTION_TYPE.FETCH_ORGANIZATION_BATCHES,
-    payload: response.data
-  });
-};
-
-export const fetchOrganizationTracks = (
-  authToken,
-  formValues
-) => async dispatch => {
-  const response = await pyLearningApi(authToken).post(
-    "/react/organization/track/list/",
-    qs.stringify(formValues)
-  );
-  dispatch({
-    type: ACTION_TYPE.FETCH_ORGANIZATION_TRACKS,
-    payload: response.data
-  });
-};

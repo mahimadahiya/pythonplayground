@@ -42,11 +42,11 @@ class SideBar extends React.Component {
 
   renderPaths = () => {
     return this.state.paths.length > 0
-      ? this.state.paths.map(path => {
+      ? this.state.paths.map((path, index) => {
           const i = path.lastIndexOf("/");
           const pathName = path.substring(i + 1);
           return (
-            <Breadcrumb.Item>
+            <Breadcrumb.Item key={`${path}${index}`}>
               <Link to={path}>{pathName}</Link>
             </Breadcrumb.Item>
           );
@@ -77,6 +77,7 @@ class SideBar extends React.Component {
               <h1>{this.state.heading}</h1>
             </span>
           ) : null}
+          {/* <span>{this.props.user}</span> */}
           <span onClick={this.logout}>
             <Icon
               type="user"
@@ -87,7 +88,7 @@ class SideBar extends React.Component {
             </Button>
           </span>
         </Header>
-        <Layout style={{ height: "93.5vh" }}>
+        <Layout style={{ height: "100vh" }}>
           <Sider theme="dark" width="300px" style={{ paddingTop: "20px" }}>
             <Menu
               className="menu"
@@ -174,9 +175,15 @@ class SideBar extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.userAuth.userName
+  };
+};
+
 export default withCookies(
   connect(
-    null,
+    mapStateToProps,
     { logoutUser }
   )(SideBar)
 );
