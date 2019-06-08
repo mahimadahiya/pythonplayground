@@ -6,6 +6,7 @@ import logo from "../../assets/logo.png";
 import history from "../../history";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions";
+import Breadcrumbs from "./Breadcrumbs";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -146,16 +147,9 @@ class SideBar extends React.Component {
             </Menu>
           </Sider>
           <Layout>
-            <Breadcrumb style={{ margin: "25px 15px 25px" }}>
-              {this.renderPaths()}
-              <Breadcrumb.Item key="1">Home</Breadcrumb.Item>
-              <Breadcrumb.Item key="2">List</Breadcrumb.Item>
-              <Breadcrumb.Item key="3">
-                <Link to="" style={{ textTransform: "capitalize" }}>
-                  {window.location.pathname.substring(1)}
-                </Link>
-              </Breadcrumb.Item>
-            </Breadcrumb>
+            <div style={{ margin: "25px 0 15px 15px" }}>
+              <Breadcrumbs />
+            </div>
             <Content>
               <div
                 style={{

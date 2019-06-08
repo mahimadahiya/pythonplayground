@@ -28,6 +28,7 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => {
   );
 };
 
+
 class Routing extends React.Component {
   render() {
     const { user } = this.props;
