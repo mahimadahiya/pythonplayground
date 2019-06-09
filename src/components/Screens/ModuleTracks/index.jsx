@@ -69,6 +69,7 @@ class TrackList extends React.Component {
           <Table
             dataSource={tableData}
             columns={columnName}
+            rowKey={(row) => row.id}
             footer={() => (
               <MButton>
                 <Link to="/tracks/create">Create Track</Link>

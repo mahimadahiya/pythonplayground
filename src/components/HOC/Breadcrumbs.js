@@ -3,6 +3,10 @@ import withBreadcrumbs from "react-router-breadcrumbs-hoc";
 import { Link } from "react-router-dom";
 import { Breadcrumb } from "antd";
 
+const DynamicBreadCrumb = ({ match }) => {
+  return <span>{`Map Module ${match.params.id}`}</span>
+}
+
 const routes = [
   {
     path: "/tracks",
@@ -13,8 +17,8 @@ const routes = [
     breadcrumb: "Create"
   },
   {
-    path: "/tracks/map/module",
-    breadcrumb: "Map Module"
+    path: "/tracks/map/module/:id",
+    breadcrumb: DynamicBreadCrumb
   }
 ];
 
