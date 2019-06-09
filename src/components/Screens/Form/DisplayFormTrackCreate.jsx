@@ -25,6 +25,20 @@ const DisplayFormTrackCreate = ({
   const selectOptionObject = list.map(({ id, name }) => {
     return { name, id };
   });
+
+  const filterOrganizations = (val, option) => {
+    const filteredList = list.filter(({ name }) => {
+      if (name.toLowerCase().includes(val)) {
+        return true;
+      }
+      return false;
+    });
+    for (var i = 0; i < filteredList.length; i++) {
+      if (filteredList[i].id.toString() === option.key) return true;
+    }
+    return false;
+  }
+
   return (
     <Form className="form-container" onSubmit={handleSubmit}>
       <Field
@@ -42,18 +56,7 @@ const DisplayFormTrackCreate = ({
         name="orgId"
         showSearch
         list={list}
-        filterOption={(val, option) => {
-          const filteredList = list.filter(({ id, name }) => {
-            if (name.toLowerCase().includes(val)) {
-              return true;
-            }
-            return false;
-          });
-          for (var i = 0; i < filteredList.length; i++) {
-            if (filteredList[i].id.toString() === option.key) return true;
-          }
-          return false;
-        }}
+        filterOption={filterOrganizations}
         prefix={<Icon type="lock" />}
         selectOptionObject={selectOptionObject}
         validate={validateRequired}
