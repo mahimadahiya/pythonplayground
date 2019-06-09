@@ -95,7 +95,7 @@ class SideBar extends React.Component {
               className="menu"
               mode="inline"
               theme="dark"
-              defaultSelectedKeys={["1"]}
+              defaultSelectedKeys={["sub1-1"]}
               defaultOpenKeys={["sub1"]}
               style={{ height: "100%", borderRight: 0 }}
             >
@@ -108,11 +108,11 @@ class SideBar extends React.Component {
                   </span>
                 }
               >
-                <Menu.Item key="1" onClick={() => history.push("/tracks")}>
+                <Menu.Item key="sub1-1" onClick={() => history.push("/tracks")}>
                   List
                 </Menu.Item>
                 <Menu.Item
-                  key="2"
+                  key="sub1-2"
                   onClick={() => history.push("/tracks/map/user")}
                 >
                   Map User
@@ -120,7 +120,6 @@ class SideBar extends React.Component {
               </SubMenu>
               <SubMenu
                 key="sub2"
-                // style={{ backgroundColor: "#000c17" }}
                 title={
                   <span>
                     <Icon type="user" />
@@ -128,7 +127,7 @@ class SideBar extends React.Component {
                   </span>
                 }
               >
-                <Menu.Item key="1" onClick={() => history.push("/tracks")}>
+                <Menu.Item key="sub2-1" onClick={() => history.push("/tracks")}>
                   List
                 </Menu.Item>
               </SubMenu>
@@ -138,7 +137,7 @@ class SideBar extends React.Component {
                 title={<span>Organization</span>}
               >
                 <Menu.Item
-                  key="1"
+                  key="sub3-1"
                   onClick={() => history.push("/organization/map")}
                 >
                   Map
