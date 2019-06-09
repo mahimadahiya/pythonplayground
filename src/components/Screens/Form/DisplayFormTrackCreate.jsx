@@ -40,6 +40,20 @@ const DisplayFormTrackCreate = ({
         label="Organization ID"
         component={AntSelect}
         name="orgId"
+        showSearch
+        list={list}
+        filterOption={(val, option) => {
+          const filteredList = list.filter(({ id, name }) => {
+            if (name.toLowerCase().includes(val)) {
+              return true;
+            }
+            return false;
+          });
+          for (var i = 0; i < filteredList.length; i++) {
+            if (filteredList[i].id.toString() === option.key) return true;
+          }
+          return false;
+        }}
         prefix={<Icon type="lock" />}
         selectOptionObject={selectOptionObject}
         validate={validateRequired}

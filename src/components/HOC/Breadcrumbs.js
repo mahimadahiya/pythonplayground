@@ -23,9 +23,8 @@ const Breadcrumbs = withBreadcrumbs(routes, { disableDefaults: true })(
     <React.Fragment>
       <Breadcrumb>
         {breadcrumbs.map(({ breadcrumb }) => {
-          console.log(breadcrumb);
           return (
-            <Breadcrumb.Item>
+            <Breadcrumb.Item key={breadcrumb.key}>
               <Link to={breadcrumb.key}>{breadcrumb}</Link>
             </Breadcrumb.Item>
           );
