@@ -2,6 +2,7 @@ import pyLearningApi from "../apis/pylearning";
 import adminPanelApi from "../apis/adminPanel";
 import * as ACTION_TYPE from "./actionTypes";
 import qs from "querystring";
+import history from "../history";
 
 export const fetchModuleSimulations = (
   authToken,
