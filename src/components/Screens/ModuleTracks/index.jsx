@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Table, Divider, Button, Card } from "antd";
+import { Table, Divider, Card } from "antd";
 import { fetchModuleTracks } from "../../../actions";
+import MButton from "../../Elements/MButton";
 
 class TrackList extends React.Component {
   componentWillMount = () => {
@@ -64,15 +65,15 @@ class TrackList extends React.Component {
     const tableData = this.props.tracks;
     return (
       <div>
-        <Card>
+        <Card type="inner">
           <Table
-            className="bg-white"
             dataSource={tableData}
             columns={columnName}
+            rowKey={row => row.id}
             footer={() => (
-              <Button type="primary">
+              <MButton>
                 <Link to="/tracks/create">Create Track</Link>
-              </Button>
+              </MButton>
             )}
           />
         </Card>

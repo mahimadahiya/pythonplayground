@@ -7,6 +7,8 @@
 .header {
   background-color: #fff;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .center {
@@ -90,6 +92,10 @@ img {
 
 .input-height {
   min-height: 4rem;
+}
+
+.shadow-header {
+  box-shadow: 300px 5px 10px #888888;
 }
 
 .shadow {

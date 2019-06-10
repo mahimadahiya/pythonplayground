@@ -14,6 +14,7 @@ import {
   validateRequired
 } from "./ValidateFields";
 import { dateFormat } from "./FieldFormats";
+import MButton from "../../Elements/MButton";
 
 const DisplayFormTrackCreate = ({
   handleSubmit,
@@ -24,6 +25,20 @@ const DisplayFormTrackCreate = ({
   const selectOptionObject = list.map(({ id, name }) => {
     return { name, id };
   });
+
+  const filterOrganizations = (val, option) => {
+    const filteredList = list.filter(({ name }) => {
+      if (name.toLowerCase().includes(val) ) {
+        return true;
+      }
+      return false;
+    });
+    for (var i = 0; i < filteredList.length; i++) {
+      if (filteredList[i].id.toString() === option.key) return true;
+    }
+    return false;
+  }
+
   return (
     <Form className="form-container" onSubmit={handleSubmit}>
       <Field
@@ -39,6 +54,9 @@ const DisplayFormTrackCreate = ({
         label="Organization ID"
         component={AntSelect}
         name="orgId"
+        showSearch
+        list={list}
+        filterOption={filterOrganizations}
         prefix={<Icon type="lock" />}
         selectOptionObject={selectOptionObject}
         validate={validateRequired}
@@ -54,11 +72,7 @@ const DisplayFormTrackCreate = ({
         submitCount={submitCount}
         hasFeedback
       />
-      <div className="submit-container">
-        <button className="ant-btn ant-btn-primary" type="submit">
-          Create
-        </button>
-      </div>
+      <MButton>Create Track</MButton>
     </Form>
   );
 };

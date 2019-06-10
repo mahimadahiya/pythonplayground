@@ -12,9 +12,10 @@ class ModuleMapping extends React.Component {
   };
 
   onSubmit = formValues => {
+    console.log(formValues)
     const data = {
       track_id: this.state.track.id,
-      module_id_list: `${formValues.modules}`
+      module_id_list: JSON.stringify(formValues.modules)
     };
     this.props.createModuleTrackMapping(this.props.user.Authorization, data);
   };

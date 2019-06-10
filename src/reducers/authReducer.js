@@ -1,4 +1,4 @@
-import * as ACTION_TYPE from '../actions/actionTypes'
+import * as ACTION_TYPE from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   isSignedIn: null,
@@ -15,6 +15,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         isSignedIn: true,
         userId: action.payload.user.id,
+        groupId: action.payload.user.group_id,
         userName: action.payload.user.name,
         userEmail: action.payload.user.Email,
         Authorization: action.payload.token
@@ -35,10 +36,10 @@ export default (state = INITIAL_STATE, action) => {
         userId: null,
         userName: "",
         userEmail: "",
-        Authorization: ""
+        Authorization: "",
+        groupId: null
       };
     default:
       return state;
   }
 };
-  

@@ -3,12 +3,14 @@ import { connect } from "react-redux";
 import { Route, Redirect, Switch } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
-import Login from "../../components/Screens/Login/Login";
-import TrackList from "../../components/Screens/ModuleTracks/";
-import CreateTrack from "../../components/Screens/ModuleTracks/create";
-import ModuleMapping from "../../components/Screens/ModuleTracks/ModuleMapping";
-import UserTrackMapping from "../../components/Screens/ModuleTracks/UserMapping";
-import HomeScreen from '../Screens/Dashboard/TrackList'
+import Login from "../Screens/Login/Login";
+import TrackList from "../Screens/ModuleTracks";
+import CreateTrack from "../Screens/ModuleTracks/create";
+import ModuleMapping from "../Screens/ModuleTracks/ModuleMapping";
+import UserTrackMapping from "../Screens/ModuleTracks/UserMapping";
+import HomeScreen from "../Screens/Dashboard/TrackList";
+import SimulationMapping from "../Screens/Simulation/SimulationMapping";
+import SimulationList from "../Screens/Simulation/SimulationList";
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   return (
@@ -34,12 +36,7 @@ class Routing extends React.Component {
       <div>
         <React.Fragment>
           <Switch>
-            <PrivateRoute
-              path="/"
-              component={HomeScreen}
-              user={user}
-              exact
-            />
+            <PrivateRoute path="/" component={HomeScreen} user={user} exact />
             <PrivateRoute
               path="/tracks"
               component={TrackList}
@@ -61,6 +58,18 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/tracks/map/user"
               component={UserTrackMapping}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/simulation/map"
+              component={SimulationMapping}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/simulation"
+              component={SimulationList}
               user={user}
               exact
             />

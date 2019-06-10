@@ -1,8 +1,12 @@
 import React from "react";
 import { Layout, Menu, Icon, Breadcrumb, Button } from "antd";
 import { Link } from "react-router-dom";
+import { withCookies } from "react-cookie";
 import logo from "../../assets/logo.png";
 import history from "../../history";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions";
+import Breadcrumbs from "./Breadcrumbs";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -39,11 +43,11 @@ class SideBar extends React.Component {
 
   renderPaths = () => {
     return this.state.paths.length > 0
-      ? this.state.paths.map(path => {
+      ? this.state.paths.map((path, index) => {
           const i = path.lastIndexOf("/");
           const pathName = path.substring(i + 1);
           return (
-            <Breadcrumb.Item>
+            <Breadcrumb.Item key={`${path}${index}`}>
               <Link to={path}>{pathName}</Link>
             </Breadcrumb.Item>
           );
@@ -51,35 +55,47 @@ class SideBar extends React.Component {
       : null;
   };
 
+  logout = () => {
+    // console.log(this.props);
+    const { cookies } = this.props;
+    cookies.remove("Authorization", { path: "/" });
+    cookies.remove("isSignedIn", { path: "/" });
+    cookies.remove("userId", { path: "/" });
+    cookies.remove("userEmail", { path: "/" });
+    cookies.remove("userName", { path: "/" });
+    this.props.logoutUser();
+  };
+
   render() {
     return (
       <Layout>
-        <Header className="header shadow" style={{ zIndex: 1 }}>
+        <Header className="header shadow-header" style={{ zIndex: 1 }}>
           <div>
             <img src={logo} alt="logo" />
           </div>
           {this.state.heading ? (
-            <span className="text-center bg-white" style={{ margin: "0 auto" }}>
-              <h2>{this.state.heading}</h2>
+            <span>
+              <h1>{this.state.heading}</h1>
             </span>
           ) : null}
-          <span style={{ marginLeft: "auto" }}>
+          {/* <span>{this.props.user}</span> */}
+          <span onClick={this.logout}>
             <Icon
               type="user"
-              style={{ width: 20, height: 20, color: "black" }}
+              // style={{ width: 20, height: 20, color: "black" }}
             />
             <Button type="link" size="large">
               Logout
             </Button>
           </span>
         </Header>
-        <Layout style={{ height: "93.5vh" }}>
+        <Layout style={{ height: "100vh" }}>
           <Sider theme="dark" width="300px" style={{ paddingTop: "20px" }}>
             <Menu
               className="menu"
               mode="inline"
               theme="dark"
-              defaultSelectedKeys={["1"]}
+              defaultSelectedKeys={["sub1-1"]}
               defaultOpenKeys={["sub1"]}
               style={{ height: "100%", borderRight: 0 }}
             >
@@ -92,43 +108,43 @@ class SideBar extends React.Component {
                   </span>
                 }
               >
-                <Menu.Item key="1" onClick={() => history.push("/tracks")}>
+                <Menu.Item
+                  key="sub1-1"
+                  onClick={() => history.push("/tracks")}
+                >
                   List
                 </Menu.Item>
                 <Menu.Item
-                  key="2"
+                  key="sub1-2"
                   onClick={() => history.push("/tracks/map/user")}
                 >
                   Map User
                 </Menu.Item>
               </SubMenu>
               <SubMenu
-                key="sub2"
+                key="sub3"
                 // style={{ backgroundColor: "#000c17" }}
-                title={
-                  <span>
-                    <Icon type="user" />
-                    Questions
-                  </span>
-                }
+                title={<span>Simulation</span>}
               >
-                <Menu.Item key="1" onClick={() => history.push("/tracks")}>
+                <Menu.Item
+                  key="sub3-2"
+                  onClick={() => history.push("/simulation")}
+                >
                   List
+                </Menu.Item>
+                <Menu.Item
+                  key="sub3-1"
+                  onClick={() => history.push("/simulation/map")}
+                >
+                  Map
                 </Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>
           <Layout>
-            <Breadcrumb style={{ margin: "25px 15px 25px" }}>
-              {this.renderPaths()}
-              <Breadcrumb.Item key="1">Home</Breadcrumb.Item>
-              <Breadcrumb.Item key="2">List</Breadcrumb.Item>
-              <Breadcrumb.Item key="3">
-                <Link to="" style={{ textTransform: "capitalize" }}>
-                  {window.location.pathname.substring(1)}
-                </Link>
-              </Breadcrumb.Item>
-            </Breadcrumb>
+            <div style={{ margin: "25px 0 15px 15px" }}>
+              <Breadcrumbs />
+            </div>
             <Content>
               <div
                 style={{
@@ -148,4 +164,15 @@ class SideBar extends React.Component {
   }
 }
 
-export default SideBar;
+const mapStateToProps = state => {
+  return {
+    user: state.userAuth.userName
+  };
+};
+
+export default withCookies(
+  connect(
+    mapStateToProps,
+    { logoutUser }
+  )(SideBar)
+);

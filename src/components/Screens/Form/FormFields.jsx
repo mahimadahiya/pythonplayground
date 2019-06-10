@@ -27,6 +27,7 @@ const CreateAntField = AntComponent => ({
     form.setFieldValue(field.name, value);
     if (props.onChange) props.onChange(value);
   };
+
   const onBlur = () => form.setFieldTouched(field.name, true);
   return (
     <div className="field-container">
