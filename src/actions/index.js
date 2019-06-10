@@ -15,15 +15,29 @@ import {
   fetchQuestionDetail,
   updateQuestion
 } from "./question";
+import {
+  createSimulationOrgMapping,
+  fetchModuleSimulations
+} from "./simulationActions";
 
-export { fetchQuestionList, fetchQuestionDetail, updateQuestion };
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
   fetchOrganizationTracks,
-  fetchOrganizations
+  fetchOrganizations,
+  createSimulationOrgMapping,
+  fetchModuleSimulations,
+  fetchQuestionList,
+  fetchQuestionDetail,
+  updateQuestion,
+  loginUser,
+  logoutUser
 };
-export { loginUser, logoutUser };
+
+
+
+
+
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

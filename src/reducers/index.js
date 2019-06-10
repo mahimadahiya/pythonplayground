@@ -4,11 +4,13 @@ import moduleTrackReducer from "./moduleTrackReducer";
 import organizationReducer from "./organizationReducer";
 import questionReducer from "./questionReducer";
 import userTrackReducer from "./userTrackReducer";
+import simulationReducer from "./simulationReducer"
 
 export default combineReducers({
   userAuth: authReducer,
   moduleTrack: moduleTrackReducer,
   organization: organizationReducer,
   question: questionReducer,
-  userTrack: userTrackReducer
+  userTrack: userTrackReducer,
+  simulation: simulationReducer
 });

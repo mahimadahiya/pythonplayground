@@ -12,6 +12,7 @@ const DisplayFormMapUser = ({
   submitCount,
   listOrgs,
   listModules,
+  listSimulations,
   handlers
 }) => {
   const selectOptionObjectOrgs = listOrgs.map(({ id, name }) => {
@@ -22,6 +23,10 @@ const DisplayFormMapUser = ({
       return { name: module__name, id: module_id };
     }
   );
+  const selectOptionSimulations = listSimulations.map(({id, text}) => {
+    return { id, name:`${text.substring(0,50)}...` }
+  })
+
   const filterOrganizations = (val, option) => {
     const filteredList = listOrgs.filter(({ name }) => {
       if (name.toLowerCase().includes(val)) {
@@ -56,6 +61,7 @@ const DisplayFormMapUser = ({
           name="organization_id"
           showSearch
           filterOption={filterOrganizations}
+          placeholder="Select Organization"
           selectOptionObject={selectOptionObjectOrgs}
           validate={validateRequired}
           submitCount={submitCount}
@@ -66,26 +72,27 @@ const DisplayFormMapUser = ({
         <Field
           label="Organization Modules"
           component={AntSelect}
-          name="organization_module_id"
+          name="module_id"
           showSearch
           filterOption={filterModules}
+          placeholder="Select Modules"
           selectOptionObject={selectOptionObjectOrgModules}
           validate={validateRequired}
           submitCount={submitCount}
-          //   onChange={handlers.onModuleSelect}
+          onChange={handlers.onModuleSelect}
           hasFeedback
         />
 
         <Field
-          label="Organization Modules"
+          label="Simulations"
           component={AntSelect}
-          name="organization_module_id"
+          name="question_id_list"
           mode="multiple"
+          placeholder="Select Simulations"
           filterOption={filterModules}
-          selectOptionObject={selectOptionObjectOrgModules}
+          selectOptionObject={selectOptionSimulations}
           validate={validateRequired}
           submitCount={submitCount}
-          //   onChange={handlers.onModuleSelect}
           hasFeedback
         />
 
