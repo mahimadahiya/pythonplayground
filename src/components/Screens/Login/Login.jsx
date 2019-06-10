@@ -1,12 +1,11 @@
 import React from "react";
-import { Card, Alert } from "antd";
-import { Formik } from "formik";
+import { Card, Alert, Form, Input, Icon } from "antd";
 import { connect } from "react-redux";
 
 import history from "../../../history";
 import { loginUser, logoutUser } from "../../../actions";
-import displayForm from "../Form/DisplayFormLogin";
 import logo from "../../../assets/logo.png";
+import MButton from "../../Elements/MButton";
 
 class NormalLoginForm extends React.Component {
   state = {
@@ -36,35 +35,85 @@ class NormalLoginForm extends React.Component {
     this.setCookies();
   }
 
-  componentDidUpdate = prevProps => {
-    if (this.props.userAuth.groupId === 1) {
-      this.setCookies();
-    } else {
-      if (!this.state.error) {
-        this.setState(
-          {
-            error: true
-          },
-          () => {
-            this.props.logoutUser();
-          }
-        );
-      }
-    }
-  };
+  componentDidUpdate = prevProps => {};
 
-  onSubmit = formValues => {
-    this.props.loginUser(formValues);
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields(async (err, formValues) => {
+      if (!err) {
+        await this.props.loginUser(formValues);
+        if (this.props.userAuth.groupId === 1) {
+          this.setCookies();
+        } else {
+          if (!this.state.error) {
+            this.setState(
+              {
+                error: true
+              },
+              () => {
+                this.props.logoutUser();
+              }
+            );
+          }
+        }
+      } else {
+        console.log(err);
+      }
+    });
   };
 
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className="center">
         <div style={{ textAlign: "center", marginBottom: 20 }}>
           <img src={logo} style={{ margin: "auto 0" }} alt="logo" />
         </div>
         <Card className="shadow">
-          <Formik onSubmit={this.onSubmit} render={displayForm} />
+          {/* <Formik onSubmit={this.onSubmit} render={displayForm} /> */}
+          <Form onSubmit={this.onSubmit}>
+            <Form.Item label="Email">
+              {getFieldDecorator("email", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Email Address cannot be blank!"
+                  }
+                ]
+              })(
+                <Input
+                  allowClear
+                  prefix={
+                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                  }
+                  placeholder="Username"
+                  type="email"
+                />
+              )}
+            </Form.Item>
+            <Form.Item label="Password">
+              {getFieldDecorator("password", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Password cannot be empty!"
+                  }
+                ]
+              })(
+                <Input
+                  allowClear
+                  prefix={
+                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                  }
+                  placeholder="Password"
+                  type="password"
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              <MButton>Login</MButton>
+            </Form.Item>
+          </Form>
           {this.state.error ? (
             <Alert
               message="Invalid User"
@@ -86,4 +135,4 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   { loginUser, logoutUser }
-)(NormalLoginForm);
+)(Form.create()(NormalLoginForm));
