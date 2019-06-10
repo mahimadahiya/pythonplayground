@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
 import { connect } from "react-redux";
+import history from "../../../history";
 import DisplayFormOrganizationMap from "../Form/DisplayFormSimulationMapping";
 import {
   fetchOrganizations,
@@ -49,6 +50,7 @@ class SituationMapping extends Component {
       this.props.user.Authorization,
       formValues
     );
+    history.push("/simulation");
   };
 
   render() {

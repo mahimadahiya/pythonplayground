@@ -129,6 +129,12 @@ class SideBar extends React.Component {
                 >
                   Map
                 </Menu.Item>
+                <Menu.Item
+                  key="sub3-2"
+                  onClick={() => history.push("/simulation")}
+                >
+                  List
+                </Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>

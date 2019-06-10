@@ -10,6 +10,7 @@ import ModuleMapping from "../Screens/ModuleTracks/ModuleMapping";
 import UserTrackMapping from "../Screens/ModuleTracks/UserMapping";
 import HomeScreen from "../Screens/Dashboard/TrackList";
 import SimulationMapping from "../Screens/Simulation/SimulationMapping";
+import SimulationList from "../Screens/Simulation/SimulationList";
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   return (
@@ -63,6 +64,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/simulation/map"
               component={SimulationMapping}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/simulation"
+              component={SimulationList}
               user={user}
               exact
             />

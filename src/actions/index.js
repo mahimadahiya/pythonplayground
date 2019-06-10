@@ -17,7 +17,8 @@ import {
 } from "./question";
 import {
   createSimulationOrgMapping,
-  fetchModuleSimulations
+  fetchModuleSimulations,
+  fetchSimulationList
 } from "./simulationActions";
 
 export {
@@ -27,17 +28,13 @@ export {
   fetchOrganizations,
   createSimulationOrgMapping,
   fetchModuleSimulations,
+  fetchSimulationList,
   fetchQuestionList,
   fetchQuestionDetail,
   updateQuestion,
   loginUser,
   logoutUser
 };
-
-
-
-
-
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

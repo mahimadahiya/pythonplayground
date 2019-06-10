@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Breadcrumb } from "antd";
 
 const DynamicBreadCrumb = ({ match }) => {
-  return <span>{`Map Module ${match.params.id}`}</span>
-}
+  return <span>{`Map Module ${match.params.id}`}</span>;
+};
 
 const routes = [
   {
@@ -21,8 +21,12 @@ const routes = [
     breadcrumb: DynamicBreadCrumb
   },
   {
-    path: '/simulation/map',
-    breadcrumb: 'Simulation Mapping'
+    path: "/simulation/map",
+    breadcrumb: "Simulation Mapping"
+  },
+  {
+    path: "/simulation",
+    breadcrumb: "Simulation"
   }
 ];
 
