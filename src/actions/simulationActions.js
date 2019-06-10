@@ -38,7 +38,7 @@ export const createSimulationOrgMapping = (
   formValues
 ) => async dispatch => {
   const response = await pyLearningApi(authToken).post(
-    `/simulation/organization_map`,
+    `/simulation/organization_map/`,
     qs.stringify(formValues)
   );
   dispatch({
