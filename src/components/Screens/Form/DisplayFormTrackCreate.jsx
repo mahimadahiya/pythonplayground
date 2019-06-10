@@ -28,7 +28,7 @@ const DisplayFormTrackCreate = ({
 
   const filterOrganizations = (val, option) => {
     const filteredList = list.filter(({ name }) => {
-      if (name.toLowerCase().includes(val)) {
+      if (name.toLowerCase().includes(val) ) {
         return true;
       }
       return false;
