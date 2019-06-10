@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-export default class ErrorBoundary extends Component {
+class ErrorBoundary extends Component {
   state = {
     hasError: false,
     errorMessage: null
@@ -14,14 +15,27 @@ export default class ErrorBoundary extends Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        {this.state.hasError ? (
+    if (this.state.hasError) {
+      return (
+        <React.Fragment>
           <h1>Oops. Something Went Wrong!</h1>
-        ) : (
-          this.props.children
-        )}
-      </React.Fragment>
-    );
+        </React.Fragment>
+      );
+    } else if (this.props.errorModuleTrack || this.props.errorUserTrack) {
+      return (
+        <React.Fragment>
+          <h1>Something Went Wrong</h1>
+        </React.Fragment>
+      );
+    } else return <div>{this.props.children}</div>;
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    errorModuleTrack: state.moduleTrack.error,
+    errorUserTrack: state.userTrack.error
+  };
+};
+
+export default connect(mapStateToProps)(ErrorBoundary);

@@ -3,7 +3,12 @@ import pyLearningApi from "../apis/pylearning";
 import qs from "querystring";
 import * as ACTION_TYPE from "./actionTypes";
 import history from "../history";
-import { getOrganizationModules, fetchOrganizationBatches, fetchOrganizationTracks, fetchOrganizations } from "./organizationActions";
+import {
+  getOrganizationModules,
+  fetchOrganizationBatches,
+  fetchOrganizationTracks,
+  fetchOrganizations
+} from "./organizationActions";
 import { loginUser, logoutUser } from "./authActions";
 import {
   fetchQuestionList,
@@ -12,7 +17,12 @@ import {
 } from "./question";
 
 export { fetchQuestionList, fetchQuestionDetail, updateQuestion };
-export { getOrganizationModules, fetchOrganizationBatches, fetchOrganizationTracks, fetchOrganizations };
+export {
+  getOrganizationModules,
+  fetchOrganizationBatches,
+  fetchOrganizationTracks,
+  fetchOrganizations
+};
 export { loginUser, logoutUser };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -30,14 +40,20 @@ export const setUserAuthValue = formValues => {
 
 export const fetchModuleTracks = authToken => async dispatch => {
   const response = await pyLearningApi(authToken).get("/react/track/list");
-  dispatch({ type: ACTION_TYPE.FETCH_MODULE_TRACKS, payload: response.data });
+  if (response.status === 200) {
+    dispatch({ type: ACTION_TYPE.FETCH_MODULE_TRACKS, payload: response.data });
+  } else {
+    dispatch({ type: ACTION_TYPE.FETCH_MODULE_TRACKS_ERROR });
+  }
 };
 
 export const fetchModuleTrack = (authToken, id) => async dispatch => {
   const response = await pyLearningApi(authToken).get(
     `/react/track/list?track_id=${id}`
   );
-  dispatch({ type: ACTION_TYPE.FETCH_MODULE_TRACK, payload: response.data });
+  if (response.status === 200)
+    dispatch({ type: ACTION_TYPE.FETCH_MODULE_TRACK, payload: response.data });
+  else dispatch({ type: ACTION_TYPE.FETCH_MODULE_TRACK_ERROR });
 };
 
 export const createModuleTrack = (authToken, formValues) => async dispatch => {
@@ -45,9 +61,11 @@ export const createModuleTrack = (authToken, formValues) => async dispatch => {
     "/react/track/create/",
     qs.stringify(formValues)
   );
-  dispatch({ type: ACTION_TYPE.CREATE_MODULE_TRACK, payload: response.data });
-  const id = response.data.result.track_id;
-  history.push(`/tracks/map/module/${id}`);
+  if (response.status === 200) {
+    dispatch({ type: ACTION_TYPE.CREATE_MODULE_TRACK, payload: response.data });
+    const id = response.data.result.track_id;
+    history.push(`/tracks/map/module/${id}`);
+  } else dispatch({ type: ACTION_TYPE.CREATE_MODULE_TRACK_ERROR });
 };
 
 export const createModuleTrackMapping = (
@@ -58,11 +76,13 @@ export const createModuleTrackMapping = (
     "/react/track/module/map/",
     qs.stringify(formValues)
   );
-  dispatch({
-    type: ACTION_TYPE.CREATE_MODULE_TRACK_MAPPING,
-    payload: response.data
-  });
-  history.push("/tracks");
+  if (response.status === 200) {
+    dispatch({
+      type: ACTION_TYPE.CREATE_MODULE_TRACK_MAPPING,
+      payload: response.data
+    });
+    history.push("/tracks");
+  } else dispatch({ type: ACTION_TYPE.CREATE_MODULE_TRACK_MAPPING_ERROR });
 };
 
 export const createUserTrackMapping = (
@@ -73,11 +93,13 @@ export const createUserTrackMapping = (
     "/react/user/track/mapping/",
     qs.stringify(formValues)
   );
-  dispatch({
-    type: ACTION_TYPE.CREATE_USER_TRACK_MAPPING,
-    payload: response.data
-  });
-  history.push("/tracks");
+  if (response.status === 200) {
+    dispatch({
+      type: ACTION_TYPE.CREATE_USER_TRACK_MAPPING,
+      payload: response.data
+    });
+    history.push("/tracks");
+  } else dispatch({ type: ACTION_TYPE.CREATE_USER_TRACK_MAPPING_ERROR });
 };
 
 // ENTITY MANAGEMENT
