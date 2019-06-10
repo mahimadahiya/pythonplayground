@@ -48,3 +48,9 @@ export const fetchOrganizationTracks = (
     payload: response.data
   });
 };
+
+export const clearModules = () => {
+  return {
+    type: ACTION_TYPE.CLEAR_MODULES
+  };
+};

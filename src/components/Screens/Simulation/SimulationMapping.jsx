@@ -8,14 +8,16 @@ import {
   getOrganizationModules,
   fetchModuleSimulations,
   fetchDefaultModuleSimulations,
-  createSimulationOrgMapping
+  createSimulationOrgMapping,
+  clearModules
 } from "../../../actions";
 
 class SituationMapping extends Component {
   state = {
     organization_id: null,
     module_id: null,
-    defaultSimulations: []
+    defaultSimulations: [],
+    moduleValue: null
   };
 
   componentDidMount() {
@@ -24,9 +26,13 @@ class SituationMapping extends Component {
   }
 
   onOrgSelect = value => {
+    this.props.clearModules();
     this.setState(
       {
-        organization_id: value
+        organization_id: value,
+        module_id: null,
+        moduleValue: "",
+        defaultSimulations: []
       },
       () => {
         this.props.getOrganizationModules(
@@ -87,6 +93,7 @@ class SituationMapping extends Component {
               listModules={this.props.organizationModules}
               listSimulations={this.props.moduleSimulations}
               listDefaultSimulations={this.state.defaultSimulations}
+              moduleValue={this.state.moduleValue}
               handlers={{
                 onOrgSelect: this.onOrgSelect,
                 onModuleSelect: this.onModuleSelect
@@ -116,6 +123,7 @@ export default connect(
     getOrganizationModules,
     fetchModuleSimulations,
     createSimulationOrgMapping,
-    fetchDefaultModuleSimulations
+    fetchDefaultModuleSimulations,
+    clearModules
   }
 )(SituationMapping);

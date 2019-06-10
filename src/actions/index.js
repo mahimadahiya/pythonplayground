@@ -7,7 +7,8 @@ import {
   getOrganizationModules,
   fetchOrganizationBatches,
   fetchOrganizationTracks,
-  fetchOrganizations
+  fetchOrganizations,
+  clearModules
 } from "./organizationActions";
 import { loginUser, logoutUser } from "./authActions";
 import {
@@ -26,6 +27,7 @@ export {
   getOrganizationModules,
   fetchOrganizationBatches,
   fetchOrganizationTracks,
+  clearModules,
   fetchOrganizations,
   createSimulationOrgMapping,
   fetchModuleSimulations,

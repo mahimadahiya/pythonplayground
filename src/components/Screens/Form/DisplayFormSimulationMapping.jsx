@@ -11,11 +11,13 @@ const DisplayFormMapUser = ({
   values,
   submitCount,
   listOrgs,
+  moduleValue,
   listSimulations,
   listModules,
   listDefaultSimulations,
   handlers
 }) => {
+  console.log("mods", listModules);
   const selectOptionObjectOrgs = listOrgs.map(({ id, name }) => {
     return { name, id };
   });

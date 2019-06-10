@@ -34,6 +34,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         organizationModules: _.mapKeys(action.payload.result, "module_id")
       };
+    case ACTION_TYPE.CLEAR_MODULES:
+      return {
+        ...state,
+        organizationModules: []
+      };
     default:
       return state;
   }
