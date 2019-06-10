@@ -4,7 +4,7 @@ import { AntSelect } from "./FormFields";
 import { Icon } from "antd";
 
 import { validateRequired } from "./ValidateFields";
-import MButton from "../../HOC/MButton";
+import MButton from "../../Elements/MButton";
 
 const DisplayFormModuleMapping = ({
   handleSubmit,

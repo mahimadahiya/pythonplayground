@@ -119,26 +119,13 @@ class SideBar extends React.Component {
                 </Menu.Item>
               </SubMenu>
               <SubMenu
-                key="sub2"
-                title={
-                  <span>
-                    <Icon type="user" />
-                    Questions
-                  </span>
-                }
-              >
-                <Menu.Item key="sub2-1" onClick={() => history.push("/tracks")}>
-                  List
-                </Menu.Item>
-              </SubMenu>
-              <SubMenu
                 key="sub3"
                 // style={{ backgroundColor: "#000c17" }}
-                title={<span>Organization</span>}
+                title={<span>Simulation</span>}
               >
                 <Menu.Item
                   key="sub3-1"
-                  onClick={() => history.push("/organization/map")}
+                  onClick={() => history.push("/simulation/map")}
                 >
                   Map
                 </Menu.Item>

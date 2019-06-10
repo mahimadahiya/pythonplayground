@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
 import { connect } from "react-redux";
-import DisplayFormOrganizationMap from "../Form/DisplayFormOrganizationMap";
+import DisplayFormOrganizationMap from "../Form/DisplayFormSimulationMapping";
 import { fetchOrganizations, getOrganizationModules } from "../../../actions";
 
-class OrganizationMap extends Component {
+class SituationMapping extends Component {
   state = {
     organization: null
   };
@@ -64,4 +64,4 @@ export default connect(
     fetchOrganizations,
     getOrganizationModules
   }
-)(OrganizationMap);
+)(SituationMapping);

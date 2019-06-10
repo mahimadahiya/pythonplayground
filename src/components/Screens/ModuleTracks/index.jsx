@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Table, Divider, Card } from "antd";
 import { fetchModuleTracks } from "../../../actions";
-import MButton from "../../HOC/MButton";
+import MButton from "../../Elements/MButton";
 
 class TrackList extends React.Component {
   componentWillMount = () => {

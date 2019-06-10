@@ -19,6 +19,10 @@ const routes = [
   {
     path: "/tracks/map/module/:id",
     breadcrumb: DynamicBreadCrumb
+  },
+  {
+    path: '/simulation/map',
+    breadcrumb: 'Simulation Mapping'
   }
 ];
 

@@ -8,8 +8,8 @@ import TrackList from "../Screens/ModuleTracks";
 import CreateTrack from "../Screens/ModuleTracks/create";
 import ModuleMapping from "../Screens/ModuleTracks/ModuleMapping";
 import UserTrackMapping from "../Screens/ModuleTracks/UserMapping";
-import OrganizationMap from "../Screens/Organization/OrganizationMap";
 import HomeScreen from "../Screens/Dashboard/TrackList";
+import SimulationMapping from "../Screens/Simulation/SimulationMapping";
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   return (
@@ -27,7 +27,6 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => {
     />
   );
 };
-
 
 class Routing extends React.Component {
   render() {
@@ -62,8 +61,8 @@ class Routing extends React.Component {
               exact
             />
             <PrivateRoute
-              path="/organization/map"
-              component={OrganizationMap}
+              path="/simulation/map"
+              component={SimulationMapping}
               user={user}
               exact
             />
