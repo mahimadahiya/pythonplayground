@@ -1,23 +1,34 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Descriptions, Card } from "antd";
+import { Descriptions, Card, Form, Select } from "antd";
 import { fetchModuleTracks, createModuleTrackMapping } from "../../../actions";
 import { getOrganizationModules } from "../../../actions";
 import { Formik } from "formik";
 import DisplayFormModuleMapping from "../Form/DisplayFormModuleMapping";
+import MButton from "../../Elements/MButton";
 
 class ModuleMapping extends React.Component {
   state = {
     track: null
   };
 
-  onSubmit = formValues => {
-    console.log(formValues)
-    const data = {
-      track_id: this.state.track.id,
-      module_id_list: JSON.stringify(formValues.modules)
-    };
-    this.props.createModuleTrackMapping(this.props.user.Authorization, data);
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields((err, formValues) => {
+      console.log(formValues);
+      if (!err) {
+        const data = {
+          track_id: this.state.track.id,
+          module_id_list: JSON.stringify(formValues.module_id_list)
+        };
+        this.props.createModuleTrackMapping(
+          this.props.user.Authorization,
+          data
+        );
+      } else {
+        console.log(err);
+      }
+    });
   };
 
   componentDidMount() {
@@ -45,7 +56,21 @@ class ModuleMapping extends React.Component {
     });
   }
 
+  filterModules = (val, option) => {
+    const filteredList = this.props.modules.filter(({ module__name }) => {
+      if (module__name.toLowerCase().includes(val)) {
+        return true;
+      }
+      return false;
+    });
+    for (var i = 0; i < filteredList.length; i++) {
+      if (filteredList[i].module_id.toString() === option.key) return true;
+    }
+    return false;
+  };
+
   render() {
+    const { getFieldDecorator } = this.props.form;
     if (this.state.track === null) return null;
     return (
       <div>
@@ -68,7 +93,35 @@ class ModuleMapping extends React.Component {
 
         {this.props.modules ? (
           <Card title="Select Modules" style={{ marginTop: "10px" }}>
-            <Formik
+            <Form onSubmit={this.onSubmit}>
+              <Form.Item label="Modules">
+                {getFieldDecorator("module_id_list", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please select a module"
+                    }
+                  ]
+                })(
+                  <Select mode="multiple" filterOption={this.filterModules}>
+                    {this.props.modules.map(module => {
+                      return (
+                        <Select.Option
+                          value={module.module_id}
+                          key={module.module_id}
+                        >{`${module.module__name} (${
+                          module.module_id
+                        })`}</Select.Option>
+                      );
+                    })}
+                  </Select>
+                )}
+              </Form.Item>
+              <Form.Item>
+                <MButton>Map Module</MButton>
+              </Form.Item>
+            </Form>
+            {/* <Formik
               onSubmit={this.onSubmit}
               render={formikProps => (
                 <DisplayFormModuleMapping
@@ -76,7 +129,7 @@ class ModuleMapping extends React.Component {
                   list={this.props.modules}
                 />
               )}
-            />
+            /> */}
           </Card>
         ) : null}
       </div>
@@ -95,4 +148,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { fetchModuleTracks, getOrganizationModules, createModuleTrackMapping }
-)(ModuleMapping);
+)(Form.create()(ModuleMapping));

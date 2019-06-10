@@ -102,15 +102,6 @@ class CreateTrack extends React.Component {
               <MButton>Create Track</MButton>
             </Form.Item>
           </Form>
-          {/* <Formik
-            onSubmit={this.onSubmit}
-            render={formikProps => (
-              <DisplayFormTrackCreate
-                {...formikProps}
-                list={this.props.organizations}
-              />
-            )}
-          /> */}
         </Card>
       </div>
     );
