@@ -17,6 +17,7 @@ class SituationMapping extends Component {
 
   componentDidMount() {
     this.props.fetchOrganizations(this.props.user.Authorization);
+    this.props.heading("Simulation Mapping");
   }
 
   onOrgSelect = value => {
@@ -43,14 +44,12 @@ class SituationMapping extends Component {
   };
 
   onSubmit = formValues => {
-    formValues.question_id_list = JSON.stringify(
-      formValues.question_id_list
-    );
+    formValues.question_id_list = JSON.stringify(formValues.question_id_list);
     this.props.createSimulationOrgMapping(
       this.props.user.Authorization,
       formValues
     );
-  }
+  };
 
   render() {
     return (
@@ -79,9 +78,7 @@ const mapStateToProps = state => {
   return {
     user: state.userAuth,
     organizations: Object.values(state.organization.organizationList),
-    organizationModules: Object.values(
-      state.organization.organizationModules
-    ),
+    organizationModules: Object.values(state.organization.organizationModules),
     moduleSimulations: Object.values(state.simulation.moduleSimulations)
   };
 };
