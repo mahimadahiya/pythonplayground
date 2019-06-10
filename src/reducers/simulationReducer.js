@@ -3,7 +3,8 @@ import _ from "lodash";
 
 const INITIAL_STATE = {
   moduleSimulations: {},
-  simulations: []
+  simulations: [],
+  defaultSimulations: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -17,6 +18,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         simulations: action.payload.result
+      };
+    case ACTION_TYPE.FETCH_DEFAULT_SIMULATIONS:
+      return {
+        ...state,
+        defaultSimulations: action.payload.result
       };
     default:
       return state;

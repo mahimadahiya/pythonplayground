@@ -17,6 +17,22 @@ export const fetchModuleSimulations = (
   });
 };
 
+export const fetchDefaultModuleSimulations = (
+  authToken,
+  formValues
+) => async dispatch => {
+  console.log(formValues);
+  const response = await pyLearningApi(authToken).get(
+    `/simulation/view_mapped?organization_id=${
+      formValues.organization_id
+    }&module_id=${formValues.module_id}`
+  );
+  dispatch({
+    type: ACTION_TYPE.FETCH_DEFAULT_SIMULATIONS,
+    payload: response.data
+  });
+};
+
 export const createSimulationOrgMapping = (
   authToken,
   formValues

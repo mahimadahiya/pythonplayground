@@ -38,8 +38,6 @@ class SimulationList extends React.Component {
     return column;
   };
 
-  renderTableData = () => {};
-
   render() {
     const columnName = this.tableColumnName();
     const tableData = this.props.simulations;

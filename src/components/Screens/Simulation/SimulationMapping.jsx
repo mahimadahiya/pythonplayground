@@ -7,13 +7,15 @@ import {
   fetchOrganizations,
   getOrganizationModules,
   fetchModuleSimulations,
+  fetchDefaultModuleSimulations,
   createSimulationOrgMapping
 } from "../../../actions";
 
 class SituationMapping extends Component {
   state = {
     organization_id: null,
-    module_id: null
+    module_id: null,
+    defaultSimulations: []
   };
 
   componentDidMount() {
@@ -35,12 +37,32 @@ class SituationMapping extends Component {
     );
   };
 
+  componentDidUpdate() {}
+
   onModuleSelect = value => {
     this.setState({ module_id: value }, () => {
       this.props.fetchModuleSimulations(
         this.props.user.Authorization,
         this.state.module_id
       );
+      const queryParams = {
+        organization_id: this.state.organization_id,
+        module_id: this.state.module_id
+      };
+      this.props.fetchDefaultModuleSimulations(
+        this.props.user.Authorization,
+        queryParams
+      );
+      setTimeout(() => {
+        console.log("state", this.props.defaultSimulations);
+        const filteredList = this.props.defaultSimulations.map(simulation => {
+          return simulation.question_id;
+        });
+        console.log(filteredList);
+        this.setState({
+          defaultSimulations: filteredList
+        });
+      }, 1000);
     });
   };
 
@@ -64,6 +86,7 @@ class SituationMapping extends Component {
               listOrgs={this.props.organizations}
               listModules={this.props.organizationModules}
               listSimulations={this.props.moduleSimulations}
+              listDefaultSimulations={this.state.defaultSimulations}
               handlers={{
                 onOrgSelect: this.onOrgSelect,
                 onModuleSelect: this.onModuleSelect
@@ -81,7 +104,8 @@ const mapStateToProps = state => {
     user: state.userAuth,
     organizations: Object.values(state.organization.organizationList),
     organizationModules: Object.values(state.organization.organizationModules),
-    moduleSimulations: Object.values(state.simulation.moduleSimulations)
+    moduleSimulations: Object.values(state.simulation.moduleSimulations),
+    defaultSimulations: state.simulation.defaultSimulations
   };
 };
 
@@ -91,6 +115,7 @@ export default connect(
     fetchOrganizations,
     getOrganizationModules,
     fetchModuleSimulations,
-    createSimulationOrgMapping
+    createSimulationOrgMapping,
+    fetchDefaultModuleSimulations
   }
 )(SituationMapping);

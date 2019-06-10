@@ -11,8 +11,9 @@ const DisplayFormMapUser = ({
   values,
   submitCount,
   listOrgs,
-  listModules,
   listSimulations,
+  listModules,
+  listDefaultSimulations,
   handlers
 }) => {
   const selectOptionObjectOrgs = listOrgs.map(({ id, name }) => {
@@ -23,9 +24,9 @@ const DisplayFormMapUser = ({
       return { name: module__name, id: module_id };
     }
   );
-  const selectOptionSimulations = listSimulations.map(({id, text}) => {
-    return { id, name:`${text.substring(0,50)}...` }
-  })
+  const selectOptionSimulations = listSimulations.map(({ id, text }) => {
+    return { id, name: `${text.substring(0, 50)}...` };
+  });
 
   const filterOrganizations = (val, option) => {
     const filteredList = listOrgs.filter(({ name }) => {
@@ -51,6 +52,8 @@ const DisplayFormMapUser = ({
     }
     return false;
   };
+
+  console.log("form", listDefaultSimulations);
 
   return (
     <Card>
@@ -89,6 +92,7 @@ const DisplayFormMapUser = ({
           name="question_id_list"
           mode="multiple"
           placeholder="Select Simulations"
+          defaultValue={listDefaultSimulations}
           filterOption={filterModules}
           selectOptionObject={selectOptionSimulations}
           validate={validateRequired}

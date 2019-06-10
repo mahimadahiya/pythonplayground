@@ -18,7 +18,8 @@ import {
 import {
   createSimulationOrgMapping,
   fetchModuleSimulations,
-  fetchSimulationList
+  fetchSimulationList,
+  fetchDefaultModuleSimulations
 } from "./simulationActions";
 
 export {
@@ -29,6 +30,7 @@ export {
   createSimulationOrgMapping,
   fetchModuleSimulations,
   fetchSimulationList,
+  fetchDefaultModuleSimulations,
   fetchQuestionList,
   fetchQuestionDetail,
   updateQuestion,
