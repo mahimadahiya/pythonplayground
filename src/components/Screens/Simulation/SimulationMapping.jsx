@@ -65,7 +65,7 @@ class SituationMapping extends Component {
       );
 
       const filteredList = this.props.defaultSimulations.map(simulation => {
-        return simulation.question_id;
+        return simulation.question_id.toString();
       });
       this.setState({
         defaultSimulations: filteredList
@@ -131,6 +131,7 @@ class SituationMapping extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    console.log(this.state);
     return (
       <div>
         <Card>
@@ -190,36 +191,38 @@ class SituationMapping extends Component {
                 </Select>
               )}
             </Form.Item>
-            <Form.Item label="Simulations:">
-              {getFieldDecorator("question_id_list", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please select a simulation"
-                  }
-                ]
-              })(
-                <Select
-                  allowClear
-                  showSearch
-                  placeholder="Select a simulation"
-                  mode="multiple"
-                  defaultActiveFirstOption={false}
-                  onChange={this.handleSimulationChange}
-                >
-                  {this.props.moduleSimulations.map(simulation => {
-                    return (
-                      <Select.Option
-                        value={simulation.id}
-                        key={simulation.id}
-                      >{`${simulation.text.substring(0, 50)}... (${
-                        simulation.id
-                      })`}</Select.Option>
-                    );
-                  })}
-                </Select>
-              )}
-            </Form.Item>
+            {this.state.defaultSimulations.length > 0 ? (
+              <Form.Item label="Simulations:">
+                {getFieldDecorator("question_id_list", {
+                  initialValue: this.state.defaultSimulations,
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please select a simulation"
+                    }
+                  ]
+                })(
+                  <Select
+                    allowClear
+                    showSearch
+                    placeholder="Select a simulation"
+                    mode="multiple"
+                    onChange={this.handleSimulationChange}
+                  >
+                    {this.props.moduleSimulations.map(simulation => {
+                      return (
+                        <Select.Option
+                          value={simulation.id}
+                          key={simulation.id}
+                        >{`${simulation.text.substring(0, 50)}... (${
+                          simulation.id
+                        })`}</Select.Option>
+                      );
+                    })}
+                  </Select>
+                )}
+              </Form.Item>
+            ) : null}
             <Form.Item>
               <MButton>Map Simulation</MButton>
             </Form.Item>
