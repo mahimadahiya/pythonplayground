@@ -11,6 +11,8 @@ import {
   Row,
   Col
 } from "antd";
+import { connect } from "react-redux";
+import { updateQuestion } from "../../../actions";
 
 const mapAlphabet = {
   0: `a`,
@@ -177,6 +179,15 @@ class MapQuestionChoices extends React.Component {
   };
   handleSubmit = event => {
     event.preventDefault();
+    const query = {
+      choices: JSON.stringify(this.state.choices),
+      correct_choice: this.state.correctChoice
+    };
+    this.props.updateQuestion(
+      this.props.match.params.id,
+      this.props.user.Authorization,
+      query
+    );
   };
 
   render() {
@@ -215,4 +226,13 @@ class MapQuestionChoices extends React.Component {
   }
 }
 
-export default MapQuestionChoices;
+const mapStateToProps = state => {
+  return {
+    user: state.userAuth
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { updateQuestion }
+)(MapQuestionChoices);
