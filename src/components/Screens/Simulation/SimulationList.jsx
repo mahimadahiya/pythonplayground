@@ -32,7 +32,11 @@ class SimulationList extends React.Component {
       {
         title: "Media URL",
         dataIndex: "media_url",
-        key: "media_url"
+        key: "media_url",
+        render: (text, row, index) => {
+          console.log(text);
+          return <a href={text}>Link</a>;
+        }
       }
     ];
     return column;
