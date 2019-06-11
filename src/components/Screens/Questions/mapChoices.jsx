@@ -122,8 +122,8 @@ class MapQuestionChoices extends React.Component {
 
   createUI = () => {
     return this.state.choices.map((el, i) => (
-      <Col span={8} style={{ marginTop: 10 }}>
-        <div key={i}>
+      <Col span={8} style={{ marginTop: 10 }} key={i}>
+        <div>
           <Card
             title={`Choice ${i + 1}`}
             size="small"
@@ -213,7 +213,12 @@ class MapQuestionChoices extends React.Component {
               </Col>
               <Col span={12} style={{ textAlign: "end" }}>
                 <Form.Item>
-                  <Button htmlType="submit" size="large" type="primary">
+                  <Button
+                    htmlType="submit"
+                    size="large"
+                    type="primary"
+                    disabled={this.state.choices.length === 0 ? true : false}
+                  >
                     Submit
                   </Button>
                 </Form.Item>
