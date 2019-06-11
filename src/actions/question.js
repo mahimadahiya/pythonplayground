@@ -4,7 +4,7 @@ import qs from "querystring";
 
 export const fetchQuestionList = (authToken) => async dispatch => {
   const response = await adminPanelApi(authToken).get("/v1/admin/questions");
-  dispatch( { type: ACTION_TYPE.FETCH_QUESTIONS, payload: response.data.result })
+  dispatch( { type: ACTION_TYPE.FETCH_QUESTIONS, payload: response.data.results })
   
 }
 

@@ -12,7 +12,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         questionsList: _.mapKeys(
-          action.payload.result,
+          action.payload,
           "id"
         )
       };

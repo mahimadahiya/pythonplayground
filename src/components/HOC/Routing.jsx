@@ -11,6 +11,8 @@ import UserTrackMapping from "../Screens/ModuleTracks/UserMapping";
 import HomeScreen from "../Screens/Dashboard/TrackList";
 import SimulationMapping from "../Screens/Simulation/SimulationMapping";
 import SimulationList from "../Screens/Simulation/SimulationList";
+import QuestionList from "../Screens/Questions/index";
+import MapQuestionChoices from '../Screens/Questions/mapChoices'
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   return (
@@ -36,7 +38,12 @@ class Routing extends React.Component {
       <div>
         <React.Fragment>
           <Switch>
-            <PrivateRoute path="/" component={HomeScreen} user={user} exact />
+            <PrivateRoute
+              path="/"
+              component={HomeScreen}
+              user={user}
+              exact
+            />
             <PrivateRoute
               path="/tracks"
               component={TrackList}
@@ -70,6 +77,18 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/simulation"
               component={SimulationList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/questions"
+              component={QuestionList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/question/map/choices/:id"
+              component={MapQuestionChoices}
               user={user}
               exact
             />
