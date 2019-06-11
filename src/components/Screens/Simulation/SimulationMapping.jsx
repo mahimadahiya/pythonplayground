@@ -67,8 +67,14 @@ class SituationMapping extends Component {
       const filteredList = this.props.defaultSimulations.map(simulation => {
         return simulation.question_id.toString();
       });
+
+      const onlyUnique = (value, index, self) => {
+        return self.indexOf(value) === index;
+      };
+
+      const uniqueFilteredList = filteredList.filter(onlyUnique);
       this.setState({
-        defaultSimulations: filteredList
+        defaultSimulations: uniqueFilteredList
       });
     });
   };
@@ -131,7 +137,6 @@ class SituationMapping extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.state);
     return (
       <div>
         <Card>
