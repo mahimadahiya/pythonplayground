@@ -15,15 +15,24 @@ import MButton from "../../Elements/MButton";
 class SituationMapping extends Component {
   state = {
     organization_id: null,
+    defaultSimulations: [],
     module_id: null,
     simulations: [],
-    defaultSimulations: [],
-    moduleValue: null
+    moduleValue: null,
+    loaded: false
   };
 
   componentDidMount() {
     this.props.fetchOrganizations(this.props.user.Authorization);
     this.props.heading("Simulation Mapping");
+  }
+
+  componentDidUpdate() {
+    if (this.props.defaultSimulations && !this.state.loaded) {
+      this.setState({
+        loaded: true
+      });
+    }
   }
 
   onOrgSelect = value => {
@@ -159,9 +168,9 @@ class SituationMapping extends Component {
                       <Select.Option
                         value={organization.id}
                         key={organization.id}
-                      >{`${organization.name} (${
-                        organization.id
-                      })`}</Select.Option>
+                      >
+                        {`${organization.name} (${organization.id})`}
+                      </Select.Option>
                     );
                   })}
                 </Select>
@@ -196,7 +205,7 @@ class SituationMapping extends Component {
                 </Select>
               )}
             </Form.Item>
-            {this.state.defaultSimulations.length > 0 ? (
+            {this.state.loaded ? (
               <Form.Item label="Simulations:">
                 {getFieldDecorator("question_id_list", {
                   initialValue: this.state.defaultSimulations,
@@ -228,6 +237,7 @@ class SituationMapping extends Component {
                 )}
               </Form.Item>
             ) : null}
+
             <Form.Item>
               <MButton>Map Simulation</MButton>
             </Form.Item>

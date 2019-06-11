@@ -4,7 +4,7 @@ import _ from "lodash";
 const INITIAL_STATE = {
   moduleSimulations: {},
   simulations: [],
-  defaultSimulations: []
+  defaultSimulations: null
 };
 
 export default (state = INITIAL_STATE, action) => {
