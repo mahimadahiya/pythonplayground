@@ -36,9 +36,9 @@ const DisplayFormMapUser = ({
       if (filteredList[i].id.toString() === option.key) return true;
     }
     return false;
-  }
+  };
   const filterTracks = (val, option) => {
-    const filteredList = listTracks.filter(({  name }) => {
+    const filteredList = listTracks.filter(({ name }) => {
       if (name.toLowerCase().includes(val)) {
         return true;
       }
@@ -48,7 +48,7 @@ const DisplayFormMapUser = ({
       if (filteredList[i].id.toString() === option.key) return true;
     }
     return false;
-  }
+  };
 
   const filterBatches = (val, option) => {
     const filteredList = listBatches.filter(({ name }) => {
@@ -61,7 +61,7 @@ const DisplayFormMapUser = ({
       if (filteredList[i].id.toString() === option.key) return true;
     }
     return false;
-  }
+  };
 
   return (
     <Card>
