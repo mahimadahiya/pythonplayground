@@ -21,7 +21,6 @@ export const fetchDefaultModuleSimulations = (
   authToken,
   formValues
 ) => async dispatch => {
-  console.log(formValues);
   const response = await pyLearningApi(authToken).get(
     `/simulation/view_mapped?organization_id=${
       formValues.organization_id

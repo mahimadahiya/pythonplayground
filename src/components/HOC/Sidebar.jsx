@@ -56,7 +56,6 @@ class SideBar extends React.Component {
   };
 
   logout = () => {
-    // console.log(this.props);
     const { cookies } = this.props;
     cookies.remove("Authorization", { path: "/" });
     cookies.remove("isSignedIn", { path: "/" });

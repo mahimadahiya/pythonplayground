@@ -64,11 +64,9 @@ class SituationMapping extends Component {
         queryParams
       );
 
-      console.log("state", this.props.defaultSimulations);
       const filteredList = this.props.defaultSimulations.map(simulation => {
         return simulation.question_id;
       });
-      console.log(filteredList);
       this.setState({
         defaultSimulations: filteredList
       });
@@ -111,7 +109,6 @@ class SituationMapping extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         values.question_id_list = JSON.stringify(values.question_id_list);
-        console.log(values);
         this.props.createSimulationOrgMapping(
           this.props.user.Authorization,
           values

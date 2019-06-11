@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import { Descriptions, Card, Form, Select } from "antd";
 import { fetchModuleTracks, createModuleTrackMapping } from "../../../actions";
 import { getOrganizationModules } from "../../../actions";
-import { Formik } from "formik";
-import DisplayFormModuleMapping from "../Form/DisplayFormModuleMapping";
 import MButton from "../../Elements/MButton";
 
 class ModuleMapping extends React.Component {
@@ -15,7 +13,6 @@ class ModuleMapping extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, formValues) => {
-      console.log(formValues);
       if (!err) {
         const data = {
           track_id: this.state.track.id,
@@ -121,15 +118,6 @@ class ModuleMapping extends React.Component {
                 <MButton>Map Module</MButton>
               </Form.Item>
             </Form>
-            {/* <Formik
-              onSubmit={this.onSubmit}
-              render={formikProps => (
-                <DisplayFormModuleMapping
-                  {...formikProps}
-                  list={this.props.modules}
-                />
-              )}
-            /> */}
           </Card>
         ) : null}
       </div>
