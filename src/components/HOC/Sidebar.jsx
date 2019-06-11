@@ -80,10 +80,7 @@ class SideBar extends React.Component {
           ) : null}
           {/* <span>{this.props.user}</span> */}
           <span onClick={this.logout}>
-            <Icon
-              type="user"
-              // style={{ width: 20, height: 20, color: "black" }}
-            />
+            <Icon type="user" />
             <Button type="link" size="large">
               Logout
             </Button>
@@ -95,7 +92,7 @@ class SideBar extends React.Component {
               className="menu"
               mode="inline"
               theme="dark"
-              defaultSelectedKeys={["sub1-1"]}
+              // defaultSelectedKeys={["sub1-1"]}
               defaultOpenKeys={["sub1"]}
               style={{ height: "100%", borderRight: 0 }}
             >
@@ -103,7 +100,7 @@ class SideBar extends React.Component {
                 key="sub1"
                 title={
                   <span>
-                    <Icon type="user" />
+                    <Icon type="fork" />
                     Tracks
                   </span>
                 }
@@ -120,8 +117,12 @@ class SideBar extends React.Component {
               </SubMenu>
               <SubMenu
                 key="sub2"
-                // style={{ backgroundColor: "#000c17" }}
-                title={<span>Questions</span>}
+                title={
+                  <span>
+                    <Icon type="question-circle" />
+                    Questions
+                  </span>
+                }
               >
                 <Menu.Item
                   key="sub2-1"
@@ -132,8 +133,12 @@ class SideBar extends React.Component {
               </SubMenu>
               <SubMenu
                 key="sub3"
-                // style={{ backgroundColor: "#000c17" }}
-                title={<span>Simulation</span>}
+                title={
+                  <span>
+                    <Icon type="smile" />
+                    Simulation
+                  </span>
+                }
               >
                 <Menu.Item
                   key="sub3-2"
