@@ -36,7 +36,6 @@ class SituationMapping extends Component {
   }
 
   onOrgSelect = value => {
-    console.log(value);
     this.setState(
       {
         organization_id: value.key,
@@ -57,45 +56,37 @@ class SituationMapping extends Component {
   };
 
   onModuleSelect = value => {
-    this.setState({ module_id: value, simulations: [] }, async () => {
-      this.props.form.setFieldsValue({
-        question_id_list: this.state.simulations
-      });
-      await this.props.fetchModuleSimulations(
-        this.props.user.Authorization,
-        this.state.module_id
-      );
-      const queryParams = {
-        organization_id: this.state.organization_id,
-        module_id: this.state.module_id
-      };
-      await this.props.fetchDefaultModuleSimulations(
-        this.props.user.Authorization,
-        queryParams
-      );
-
-      const filteredList = this.props.defaultSimulations.map(simulation => {
-        return {
-          key: simulation.question_id,
-          label: simulation.question__text
+    this.setState(
+      { module_id: value, simulations: [], loaded: false },
+      async () => {
+        this.props.form.setFieldsValue({
+          question_id_list: this.state.simulations
+        });
+        await this.props.fetchModuleSimulations(
+          this.props.user.Authorization,
+          this.state.module_id
+        );
+        const queryParams = {
+          organization_id: this.state.organization_id,
+          module_id: this.state.module_id
         };
-      });
+        await this.props.fetchDefaultModuleSimulations(
+          this.props.user.Authorization,
+          queryParams
+        );
 
-      console.log(`list`, filteredList);
+        const filteredList = this.props.defaultSimulations.map(simulation => {
+          return {
+            key: simulation.question_id,
+            label: simulation.question__text
+          };
+        });
 
-      // const onlyUnique = (value, index, self) => {
-      //   console.log("val", value);
-      //   return self.indexOf(value.key) === index;
-      // };
-
-      // const uniqueFilteredList = filteredList.filter(onlyUnique);
-      this.setState(
-        {
+        this.setState({
           defaultSimulations: filteredList
-        },
-        () => console.log(this.state.defaultSimulations)
-      );
-    });
+        });
+      }
+    );
   };
 
   filterOrganizations = (val, option) => {
