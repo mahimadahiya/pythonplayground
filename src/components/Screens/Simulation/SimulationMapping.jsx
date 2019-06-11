@@ -36,9 +36,10 @@ class SituationMapping extends Component {
   }
 
   onOrgSelect = value => {
+    console.log(value);
     this.setState(
       {
-        organization_id: value,
+        organization_id: value.key,
         module_id: null,
         simulations: []
       },
@@ -74,17 +75,26 @@ class SituationMapping extends Component {
       );
 
       const filteredList = this.props.defaultSimulations.map(simulation => {
-        return simulation.question_id.toString();
+        return {
+          key: simulation.question_id,
+          label: simulation.question__text
+        };
       });
 
-      const onlyUnique = (value, index, self) => {
-        return self.indexOf(value) === index;
-      };
+      console.log(`list`, filteredList);
 
-      const uniqueFilteredList = filteredList.filter(onlyUnique);
-      this.setState({
-        defaultSimulations: uniqueFilteredList
-      });
+      // const onlyUnique = (value, index, self) => {
+      //   console.log("val", value);
+      //   return self.indexOf(value.key) === index;
+      // };
+
+      // const uniqueFilteredList = filteredList.filter(onlyUnique);
+      this.setState(
+        {
+          defaultSimulations: filteredList
+        },
+        () => console.log(this.state.defaultSimulations)
+      );
     });
   };
 
@@ -137,7 +147,7 @@ class SituationMapping extends Component {
 
   handleSimulationChange = value => {
     this.setState({
-      simulations: value
+      simulations: value.key
     });
     this.props.form.setFieldsValue({
       question_id_list: this.state.simulations
@@ -159,6 +169,7 @@ class SituationMapping extends Component {
                 <Select
                   allowClear
                   showSearch
+                  labelInValue
                   filterOption={this.filterOrganizations}
                   placeholder="Select an organization"
                   onChange={this.onOrgSelect}
@@ -219,6 +230,7 @@ class SituationMapping extends Component {
                   <Select
                     allowClear
                     showSearch
+                    labelInValue
                     placeholder="Select a simulation"
                     mode="multiple"
                     onChange={this.handleSimulationChange}
