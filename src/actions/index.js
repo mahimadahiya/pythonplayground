@@ -114,7 +114,7 @@ export const createUserTrackMapping = (
       type: ACTION_TYPE.CREATE_USER_TRACK_MAPPING,
       payload: response.data
     });
-    // history.push("/tracks");
+    history.push("/tracks");
   } else dispatch({ type: ACTION_TYPE.CREATE_USER_TRACK_MAPPING_ERROR });
 };
 
