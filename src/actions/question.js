@@ -3,11 +3,13 @@ import * as ACTION_TYPE from "./actionTypes";
 import qs from "querystring";
 import history from "../history";
 
-export const fetchQuestionList = authToken => async dispatch => {
-  const response = await adminPanelApi(authToken).get("/v1/admin/questions");
+export const fetchQuestionList = (authToken, values) => async dispatch => {
+  const response = await adminPanelApi(authToken).get(
+    `/v1/admin/questions?offset=${values.offset}`
+  );
   dispatch({
     type: ACTION_TYPE.FETCH_QUESTIONS,
-    payload: response.data.results
+    payload: response.data
   });
 };
 

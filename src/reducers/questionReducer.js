@@ -11,7 +11,8 @@ export default (state = INITIAL_STATE, action) => {
     case ACTION_TYPE.FETCH_QUESTIONS:
       return {
         ...state,
-        questionsList: _.mapKeys(action.payload, "id")
+        questionsList: _.mapKeys(action.payload.results, "id"),
+        count: action.payload.count
       };
     case ACTION_TYPE.FETCH_QUESTION_DETAIL:
       return {

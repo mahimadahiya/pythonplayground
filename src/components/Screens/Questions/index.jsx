@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Divider, Card, Table } from "antd";
+import { Divider, Card, Table, Pagination } from "antd";
 
 import { fetchQuestionList } from "../../../actions";
 
 class QuestionList extends React.Component {
   componentWillMount = () => {
     this.props.heading("Questions");
-    this.props.fetchQuestionList(this.props.user.Authorization);
+    this.props.fetchQuestionList(this.props.user.Authorization, { offset: 10 });
   };
 
   tableColumnName = () => {
@@ -52,6 +52,12 @@ class QuestionList extends React.Component {
     return column;
   };
 
+  handlePageChange = pageNumber => {
+    console.log(pageNumber);
+    const offset = pageNumber * 10;
+    this.props.fetchQuestionList(this.props.user.Authorization, { offset });
+  };
+
   render() {
     const columnName = this.tableColumnName();
     const tableData = this.props.questions;
@@ -62,12 +68,20 @@ class QuestionList extends React.Component {
             dataSource={tableData}
             columns={columnName}
             rowKey={row => row.id}
+            pagination={false}
             // footer={() => (
-            //   <MButton>
-            //     <Link to="/tracks/create">Create Track</Link>
-            //   </MButton>
+            //   <p>x</p>
+            //   // <MButton>
+            //   //   <Link to="/tracks/create">Create Track</Link>
+            //   // </MButton>
             // )}
           />
+          <div style={{ marginTop: "20px", textAlign: "right" }}>
+            <Pagination
+              onChange={this.handlePageChange}
+              total={this.props.count}
+            />
+          </div>
         </Card>
       </div>
     );
@@ -77,7 +91,8 @@ class QuestionList extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.userAuth,
-    questions: Object.values(state.question.questionsList)
+    questions: Object.values(state.question.questionsList),
+    count: state.question.count
   };
 };
 
