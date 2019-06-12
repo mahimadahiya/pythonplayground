@@ -7,6 +7,7 @@ import { CookiesProvider } from "react-cookie";
 
 import reducers from "./reducers";
 import ErrorBoundary from "./components/HOC/ErrorBoundary";
+import Loading from "./components/Elements/Loading";
 const App = lazy(() => import("./components/App"));
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -16,7 +17,7 @@ ReactDOM.render(
   <CookiesProvider>
     <Provider store={store}>
       <ErrorBoundary>
-        <Suspense fallback={<h1>Loading</h1>}>
+        <Suspense fallback={<Loading />}>
           <App />
         </Suspense>
       </ErrorBoundary>
