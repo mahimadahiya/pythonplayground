@@ -7,7 +7,8 @@ import MButton from "../../Elements/MButton";
 
 class ModuleMapping extends React.Component {
   state = {
-    track: null
+    track: null,
+    loading: true
   };
 
   onSubmit = e => {
@@ -28,8 +29,9 @@ class ModuleMapping extends React.Component {
     });
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.heading("Map Module");
+    // if (this.props.)
     this.props.fetchModuleTracks(this.props.user.Authorization);
   }
 

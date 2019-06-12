@@ -10,7 +10,7 @@ class TrackList extends React.Component {
   state = { loading: true };
 
   componentWillMount = async () => {
-    if (this.props.fetchModuleTracks.length === 0) {
+    if (this.props.tracks.length === 0) {
       await this.props.fetchModuleTracks(this.props.user.Authorization);
       this.setState({ loading: false });
     } else {
