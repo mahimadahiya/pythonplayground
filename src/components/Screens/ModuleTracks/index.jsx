@@ -4,10 +4,18 @@ import { Link } from "react-router-dom";
 import { Table, Divider, Card } from "antd";
 import { fetchModuleTracks } from "../../../actions";
 import MButton from "../../Elements/MButton";
+import Loading from "../../Elements/Loading";
 
 class TrackList extends React.Component {
-  componentWillMount = () => {
-    this.props.fetchModuleTracks(this.props.user.Authorization);
+  state = { loading: true };
+
+  componentWillMount = async () => {
+    if (this.props.fetchModuleTracks.length === 0) {
+      await this.props.fetchModuleTracks(this.props.user.Authorization);
+      this.setState({ loading: false });
+    } else {
+      this.setState({ loading: false });
+    }
   };
 
   componentDidMount() {
@@ -65,18 +73,22 @@ class TrackList extends React.Component {
     const tableData = this.props.tracks;
     return (
       <div>
-        <Card type="inner">
-          <Table
-            dataSource={tableData}
-            columns={columnName}
-            rowKey={row => row.id}
-            footer={() => (
-              <MButton>
-                <Link to="/tracks/create">Create Track</Link>
-              </MButton>
-            )}
-          />
-        </Card>
+        {this.state.loading ? (
+          <Loading />
+        ) : (
+          <Card type="inner">
+            <Table
+              dataSource={tableData}
+              columns={columnName}
+              rowKey={row => row.id}
+              footer={() => (
+                <MButton>
+                  <Link to="/tracks/create">Create Track</Link>
+                </MButton>
+              )}
+            />
+          </Card>
+        )}
       </div>
     );
   }

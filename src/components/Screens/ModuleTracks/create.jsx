@@ -6,10 +6,24 @@ import { dateFormat } from "../Form/FieldFormats";
 import { createModuleTrack, fetchOrganizations } from "../../../actions";
 import moment from "moment";
 import MButton from "../../Elements/MButton";
+import Loading from "../../Elements/Loading";
 
 class CreateTrack extends React.Component {
-  componentDidMount() {
-    this.props.fetchOrganizations(this.props.user.Authorization);
+  state = {
+    loading: true
+  };
+
+  async componentDidMount() {
+    if (this.props.organizations.length === 0) {
+      await this.props.fetchOrganizations(this.props.user.Authorization);
+      this.setState({
+        loading: false
+      });
+    } else {
+      this.setState({
+        loading: false
+      });
+    }
     this.props.heading("Create Track");
   }
 
@@ -46,61 +60,65 @@ class CreateTrack extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <Card>
-          <Form onSubmit={this.onSubmit}>
-            <Form.Item label="Track Name">
-              {getFieldDecorator("name", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please enter a valid Track Name"
-                  }
-                ]
-              })(<Input placeholder="Type Track Name" />)}
-            </Form.Item>
-            <Form.Item label="Organization">
-              {getFieldDecorator("organization_id", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please select an Organization"
-                  }
-                ]
-              })(
-                <Select
-                  placeholder="Select an Organization"
-                  allowClear
-                  showSearch
-                  filterOption={this.filterOrganizations}
-                >
-                  {this.props.organizations.map(organization => {
-                    return (
-                      <Select.Option
-                        value={organization.id}
-                        key={organization.id}
-                      >{`${organization.name} (${
-                        organization.id
-                      })`}</Select.Option>
-                    );
-                  })}
-                </Select>
-              )}
-            </Form.Item>
-            <Form.Item label="Going Live At">
-              {getFieldDecorator("going_live_at", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please select a date"
-                  }
-                ]
-              })(<DatePicker />)}
-            </Form.Item>
-            <Form.Item>
-              <MButton>Create Track</MButton>
-            </Form.Item>
-          </Form>
-        </Card>
+        {this.state.loading ? (
+          <Loading />
+        ) : (
+          <Card>
+            <Form onSubmit={this.onSubmit}>
+              <Form.Item label="Track Name">
+                {getFieldDecorator("name", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please enter a valid Track Name"
+                    }
+                  ]
+                })(<Input placeholder="Type Track Name" />)}
+              </Form.Item>
+              <Form.Item label="Organization">
+                {getFieldDecorator("organization_id", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please select an Organization"
+                    }
+                  ]
+                })(
+                  <Select
+                    placeholder="Select an Organization"
+                    allowClear
+                    showSearch
+                    filterOption={this.filterOrganizations}
+                  >
+                    {this.props.organizations.map(organization => {
+                      return (
+                        <Select.Option
+                          value={organization.id}
+                          key={organization.id}
+                        >{`${organization.name} (${
+                          organization.id
+                        })`}</Select.Option>
+                      );
+                    })}
+                  </Select>
+                )}
+              </Form.Item>
+              <Form.Item label="Going Live At">
+                {getFieldDecorator("going_live_at", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please select a date"
+                    }
+                  ]
+                })(<DatePicker />)}
+              </Form.Item>
+              <Form.Item>
+                <MButton>Create Track</MButton>
+              </Form.Item>
+            </Form>
+          </Card>
+        )}
       </div>
     );
   }

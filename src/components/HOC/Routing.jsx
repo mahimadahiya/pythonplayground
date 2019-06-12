@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect, Switch } from "react-router-dom";
 
-import Sidebar from "./Sidebar";
+// import Sidebar from "./Sidebar";
 import Login from "../Screens/Login/Login";
 import TrackList from "../Screens/ModuleTracks";
 import CreateTrack from "../Screens/ModuleTracks/create";
@@ -12,7 +12,8 @@ import HomeScreen from "../Screens/Dashboard/TrackList";
 import SimulationMapping from "../Screens/Simulation/SimulationMapping";
 import SimulationList from "../Screens/Simulation/SimulationList";
 import QuestionList from "../Screens/Questions/index";
-import MapQuestionChoices from '../Screens/Questions/mapChoices'
+import MapQuestionChoices from "../Screens/Questions/mapChoices";
+const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   return (
@@ -38,12 +39,7 @@ class Routing extends React.Component {
       <div>
         <React.Fragment>
           <Switch>
-            <PrivateRoute
-              path="/"
-              component={HomeScreen}
-              user={user}
-              exact
-            />
+            <PrivateRoute path="/" component={HomeScreen} user={user} exact />
             <PrivateRoute
               path="/tracks"
               component={TrackList}
