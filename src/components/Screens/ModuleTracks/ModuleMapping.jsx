@@ -40,6 +40,7 @@ class ModuleMapping extends React.Component {
 
   fetchTrack = () => {
     if (this.state.track === null) {
+      this.setState({ loading: true });
       const trackDetail = this.props.tracks[this.props.match.params.id];
       this.setState({
         track: trackDetail
@@ -47,15 +48,17 @@ class ModuleMapping extends React.Component {
     }
   };
 
-  componentDidUpdate() {
+  async componentDidUpdate() {
     if (this.state.track !== null) return;
-    new Promise((res, rej) => {
-      this.fetchTrack();
-      res();
-    }).then(() => {
-      const orgId = this.state.track.organization_id;
-      this.props.getOrganizationModules(orgId, this.props.user.Authorization);
-    });
+
+    await this.fetchTrack();
+    const orgId = this.state.track.organization_id;
+    await this.props.getOrganizationModules(
+      orgId,
+      this.props.user.Authorization
+    );
+
+    this.setState({ loading: false });
   }
 
   filterModules = (val, option) => {

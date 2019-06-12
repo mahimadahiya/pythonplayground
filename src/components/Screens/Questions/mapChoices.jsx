@@ -48,7 +48,6 @@ class MapQuestionChoices extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.props.match.params);
     this.props.fetchQuestionDetail(
       this.props.match.params.id,
       this.props.user.Authorization
@@ -56,7 +55,6 @@ class MapQuestionChoices extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.props.questionDetail.question.answer);
     if (this.state.choices.length === 1)
       this.setState({
         choices: this.props.questionDetail.question.final_choices,
@@ -215,7 +213,6 @@ class MapQuestionChoices extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <Card>
