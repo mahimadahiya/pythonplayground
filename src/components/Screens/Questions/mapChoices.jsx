@@ -44,6 +44,7 @@ class MapQuestionChoices extends React.Component {
       }
     ],
     correctChoice: "",
+    loadedChoices: false,
     questionDetail: {}
   };
 
@@ -56,12 +57,13 @@ class MapQuestionChoices extends React.Component {
 
   componentDidUpdate() {
     if (
-      this.state.choices.length === 1 &&
-      this.props.questionDetail.question.final_choices.length !== 0
+      this.props.questionDetail.question.final_choices.length !== 0 &&
+      !this.state.loadedChoices
     )
       this.setState({
         choices: this.props.questionDetail.question.final_choices,
-        correctChoice: this.props.questionDetail.question.answer
+        correctChoice: this.props.questionDetail.question.answer,
+        loadedChoices: true
       });
   }
 

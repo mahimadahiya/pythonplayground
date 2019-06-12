@@ -52,5 +52,11 @@ export const fetchSimulationList = authToken => async dispatch => {
     type: ACTION_TYPE.FETCH_SIMULTATION_LIST,
     payload: response.data
   });
-  history.push('/simulation')
+  history.push("/simulation");
+};
+
+export const clearSimulations = () => {
+  return {
+    type: ACTION_TYPE.CLEAR_SIMULATIONS
+  };
 };

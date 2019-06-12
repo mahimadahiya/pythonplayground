@@ -24,6 +24,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         defaultSimulations: action.payload.result
       };
+    case ACTION_TYPE.CLEAR_SIMULATIONS:
+      return {
+        ...state,
+        ...INITIAL_STATE
+      };
     default:
       return state;
   }

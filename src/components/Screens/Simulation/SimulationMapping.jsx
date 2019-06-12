@@ -7,7 +7,8 @@ import {
   fetchModuleSimulations,
   fetchDefaultModuleSimulations,
   createSimulationOrgMapping,
-  clearModules
+  clearModules,
+  clearSimulations
 } from "../../../actions";
 import { Form, Select, Card } from "antd";
 import MButton from "../../Elements/MButton";
@@ -33,6 +34,11 @@ class SituationMapping extends Component {
         loaded: true
       });
     }
+  }
+
+  componentWillUnmount() {
+    console.log(this.props);
+    this.props.clearSimulations();
   }
 
   onOrgSelect = value => {
@@ -269,6 +275,7 @@ export default connect(
     fetchModuleSimulations,
     createSimulationOrgMapping,
     fetchDefaultModuleSimulations,
-    clearModules
+    clearModules,
+    clearSimulations
   }
 )(Form.create()(SituationMapping));
