@@ -12,7 +12,7 @@ import {
   Col
 } from "antd";
 import { connect } from "react-redux";
-import { updateQuestion } from "../../../actions";
+import { updateQuestion, fetchQuestionDetail } from "../../../actions";
 
 const mapAlphabet = {
   0: `a`,
@@ -43,8 +43,26 @@ class MapQuestionChoices extends React.Component {
         media_url: ""
       }
     ],
-    correctChoice: ""
+    correctChoice: "",
+    questionDetail: {}
   };
+
+  componentDidMount() {
+    console.log(this.props.match.params);
+    this.props.fetchQuestionDetail(
+      this.props.match.params.id,
+      this.props.user.Authorization
+    );
+  }
+
+  componentDidUpdate() {
+    console.log(this.props.questionDetail.question.answer);
+    if (this.state.choices.length === 1)
+      this.setState({
+        choices: this.props.questionDetail.question.final_choices,
+        correctChoice: this.props.questionDetail.question.answer
+      });
+  }
 
   addClick = () => {
     this.setState(prevState => ({
@@ -151,8 +169,14 @@ class MapQuestionChoices extends React.Component {
             <Form.Item label="Answer">
               <Switch
                 disabled={
-                  this.state.correctChoice.length !== 0 &&
+                  this.state.correctChoice !== "" &&
                   i !== reverseMapAlphabet[this.state.correctChoice]
+                    ? true
+                    : false
+                }
+                checked={
+                  this.state.correctChoice !== "" &&
+                  i === reverseMapAlphabet[this.state.correctChoice]
                     ? true
                     : false
                 }
@@ -191,6 +215,7 @@ class MapQuestionChoices extends React.Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <Card>
@@ -233,11 +258,12 @@ class MapQuestionChoices extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.userAuth
+    user: state.userAuth,
+    questionDetail: state.question.questionDetail
   };
 };
 
 export default connect(
   mapStateToProps,
-  { updateQuestion }
+  { updateQuestion, fetchQuestionDetail }
 )(MapQuestionChoices);
