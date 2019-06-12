@@ -37,7 +37,6 @@ class SituationMapping extends Component {
   }
 
   componentWillUnmount() {
-    console.log(this.props);
     this.props.clearSimulations();
   }
 
@@ -129,11 +128,18 @@ class SituationMapping extends Component {
   onSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+      const questionIds = values.question_id_list.map(question => {
+        return question.key;
+      });
+      const formValues = {
+        organization_id: values.organization.key,
+        module_id: values.module_id,
+        question_id_list: JSON.stringify(questionIds)
+      };
       if (!err) {
-        values.question_id_list = JSON.stringify(values.question_id_list);
         this.props.createSimulationOrgMapping(
           this.props.user.Authorization,
-          values
+          formValues
         );
         history.push("/simulation");
       } else {
@@ -158,7 +164,7 @@ class SituationMapping extends Component {
         <Card>
           <Form onSubmit={this.onSubmit} style={{ padding: 20 }}>
             <Form.Item label="Organization Names">
-              {getFieldDecorator("organization_id", {
+              {getFieldDecorator("organization", {
                 rules: [
                   { required: true, message: "Please select an organization" }
                 ]
