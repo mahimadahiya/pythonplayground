@@ -241,6 +241,7 @@ class MapQuestionChoices extends React.Component {
                   <Button
                     htmlType="submit"
                     size="large"
+                    shape="round"
                     type="primary"
                     disabled={this.state.choices.length === 0 ? true : false}
                   >
