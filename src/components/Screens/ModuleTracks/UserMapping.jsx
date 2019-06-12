@@ -17,16 +17,22 @@ class UserTrackMapping extends React.Component {
     mode: 0,
     organization_id: null,
     selectedTracks: [],
-    selectedBatches: []
+    selectedBatches: [],
+    loading: true
   };
 
   setMode = e => {
     this.setState({ mode: e === true ? 1 : 0 });
   };
 
-  componentWillMount = () => {
-    this.props.fetchOrganizations(this.props.user.Authorization);
-  };
+  async componentWillMount() {
+    if (this.props.organizations.length === 0) {
+      await this.props.fetchOrganizations(this.props.user.Authorization);
+    }
+    this.setState({
+      loading: false
+    });
+  }
 
   componentDidMount() {
     this.props.heading("Map Users");
@@ -44,22 +50,34 @@ class UserTrackMapping extends React.Component {
     this.setState({ organization_id: e }, () => this.loadBatchTrackData());
   };
 
-  loadBatchTrackData = () => {
+  async loadBatchTrackData() {
     const query = { organization_id: this.state.organization_id };
-    this.props.fetchOrganizationTracks(this.props.user.Authorization, query);
-    this.props.fetchOrganizationBatches(this.props.user.Authorization, query);
-  };
+    this.setState({ loading: true });
+    await this.props.fetchOrganizationTracks(
+      this.props.user.Authorization,
+      query
+    );
+    await this.props.fetchOrganizationBatches(
+      this.props.user.Authorization,
+      query
+    );
+    this.setState({ loading: false });
+  }
 
-  onSubmit = values => {
+  async onSubmit(values) {
     const query = {
       organization_id: values.organization_id,
       mode: this.state.mode,
       selectedBatches: `${values.selectedBatches}`,
       selectedTracks: `${values.selectedTracks}`
     };
-
-    this.props.createUserTrackMapping(this.props.user.Authorization, query);
-  };
+    this.setState({ loading: true });
+    await this.props.createUserTrackMapping(
+      this.props.user.Authorization,
+      query
+    );
+    this.setState({ loading: false });
+  }
 
   filterOrganizations = (val, option) => {
     const filteredList = this.props.organizations.filter(({ name }) => {

@@ -104,6 +104,7 @@ export const createUserTrackMapping = (
   authToken,
   formValues
 ) => async dispatch => {
+  console.log(formValues);
   const response = await pyLearningApi(authToken).post(
     "/react/user/track/mapping/",
     qs.stringify(formValues)
@@ -113,7 +114,7 @@ export const createUserTrackMapping = (
       type: ACTION_TYPE.CREATE_USER_TRACK_MAPPING,
       payload: response.data
     });
-    history.push("/tracks");
+    // history.push("/tracks");
   } else dispatch({ type: ACTION_TYPE.CREATE_USER_TRACK_MAPPING_ERROR });
 };
 
