@@ -34,7 +34,6 @@ class SimulationList extends React.Component {
         dataIndex: "media_url",
         key: "media_url",
         render: (text, row, index) => {
-          console.log(text);
           return <a href={text}>Link</a>;
         }
       }

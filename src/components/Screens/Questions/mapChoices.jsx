@@ -47,15 +47,18 @@ class MapQuestionChoices extends React.Component {
     questionDetail: {}
   };
 
-  componentDidMount() {
-    this.props.fetchQuestionDetail(
+  async componentDidMount() {
+    await this.props.fetchQuestionDetail(
       this.props.match.params.id,
       this.props.user.Authorization
     );
   }
 
   componentDidUpdate() {
-    if (this.state.choices.length === 1)
+    if (
+      this.state.choices.length === 1 &&
+      this.props.questionDetail.question.final_choices.length !== 0
+    )
       this.setState({
         choices: this.props.questionDetail.question.final_choices,
         correctChoice: this.props.questionDetail.question.answer
