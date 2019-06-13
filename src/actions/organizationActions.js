@@ -35,6 +35,29 @@ export const fetchOrganizationBatches = (
   });
 };
 
+export const fetchUsers = (authToken, formValues, offset) => async dispatch => {
+  let response = null;
+  console.log(formValues);
+  if (!formValues.batchId) {
+    response = await adminPanelApi(authToken).get(
+      `/v1/admin/list/batch/user/?organization_id=${
+        formValues.orgId
+      }&limit=10&offset=${offset}`
+    );
+  } else {
+    response = await adminPanelApi(authToken).get(
+      `/v1/admin/list/batch/user/?organization_id=${
+        formValues.orgId
+      }&batch_id=${formValues.batchId}&limit=10&offset=${offset}`
+    );
+  }
+
+  dispatch({
+    type: ACTION_TYPE.FETCH_USERS,
+    payload: response.data
+  });
+};
+
 export const fetchOrganizationTracks = (
   authToken,
   formValues

@@ -53,7 +53,7 @@ class QuestionList extends React.Component {
   };
 
   handlePageChange = pageNumber => {
-    const offset = pageNumber * 10;
+    const offset = pageNumber * 10 - 10;
     this.props.fetchQuestionList(this.props.user.Authorization, { offset });
   };
 

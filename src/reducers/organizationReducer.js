@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   currentOrganization: null,
   organizationBatches: {},
   organizationTracks: {},
-  organizationModules: {}
+  organizationModules: {},
+  users: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -33,6 +34,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         organizationModules: _.mapKeys(action.payload.result, "module_id")
+      };
+    case ACTION_TYPE.FETCH_USERS:
+      return {
+        ...state,
+        users: action.payload.results
       };
     case ACTION_TYPE.CLEAR_MODULES:
       return {

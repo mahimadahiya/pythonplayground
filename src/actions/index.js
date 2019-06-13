@@ -8,7 +8,8 @@ import {
   fetchOrganizationBatches,
   fetchOrganizationTracks,
   fetchOrganizations,
-  clearModules
+  clearModules,
+  fetchUsers
 } from "./organizationActions";
 import { loginUser, logoutUser } from "./authActions";
 import {
@@ -35,6 +36,7 @@ export {
   fetchSimulationList,
   fetchDefaultModuleSimulations,
   clearSimulations,
+  fetchUsers,
   fetchQuestionList,
   fetchQuestionDetail,
   updateQuestion,

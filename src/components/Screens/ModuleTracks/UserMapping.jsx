@@ -6,10 +6,21 @@ import {
   fetchOrganizations,
   fetchOrganizationBatches,
   fetchOrganizationTracks,
-  createUserTrackMapping
+  createUserTrackMapping,
+  fetchUsers
 } from "../../../actions";
 
-import { Form, Select, Switch, Card } from "antd";
+import {
+  Form,
+  Select,
+  Switch,
+  Card,
+  Row,
+  Col,
+  Transfer,
+  Checkbox,
+  Table
+} from "antd";
 import MButton from "../../Elements/MButton";
 
 class UserTrackMapping extends React.Component {
@@ -18,7 +29,10 @@ class UserTrackMapping extends React.Component {
     organization_id: null,
     selectedTracks: [],
     selectedBatches: [],
-    loading: true
+    loading: true,
+    users: [],
+    plainUsers: [],
+    targetKeys: []
   };
 
   setMode = e => {
@@ -46,8 +60,26 @@ class UserTrackMapping extends React.Component {
     this.setState({ selectedBatches: e });
   };
 
-  onOrgSelect = e => {
-    this.setState({ organization_id: e }, () => this.loadBatchTrackData());
+  onOrgSelect = async e => {
+    this.setState({ organization_id: e, selectedTracks: [] }, () => {
+      this.props.form.setFieldsValue({
+        selectedTracks: []
+      });
+      this.loadBatchTrackData();
+    });
+    await this.props.fetchUsers(this.props.user.Authorization, { orgId: e }, 0);
+    this.setState({
+      users: this.props.users
+    });
+    // const usersList = this.props.users.map(user => {
+    //   return {
+    //     name: user.name,
+    //     description: user.email
+    //   };
+    // });
+    // this.setState({
+    //   users: usersList
+    // });
   };
 
   async loadBatchTrackData() {
@@ -105,8 +137,51 @@ class UserTrackMapping extends React.Component {
     return false;
   };
 
+  getUsers = async id => {
+    await this.props.fetchUsers(
+      this.props.user.Authorization,
+      { orgId: this.state.organization_id, batchId: id },
+      0
+    );
+    this.setState({
+      users: this.props.users
+    });
+    // const usersList = this.props.users.map(user => {
+    //   return {
+    //     key: user.id.toString(),
+    //     title: user.name,
+    //     description: user.email
+    //   };
+    // });
+    // this.setState({
+    //   users: usersList
+    // });
+  };
+
+  // handleTransferChange = (targetKeys, direction, moveKeys) => {
+  //   this.setState({
+  //     targetKeys
+  //   });
+  // };
+
+  columns = [
+    {
+      title: "ID",
+      dataIndex: "id"
+    },
+    {
+      title: "Name",
+      dataIndex: "name"
+    },
+    {
+      title: "Email",
+      dataIndex: "email"
+    }
+  ];
+
   render() {
     const { getFieldDecorator } = this.props.form;
+    console.log(this.state);
     return (
       <div>
         <Card>
@@ -165,40 +240,44 @@ class UserTrackMapping extends React.Component {
                 </Select>
               )}
             </Form.Item>
+            <Form.Item label="Batches">
+              {getFieldDecorator("selectedBatches", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please select a batch"
+                  }
+                ]
+              })(
+                <Select
+                  filterOption={this.filterBatches}
+                  placeholder="Select a batch"
+                  onChange={this.getUsers}
+                >
+                  {this.props.organizationBatches.map(batch => {
+                    return (
+                      <Select.Option value={batch.id} key={batch.id}>{`${
+                        batch.name
+                      } (${batch.id})`}</Select.Option>
+                    );
+                  })}
+                </Select>
+              )}
+            </Form.Item>
+            <Row>
+              <Col span={16}>
+                <Table columns={this.columns} dataSource={this.state.users} />
+              </Col>
+            </Row>
 
-            <div style={{ textAlign: "center" }}>
-              <Form.Item label="Modes">
-                {getFieldDecorator("mode", {})(
-                  <Switch
-                    onChange={this.setMode}
-                    unCheckedChildren="Batch Wise"
-                    checkedChildren="Organization Wide"
-                  />
-                )}
-              </Form.Item>
-              {this.state.mode === 0 ? (
-                <Form.Item label="Batches">
-                  {getFieldDecorator("selectedBatches", {
-                    rules: [
-                      {
-                        required: true,
-                        message: "Please select a batch"
-                      }
-                    ]
-                  })(
-                    <Select mode="multiple" filterOption={this.filterBatches}>
-                      {this.props.organizationBatches.map(batch => {
-                        return (
-                          <Select.Option value={batch.id} key={batch.id}>{`${
-                            batch.name
-                          } (${batch.id})`}</Select.Option>
-                        );
-                      })}
-                    </Select>
-                  )}
-                </Form.Item>
-              ) : null}
-            </div>
+            {/* <Transfer
+              showSearch
+              targetKeys={this.state.targetKeys}
+              dataSource={this.state.users}
+              onChange={this.handleTransferChange}
+              render={user => user.title}
+            /> */}
+
             <Form.Item>
               <MButton>Map User</MButton>
             </Form.Item>
@@ -215,6 +294,7 @@ const mapStateToProps = state => {
     tracks: Object.values(state.moduleTrack.moduleTracks),
     organizations: Object.values(state.organization.organizationList),
     organizationBatches: Object.values(state.organization.organizationBatches),
+    users: state.organization.users,
     organizationTracks: Object.values(state.organization.organizationTracks)
   };
 };
@@ -226,6 +306,7 @@ export default connect(
     fetchOrganizations,
     fetchOrganizationTracks,
     fetchOrganizationBatches,
-    createUserTrackMapping
+    createUserTrackMapping,
+    fetchUsers
   }
 )(Form.create()(UserTrackMapping));
