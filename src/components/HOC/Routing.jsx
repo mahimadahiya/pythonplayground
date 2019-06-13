@@ -13,6 +13,7 @@ import SimulationMapping from "../Screens/Simulation/SimulationMapping";
 import SimulationList from "../Screens/Simulation/SimulationList";
 import QuestionList from "../Screens/Questions/index";
 import MapQuestionChoices from "../Screens/Questions/mapChoices";
+import Upload from "../Screens/DonDon/Upload";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -85,6 +86,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/question/map/choices/:id"
               component={MapQuestionChoices}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/dondon/upload"
+              component={Upload}
               user={user}
               exact
             />

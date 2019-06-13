@@ -159,6 +159,22 @@ class SideBar extends React.Component {
                   Map
                 </Menu.Item>
               </SubMenu>
+              <SubMenu
+                key="sub4"
+                title={
+                  <span>
+                    <Icon type="smile" />
+                    DonDon
+                  </span>
+                }
+              >
+                <Menu.Item
+                  key="sub4-1"
+                  onClick={() => history.push("/dondon/upload")}
+                >
+                  Upload
+                </Menu.Item>
+              </SubMenu>
             </Menu>
           </Sider>
           <Layout>
