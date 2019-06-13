@@ -163,16 +163,16 @@ class SideBar extends React.Component {
                 key="sub4"
                 title={
                   <span>
-                    <Icon type="smile" />
-                    DonDon
+                    <Icon type="play-circle" />
+                    Games
                   </span>
                 }
               >
                 <Menu.Item
                   key="sub4-1"
-                  onClick={() => history.push("/dondon/upload")}
+                  onClick={() => history.push("/games/dondon/upload")}
                 >
-                  Upload
+                  Don Don
                 </Menu.Item>
               </SubMenu>
             </Menu>

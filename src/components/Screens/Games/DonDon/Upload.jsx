@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Form, Input, Card, Switch, Icon, Button, Upload, message } from "antd";
-import pyLearningApi from "../../../apis/pylearning";
+import pyLearningApi from "../../../../apis/pylearning";
 import { connect } from "react-redux";
 import qs from "querystring";
-import MButton from "../../Elements/MButton";
+import MButton from "../../../Elements/MButton";
 
 class UploadComponent extends Component {
   state = {
