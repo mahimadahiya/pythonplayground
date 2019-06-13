@@ -42,10 +42,7 @@ class UploadComponent extends Component {
     accept: ".png,.jpg"
   };
 
-  onUploadChangeChoice1 = (info, id) => {
-    if (info.file.status === "uploading") {
-      message.loading(`{info.file.name} uploading...`);
-    }
+  onUploadChangeChoice1 = info => {
     if (info.file.status === "done") {
       message.success(`${info.file.name} file uploaded successfully`);
       this.setState({ choice1: info.file.response.url });

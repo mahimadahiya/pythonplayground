@@ -69,7 +69,7 @@ class SideBar extends React.Component {
     return (
       <Layout>
         <Header className="header shadow-header" style={{ zIndex: 1 }}>
-          <div>
+          <div style={{ minWidth: "250px" }}>
             <img src={logo} alt="logo" />
           </div>
           {this.state.heading ? (
@@ -86,7 +86,7 @@ class SideBar extends React.Component {
               </span>
             </span>
             <span>
-              <Button type="ghost" size="large" icon="logout">
+              <Button type="danger" size="large" icon="logout">
                 Logout
               </Button>
             </span>

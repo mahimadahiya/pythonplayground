@@ -35,6 +35,10 @@ const routes = [
   {
     path: "/tracks/map/user",
     breadcrumb: "Map User"
+  },
+  {
+    path: "/questions",
+    breadcrumb: "Questions"
   }
 ];
 
