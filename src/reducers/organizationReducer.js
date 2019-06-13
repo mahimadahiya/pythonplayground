@@ -7,7 +7,8 @@ const INITIAL_STATE = {
   organizationBatches: {},
   organizationTracks: {},
   organizationModules: {},
-  users: []
+  users: [],
+  count: 0
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -38,7 +39,8 @@ export default (state = INITIAL_STATE, action) => {
     case ACTION_TYPE.FETCH_USERS:
       return {
         ...state,
-        users: action.payload.results
+        users: action.payload.results,
+        count: action.payload.count
       };
     case ACTION_TYPE.CLEAR_MODULES:
       return {

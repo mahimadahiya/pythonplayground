@@ -10,17 +10,7 @@ import {
   fetchUsers
 } from "../../../actions";
 
-import {
-  Form,
-  Select,
-  Switch,
-  Card,
-  Row,
-  Col,
-  Transfer,
-  Checkbox,
-  Table
-} from "antd";
+import { Form, Select, Card, Row, Col, Table, Icon, Pagination } from "antd";
 import MButton from "../../Elements/MButton";
 
 class UserTrackMapping extends React.Component {
@@ -28,11 +18,11 @@ class UserTrackMapping extends React.Component {
     mode: 0,
     organization_id: null,
     selectedTracks: [],
-    selectedBatches: [],
-    loading: true,
     users: [],
+    selectedUsers: [],
     plainUsers: [],
-    targetKeys: []
+    targetKeys: [],
+    batchId: null
   };
 
   setMode = e => {
@@ -56,10 +46,6 @@ class UserTrackMapping extends React.Component {
     this.setState({ selectedTracks: e });
   };
 
-  onBatchSelect = e => {
-    this.setState({ selectedBatches: e });
-  };
-
   onOrgSelect = async e => {
     this.setState({ organization_id: e, selectedTracks: [] }, () => {
       this.props.form.setFieldsValue({
@@ -71,15 +57,6 @@ class UserTrackMapping extends React.Component {
     this.setState({
       users: this.props.users
     });
-    // const usersList = this.props.users.map(user => {
-    //   return {
-    //     name: user.name,
-    //     description: user.email
-    //   };
-    // });
-    // this.setState({
-    //   users: usersList
-    // });
   };
 
   async loadBatchTrackData() {
@@ -96,20 +73,29 @@ class UserTrackMapping extends React.Component {
     this.setState({ loading: false });
   }
 
-  async onSubmit(values) {
-    const query = {
-      organization_id: values.organization_id,
-      mode: this.state.mode,
-      selectedBatches: `${values.selectedBatches}`,
-      selectedTracks: `${values.selectedTracks}`
-    };
-    this.setState({ loading: true });
-    await this.props.createUserTrackMapping(
-      this.props.user.Authorization,
-      query
-    );
-    this.setState({ loading: false });
-  }
+  onSubmit = async e => {
+    // const query = {
+    //   organization_id: values.organization_id,
+    //   mode: this.state.mode,
+    //   selectedBatches: `${values.selectedBatches}`,
+    //   selectedTracks: `${values.selectedTracks}`
+    // };
+    // this.setState({ loading: true });
+    // await this.props.createUserTrackMapping(
+    //   this.props.user.Authorization,
+    //   query
+    // );
+    // this.setState({ loading: false });
+    e.preventDefault();
+    this.props.form.validateFields((err, formProps) => {
+      if (!err) {
+        console.log(formProps);
+        console.log(this.state);
+      } else {
+        console.log(err);
+      }
+    });
+  };
 
   filterOrganizations = (val, option) => {
     const filteredList = this.props.organizations.filter(({ name }) => {
@@ -138,6 +124,9 @@ class UserTrackMapping extends React.Component {
   };
 
   getUsers = async id => {
+    this.setState({
+      batchId: id
+    });
     await this.props.fetchUsers(
       this.props.user.Authorization,
       { orgId: this.state.organization_id, batchId: id },
@@ -146,23 +135,7 @@ class UserTrackMapping extends React.Component {
     this.setState({
       users: this.props.users
     });
-    // const usersList = this.props.users.map(user => {
-    //   return {
-    //     key: user.id.toString(),
-    //     title: user.name,
-    //     description: user.email
-    //   };
-    // });
-    // this.setState({
-    //   users: usersList
-    // });
   };
-
-  // handleTransferChange = (targetKeys, direction, moveKeys) => {
-  //   this.setState({
-  //     targetKeys
-  //   });
-  // };
 
   columns = [
     {
@@ -179,9 +152,79 @@ class UserTrackMapping extends React.Component {
     }
   ];
 
+  columnsSelected = [
+    {
+      title: "ID",
+      dataIndex: "id"
+    },
+    {
+      title: "Name",
+      dataIndex: "name"
+    },
+    {
+      title: "Delete",
+      render: record => (
+        <div style={{ textAlign: "center" }}>
+          <Icon
+            type="delete"
+            theme="filled"
+            onClick={() => {
+              const users = this.state.selectedUsers.filter(user => {
+                return user.id !== record.id;
+              });
+              this.setState({
+                selectedUsers: users
+              });
+            }}
+          />
+        </div>
+      )
+    }
+  ];
+
+  rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      const users = [...this.state.selectedUsers, ...selectedRows];
+      const filteredUsers = users.filter(function(item, pos) {
+        return users.indexOf(item) === pos;
+      });
+      this.setState({
+        selectedUsers: filteredUsers
+      });
+    },
+    getCheckboxProps: record => ({
+      disabled: record.name === "Disabled User", // Column configuration not to be checked
+      name: record.name
+    }),
+    onSelect: (record, selected) => {
+      if (!selected) {
+        const users = this.state.selectedUsers.filter(user => {
+          return user.id !== record.id;
+        });
+        this.setState({
+          selectedUsers: users
+        });
+      }
+    }
+  };
+
+  handlePageChange = async pageNumber => {
+    const offset = pageNumber * 10 - 10;
+    await this.props.fetchUsers(
+      this.props.user.Authorization,
+      {
+        orgId: this.state.organization_id,
+        batchId: this.state.batchId
+      },
+      offset
+    );
+    this.setState({
+      users: this.props.users
+    });
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.state);
     return (
       <div>
         <Card>
@@ -198,6 +241,7 @@ class UserTrackMapping extends React.Component {
                 <Select
                   allowClear
                   showSearch
+                  size="large"
                   filterOption={this.filterOrganizations}
                   placeholder="Select an organization"
                   onChange={this.onOrgSelect}
@@ -227,6 +271,7 @@ class UserTrackMapping extends React.Component {
                 <Select
                   allowClear
                   placeholder="Select tracks"
+                  size="large"
                   mode="multiple"
                   defaultActiveFirstOption={false}
                 >
@@ -252,6 +297,7 @@ class UserTrackMapping extends React.Component {
                 <Select
                   filterOption={this.filterBatches}
                   placeholder="Select a batch"
+                  size="large"
                   onChange={this.getUsers}
                 >
                   {this.props.organizationBatches.map(batch => {
@@ -265,18 +311,44 @@ class UserTrackMapping extends React.Component {
               )}
             </Form.Item>
             <Row>
-              <Col span={16}>
-                <Table columns={this.columns} dataSource={this.state.users} />
+              <Col span={16} style={{ padding: 10, paddingLeft: 0 }}>
+                <Card
+                  title="Users"
+                  bodyStyle={{ padding: "0" }}
+                  headStyle={{ textAlign: "center" }}
+                >
+                  <Table
+                    rowSelection={this.rowSelection}
+                    rowKey={record => record.id}
+                    columns={this.columns}
+                    pagination={false}
+                    dataSource={this.state.users}
+                  />
+                  <Pagination
+                    onChange={this.handlePageChange}
+                    total={this.props.count}
+                  />
+                </Card>
+              </Col>
+
+              <Col
+                span={8}
+                style={{ padding: 10, paddingRight: 0, marginBottom: 10 }}
+              >
+                <Card
+                  title="Selected Users"
+                  bodyStyle={{ padding: "0" }}
+                  headStyle={{ textAlign: "center" }}
+                >
+                  <Table
+                    rowKey={record => record.id}
+                    pagination={false}
+                    columns={this.columnsSelected}
+                    dataSource={this.state.selectedUsers}
+                  />
+                </Card>
               </Col>
             </Row>
-
-            {/* <Transfer
-              showSearch
-              targetKeys={this.state.targetKeys}
-              dataSource={this.state.users}
-              onChange={this.handleTransferChange}
-              render={user => user.title}
-            /> */}
 
             <Form.Item>
               <MButton>Map User</MButton>
@@ -295,7 +367,8 @@ const mapStateToProps = state => {
     organizations: Object.values(state.organization.organizationList),
     organizationBatches: Object.values(state.organization.organizationBatches),
     users: state.organization.users,
-    organizationTracks: Object.values(state.organization.organizationTracks)
+    organizationTracks: Object.values(state.organization.organizationTracks),
+    count: state.organization.count
   };
 };
 
