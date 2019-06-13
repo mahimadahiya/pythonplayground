@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Icon, Breadcrumb, Button } from "antd";
+import { Layout, Menu, Icon, Breadcrumb, Button, Avatar } from "antd";
 import { Link } from "react-router-dom";
 import { withCookies } from "react-cookie";
 import logo from "../../assets/logo.png";
@@ -77,15 +77,13 @@ class SideBar extends React.Component {
               {this.state.heading}
             </span>
           ) : null}
-          {/* <span>{this.props.user}</span> */}
-          <span onClick={this.logout}>
+          <span>
             <span style={{ marginRight: 10, fontSize: "16px" }}>
+              <Avatar size="large" icon="user" style={{ marginRight: 15 }} />
               {this.props.user}
-              <span style={{ marginLeft: 5 }}>
-                {/* <Icon type="user" /> */}
-              </span>
+              <span style={{ marginLeft: 5 }} />
             </span>
-            <span>
+            <span onClick={this.logout}>
               <Button type="danger" size="large" icon="logout">
                 Logout
               </Button>
@@ -98,7 +96,6 @@ class SideBar extends React.Component {
               className="menu"
               mode="inline"
               theme="dark"
-              // defaultSelectedKeys={["sub1-1"]}
               defaultOpenKeys={["sub1"]}
               style={{ height: "100%", borderRight: 0 }}
             >

@@ -22,7 +22,9 @@ class UserTrackMapping extends React.Component {
     selectedUsers: [],
     plainUsers: [],
     targetKeys: [],
-    batchId: null
+    batchId: null,
+    loading: true,
+    loadingUsers: false
   };
 
   setMode = e => {
@@ -47,15 +49,19 @@ class UserTrackMapping extends React.Component {
   };
 
   onOrgSelect = async e => {
-    this.setState({ organization_id: e, selectedTracks: [] }, () => {
-      this.props.form.setFieldsValue({
-        selectedTracks: []
-      });
-      this.loadBatchTrackData();
-    });
+    this.setState(
+      { organization_id: e, selectedTracks: [], loadingUsers: true },
+      () => {
+        this.props.form.setFieldsValue({
+          selectedTracks: []
+        });
+        this.loadBatchTrackData();
+      }
+    );
     await this.props.fetchUsers(this.props.user.Authorization, { orgId: e }, 0);
     this.setState({
-      users: this.props.users
+      users: this.props.users,
+      loadingUsers: false
     });
   };
 
@@ -209,6 +215,7 @@ class UserTrackMapping extends React.Component {
   };
 
   handlePageChange = async pageNumber => {
+    this.setState({ loadingUsers: true });
     const offset = pageNumber * 10 - 10;
     await this.props.fetchUsers(
       this.props.user.Authorization,
@@ -219,7 +226,8 @@ class UserTrackMapping extends React.Component {
       offset
     );
     this.setState({
-      users: this.props.users
+      users: this.props.users,
+      loadingUsers: false
     });
   };
 
@@ -314,6 +322,7 @@ class UserTrackMapping extends React.Component {
               <Col span={16} style={{ padding: 10, paddingLeft: 0 }}>
                 <Card
                   title="Users"
+                  loading={this.state.loadingUsers}
                   bodyStyle={{ padding: "0" }}
                   headStyle={{ textAlign: "center" }}
                 >

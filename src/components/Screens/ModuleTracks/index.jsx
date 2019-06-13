@@ -73,22 +73,18 @@ class TrackList extends React.Component {
     const tableData = this.props.tracks;
     return (
       <div>
-        {this.state.loading ? (
-          <Loading />
-        ) : (
-          <Card type="inner">
-            <Table
-              dataSource={tableData}
-              columns={columnName}
-              rowKey={row => row.id}
-              footer={() => (
-                <MButton>
-                  <Link to="/tracks/create">Create Track</Link>
-                </MButton>
-              )}
-            />
-          </Card>
-        )}
+        <Card type="inner" loading={this.state.loading}>
+          <Table
+            dataSource={tableData}
+            columns={columnName}
+            rowKey={row => row.id}
+            footer={() => (
+              <MButton>
+                <Link to="/tracks/create">Create Track</Link>
+              </MButton>
+            )}
+          />
+        </Card>
       </div>
     );
   }

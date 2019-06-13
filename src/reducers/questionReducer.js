@@ -9,9 +9,14 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ACTION_TYPE.FETCH_QUESTIONS:
+      // console.log(_.mapKeys(action.payload.results, "id"));
+      // const reverse
+      const result = _.mapKeys(action.payload.results, "id");
+      const arr = Object.values(result);
+      console.log(arr);
       return {
         ...state,
-        questionsList: _.mapKeys(action.payload.results, "id"),
+        questionsList: arr.reverse(),
         count: action.payload.count
       };
     case ACTION_TYPE.FETCH_QUESTION_DETAIL:

@@ -60,65 +60,61 @@ class CreateTrack extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        {this.state.loading ? (
-          <Loading />
-        ) : (
-          <Card>
-            <Form onSubmit={this.onSubmit}>
-              <Form.Item label="Track Name">
-                {getFieldDecorator("name", {
-                  rules: [
-                    {
-                      required: true,
-                      message: "Please enter a valid Track Name"
-                    }
-                  ]
-                })(<Input placeholder="Type Track Name" />)}
-              </Form.Item>
-              <Form.Item label="Organization">
-                {getFieldDecorator("organization_id", {
-                  rules: [
-                    {
-                      required: true,
-                      message: "Please select an Organization"
-                    }
-                  ]
-                })(
-                  <Select
-                    placeholder="Select an Organization"
-                    allowClear
-                    showSearch
-                    filterOption={this.filterOrganizations}
-                  >
-                    {this.props.organizations.map(organization => {
-                      return (
-                        <Select.Option
-                          value={organization.id}
-                          key={organization.id}
-                        >{`${organization.name} (${
-                          organization.id
-                        })`}</Select.Option>
-                      );
-                    })}
-                  </Select>
-                )}
-              </Form.Item>
-              <Form.Item label="Going Live At">
-                {getFieldDecorator("going_live_at", {
-                  rules: [
-                    {
-                      required: true,
-                      message: "Please select a date"
-                    }
-                  ]
-                })(<DatePicker />)}
-              </Form.Item>
-              <Form.Item>
-                <MButton>Create Track</MButton>
-              </Form.Item>
-            </Form>
-          </Card>
-        )}
+        <Card loading={this.state.loading}>
+          <Form onSubmit={this.onSubmit}>
+            <Form.Item label="Track Name">
+              {getFieldDecorator("name", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please enter a valid Track Name"
+                  }
+                ]
+              })(<Input placeholder="Type Track Name" />)}
+            </Form.Item>
+            <Form.Item label="Organization">
+              {getFieldDecorator("organization_id", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please select an Organization"
+                  }
+                ]
+              })(
+                <Select
+                  placeholder="Select an Organization"
+                  allowClear
+                  showSearch
+                  filterOption={this.filterOrganizations}
+                >
+                  {this.props.organizations.map(organization => {
+                    return (
+                      <Select.Option
+                        value={organization.id}
+                        key={organization.id}
+                      >{`${organization.name} (${
+                        organization.id
+                      })`}</Select.Option>
+                    );
+                  })}
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item label="Going Live At">
+              {getFieldDecorator("going_live_at", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please select a date"
+                  }
+                ]
+              })(<DatePicker />)}
+            </Form.Item>
+            <Form.Item>
+              <MButton>Create Track</MButton>
+            </Form.Item>
+          </Form>
+        </Card>
       </div>
     );
   }

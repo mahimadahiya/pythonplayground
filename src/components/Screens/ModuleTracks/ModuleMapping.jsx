@@ -79,69 +79,62 @@ class ModuleMapping extends React.Component {
     if (this.state.track === null) return null;
     return (
       <div>
-        {this.state.loading ? (
-          <Loading />
-        ) : (
+        <div>
           <div>
-            <div>
-              {this.state.track ? (
-                <Card title="Details">
-                  <Descriptions bordered column="2">
-                    <Descriptions.Item label="Name">
-                      {this.state.track.name}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Organization Name">{`${
-                      this.state.track.organization__name
-                    } (${
-                      this.state.track.organization_id
-                    })`}</Descriptions.Item>
+            <Card title="Details" loading={this.state.loading}>
+              <Descriptions bordered column="2">
+                <Descriptions.Item label="Name">
+                  {this.state.track.name}
+                </Descriptions.Item>
+                <Descriptions.Item label="Organization Name">{`${
+                  this.state.track.organization__name
+                } (${this.state.track.organization_id})`}</Descriptions.Item>
 
-                    <Descriptions.Item label="Starts At">
-                      {this.state.track.starts_at}
-                    </Descriptions.Item>
-                  </Descriptions>
-                </Card>
-              ) : null}
-            </div>
-            <div>
-              {this.props.modules ? (
-                <Card title="Select Modules" style={{ marginTop: "10px" }}>
-                  <Form onSubmit={this.onSubmit}>
-                    <Form.Item label="Modules">
-                      {getFieldDecorator("module_id_list", {
-                        rules: [
-                          {
-                            required: true,
-                            message: "Please select a module"
-                          }
-                        ]
-                      })(
-                        <Select
-                          mode="multiple"
-                          filterOption={this.filterModules}
-                        >
-                          {this.props.modules.map(module => {
-                            return (
-                              <Select.Option
-                                value={module.module_id}
-                                key={module.module_id}
-                              >{`${module.module__name} (${
-                                module.module_id
-                              })`}</Select.Option>
-                            );
-                          })}
-                        </Select>
-                      )}
-                    </Form.Item>
-                    <Form.Item>
-                      <MButton>Map Module</MButton>
-                    </Form.Item>
-                  </Form>
-                </Card>
-              ) : null}
-            </div>
+                <Descriptions.Item label="Starts At">
+                  {this.state.track.starts_at}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
           </div>
-        )}
+          <div>
+            {this.props.modules ? (
+              <Card
+                title="Select Modules"
+                style={{ marginTop: "10px" }}
+                loading={this.state.loading}
+              >
+                <Form onSubmit={this.onSubmit}>
+                  <Form.Item label="Modules">
+                    {getFieldDecorator("module_id_list", {
+                      rules: [
+                        {
+                          required: true,
+                          message: "Please select a module"
+                        }
+                      ]
+                    })(
+                      <Select mode="multiple" filterOption={this.filterModules}>
+                        {this.props.modules.map(module => {
+                          return (
+                            <Select.Option
+                              value={module.module_id}
+                              key={module.module_id}
+                            >{`${module.module__name} (${
+                              module.module_id
+                            })`}</Select.Option>
+                          );
+                        })}
+                      </Select>
+                    )}
+                  </Form.Item>
+                  <Form.Item>
+                    <MButton>Map Module</MButton>
+                  </Form.Item>
+                </Form>
+              </Card>
+            ) : null}
+          </div>
+        </div>
       </div>
     );
   }

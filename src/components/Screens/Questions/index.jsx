@@ -6,9 +6,10 @@ import { Divider, Card, Table, Pagination } from "antd";
 import { fetchQuestionList } from "../../../actions";
 
 class QuestionList extends React.Component {
+
   componentWillMount = () => {
     this.props.heading("Questions");
-    this.props.fetchQuestionList(this.props.user.Authorization, { offset: 10 });
+    this.props.fetchQuestionList(this.props.user.Authorization, { offset: 0 });
   };
 
   tableColumnName = () => {
@@ -60,6 +61,7 @@ class QuestionList extends React.Component {
   render() {
     const columnName = this.tableColumnName();
     const tableData = this.props.questions;
+    console.log(tableData);
     return (
       <div>
         <Card type="inner">
