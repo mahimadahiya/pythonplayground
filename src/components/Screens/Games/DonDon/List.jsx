@@ -15,7 +15,6 @@ class DonDonList extends React.Component {
         { searchText: "" },
         0
       );
-      console.log(this.props.list);
       this.setState({ loading: false });
     } else {
       this.setState({ loading: false });
