@@ -4,7 +4,7 @@ import * as ACTION_TYPE from "./actionTypes";
 
 export const dondonUpload = (authToken, formValues) => {
   pyLearningApi(authToken).post(
-    "/game/dondon/upload",
+    "/game/dondon/upload/add",
     qs.stringify(formValues)
   );
 };
