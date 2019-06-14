@@ -29,6 +29,10 @@ const routes = [
     breadcrumb: "Simulation"
   },
   {
+    path: "/games/dondon",
+    breadcrumb: "DonDon List"
+  },
+  {
     path: "/games/dondon/upload",
     breadcrumb: "DonDon Upload"
   },

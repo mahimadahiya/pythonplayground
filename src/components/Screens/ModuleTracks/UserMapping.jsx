@@ -10,7 +10,17 @@ import {
   fetchUsers
 } from "../../../actions";
 
-import { Form, Select, Card, Row, Col, Table, Icon, Pagination } from "antd";
+import {
+  Form,
+  Select,
+  Card,
+  Row,
+  Col,
+  Table,
+  Icon,
+  Pagination,
+  Tag
+} from "antd";
 import MButton from "../../Elements/MButton";
 
 class UserTrackMapping extends React.Component {
@@ -24,7 +34,8 @@ class UserTrackMapping extends React.Component {
     targetKeys: [],
     batchId: null,
     loading: true,
-    loadingUsers: false
+    loadingUsers: false,
+    pageNumber: 1
   };
 
   setMode = e => {
@@ -79,7 +90,7 @@ class UserTrackMapping extends React.Component {
     this.setState({ loading: false });
   }
 
-  onSubmit = async e => {
+  onSubmit = e => {
     // const query = {
     //   organization_id: values.organization_id,
     //   mode: this.state.mode,
@@ -93,10 +104,19 @@ class UserTrackMapping extends React.Component {
     // );
     // this.setState({ loading: false });
     e.preventDefault();
-    this.props.form.validateFields((err, formProps) => {
+    this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
-        console.log(formProps);
-        console.log(this.state);
+        const users = this.state.selectedUsers.map(user => user.id);
+        const formValues = {
+          selected_org_id: this.state.organization_id,
+          selected_tracks: JSON.stringify(formProps.selectedTracks),
+          selected_users: JSON.stringify(users)
+        };
+        console.log(formValues);
+        await this.props.createUserTrackMapping(
+          this.props.user.Authorization,
+          formValues
+        );
       } else {
         console.log(err);
       }
@@ -155,6 +175,20 @@ class UserTrackMapping extends React.Component {
     {
       title: "Email",
       dataIndex: "email"
+    },
+    {
+      title: "Tracks",
+      dataIndex: "track_details",
+      key: "tracks",
+      render: tracks => (
+        <span>
+          {tracks.map(track => (
+            <Tag color="blue" key={track.track_id}>
+              {track.track__name}
+            </Tag>
+          ))}
+        </span>
+      )
     }
   ];
 
@@ -228,7 +262,8 @@ class UserTrackMapping extends React.Component {
     );
     this.setState({
       users: this.props.users,
-      loadingUsers: false
+      loadingUsers: false,
+      pageNumber
     });
   };
 
@@ -337,6 +372,7 @@ class UserTrackMapping extends React.Component {
                   <Pagination
                     onChange={this.handlePageChange}
                     total={this.props.count}
+                    current={this.state.pageNumber}
                   />
                 </Card>
               </Col>

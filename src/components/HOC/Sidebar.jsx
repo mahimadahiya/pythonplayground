@@ -94,7 +94,7 @@ class SideBar extends React.Component {
           </span>
         </Header>
         <Layout style={{ height: "100vh" }}>
-          <Sider theme="dark" width="300px" style={{ paddingTop: "20px" }}>
+          <Sider theme="dark" width="300px" style={{ paddingTop: "60px" }}>
             <Menu
               className="menu"
               mode="inline"
@@ -168,12 +168,20 @@ class SideBar extends React.Component {
                   </span>
                 }
               >
-                <Menu.Item
-                  key="sub4-1"
-                  onClick={() => history.push("/games/dondon/upload")}
-                >
-                  Don Don
-                </Menu.Item>
+                <SubMenu key="sub4-1" title="Don Don">
+                  <Menu.Item
+                    key="sub4-1-1"
+                    onClick={() => history.push("/games/dondon")}
+                  >
+                    List
+                  </Menu.Item>
+                  <Menu.Item
+                    key="sub4-1-2"
+                    onClick={() => history.push("/games/dondon/upload")}
+                  >
+                    Upload
+                  </Menu.Item>
+                </SubMenu>
               </SubMenu>
             </Menu>
           </Sider>

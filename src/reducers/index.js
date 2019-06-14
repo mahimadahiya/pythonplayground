@@ -5,6 +5,7 @@ import organizationReducer from "./organizationReducer";
 import questionReducer from "./questionReducer";
 import userTrackReducer from "./userTrackReducer";
 import simulationReducer from "./simulationReducer"
+import dondonReducer from "./dondonReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   organization: organizationReducer,
   question: questionReducer,
   userTrack: userTrackReducer,
-  simulation: simulationReducer
+  simulation: simulationReducer,
+  dondon: dondonReducer
 });
