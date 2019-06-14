@@ -6,7 +6,6 @@ import { dateFormat } from "../Form/FieldFormats";
 import { createModuleTrack, fetchOrganizations } from "../../../actions";
 import moment from "moment";
 import MButton from "../../Elements/MButton";
-import Loading from "../../Elements/Loading";
 
 class CreateTrack extends React.Component {
   state = {

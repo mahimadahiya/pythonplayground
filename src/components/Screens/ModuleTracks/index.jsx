@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Table, Divider, Card } from "antd";
 import { fetchModuleTracks } from "../../../actions";
 import MButton from "../../Elements/MButton";
-import Loading from "../../Elements/Loading";
 
 class TrackList extends React.Component {
   state = { loading: true };

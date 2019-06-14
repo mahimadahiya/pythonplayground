@@ -4,7 +4,6 @@ import { Descriptions, Card, Form, Select } from "antd";
 import { fetchModuleTracks, createModuleTrackMapping } from "../../../actions";
 import { getOrganizationModules } from "../../../actions";
 import MButton from "../../Elements/MButton";
-import Loading from "../../Elements/Loading";
 
 class ModuleMapping extends React.Component {
   state = {
