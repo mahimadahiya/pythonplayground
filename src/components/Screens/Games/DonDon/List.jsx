@@ -43,9 +43,12 @@ class DonDonList extends React.Component {
         key: "text"
       },
       {
-        title: "Instructions",
-        dataIndex: "instructions",
-        key: "instructions"
+        title: "Entity Type",
+        dataIndex: "entity_type",
+        key: "instructions",
+        render: record => {
+          return <div>{record === 1 ? "BM" : "FM"}</div>;
+        }
       },
       {
         title: "Actions",
