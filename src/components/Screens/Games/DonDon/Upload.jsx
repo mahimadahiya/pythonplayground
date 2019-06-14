@@ -76,7 +76,7 @@ class UploadComponent extends Component {
             choice2: this.state.choice2
           };
           pyLearningApi(this.props.user.Authorization).post(
-            "/v2/game/dondon/upload/",
+            "/v2/game/dondon/upload/add",
             qs.stringify(data)
           );
         } else {
@@ -86,7 +86,7 @@ class UploadComponent extends Component {
             type: this.state.type
           };
           pyLearningApi(this.props.user.Authorization).post(
-            "/v2/game/dondon/upload/",
+            "/v2/game/dondon/upload/add",
             qs.stringify(data)
           );
         }
@@ -107,7 +107,7 @@ class UploadComponent extends Component {
             })(<Input size="large" />)}
           </Form.Item>
           <Form.Item label="Instruction">
-            {getFieldDecorator("instruction", {
+            {getFieldDecorator("instructions", {
               rules: [{ required: true, message: "Please enter instruction" }]
             })(<Input size="large" />)}
           </Form.Item>
