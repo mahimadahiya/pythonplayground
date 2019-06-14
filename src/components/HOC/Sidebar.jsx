@@ -184,7 +184,7 @@ class SideBar extends React.Component {
             <Content>
               <div
                 style={{
-                  margin: "0px 15px 40px 15px"
+                  margin: "40px 15px 40px 15px"
                 }}
                 className="overflow shadow"
               >
