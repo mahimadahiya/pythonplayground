@@ -168,12 +168,13 @@ class UserTrackMapping extends React.Component {
       dataIndex: "name"
     },
     {
-      title: "Delete",
+      title: "",
       render: record => (
         <div style={{ textAlign: "center" }}>
           <Icon
             type="delete"
-            theme="filled"
+            theme="twoTone"
+            twoToneColor="#ff0000"
             onClick={() => {
               const users = this.state.selectedUsers.filter(user => {
                 return user.id !== record.id;
