@@ -68,7 +68,10 @@ class SideBar extends React.Component {
   render() {
     return (
       <Layout>
-        <Header className="header shadow-header" style={{ zIndex: 1 }}>
+        <Header
+          className="header shadow-header"
+          style={{ zIndex: 1, position: "fixed", width: "100%" }}
+        >
           <div style={{ minWidth: "250px" }}>
             <img src={logo} alt="logo" />
           </div>
