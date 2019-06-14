@@ -1,18 +1,20 @@
-import * as ACTION_TYPE from '../actions/actionTypes'
+import * as ACTION_TYPE from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   list: [],
   count: 0
-}
+};
 
 export default (state = INITIAL_STATE, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case ACTION_TYPE.FETCH_DONDON_LIST:
       return {
         ...state,
         list: action.payload.results,
         count: action.payload.count
-      }
-    default: return state
+      };
+
+    default:
+      return state;
   }
-}
+};

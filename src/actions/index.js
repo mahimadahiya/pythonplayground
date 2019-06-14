@@ -25,9 +25,7 @@ import {
   clearSimulations
 } from "./simulationActions";
 
-import {
-  fetchDonDonList
-} from './dondonActions'
+import { fetchDonDonList } from "./dondonActions";
 
 export {
   getOrganizationModules,

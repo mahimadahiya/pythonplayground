@@ -1,8 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Table, Card, Pagination, Input, Row, Form, Select } from "antd";
+import qs from "querystring";
+import {
+  Table,
+  Card,
+  Pagination,
+  Input,
+  Row,
+  Form,
+  Select,
+  Button,
+  Icon
+} from "antd";
 import { fetchDonDonList } from "../../../../actions";
+import history from "../../../../history";
+import pyLearningApi from "../../../../apis/pylearning";
 // import MButton from "../../Elements/MButton";
 
 class DonDonList extends React.Component {
@@ -24,6 +36,11 @@ class DonDonList extends React.Component {
   componentDidMount() {
     this.props.heading("Don Don List");
   }
+
+  onEdit = record => {
+    // console.log(record);
+    history.push("/games/dondon/edit/" + record.id);
+  };
 
   tableColumnName = () => {
     const column = [
@@ -56,12 +73,27 @@ class DonDonList extends React.Component {
 
         render: record => (
           <span>
-            <Link to="/edit">Edit</Link>
+            <Button
+              type="link"
+              onClick={() => this.onEdit(record)}
+              style={{ marginRight: 10 }}
+            >
+              Edit
+            </Button>
+            <Icon type="delete" onClick={() => this.onDelete(record)} />
           </span>
         )
       }
     ];
     return column;
+  };
+
+  onDelete = record => {
+    console.log(record);
+    pyLearningApi(this.props.user.Authorization).post(
+      "/v2/game/dondon/upload/delete",
+      qs.stringify({ id: record.id })
+    );
   };
 
   handlePageChange = pageNumber => {

@@ -15,6 +15,7 @@ import QuestionList from "../Screens/Questions/index";
 import MapQuestionChoices from "../Screens/Questions/mapChoices";
 import Upload from "../Screens/Games/DonDon/Upload";
 import List from "../Screens/Games/DonDon/List";
+import Edit from "../Screens/Games/DonDon/Edit";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -99,6 +100,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/games/dondon"
               component={List}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/games/dondon/edit/:id"
+              component={Edit}
               user={user}
               exact
             />

@@ -37,6 +37,10 @@ const routes = [
     breadcrumb: "DonDon Upload"
   },
   {
+    path: "/games/dondon/edit",
+    breadcrumb: "DonDon Edit"
+  },
+  {
     path: "/tracks/map/user",
     breadcrumb: "Map User"
   },

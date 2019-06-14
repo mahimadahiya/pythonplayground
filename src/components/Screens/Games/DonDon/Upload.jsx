@@ -136,7 +136,7 @@ class UploadComponent extends Component {
           <Form.Item label="Entity Type">
             <Switch
               unCheckedChildren="Text"
-              checkedChildren="Input"
+              checkedChildren="Image"
               onChange={this.setType}
             />
           </Form.Item>
