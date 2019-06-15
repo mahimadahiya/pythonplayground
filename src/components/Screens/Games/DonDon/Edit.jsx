@@ -17,8 +17,7 @@ class Edit extends Component {
   };
 
   componentDidMount() {
-    this.props.heading("DonDon Upload");
-    console.log(this.props);
+    this.props.heading("DonDon Edit");
     const id = this.props.match.params.id;
     const recordList = this.props.list.filter(item => {
       return item.id.toString() === id;
@@ -127,7 +126,6 @@ class Edit extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.state);
     return (
       <Card>
         <Form onSubmit={this.onSubmit}>
@@ -164,20 +162,20 @@ class Edit extends Component {
               rules: [{ required: true, message: "Please enter Bucket 2" }]
             })(<Input size="large" />)}
           </Form.Item>
-          <Form.Item label="Type">
-            <Switch
-              unCheckedChildren="Text"
-              checkedChildren="Image"
-              checked={this.state.type === "text" ? false : true}
-              onChange={this.setType}
-            />
-          </Form.Item>
           <Form.Item label="Status">
             <Switch
               unCheckedChildren="Draft"
               checkedChildren="Live"
               checked={this.state.status === 1 ? true : false}
               onChange={this.setStatus}
+            />
+          </Form.Item>
+          <Form.Item label="Type">
+            <Switch
+              unCheckedChildren="Text"
+              checkedChildren="Image"
+              checked={this.state.type === "text" ? false : true}
+              onChange={this.setType}
             />
           </Form.Item>
           {this.state.type === "text" ? (

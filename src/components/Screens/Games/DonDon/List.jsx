@@ -15,7 +15,6 @@ import {
 import { fetchDonDonList } from "../../../../actions";
 import history from "../../../../history";
 import pyLearningApi from "../../../../apis/pylearning";
-// import MButton from "../../Elements/MButton";
 
 class DonDonList extends React.Component {
   state = { loading: true, searchText: "", entity_type: null, status: null };
@@ -38,7 +37,6 @@ class DonDonList extends React.Component {
   }
 
   onEdit = record => {
-    // console.log(record);
     history.push("/games/dondon/edit/" + record.id);
   };
 
