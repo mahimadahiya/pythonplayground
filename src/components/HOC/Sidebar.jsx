@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Icon, Button, Avatar } from "antd";
+import { Layout, Menu, Icon, Button, Dropdown } from "antd";
 import { withCookies } from "react-cookie";
 import logo from "../../assets/logo.png";
 import history from "../../history";
@@ -50,6 +50,14 @@ class SideBar extends React.Component {
     this.props.logoutUser();
   };
 
+  userMenu = (
+    <Menu>
+      <Menu.Item key="0" style={{ textAlign: "center" }}>
+        <Icon type="logout" /> Logout
+      </Menu.Item>
+    </Menu>
+  );
+
   render() {
     return (
       <Layout>
@@ -67,14 +75,11 @@ class SideBar extends React.Component {
           ) : null}
           <span>
             <span style={{ marginRight: 10, fontSize: "16px" }}>
-              <Avatar size="large" icon="user" style={{ marginRight: 15 }} />
-              {this.props.user}
-              <span style={{ marginLeft: 5 }} />
-            </span>
-            <span onClick={this.logout}>
-              <Button type="danger" size="large" icon="logout">
-                Logout
-              </Button>
+              <Dropdown overlay={this.userMenu} trigger={["click"]}>
+                <Button icon="user" size="large" type="link">
+                  {this.props.user} <Icon type="down" />
+                </Button>
+              </Dropdown>
             </span>
           </span>
         </Header>
@@ -195,7 +200,6 @@ class SideBar extends React.Component {
                 }}
                 className="overflow shadow"
               >
-
                 {/* Sending Heading Prop to children to render heading on header */}
 
                 {React.cloneElement(this.props.children, {
