@@ -12,24 +12,24 @@ import {
   Button,
   Icon
 } from "antd";
-// import { fetchDonDonList } from "../../../../actions";
+import { fetchMagicphraseList } from "../../../../actions";
 import history from "../../../../history";
-// import pyLearningApi from "../../../../apis/pylearning";
+import pyLearningApi from "../../../../apis/pylearning";
 
 class DonDonList extends React.Component {
   state = { loading: true, searchText: "", entity_type: null, status: null };
 
   componentWillMount = async () => {
-    // if (this.props.list.length === 0) {
-    //   await this.props.fetchDonDonList(
-    //     this.props.user.Authorization,
-    //     { searchText: "" },
-    //     0
-    //   );
-    //   this.setState({ loading: false });
-    // } else {
+    if (this.props.list.length === 0) {
+      await this.props.fetchMagicphraseList(
+        this.props.user.Authorization,
+        { searchText: "" },
+        0
+      );
       this.setState({ loading: false });
-    // }
+    } else {
+      this.setState({ loading: false });
+    }
   };
 
   componentDidMount() {
@@ -53,20 +53,13 @@ class DonDonList extends React.Component {
         key: "entity_id"
       },
       {
-        title: "Text",
-        dataIndex: "text",
-        key: "text",
-        onCell: () => {
-          return {
-             style: {
-                whiteSpace: 'nowrap',
-                maxWidth: 400,
-             }
-          }
-       },
-        width: '60%',
-        render: (text) => {
-          return <div style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>{text}</div>
+        title: "Title",
+        dataIndex: "title",
+        key: "title",
+
+        width: "40%",
+        render: text => {
+          return <div style={{ minHeight: "100px" }}>{text}</div>;
         }
       },
       {
@@ -99,23 +92,23 @@ class DonDonList extends React.Component {
   };
 
   onDelete = record => {
-    // pyLearningApi(this.props.user.Authorization).post(
-    //   "/v2/game/dondon/upload/delete",
-    //   qs.stringify({ id: record.id })
-    // );
+    pyLearningApi(this.props.user.Authorization).post(
+      "/v2/game/ctp/upload_panel/delete",
+      qs.stringify({ id: record.id })
+    );
   };
 
   handlePageChange = pageNumber => {
     const offset = pageNumber * 10 - 10;
-    // this.props.fetchDonDonList(
-    //   this.props.user.Authorization,
-    //   {
-    //     searchText: this.state.searchText,
-    //     entity_type: this.state.entity_type,
-    //     status: this.state.status
-    //   },
-    //   offset
-    // );
+    this.props.fetchMagicphraseList(
+      this.props.user.Authorization,
+      {
+        searchText: this.state.searchText,
+        entity_type: this.state.entity_type,
+        status: this.state.status
+      },
+      offset
+    );
   };
 
   onSearch = e => {
@@ -124,15 +117,17 @@ class DonDonList extends React.Component {
         searchText: e.target.value
       },
       () => {
-        // this.props.fetchDonDonList(
-        //   this.props.user.Authorization,
-        //   {
-        //     searchText: this.state.searchText,
-        //     entity_type: this.state.entity_type,
-        //     status: this.state.status
-        //   },
-        //   0
-        // );
+        setTimeout(() => {
+          this.props.fetchMagicphraseList(
+            this.props.user.Authorization,
+            {
+              searchText: this.state.searchText,
+              entity_type: this.state.entity_type,
+              status: this.state.status
+            },
+            0
+          );
+        }, 1000);
       }
     );
   };
@@ -143,15 +138,17 @@ class DonDonList extends React.Component {
         entity_type: value.key
       },
       () => {
-        // this.props.fetchDonDonList(
-        //   this.props.user.Authorization,
-        //   {
-        //     searchText: this.state.searchText,
-        //     entity_type: this.state.entity_type,
-        //     status: this.state.status
-        //   },
-        //   0
-        // );
+        setTimeout(() => {
+          this.props.fetchMagicphraseList(
+            this.props.user.Authorization,
+            {
+              searchText: this.state.searchText,
+              entity_type: this.state.entity_type,
+              status: this.state.status
+            },
+            0
+          );
+        }, 1000);
       }
     );
   };
@@ -162,15 +159,17 @@ class DonDonList extends React.Component {
         status: value.key
       },
       () => {
-        // this.props.fetchDonDonList(
-        //   this.props.user.Authorization,
-        //   {
-        //     searchText: this.state.searchText,
-        //     entity_type: this.state.entity_type,
-        //     status: this.state.status
-        //   },
-        //   0
-        // );
+        setTimeout(() => {
+          this.props.fetchMagicphraseList(
+            this.props.user.Authorization,
+            {
+              searchText: this.state.searchText,
+              entity_type: this.state.entity_type,
+              status: this.state.status
+            },
+            0
+          );
+        }, 1000);
       }
     );
   };
@@ -185,8 +184,7 @@ class DonDonList extends React.Component {
               <Input
                 placeholder="Search by ID or Text"
                 width="20"
-                onPressEnter={this.onSearch}
-                onChange={this.onSearchChange}
+                onChange={this.onSearch}
               />
             </Form.Item>
             <Form
@@ -252,13 +250,13 @@ class DonDonList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    // list: state.dondon.list,
-    // count: state.dondon.count,
+    list: state.magicphrase.list,
+    count: state.magicphrase.count,
     user: state.userAuth
   };
 };
 
 export default connect(
   mapStateToProps,
-  // { fetchDonDonList }
+  { fetchMagicphraseList }
 )(DonDonList);

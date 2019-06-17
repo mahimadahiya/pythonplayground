@@ -56,17 +56,9 @@ class DonDonList extends React.Component {
         title: "Text",
         dataIndex: "text",
         key: "text",
-        onCell: () => {
-          return {
-             style: {
-                whiteSpace: 'nowrap',
-                maxWidth: 400,
-             }
-          }
-       },
-        width: '60%',
-        render: (text) => {
-          return <div style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>{text}</div>
+        width: "60%",
+        render: text => {
+          return <div style={{ minHeight: "60px" }}>{text}</div>;
         }
       },
       {
@@ -120,12 +112,12 @@ class DonDonList extends React.Component {
   };
 
   onSearch = e => {
-      this.setState(
-        {
-          searchText: e.target.value
-        },
-        () => {
-          setTimeout(() => {
+    this.setState(
+      {
+        searchText: e.target.value
+      },
+      () => {
+        setTimeout(() => {
           this.props.fetchDonDonList(
             this.props.user.Authorization,
             {
@@ -135,9 +127,9 @@ class DonDonList extends React.Component {
             },
             0
           );
-        }, 1000)
-        }
-      );
+        }, 1000);
+      }
+    );
   };
 
   onEntityChange = value => {
@@ -147,7 +139,6 @@ class DonDonList extends React.Component {
       },
       () => {
         setTimeout(() => {
-
           this.props.fetchDonDonList(
             this.props.user.Authorization,
             {
@@ -157,7 +148,7 @@ class DonDonList extends React.Component {
             },
             0
           );
-        }, 1000)
+        }, 1000);
       }
     );
   };
@@ -169,7 +160,6 @@ class DonDonList extends React.Component {
       },
       () => {
         setTimeout(() => {
-
           this.props.fetchDonDonList(
             this.props.user.Authorization,
             {
@@ -179,7 +169,7 @@ class DonDonList extends React.Component {
             },
             0
           );
-        }, 1000)
+        }, 1000);
       }
     );
   };

@@ -4,7 +4,7 @@ import pyLearningApi from "../../../../apis/pylearning";
 import { connect } from "react-redux";
 import qs from "querystring";
 import MButton from "../../../Elements/MButton";
-// import { fetchDonDonList } from "../../../../actions";
+import { fetchMagicphraseList } from "../../../../actions";
 
 class Edit extends Component {
   state = {
@@ -13,31 +13,31 @@ class Edit extends Component {
     choice1: null,
     choice2: null,
     status: 1,
-    id: null
+    id: null,
+    media: null
   };
 
   componentDidMount() {
     this.props.heading("MagicPhrase Edit");
     const id = this.props.match.params.id;
-    // const recordList = this.props.list.filter(item => {
-    //   return item.id.toString() === id;
-    // });
-    // const record = recordList[0];
-    // this.props.form.setFieldsValue({
-    //   text: record.text,
-    //   instructions: record.instructions,
-    //   entity_id: record.entity_id,
-    //   bucket1: record.bucket1,
-    //   bucket2: record.bucket2
-    // });
-    // this.setState({
-    //   entityType: record.entity_type,
-    //   type: record.type,
-    //   status: record.status,
-    //   choice1: record.choice1,
-    //   choice2: record.choice2,
-    //   id
-    // });
+    const recordList = this.props.list.filter(item => {
+      return item.id.toString() === id;
+    });
+    const record = recordList[0];
+    this.props.form.setFieldsValue({
+      title: record.title,
+      entity_id: record.entity_id,
+      bucket1: record.bucket1,
+      bucket2: record.bucket2
+    });
+    this.setState({
+      entityType: record.entity_type,
+      type: record.type,
+      status: record.status,
+      choice1: record.choice1,
+      choice2: record.choice2,
+      id
+    });
   }
 
   setEntityType = e => {
@@ -63,6 +63,15 @@ class Edit extends Component {
       key: "TcS99L07QkDezB5n4Qdw"
     },
     accept: ".png,.jpg"
+  };
+
+  onUploadMedia = info => {
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} file uploaded successfully`);
+      this.setState({ media: info.file.response.url });
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} file upload failed.`);
+    }
   };
 
   onUploadChangeChoice1 = info => {
@@ -106,10 +115,10 @@ class Edit extends Component {
             id: this.state.id,
             status: this.state.status
           };
-        //   pyLearningApi(this.props.user.Authorization).post(
-        //     "/v2/game/dondon/upload/edit",
-        //     qs.stringify(data)
-        //   );
+          pyLearningApi(this.props.user.Authorization).post(
+            "/v2/game/ctp/upload_panel/edit",
+            qs.stringify(data)
+          );
         } else {
           const data = {
             ...formProps,
@@ -118,10 +127,10 @@ class Edit extends Component {
             id: this.state.id,
             status: this.state.status
           };
-        //   pyLearningApi(this.props.user.Authorization).post(
-        //     "/v2/game/dondon/upload/edit",
-        //     qs.stringify(data)
-        //   );
+          pyLearningApi(this.props.user.Authorization).post(
+            "/v2/game/ctp/upload_panel/edit",
+            qs.stringify(data)
+          );
         }
       } else {
         console.log(err);
@@ -138,14 +147,9 @@ class Edit extends Component {
     return (
       <Card>
         <Form onSubmit={this.onSubmit}>
-          <Form.Item label="Text">
-            {getFieldDecorator("text", {
-              rules: [{ required: true, message: "Please enter text" }]
-            })(<Input size="large" />)}
-          </Form.Item>
-          <Form.Item label="Instructions">
-            {getFieldDecorator("instructions", {
-              rules: [{ required: true, message: "Please enter instruction" }]
+          <Form.Item label="Title">
+            {getFieldDecorator("title", {
+              rules: [{ required: true, message: "Please enter title" }]
             })(<Input size="large" />)}
           </Form.Item>
           <Form.Item label="Entity ID">
@@ -268,6 +272,13 @@ class Edit extends Component {
               </Form.Item>
             </div>
           )}
+          <Form.Item label="Media">
+            <Upload {...this.uploadProps} onChange={this.onUploadMedia}>
+              <Button>
+                <Icon type="upload" /> Click to Upload
+              </Button>
+            </Upload>
+          </Form.Item>
           <div style={{ textAlign: "right" }}>
             <MButton>Update</MButton>
           </div>
@@ -280,11 +291,11 @@ class Edit extends Component {
 const mapStateToProps = state => {
   return {
     user: state.userAuth,
-    list: state.dondon.list
+    list: state.magicphrase.list
   };
 };
 
 export default connect(
   mapStateToProps,
-//   { fetchDonDonList }
+    { fetchMagicphraseList }
 )(Form.create()(Edit));

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Input, Card, Switch, Icon, Button, Upload, message } from "antd";
-// import pyLearningApi from "../../../../apis/pylearning";
+import pyLearningApi from "../../../../apis/pylearning";
 import { connect } from "react-redux";
 import qs from "querystring";
 import MButton from "../../../Elements/MButton";
@@ -10,7 +10,8 @@ class UploadComponent extends Component {
     entityType: 1,
     type: "text",
     choice1: null,
-    choice2: null
+    choice2: null,
+    media: null
   };
 
   componentDidMount() {
@@ -40,6 +41,15 @@ class UploadComponent extends Component {
       key: "TcS99L07QkDezB5n4Qdw"
     },
     accept: ".png,.jpg"
+  };
+
+  onUploadMedia = info => {
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} file uploaded successfully`);
+      this.setState({ media: info.file.response.url });
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} file upload failed.`);
+    }
   };
 
   onUploadChangeChoice1 = info => {
@@ -85,22 +95,24 @@ class UploadComponent extends Component {
             entity_type: this.state.entityType,
             type: this.state.type,
             choice1: this.state.choice1,
-            choice2: this.state.choice2
+            choice2: this.state.choice2,
+            media: this.state.media
           };
-        //   pyLearningApi(this.props.user.Authorization).post(
-        //     "/v2/game/dondon/upload/add",
-        //     qs.stringify(data)
-        //   );
+          pyLearningApi(this.props.user.Authorization).post(
+            "/v2/game/ctp/upload_panel/add",
+            qs.stringify(data)
+          );
         } else {
           const data = {
             ...formProps,
             entity_type: this.state.entityType,
-            type: this.state.type
+            type: this.state.type,
+            media: this.state.media
           };
-        //   pyLearningApi(this.props.user.Authorization).post(
-        //     "/v2/game/dondon/upload/add",
-        //     qs.stringify(data)
-        //   );
+          pyLearningApi(this.props.user.Authorization).post(
+            "/v2/game/ctp/upload_panel/add",
+            qs.stringify(data)
+          );
         }
       } else {
         console.log(err);
@@ -113,20 +125,17 @@ class UploadComponent extends Component {
     return (
       <Card>
         <Form onSubmit={this.onSubmit}>
-          <Form.Item label="Text">
-            {getFieldDecorator("text", {
-              rules: [{ required: true, message: "Please enter text" }]
-            })(<Input size="large" placeholder="Enter text" />)}
-          </Form.Item>
-          <Form.Item label="Instruction">
-            {getFieldDecorator("instructions", {
-              rules: [{ required: true, message: "Please enter instructions" }]
-            })(<Input size="large" placeholder="Enter Instructions" />)}
+          <Form.Item label="Title">
+            {getFieldDecorator("title", {
+              rules: [{ required: true, message: "Please enter Title" }]
+            })(<Input size="large" placeholder="Enter title" />)}
           </Form.Item>
           <Form.Item label="Entity ID">
             {getFieldDecorator("entity_id", {
               rules: [{ required: true, message: "Please enter Entity ID" }]
-            })(<Input size="large" type="number" placeholder="Enter Entity ID" />)}
+            })(
+              <Input size="large" type="number" placeholder="Enter Entity ID" />
+            )}
           </Form.Item>
           <Form.Item label="Entity Type">
             <Switch
@@ -150,6 +159,7 @@ class UploadComponent extends Component {
               rules: [{ required: true, message: "Please enter Bucket 3" }]
             })(<Input size="large" placeholder="Enter Bucket 3" />)}
           </Form.Item>
+
           <Form.Item label="Entity Type">
             <Switch
               unCheckedChildren="Text"
@@ -209,6 +219,13 @@ class UploadComponent extends Component {
               </Form.Item>
             </div>
           )}
+          <Form.Item label="Media">
+            <Upload {...this.uploadProps} onChange={this.onUploadMedia}>
+              <Button>
+                <Icon type="upload" /> Click to Upload
+              </Button>
+            </Upload>
+          </Form.Item>
           <div style={{ textAlign: "right" }}>
             <MButton>Upload</MButton>
           </div>

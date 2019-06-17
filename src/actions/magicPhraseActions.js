@@ -1,7 +1,7 @@
 import pyLearningApi from "../apis/pylearning";
 import * as ACTION_TYPE from "./actionTypes";
 
-export const fetchDonDonList = (
+export const fetchMagicphraseList = (
   authToken,
   params,
   offset
@@ -9,26 +9,29 @@ export const fetchDonDonList = (
   let response = null;
   if (!params.entity_type && !params.status) {
     response = await pyLearningApi(authToken).get(
-      `/game/dondon/list?search=${params.searchText}&offset=${offset}`
+      `/game/ctp/list?search=${params.searchText}&offset=${offset}`
     );
   } else if (!params.entity_type) {
     response = await pyLearningApi(authToken).get(
-      `/game/dondon/list?filter={"status": ${params.status}}&search=${
+      `/game/ctp/list?filter={"status": ${params.status}}&search=${
         params.searchText
       }&offset=${offset}`
     );
   } else if (!params.status) {
     response = await pyLearningApi(authToken).get(
-      `/game/dondon/list?filter={"entity_type": ${params.entity_type}}&search=${
+      `/game/ctp/list?filter={"entity_type": ${params.entity_type}}&search=${
         params.searchText
       }&offset=${offset}`
     );
   } else {
     response = await pyLearningApi(authToken).get(
-      `/game/dondon/list?filter={"entity_type": ${params.entity_type}}&search=${
+      `/game/ctp/list?filter={"entity_type": ${params.entity_type}}&search=${
         params.searchText
       }&offset=${offset}`
     );
   }
-  dispatch({ type: ACTION_TYPE.FETCH_DONDON_LIST, payload: response.data });
+  dispatch({
+    type: ACTION_TYPE.FETCH_MAGICPHRASE_LIST,
+    payload: response.data
+  });
 };

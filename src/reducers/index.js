@@ -4,8 +4,9 @@ import moduleTrackReducer from "./moduleTrackReducer";
 import organizationReducer from "./organizationReducer";
 import questionReducer from "./questionReducer";
 import userTrackReducer from "./userTrackReducer";
-import simulationReducer from "./simulationReducer"
+import simulationReducer from "./simulationReducer";
 import dondonReducer from "./dondonReducer";
+import magicphraseReducer from "./magicphraseReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   question: questionReducer,
   userTrack: userTrackReducer,
   simulation: simulationReducer,
-  dondon: dondonReducer
+  dondon: dondonReducer,
+  magicphrase: magicphraseReducer
 });

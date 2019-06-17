@@ -26,6 +26,7 @@ import {
 } from "./simulationActions";
 
 import { fetchDonDonList } from "./dondonActions";
+import { fetchMagicphraseList } from "./magicPhraseActions";
 
 export {
   getOrganizationModules,
@@ -43,6 +44,7 @@ export {
   fetchQuestionDetail,
   updateQuestion,
   fetchDonDonList,
+  fetchMagicphraseList,
   loginUser,
   logoutUser
 };
