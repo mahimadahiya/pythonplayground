@@ -76,7 +76,12 @@ class SideBar extends React.Component {
           <span>
             <span style={{ marginRight: 10, fontSize: "16px" }}>
               <Dropdown overlay={this.userMenu} trigger={["click"]}>
-                <Button icon="user" size="large" type="link">
+                <Button
+                  icon="user"
+                  size="large"
+                  type="link"
+                  style={{ color: "black" }}
+                >
                   {this.props.user} <Icon type="down" />
                 </Button>
               </Dropdown>

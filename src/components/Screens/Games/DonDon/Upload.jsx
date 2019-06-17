@@ -4,6 +4,7 @@ import pyLearningApi from "../../../../apis/pylearning";
 import { connect } from "react-redux";
 import qs from "querystring";
 import MButton from "../../../Elements/MButton";
+import history from "../../../../history";
 
 class UploadComponent extends Component {
   state = {
@@ -65,7 +66,7 @@ class UploadComponent extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, formProps) => {
+    this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
         if (this.state.type === "image") {
           const data = {
@@ -75,7 +76,7 @@ class UploadComponent extends Component {
             choice1: this.state.choice1,
             choice2: this.state.choice2
           };
-          pyLearningApi(this.props.user.Authorization).post(
+          await pyLearningApi(this.props.user.Authorization).post(
             "/v2/game/dondon/upload/add",
             qs.stringify(data)
           );
@@ -85,11 +86,12 @@ class UploadComponent extends Component {
             entity_type: this.state.entityType,
             type: this.state.type
           };
-          pyLearningApi(this.props.user.Authorization).post(
+          await pyLearningApi(this.props.user.Authorization).post(
             "/v2/game/dondon/upload/add",
             qs.stringify(data)
           );
         }
+        history.push("/games/dondon");
       } else {
         console.log(err);
       }
@@ -114,7 +116,9 @@ class UploadComponent extends Component {
           <Form.Item label="Entity ID">
             {getFieldDecorator("entity_id", {
               rules: [{ required: true, message: "Please enter Entity ID" }]
-            })(<Input size="large" type="number" placeholder="Enter Entity ID" />)}
+            })(
+              <Input size="large" type="number" placeholder="Enter Entity ID" />
+            )}
           </Form.Item>
           <Form.Item label="Entity Type">
             <Switch

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import qs from "querystring";
 import MButton from "../../../Elements/MButton";
 import { fetchDonDonList } from "../../../../actions";
+import history from "../../../../history";
 
 class Edit extends Component {
   state = {
@@ -85,7 +86,7 @@ class Edit extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, formProps) => {
+    this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
         if (this.state.type === "image") {
           const data = {
@@ -97,7 +98,7 @@ class Edit extends Component {
             id: this.state.id,
             status: this.state.status
           };
-          pyLearningApi(this.props.user.Authorization).post(
+          await pyLearningApi(this.props.user.Authorization).post(
             "/v2/game/dondon/upload/edit",
             qs.stringify(data)
           );
@@ -109,11 +110,12 @@ class Edit extends Component {
             id: this.state.id,
             status: this.state.status
           };
-          pyLearningApi(this.props.user.Authorization).post(
+          await pyLearningApi(this.props.user.Authorization).post(
             "/v2/game/dondon/upload/edit",
             qs.stringify(data)
           );
         }
+        history.push("/games/dondon");
       } else {
         console.log(err);
       }

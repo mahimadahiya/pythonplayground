@@ -90,16 +90,22 @@ class DonDonList extends React.Component {
     return column;
   };
 
-  onDelete = record => {
+  onDelete = async record => {
     console.log(record);
-    pyLearningApi(this.props.user.Authorization).post(
+    await pyLearningApi(this.props.user.Authorization).post(
       "/v2/game/dondon/upload/delete",
       qs.stringify({ id: record.id })
+    );
+    this.props.fetchDonDonList(
+      this.props.user.Authorization,
+      { searchText: "" },
+      0
     );
   };
 
   handlePageChange = pageNumber => {
     const offset = pageNumber * 10 - 10;
+    // this.setState
     this.props.fetchDonDonList(
       this.props.user.Authorization,
       {
