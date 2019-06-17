@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Suspense } from "react";
+import Loading from "./Elements/Loading";
 import history from "../history";
 import { Route, Router } from "react-router-dom";
 import Routing from "./HOC/Routing";
@@ -20,12 +21,14 @@ class App extends React.Component {
     // throw new Error("Test error boundary");
     return (
       <div>
-        <Router history={history}>
-          <Route
-            path="/*"
-            render={() => <Routing cookies={this.props.cookies} />}
-          />
-        </Router>
+        <Suspense fallback={<Loading />}>
+          <Router history={history}>
+            <Route
+              path="/*"
+              render={() => <Routing cookies={this.props.cookies} />}
+            />
+          </Router>
+        </Suspense>
       </div>
     );
   }

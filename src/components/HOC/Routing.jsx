@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect, Switch } from "react-router-dom";
 
-// import Sidebar from "./Sidebar";
 import Login from "../Screens/Login/Login";
 import TrackList from "../Screens/ModuleTracks";
 import CreateTrack from "../Screens/ModuleTracks/create";
