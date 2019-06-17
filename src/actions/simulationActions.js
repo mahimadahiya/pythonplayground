@@ -46,8 +46,10 @@ export const createSimulationOrgMapping = (
   });
 };
 
-export const fetchSimulationList = authToken => async dispatch => {
-  const response = await adminPanelApi(authToken).get("/v1/admin/simulations");
+export const fetchSimulationList = (authToken, offset) => async dispatch => {
+  const response = await adminPanelApi(authToken).get(
+    `/v1/admin/simulations?limit=10&offset=${offset}`
+  );
   dispatch({
     type: ACTION_TYPE.FETCH_SIMULTATION_LIST,
     payload: response.data

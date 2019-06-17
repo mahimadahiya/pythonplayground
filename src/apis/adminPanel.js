@@ -2,7 +2,7 @@ import axios from "axios";
 
 const adminPanelApi = authToken => {
   return axios.create({
-    baseURL: "http://203.110.86.43:8892",
+    baseURL: "https://learning-new.iaugmentor.com",
     headers: {
       key: "TcS99L07QkDezB5n4Qdw",
       Authorization: `Bearer ${authToken}`

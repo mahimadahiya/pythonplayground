@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Card } from "antd";
+import { Table, Card, Pagination } from "antd";
 import { fetchSimulationList } from "../../../actions";
 
 class SimulationList extends React.Component {
   componentWillMount = () => {
-    this.props.fetchSimulationList(this.props.user.Authorization);
+    this.props.fetchSimulationList(this.props.user.Authorization, 0);
   };
 
   componentDidMount() {
@@ -41,6 +41,11 @@ class SimulationList extends React.Component {
     return column;
   };
 
+  handlePageChange = pageNumber => {
+    const offset = pageNumber * 10 - 10;
+    this.props.fetchSimulationList(this.props.user.Authorization, offset);
+  };
+
   render() {
     const columnName = this.tableColumnName();
     const tableData = this.props.simulations;
@@ -51,12 +56,19 @@ class SimulationList extends React.Component {
             dataSource={tableData}
             columns={columnName}
             rowKey={row => row.id}
+            pagination={false}
             // footer={() => (
             //   <MButton>
             //     <Link to="/tracks/create">Create Track</Link>
             //   </MButton>
             // )}
           />
+          <div style={{ marginTop: "20px", textAlign: "right" }}>
+            <Pagination
+              onChange={this.handlePageChange}
+              total={this.props.count}
+            />
+          </div>
         </Card>
       </div>
     );
@@ -66,7 +78,8 @@ class SimulationList extends React.Component {
 const mapStateToProps = state => {
   return {
     simulations: state.simulation.simulations,
-    user: state.userAuth
+    user: state.userAuth,
+    count: state.simulation.count
   };
 };
 

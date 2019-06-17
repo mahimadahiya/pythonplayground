@@ -4,7 +4,8 @@ import _ from "lodash";
 const INITIAL_STATE = {
   moduleSimulations: {},
   simulations: [],
-  defaultSimulations: null
+  defaultSimulations: null,
+  count: 0
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -17,7 +18,8 @@ export default (state = INITIAL_STATE, action) => {
     case ACTION_TYPE.FETCH_SIMULTATION_LIST:
       return {
         ...state,
-        simulations: action.payload.result
+        simulations: action.payload.result,
+        count: action.payload.count
       };
     case ACTION_TYPE.FETCH_DEFAULT_SIMULATIONS:
       return {
