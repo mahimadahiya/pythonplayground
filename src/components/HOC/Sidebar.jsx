@@ -41,20 +41,6 @@ class SideBar extends React.Component {
     this.setState({ heading: text });
   };
 
-  renderPaths = () => {
-    return this.state.paths.length > 0
-      ? this.state.paths.map((path, index) => {
-          const i = path.lastIndexOf("/");
-          const pathName = path.substring(i + 1);
-          return (
-            <Breadcrumb.Item key={`${path}${index}`}>
-              <Link to={path}>{pathName}</Link>
-            </Breadcrumb.Item>
-          );
-        })
-      : null;
-  };
-
   logout = () => {
     const { cookies } = this.props;
     cookies.remove("Authorization", { path: "/" });
@@ -182,6 +168,20 @@ class SideBar extends React.Component {
                     Upload
                   </Menu.Item>
                 </SubMenu>
+                <SubMenu key="sub4-2" title="Magic Phrase">
+                  <Menu.Item
+                    key="sub4-2-1"
+                    onClick={() => history.push("/games/magicphrase")}
+                  >
+                    List
+                  </Menu.Item>
+                  <Menu.Item
+                    key="sub4-2-2"
+                    onClick={() => history.push("/games/magicphrase/upload")}
+                  >
+                    Upload
+                  </Menu.Item>
+                </SubMenu>
               </SubMenu>
             </Menu>
           </Sider>
@@ -196,6 +196,9 @@ class SideBar extends React.Component {
                 }}
                 className="overflow shadow"
               >
+
+                {/* Sending Heading Prop to children to render heading on header */}
+
                 {React.cloneElement(this.props.children, {
                   heading: this.setHeading
                 })}

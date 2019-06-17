@@ -12,32 +12,32 @@ import {
   Button,
   Icon
 } from "antd";
-import { fetchDonDonList } from "../../../../actions";
+// import { fetchDonDonList } from "../../../../actions";
 import history from "../../../../history";
-import pyLearningApi from "../../../../apis/pylearning";
+// import pyLearningApi from "../../../../apis/pylearning";
 
 class DonDonList extends React.Component {
   state = { loading: true, searchText: "", entity_type: null, status: null };
 
   componentWillMount = async () => {
-    if (this.props.list.length === 0) {
-      await this.props.fetchDonDonList(
-        this.props.user.Authorization,
-        { searchText: "" },
-        0
-      );
+    // if (this.props.list.length === 0) {
+    //   await this.props.fetchDonDonList(
+    //     this.props.user.Authorization,
+    //     { searchText: "" },
+    //     0
+    //   );
+    //   this.setState({ loading: false });
+    // } else {
       this.setState({ loading: false });
-    } else {
-      this.setState({ loading: false });
-    }
+    // }
   };
 
   componentDidMount() {
-    this.props.heading("Don Don List");
+    this.props.heading("MagicPhrase List");
   }
 
   onEdit = record => {
-    history.push("/games/dondon/edit/" + record.id);
+    history.push("/games/magicphrase/edit/" + record.id);
   };
 
   tableColumnName = () => {
@@ -55,19 +55,7 @@ class DonDonList extends React.Component {
       {
         title: "Text",
         dataIndex: "text",
-        key: "text",
-        onCell: () => {
-          return {
-             style: {
-                whiteSpace: 'nowrap',
-                maxWidth: 400,
-             }
-          }
-       },
-        width: '60%',
-        render: (text) => {
-          return <div style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>{text}</div>
-        }
+        key: "text"
       },
       {
         title: "Entity Type",
@@ -99,45 +87,42 @@ class DonDonList extends React.Component {
   };
 
   onDelete = record => {
-    console.log(record);
-    pyLearningApi(this.props.user.Authorization).post(
-      "/v2/game/dondon/upload/delete",
-      qs.stringify({ id: record.id })
-    );
+    // pyLearningApi(this.props.user.Authorization).post(
+    //   "/v2/game/dondon/upload/delete",
+    //   qs.stringify({ id: record.id })
+    // );
   };
 
   handlePageChange = pageNumber => {
     const offset = pageNumber * 10 - 10;
-    this.props.fetchDonDonList(
-      this.props.user.Authorization,
-      {
-        searchText: this.state.searchText,
-        entity_type: this.state.entity_type,
-        status: this.state.status
-      },
-      offset
-    );
+    // this.props.fetchDonDonList(
+    //   this.props.user.Authorization,
+    //   {
+    //     searchText: this.state.searchText,
+    //     entity_type: this.state.entity_type,
+    //     status: this.state.status
+    //   },
+    //   offset
+    // );
   };
 
   onSearch = e => {
-      this.setState(
-        {
-          searchText: e.target.value
-        },
-        () => {
-          setTimeout(() => {
-          this.props.fetchDonDonList(
-            this.props.user.Authorization,
-            {
-              searchText: this.state.searchText,
-              entity_type: this.state.entity_type,
-              status: this.state.status
-            },
-            0
-          );
-        }, 1000)
-        }
-      );
+    this.setState(
+      {
+        searchText: e.target.value
+      },
+      () => {
+        // this.props.fetchDonDonList(
+        //   this.props.user.Authorization,
+        //   {
+        //     searchText: this.state.searchText,
+        //     entity_type: this.state.entity_type,
+        //     status: this.state.status
+        //   },
+        //   0
+        // );
+      }
+    );
   };
 
   onEntityChange = value => {
@@ -146,18 +131,15 @@ class DonDonList extends React.Component {
         entity_type: value.key
       },
       () => {
-        setTimeout(() => {
-
-          this.props.fetchDonDonList(
-            this.props.user.Authorization,
-            {
-              searchText: this.state.searchText,
-              entity_type: this.state.entity_type,
-              status: this.state.status
-            },
-            0
-          );
-        }, 1000)
+        // this.props.fetchDonDonList(
+        //   this.props.user.Authorization,
+        //   {
+        //     searchText: this.state.searchText,
+        //     entity_type: this.state.entity_type,
+        //     status: this.state.status
+        //   },
+        //   0
+        // );
       }
     );
   };
@@ -168,18 +150,15 @@ class DonDonList extends React.Component {
         status: value.key
       },
       () => {
-        setTimeout(() => {
-
-          this.props.fetchDonDonList(
-            this.props.user.Authorization,
-            {
-              searchText: this.state.searchText,
-              entity_type: this.state.entity_type,
-              status: this.state.status
-            },
-            0
-          );
-        }, 1000)
+        // this.props.fetchDonDonList(
+        //   this.props.user.Authorization,
+        //   {
+        //     searchText: this.state.searchText,
+        //     entity_type: this.state.entity_type,
+        //     status: this.state.status
+        //   },
+        //   0
+        // );
       }
     );
   };
@@ -194,7 +173,8 @@ class DonDonList extends React.Component {
               <Input
                 placeholder="Search by ID or Text"
                 width="20"
-                onChange={this.onSearch}
+                onPressEnter={this.onSearch}
+                onChange={this.onSearchChange}
               />
             </Form.Item>
             <Form
@@ -260,13 +240,13 @@ class DonDonList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    list: state.dondon.list,
-    count: state.dondon.count,
+    // list: state.dondon.list,
+    // count: state.dondon.count,
     user: state.userAuth
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchDonDonList }
+  // { fetchDonDonList }
 )(DonDonList);

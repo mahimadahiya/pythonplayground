@@ -13,9 +13,12 @@ import SimulationMapping from "../Screens/Simulation/SimulationMapping";
 import SimulationList from "../Screens/Simulation/SimulationList";
 import QuestionList from "../Screens/Questions/index";
 import MapQuestionChoices from "../Screens/Questions/mapChoices";
-import Upload from "../Screens/Games/DonDon/Upload";
-import List from "../Screens/Games/DonDon/List";
-import Edit from "../Screens/Games/DonDon/Edit";
+import UploadDonDon from "../Screens/Games/DonDon/Upload";
+import UploadMagicPhrase from "../Screens/Games/MagicPhrase/Upload";
+import ListDonDon from "../Screens/Games/DonDon/List";
+import ListMagicPhrase from "../Screens/Games/MagicPhrase/List";
+import EditDonDon from "../Screens/Games/DonDon/Edit";
+import EditMagicPhrase from "../Screens/Games/MagicPhrase/Edit";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -93,19 +96,37 @@ class Routing extends React.Component {
             />
             <PrivateRoute
               path="/games/dondon/upload"
-              component={Upload}
+              component={UploadDonDon}
               user={user}
               exact
             />
             <PrivateRoute
               path="/games/dondon"
-              component={List}
+              component={ListDonDon}
               user={user}
               exact
             />
             <PrivateRoute
               path="/games/dondon/edit/:id"
-              component={Edit}
+              component={EditDonDon}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/games/magicphrase/upload"
+              component={UploadMagicPhrase}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/games/magicphrase"
+              component={ListMagicPhrase}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/games/magicphrase/edit/:id"
+              component={EditMagicPhrase}
               user={user}
               exact
             />
