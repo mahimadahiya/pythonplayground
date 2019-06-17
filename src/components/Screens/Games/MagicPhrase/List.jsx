@@ -55,7 +55,19 @@ class DonDonList extends React.Component {
       {
         title: "Text",
         dataIndex: "text",
-        key: "text"
+        key: "text",
+        onCell: () => {
+          return {
+             style: {
+                whiteSpace: 'nowrap',
+                maxWidth: 400,
+             }
+          }
+       },
+        width: '60%',
+        render: (text) => {
+          return <div style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>{text}</div>
+        }
       },
       {
         title: "Entity Type",
