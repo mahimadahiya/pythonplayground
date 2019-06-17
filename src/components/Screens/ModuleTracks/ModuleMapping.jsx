@@ -31,9 +31,13 @@ class ModuleMapping extends React.Component {
 
   async componentDidMount() {
     this.props.heading("Map Module");
-    if (this.props.tracks.length === 0) {
-      await this.props.fetchModuleTracks(this.props.user.Authorization);
-    }
+    await this.props.fetchModuleTracks(this.props.user.Authorization);
+    await this.fetchTrack();
+    const orgId = this.state.track.organization_id;
+    await this.props.getOrganizationModules(
+      orgId,
+      this.props.user.Authorization
+    );
     this.setState({ loading: false });
   }
 
@@ -47,18 +51,11 @@ class ModuleMapping extends React.Component {
     }
   };
 
-  async componentDidUpdate() {
-    if (this.state.track !== null) return;
+  // async componentDidUpdate() {
+  //   if (this.state.track !== null) return;
 
-    await this.fetchTrack();
-    const orgId = this.state.track.organization_id;
-    await this.props.getOrganizationModules(
-      orgId,
-      this.props.user.Authorization
-    );
-
-    this.setState({ loading: false });
-  }
+  //   this.setState({ loading: false });
+  // }
 
   filterModules = (val, option) => {
     const filteredList = this.props.modules.filter(({ module__name }) => {

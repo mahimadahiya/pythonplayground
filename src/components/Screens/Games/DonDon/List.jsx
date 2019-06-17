@@ -229,6 +229,8 @@ class DonDonList extends React.Component {
               </Form.Item>
             </Form>
           </Row>
+        </Card>
+        <Card style={{ marginTop: 20 }}>
           <Row>
             <Table
               dataSource={this.props.list}
