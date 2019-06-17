@@ -4,8 +4,8 @@ import { Table, Card, Pagination } from "antd";
 import { fetchSimulationList } from "../../../actions";
 
 class SimulationList extends React.Component {
-  componentWillMount = () => {
-    this.props.fetchSimulationList(this.props.user.Authorization, 0);
+  componentWillMount = async () => {
+    await this.props.fetchSimulationList(this.props.user.Authorization, 0);
   };
 
   componentDidMount() {
@@ -22,7 +22,11 @@ class SimulationList extends React.Component {
       {
         title: "Text",
         dataIndex: "text",
-        key: "text"
+        key: "text",
+        width: "60%",
+        render: text => {
+          return <div style={{ minHeight: "100px" }}>{text}</div>;
+        }
       },
       {
         title: "Media Type",

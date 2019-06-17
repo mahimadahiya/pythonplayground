@@ -18,7 +18,7 @@ export default (state = INITIAL_STATE, action) => {
     case ACTION_TYPE.FETCH_SIMULTATION_LIST:
       return {
         ...state,
-        simulations: action.payload.result,
+        simulations: action.payload.results,
         count: action.payload.count
       };
     case ACTION_TYPE.FETCH_DEFAULT_SIMULATIONS:
