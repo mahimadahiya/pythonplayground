@@ -25,7 +25,9 @@ export const fetchDonDonList = (
     );
   } else {
     response = await pyLearningApi(authToken).get(
-      `/game/dondon/list?filter={"entity_type": ${params.entity_type}}&search=${
+      `/game/dondon/list?filter={"entity_type": ${
+        params.entity_type
+      }, "status": ${params.status}}&search=${
         params.searchText
       }&offset=${offset}`
     );

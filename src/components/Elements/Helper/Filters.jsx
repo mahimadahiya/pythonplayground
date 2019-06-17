@@ -14,11 +14,25 @@ const Filters = props => {
         </Form.Item>
       );
     case "select":
-        return (
-            <Form.Item label={props.label}>
-                <Select size="large"
-            </Form.Item>
-        )
+      return (
+        <Form.Item label={props.label}>
+          <Select
+            size="large"
+            labelInValue={props.labelInValue}
+            onChange={props.onChange}
+            placeholder={props.placeholder}
+            style={{ minWidth: 300 }}
+          >
+            {props.options.map(option => {
+              return (
+                <Select.Option key={option.value} value={option.value}>
+                  {option.label}
+                </Select.Option>
+              );
+            })}
+          </Select>
+        </Form.Item>
+      );
   }
 
   return <React.Fragment />;

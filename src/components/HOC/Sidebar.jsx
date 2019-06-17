@@ -195,7 +195,7 @@ class SideBar extends React.Component {
             </Menu>
           </Sider>
           <Layout>
-            <div style={{ margin: "25px 0 15px 15px" }}>
+            <div style={{ margin: "100px 0 5px 15px" }}>
               <Breadcrumbs />
             </div>
             <Content>

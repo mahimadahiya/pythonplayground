@@ -94,10 +94,6 @@ img {
   min-height: 4rem;
 }
 
-.shadow-header {
-  box-shadow: 300px 5px 10px #888888;
-}
-
 .shadow {
   box-shadow: 5px 5px 10px #888888;
 }
