@@ -104,17 +104,17 @@ class UploadComponent extends Component {
           <Form.Item label="Text">
             {getFieldDecorator("text", {
               rules: [{ required: true, message: "Please enter text" }]
-            })(<Input size="large" />)}
+            })(<Input size="large" placeholder="Enter text" />)}
           </Form.Item>
           <Form.Item label="Instruction">
             {getFieldDecorator("instructions", {
-              rules: [{ required: true, message: "Please enter instruction" }]
-            })(<Input size="large" />)}
+              rules: [{ required: true, message: "Please enter instructions" }]
+            })(<Input size="large" placeholder="Enter Instructions" />)}
           </Form.Item>
           <Form.Item label="Entity ID">
             {getFieldDecorator("entity_id", {
               rules: [{ required: true, message: "Please enter Entity ID" }]
-            })(<Input size="large" type="number" />)}
+            })(<Input size="large" type="number" placeholder="Enter Entity ID" />)}
           </Form.Item>
           <Form.Item label="Entity Type">
             <Switch
@@ -126,12 +126,12 @@ class UploadComponent extends Component {
           <Form.Item label="Bucket 1">
             {getFieldDecorator("bucket1", {
               rules: [{ required: true, message: "Please enter Bucket 1" }]
-            })(<Input size="large" />)}
+            })(<Input size="large" placeholder="Enter Bucket 1" />)}
           </Form.Item>
           <Form.Item label="Bucket 2">
             {getFieldDecorator("bucket2", {
               rules: [{ required: true, message: "Please enter Bucket 2" }]
-            })(<Input size="large" />)}
+            })(<Input size="large" placeholder="Enter Bucket 2" />)}
           </Form.Item>
           <Form.Item label="Entity Type">
             <Switch
@@ -145,12 +145,12 @@ class UploadComponent extends Component {
               <Form.Item label="Choice 1">
                 {getFieldDecorator("choice1", {
                   rules: [{ required: true, message: "Please enter Choice 1" }]
-                })(<Input size="large" />)}
+                })(<Input size="large" placeholder="Enter choice 1" />)}
               </Form.Item>
               <Form.Item label="Choice 2">
                 {getFieldDecorator("choice2", {
                   rules: [{ required: true, message: "Please enter Choice 2" }]
-                })(<Input size="large" />)}
+                })(<Input size="large" placeholder="Enter choice 2" />)}
               </Form.Item>
             </div>
           ) : (
