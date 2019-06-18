@@ -1,17 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import qs from "querystring";
-import {
-  Table,
-  Card,
-  Pagination,
-  Input,
-  Row,
-  Form,
-  Select,
-  Button,
-  Icon
-} from "antd";
+import { Table, Card, Pagination, Row, Form, Button, Icon } from "antd";
 import { fetchDonDonList } from "../../../../actions";
 import history from "../../../../history";
 import pyLearningApi from "../../../../apis/pylearning";

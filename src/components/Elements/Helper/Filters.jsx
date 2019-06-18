@@ -33,9 +33,9 @@ const Filters = props => {
           </Select>
         </Form.Item>
       );
+    default:
+      return null;
   }
-
-  return <React.Fragment />;
 };
 
 export default Filters;
