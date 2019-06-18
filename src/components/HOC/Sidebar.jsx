@@ -33,8 +33,8 @@ class SideBar extends React.Component {
 
   onCollapse = collapsed => {
     this.setState({
-      collapsed: !this.state.collapsed,
-      logo: collapsed ? logoMini : logo
+      logo: !this.state.collapsed ? logoMini : logo,
+      collapsed: !this.state.collapsed
     });
   };
 
