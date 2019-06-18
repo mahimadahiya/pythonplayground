@@ -112,7 +112,6 @@ class UserTrackMapping extends React.Component {
           selected_tracks: JSON.stringify(formProps.selectedTracks),
           selected_users: JSON.stringify(users)
         };
-        console.log(formValues);
         await this.props.createUserTrackMapping(
           this.props.user.Authorization,
           formValues

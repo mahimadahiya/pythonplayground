@@ -61,7 +61,6 @@ class QuestionList extends React.Component {
   render() {
     const columnName = this.tableColumnName();
     const tableData = this.props.questions;
-    console.log(tableData);
     return (
       <div>
         <Card type="inner">

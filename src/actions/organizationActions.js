@@ -37,7 +37,6 @@ export const fetchOrganizationBatches = (
 
 export const fetchUsers = (authToken, formValues, offset) => async dispatch => {
   let response = null;
-  console.log(formValues);
   if (!formValues.batchId) {
     response = await adminPanelApi(authToken).get(
       `/v1/admin/list/batch/user/?organization_id=${

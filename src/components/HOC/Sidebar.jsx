@@ -32,7 +32,10 @@ class SideBar extends React.Component {
   };
 
   onCollapse = collapsed => {
-    this.setState({ collapsed, logo: collapsed ? logoMini : logo });
+    this.setState({
+      collapsed: !this.state.collapsed,
+      logo: collapsed ? logoMini : logo
+    });
   };
 
   userMenu = (
@@ -48,6 +51,7 @@ class SideBar extends React.Component {
       <Layout>
         <Sider
           collapsible
+          trigger={null}
           width="250px"
           collapsedWidth={80}
           collapsed={this.state.collapsed}
@@ -175,6 +179,11 @@ class SideBar extends React.Component {
             className="header-shadow"
           >
             <div className="header">
+              <Icon
+                className="trigger"
+                type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
+                onClick={this.onCollapse}
+              />
               {this.state.heading ? (
                 <div
                   style={{

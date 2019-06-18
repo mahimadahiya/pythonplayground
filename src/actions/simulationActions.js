@@ -50,7 +50,6 @@ export const fetchSimulationList = (authToken, offset) => async dispatch => {
   const response = await adminPanelApi(authToken).get(
     `/v1/admin/simulations?limit=10&offset=${offset}`
   );
-  console.log(response);
   dispatch({
     type: ACTION_TYPE.FETCH_SIMULTATION_LIST,
     payload: response.data

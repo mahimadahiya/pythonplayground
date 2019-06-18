@@ -82,7 +82,6 @@ class DonDonList extends React.Component {
   };
 
   onDelete = async record => {
-    console.log(record);
     await pyLearningApi(this.props.user.Authorization).post(
       "/v2/game/dondon/upload/delete",
       qs.stringify({ id: record.id })

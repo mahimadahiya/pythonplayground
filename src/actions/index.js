@@ -113,7 +113,6 @@ export const createUserTrackMapping = (
   authToken,
   formValues
 ) => async dispatch => {
-  console.log(formValues);
   const response = await pyLearningApi(authToken).post(
     "/react/user/track/mapping/",
     qs.stringify(formValues)
