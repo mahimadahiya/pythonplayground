@@ -61,11 +61,6 @@ class SimulationList extends React.Component {
             columns={columnName}
             rowKey={row => row.id}
             pagination={false}
-            // footer={() => (
-            //   <MButton>
-            //     <Link to="/tracks/create">Create Track</Link>
-            //   </MButton>
-            // )}
           />
           <div style={{ marginTop: "20px", textAlign: "right" }}>
             <Pagination

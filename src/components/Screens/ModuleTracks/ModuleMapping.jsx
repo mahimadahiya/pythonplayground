@@ -51,12 +51,6 @@ class ModuleMapping extends React.Component {
     }
   };
 
-  // async componentDidUpdate() {
-  //   if (this.state.track !== null) return;
-
-  //   this.setState({ loading: false });
-  // }
-
   filterModules = (val, option) => {
     const filteredList = this.props.modules.filter(({ module__name }) => {
       if (module__name.toLowerCase().includes(val)) {

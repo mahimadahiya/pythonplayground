@@ -6,7 +6,6 @@ import { Divider, Card, Table, Pagination } from "antd";
 import { fetchQuestionList } from "../../../actions";
 
 class QuestionList extends React.Component {
-
   componentWillMount = () => {
     this.props.heading("Questions");
     this.props.fetchQuestionList(this.props.user.Authorization, { offset: 0 });
@@ -29,11 +28,6 @@ class QuestionList extends React.Component {
         dataIndex: "quiz_type",
         key: "quiz_type"
       },
-      // {
-      //   title: "Choices",
-      //   dataIndex: "choices2",
-      //   key: "choices2"
-      // },
       {
         title: "Actions",
         key: "action",
@@ -69,12 +63,6 @@ class QuestionList extends React.Component {
             columns={columnName}
             rowKey={row => row.id}
             pagination={false}
-            // footer={() => (
-            //   <p>x</p>
-            //   // <MButton>
-            //   //   <Link to="/tracks/create">Create Track</Link>
-            //   // </MButton>
-            // )}
           />
           <div style={{ marginTop: "20px", textAlign: "right" }}>
             <Pagination

@@ -144,7 +144,4 @@ const mapStateToProps = state => {
   return { user: state.userAuth };
 };
 
-export default connect(
-  mapStateToProps,
-  {}
-)(Routing);
+export default connect(mapStateToProps)(Routing);

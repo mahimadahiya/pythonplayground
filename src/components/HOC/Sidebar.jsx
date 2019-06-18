@@ -229,9 +229,6 @@ class SideBar extends React.Component {
               })}
             </div>
           </Content>
-          {/* <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2018 Created by Ant UED
-          </Footer> */}
         </Layout>
       </Layout>
     );

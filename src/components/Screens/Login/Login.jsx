@@ -70,7 +70,6 @@ class NormalLoginForm extends React.Component {
           <img src={logo} style={{ margin: "auto 0" }} alt="logo" />
         </div>
         <Card className="shadow">
-          {/* <Formik onSubmit={this.onSubmit} render={displayForm} /> */}
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="Email">
               {getFieldDecorator("email", {

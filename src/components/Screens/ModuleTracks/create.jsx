@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Form, Input, Select, DatePicker, TimePicker } from "antd";
+import { Card, Form, Input, Select, DatePicker } from "antd";
 import { dateFormat } from "../Form/FieldFormats";
 
 import { createModuleTrack, fetchOrganizations } from "../../../actions";
@@ -29,9 +29,7 @@ class CreateTrack extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, formProps) => {
-      console.log(formProps);
       if (!err) {
-        console.log(formProps);
         const selectedDate = moment(formProps.going_live_at).format(dateFormat);
         const formValues = {
           ...formProps,
