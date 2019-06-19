@@ -35,13 +35,16 @@ class Edit extends Component {
       entityType: record.entity_type,
       type: record.type,
       status: record.status,
-      choice1: record.choice1,
-      choice2: record.choice2,
       id
     });
 
     if (record.type === "text") {
       this.props.form.setFieldsValue({
+        choice1: record.choice1,
+        choice2: record.choice2
+      });
+    } else {
+      this.setState({
         choice1: record.choice1,
         choice2: record.choice2
       });
