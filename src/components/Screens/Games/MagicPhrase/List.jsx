@@ -71,6 +71,14 @@ class DonDonList extends React.Component {
         }
       },
       {
+        title: "Status",
+        dataIndex: "status",
+        key: "status",
+        render: record => {
+          return <div>{record === 1 ? "Live" : "Draft"}</div>;
+        }
+      },
+      {
         title: "Actions",
         key: "action",
 
