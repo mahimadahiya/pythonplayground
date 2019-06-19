@@ -12,6 +12,7 @@ class Edit extends Component {
     type: "text",
     choice1: null,
     choice2: null,
+    choice3: null,
     status: 1,
     id: null,
     media: null
@@ -28,16 +29,27 @@ class Edit extends Component {
       title: record.title,
       entity_id: record.entity_id,
       bucket1: record.bucket1,
-      bucket2: record.bucket2
+      bucket2: record.bucket2,
+      bucket3: record.bucket3
     });
     this.setState({
       entityType: record.entity_type,
       type: record.type,
-      status: record.status,
-      choice1: record.choice1,
-      choice2: record.choice2,
-      id
+      status: record.status
     });
+    if (record.type === "image") {
+      this.setState({
+        choice1: record.choice1,
+        choice2: record.choice2,
+        choice3: record.choice3
+      });
+    } else {
+      this.props.form.setFieldsValue({
+        choice1: record.choice1,
+        choice2: record.choice2,
+        choice3: record.choice3
+      });
+    }
   }
 
   setEntityType = e => {
@@ -226,12 +238,14 @@ class Edit extends Component {
                   </Button>
                 </Upload>
                 <div>
-                  <img
-                    src={this.state.choice1}
-                    alt="choice 1"
-                    height="100px"
-                    width="100px"
-                  />
+                  {this.state.choice1 ? (
+                    <img
+                      src={this.state.choice1}
+                      alt="choice 1"
+                      height="100px"
+                      width="100px"
+                    />
+                  ) : null}
                 </div>
               </Form.Item>
               <Form.Item label="Choice 2">
@@ -244,12 +258,14 @@ class Edit extends Component {
                   </Button>
                 </Upload>
                 <div>
-                  <img
-                    src={this.state.choice2}
-                    alt="choice 2"
-                    height="100px"
-                    width="100px"
-                  />
+                  {this.state.choice2 ? (
+                    <img
+                      src={this.state.choice2}
+                      alt="choice 2"
+                      height="100px"
+                      width="100px"
+                    />
+                  ) : null}
                 </div>
               </Form.Item>
               <Form.Item label="Choice 3">
@@ -262,12 +278,14 @@ class Edit extends Component {
                   </Button>
                 </Upload>
                 <div>
-                  <img
-                    src={this.state.choice3}
-                    alt="choice 3"
-                    height="100px"
-                    width="100px"
-                  />
+                  {this.state.choice3 ? (
+                    <img
+                      src={this.state.choice3}
+                      alt="choice 3"
+                      height="100px"
+                      width="100px"
+                    />
+                  ) : null}
                 </div>
               </Form.Item>
             </div>
@@ -297,5 +315,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-    { fetchMagicphraseList }
+  { fetchMagicphraseList }
 )(Form.create()(Edit));

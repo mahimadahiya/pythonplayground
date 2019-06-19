@@ -39,6 +39,13 @@ class Edit extends Component {
       choice2: record.choice2,
       id
     });
+
+    if (record.type === "text") {
+      this.props.form.setFieldsValue({
+        choice1: record.choice1,
+        choice2: record.choice2
+      });
+    }
   }
 
   setEntityType = e => {
@@ -205,12 +212,14 @@ class Edit extends Component {
                   </Button>
                 </Upload>
                 <div>
-                  <img
-                    src={this.state.choice1}
-                    alt="choice 1"
-                    height="100px"
-                    width="100px"
-                  />
+                  {this.state.choice1 ? (
+                    <img
+                      src={this.state.choice1}
+                      alt="choice 1"
+                      height="100px"
+                      width="100px"
+                    />
+                  ) : null}
                 </div>
               </Form.Item>
               <Form.Item label="Choice 2">
@@ -223,12 +232,14 @@ class Edit extends Component {
                   </Button>
                 </Upload>
                 <div>
-                  <img
-                    src={this.state.choice2}
-                    alt="choice 2"
-                    height="100px"
-                    width="100px"
-                  />
+                  {this.state.choice2 ? (
+                    <img
+                      src={this.state.choice2}
+                      alt="choice 2"
+                      height="100px"
+                      width="100px"
+                    />
+                  ) : null}
                 </div>
               </Form.Item>
             </div>
