@@ -160,7 +160,7 @@ class UploadComponent extends Component {
             })(<Input size="large" placeholder="Enter Bucket 3" />)}
           </Form.Item>
 
-          <Form.Item label="Entity Type">
+          <Form.Item label="Type">
             <Switch
               unCheckedChildren="Text"
               checkedChildren="Image"

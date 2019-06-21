@@ -137,7 +137,7 @@ class UploadComponent extends Component {
               rules: [{ required: true, message: "Please enter Bucket 2" }]
             })(<Input size="large" placeholder="Enter Bucket 2" />)}
           </Form.Item>
-          <Form.Item label="Entity Type">
+          <Form.Item label="Type">
             <Switch
               unCheckedChildren="Text"
               checkedChildren="Image"
