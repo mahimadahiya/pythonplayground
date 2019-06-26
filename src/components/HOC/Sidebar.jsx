@@ -7,9 +7,9 @@ import history from "../../history";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions";
 import Breadcrumbs from "./Breadcrumbs";
+// import SubMenu from "../Elements/Helper/SubMenu";
 
 const { Header, Content, Sider } = Layout;
-const { SubMenu } = Menu;
 
 class SideBar extends React.Component {
   state = {
@@ -46,7 +46,23 @@ class SideBar extends React.Component {
     </Menu>
   );
 
+  list = [
+    {
+      key: "sub1",
+      icon: "fork",
+      label: "Tracks",
+      menuList: [
+        {
+          key: "sub1-1",
+          onClick: () => history.push("/tracks"),
+          label: "List"
+        }
+      ]
+    }
+  ];
+
   render() {
+    const { SubMenu } = Menu;
     return (
       <Layout>
         <Sider
@@ -72,6 +88,7 @@ class SideBar extends React.Component {
             mode="inline"
             style={{ marginTop: 35 }}
           >
+            {/* <SubMenu collapsed={this.state.collapsed} list={this.list} /> */}
             <SubMenu
               key="sub1"
               title={

@@ -21,6 +21,7 @@ import {
   createSimulationOrgMapping,
   fetchModuleSimulations,
   fetchSimulationList,
+  fetchSimulation,
   fetchDefaultModuleSimulations,
   clearSimulations
 } from "./simulationActions";
@@ -37,6 +38,7 @@ export {
   createSimulationOrgMapping,
   fetchModuleSimulations,
   fetchSimulationList,
+  fetchSimulation,
   fetchDefaultModuleSimulations,
   clearSimulations,
   fetchUsers,

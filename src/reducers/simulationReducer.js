@@ -4,6 +4,7 @@ import _ from "lodash";
 const INITIAL_STATE = {
   moduleSimulations: {},
   simulations: [],
+  currentSimulation: null,
   defaultSimulations: null,
   count: 0
 };
@@ -15,11 +16,16 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         moduleSimulations: _.mapKeys(action.payload.result, "id")
       };
-    case ACTION_TYPE.FETCH_SIMULTATION_LIST:
+    case ACTION_TYPE.FETCH_SIMULATION_LIST:
       return {
         ...state,
         simulations: action.payload.results,
         count: action.payload.count
+      };
+    case ACTION_TYPE.FETCH_SIMULATION:
+      return {
+        ...state,
+        currentSimulation: action.payload.result
       };
     case ACTION_TYPE.FETCH_DEFAULT_SIMULATIONS:
       return {
