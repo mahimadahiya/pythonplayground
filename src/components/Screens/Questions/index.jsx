@@ -34,7 +34,7 @@ class QuestionList extends React.Component {
         width: 360,
         render: record => (
           <span>
-            <Link to={`/tracks/edit/${record.id}`}>Edit</Link>
+            <Link to={`/question/edit/${record.id}`}>Edit</Link>
             <Divider type="vertical" />
             <Link to={`/tracks/delete/${record.id}`}>Delete</Link>
             <Divider type="vertical" />
