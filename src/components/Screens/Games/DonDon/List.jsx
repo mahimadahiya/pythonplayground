@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import qs from "querystring";
-import { Table, Card, Pagination, Row, Form, Button, Icon } from "antd";
+import { Table, Card, Pagination, Row, Button, Icon } from "antd";
 import { fetchDonDonList } from "../../../../actions";
 import history from "../../../../history";
 import pyLearningApi from "../../../../apis/pylearning";
@@ -178,11 +178,41 @@ class DonDonList extends React.Component {
     );
   };
 
+  fields = [
+    {
+      type: "input",
+      placeholder: "Search by ID or Text",
+      onChange: this.onSearch,
+      key: 1
+    },
+    {
+      type: "select",
+      placeholder: "Filter by Entity Type",
+      onChange: this.onEntityChange,
+      labelInValue: true,
+      options: [
+        { value: null, label: "None" },
+        { value: 1, label: "BM" },
+        { value: 2, label: "FM" }
+      ],
+      key: 2
+    },
+    {
+      type: "select",
+      placeholder: "Filter by Status",
+      onChange: this.onStatusChange,
+      labelInValue: true,
+      options: [{ value: 1, label: "Live" }, { value: 2, label: "Draft" }],
+      key: 3
+    }
+  ];
+
   render() {
     const columnName = this.tableColumnName();
     return (
       <div>
-        <Card type="inner" loading={this.state.loading}>
+        <Filters loading={false} fields={this.fields} />
+        {/* <Card type="inner" loading={this.state.loading}>
           <Filters
             component="input"
             placeholder="Search by ID or Text"
@@ -211,7 +241,7 @@ class DonDonList extends React.Component {
               ]}
             />
           </Form>
-        </Card>
+        </Card> */}
         <Card style={{ marginTop: 20 }}>
           <Row>
             <Table
