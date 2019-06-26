@@ -46,7 +46,7 @@ class SimulationList extends React.Component {
             <div style={{ minHeight: "100px" }}>
               <div>{text}</div>
               {status ? (
-                <div style={{ marginTop: 10 }}>
+                <div style={{ marginTop: 20 }}>
                   <Alert
                     message={message}
                     type={status}
