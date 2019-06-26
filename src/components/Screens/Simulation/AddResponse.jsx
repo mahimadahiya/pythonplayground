@@ -20,6 +20,7 @@ class AddResponse extends Component {
 
   componentWillMount() {
     this.id = this.props.match.params.id;
+    this.props.heading("Add Simulation");
   }
 
   uploadPropsAudio = {

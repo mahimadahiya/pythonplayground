@@ -7,7 +7,7 @@ import history from "../../history";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions";
 import Breadcrumbs from "./Breadcrumbs";
-// import SubMenu from "../Elements/Helper/SubMenu";
+import Submenu from "../Elements/Helper/Submenu";
 
 const { Header, Content, Sider } = Layout;
 
@@ -56,13 +56,46 @@ class SideBar extends React.Component {
           key: "sub1-1",
           onClick: () => history.push("/tracks"),
           label: "List"
+        },
+        {
+          key: "sub1-2",
+          onClick: () => history.push("/tracks/map/user"),
+          label: "Map User"
+        }
+      ]
+    },
+    {
+      key: "sub2",
+      icon: "question-circle",
+      label: "Questions",
+      menuList: [
+        {
+          key: "sub2-1",
+          onClick: () => history.push("/questions"),
+          label: "List"
+        }
+      ]
+    },
+    {
+      key: "sub3",
+      icon: "smile",
+      label: "Simulation",
+      menuList: [
+        {
+          key: "sub3-1",
+          onClick: () => history.push("/simulation"),
+          label: "List"
+        },
+        {
+          key: "sub3-2",
+          onClick: () => history.push("/simulation/map"),
+          label: "Map Simulation"
         }
       ]
     }
   ];
 
   render() {
-    const { SubMenu } = Menu;
     return (
       <Layout>
         <Sider
@@ -82,109 +115,8 @@ class SideBar extends React.Component {
           <div style={{ padding: "15px", textAlign: "center" }}>
             <img src={this.state.logo} alt="logo" width="auto" height="40px" />
           </div>
-          <Menu
-            theme="dark"
-            defaultSelectedKeys={["1"]}
-            mode="inline"
-            style={{ marginTop: 35 }}
-          >
-            {/* <SubMenu collapsed={this.state.collapsed} list={this.list} /> */}
-            <SubMenu
-              key="sub1"
-              title={
-                <span>
-                  <Icon type="fork" />
-                  {!this.state.collapsed ? "Tracks" : null}
-                </span>
-              }
-            >
-              <Menu.Item key="sub1-1" onClick={() => history.push("/tracks")}>
-                List
-              </Menu.Item>
-              <Menu.Item
-                key="sub1-2"
-                onClick={() => history.push("/tracks/map/user")}
-              >
-                Map User
-              </Menu.Item>
-            </SubMenu>
-            <SubMenu
-              key="sub2"
-              title={
-                <span>
-                  <Icon type="question-circle" />
-                  {!this.state.collapsed ? "Questions" : null}
-                </span>
-              }
-            >
-              <Menu.Item
-                key="sub2-1"
-                onClick={() => history.push("/questions")}
-              >
-                List
-              </Menu.Item>
-            </SubMenu>
-            <SubMenu
-              key="sub3"
-              title={
-                <span>
-                  <Icon type="smile" />
-                  {!this.state.collapsed ? "Simulation" : null}
-                </span>
-              }
-            >
-              <Menu.Item
-                key="sub3-2"
-                onClick={() => history.push("/simulation")}
-              >
-                List
-              </Menu.Item>
-              <Menu.Item
-                key="sub3-1"
-                onClick={() => history.push("/simulation/map")}
-              >
-                Map
-              </Menu.Item>
-            </SubMenu>
-            <SubMenu
-              key="sub4"
-              title={
-                <span>
-                  <Icon type="play-circle" />
-                  {!this.state.collapsed ? "Games" : null}
-                </span>
-              }
-            >
-              <SubMenu key="sub4-1" title="Don Don">
-                <Menu.Item
-                  key="sub4-1-1"
-                  onClick={() => history.push("/games/dondon")}
-                >
-                  List
-                </Menu.Item>
-                <Menu.Item
-                  key="sub4-1-2"
-                  onClick={() => history.push("/games/dondon/upload")}
-                >
-                  Upload
-                </Menu.Item>
-              </SubMenu>
-              <SubMenu key="sub4-2" title="Magic Phrase">
-                <Menu.Item
-                  key="sub4-2-1"
-                  onClick={() => history.push("/games/magicphrase")}
-                >
-                  List
-                </Menu.Item>
-                <Menu.Item
-                  key="sub4-2-2"
-                  onClick={() => history.push("/games/magicphrase/upload")}
-                >
-                  Upload
-                </Menu.Item>
-              </SubMenu>
-            </SubMenu>
-          </Menu>
+
+          <Submenu collapsed={this.state.collapsed} list={this.list} />
         </Sider>
         <Layout style={{ marginLeft: this.state.collapsed ? 80 : 250 }}>
           <Header
