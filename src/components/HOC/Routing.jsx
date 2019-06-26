@@ -19,6 +19,7 @@ import ListMagicPhrase from "../Screens/Games/MagicPhrase/List";
 import EditDonDon from "../Screens/Games/DonDon/Edit";
 import EditMagicPhrase from "../Screens/Games/MagicPhrase/Edit";
 import QuestionEdit from "../Screens/Questions/edit";
+import AddResponse from "../Screens/Simulation/AddResponse";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -79,6 +80,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/simulation"
               component={SimulationList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/simulation/add/:id"
+              component={AddResponse}
               user={user}
               exact
             />

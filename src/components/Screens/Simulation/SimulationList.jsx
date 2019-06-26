@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Card, Pagination } from "antd";
+import { Table, Card, Pagination, Alert, Button } from "antd";
 import { fetchSimulationList } from "../../../actions";
+import history from "../../../history";
 
 class SimulationList extends React.Component {
   componentWillMount = async () => {
@@ -11,6 +12,10 @@ class SimulationList extends React.Component {
   componentDidMount() {
     this.props.heading("Simulation List");
   }
+
+  onAddClick = (e, id) => {
+    history.push("/simulation/add/" + id);
+  };
 
   tableColumnName = () => {
     const column = [
@@ -24,8 +29,42 @@ class SimulationList extends React.Component {
         dataIndex: "text",
         key: "text",
         width: "60%",
-        render: text => {
-          return <div style={{ minHeight: "100px" }}>{text}</div>;
+        render: (text, row) => {
+          let status = null;
+          let message = null;
+          if (row.expert_response_status && row.expert_response_status <= 3) {
+            status = "warning";
+            message = "Draft";
+          } else if (row.expert_response_status === 4) {
+            status = "success";
+            message = row.expert_response_name;
+          } else {
+            status = "error";
+            message = "No response found";
+          }
+          return (
+            <div style={{ minHeight: "100px" }}>
+              <div>{text}</div>
+              {status ? (
+                <div style={{ marginTop: 20 }}>
+                  <Alert
+                    message={message}
+                    type={status}
+                    showIcon
+                    style={{ width: "60%", display: "inline", marginRight: 20 }}
+                  />
+                  {status === "error" ? (
+                    <Button
+                      type="primary"
+                      onClick={e => this.onAddClick(e, row.id)}
+                    >
+                      Add
+                    </Button>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+          );
         }
       },
       {

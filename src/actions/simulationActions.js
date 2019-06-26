@@ -47,14 +47,31 @@ export const createSimulationOrgMapping = (
 };
 
 export const fetchSimulationList = (authToken, offset) => async dispatch => {
-  const response = await adminPanelApi(authToken).get(
-    `/v1/admin/simulations?limit=10&offset=${offset}`
-  );
+  let response = null;
+
+  if (offset) {
+    response = await adminPanelApi(authToken).get(
+      `/v1/admin/simulations?limit=10&offset=${offset}`
+    );
+  } else {
+    response = await adminPanelApi(authToken).get(`/v1/admin/simulations`);
+  }
+
   dispatch({
-    type: ACTION_TYPE.FETCH_SIMULTATION_LIST,
+    type: ACTION_TYPE.FETCH_SIMULATION_LIST,
     payload: response.data
   });
   history.push("/simulation");
+};
+
+export const fetchSimulation = (authToken, id) => async dispatch => {
+  const response = await adminPanelApi(authToken).get(
+    `v1/admin/simulations/detail?question_id=${id}`
+  );
+  dispatch({
+    type: ACTION_TYPE.FETCH_SIMULATION,
+    payload: response.data
+  });
 };
 
 export const clearSimulations = () => {
