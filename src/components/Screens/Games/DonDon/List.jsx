@@ -181,12 +181,14 @@ class DonDonList extends React.Component {
   fields = [
     {
       type: "input",
+      label: "Search",
       placeholder: "Search by ID or Text",
       onChange: this.onSearch,
       key: 1
     },
     {
       type: "select",
+      label: "Entity Type",
       placeholder: "Filter by Entity Type",
       onChange: this.onEntityChange,
       labelInValue: true,
@@ -199,6 +201,7 @@ class DonDonList extends React.Component {
     },
     {
       type: "select",
+      label: "Status",
       placeholder: "Filter by Status",
       onChange: this.onStatusChange,
       labelInValue: true,
@@ -211,37 +214,7 @@ class DonDonList extends React.Component {
     const columnName = this.tableColumnName();
     return (
       <div>
-        <Filters loading={false} fields={this.fields} />
-        {/* <Card type="inner" loading={this.state.loading}>
-          <Filters
-            component="input"
-            placeholder="Search by ID or Text"
-            onChange={this.onSearch}
-          />
-          <Form layout="inline">
-            <Filters
-              component="select"
-              placeholder="Filter by Entity Type"
-              onChange={this.onEntityChange}
-              labelInValue={true}
-              options={[
-                { value: null, label: "None" },
-                { value: 1, label: "BM" },
-                { value: 2, label: "FM" }
-              ]}
-            />
-            <Filters
-              component="select"
-              placeholder="Filter by Status"
-              onChange={this.onStatusChange}
-              labelInValue={true}
-              options={[
-                { value: 1, label: "Live" },
-                { value: 2, label: "Draft" }
-              ]}
-            />
-          </Form>
-        </Card> */}
+        <Filters fields={this.fields} />
         <Card style={{ marginTop: 20 }}>
           <Row>
             <Table

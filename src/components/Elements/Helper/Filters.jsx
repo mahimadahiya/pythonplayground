@@ -49,37 +49,9 @@ const renderSelect = fields => {
 
 const Filters = props => {
   return (
-    <Card type="inner">
+    <Card>
       {renderInput(props.fields)}
       <Form layout="inline">{renderSelect(props.fields)}</Form>
-      {/* <Filters
-        component="input"
-        placeholder="Search by ID or Text"
-        onChange={this.onSearch}
-      />
-      <Form layout="inline">
-        <Filters
-          component="select"
-          placeholder="Filter by Entity Type"
-          onChange={this.onEntityChange}
-          labelInValue={true}
-          options={[
-            { value: null, label: "None" },
-            { value: 1, label: "BM" },
-            { value: 2, label: "FM" }
-          ]}
-        />
-        <Filters
-          component="select"
-          placeholder="Filter by Status"
-          onChange={this.onStatusChange}
-          labelInValue={true}
-          options={[
-            { value: 1, label: "Live" },
-            { value: 2, label: "Draft" }
-          ]}
-        />
-      </Form> */}
     </Card>
   );
 

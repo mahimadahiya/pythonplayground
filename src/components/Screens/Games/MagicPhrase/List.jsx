@@ -1,20 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import qs from "querystring";
-import {
-  Table,
-  Card,
-  Pagination,
-  Input,
-  Row,
-  Form,
-  Select,
-  Button,
-  Icon
-} from "antd";
+import { Table, Card, Pagination, Row, Button, Icon } from "antd";
 import { fetchMagicphraseList } from "../../../../actions";
 import history from "../../../../history";
 import pyLearningApi from "../../../../apis/pylearning";
+import Filters from "../../../Elements/Helper/Filters";
 
 class DonDonList extends React.Component {
   state = { loading: true, searchText: "", entity_type: null, status: null };
@@ -182,54 +173,45 @@ class DonDonList extends React.Component {
     );
   };
 
+  fields = [
+    {
+      type: "input",
+      label: "Search",
+      placeholder: "Search by ID or Text",
+      onChange: this.onSearch,
+      key: 1
+    },
+    {
+      type: "select",
+      label: "Entity Type",
+      placeholder: "Filter by Entity Type",
+      onChange: this.onEntityChange,
+      labelInValue: true,
+      options: [
+        { value: null, label: "None" },
+        { value: 1, label: "BM" },
+        { value: 2, label: "FM" }
+      ],
+      key: 2
+    },
+    {
+      type: "select",
+      label: "Status",
+      placeholder: "Filter by Status",
+      onChange: this.onStatusChange,
+      labelInValue: true,
+      options: [{ value: 1, label: "Live" }, { value: 2, label: "Draft" }],
+      key: 3
+    }
+  ];
+
   render() {
     const columnName = this.tableColumnName();
     return (
       <div>
         <Card type="inner" loading={this.state.loading}>
           <Row>
-            <Form.Item label="Search Input">
-              <Input
-                placeholder="Search by ID or Text"
-                width="20"
-                onChange={this.onSearch}
-              />
-            </Form.Item>
-            <Form
-              layout="inline"
-              style={{ textAlign: "center", marginBottom: 20 }}
-            >
-              <Form.Item label="Entity Type">
-                <Select
-                  placeholder="Filter by Entity Type"
-                  onChange={this.onEntityChange}
-                  style={{ minWidth: "300px" }}
-                  labelInValue
-                >
-                  <Select.Option value={1} key={1}>
-                    BM
-                  </Select.Option>
-                  <Select.Option value={2} key={2}>
-                    FM
-                  </Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item label="Status">
-                <Select
-                  placeholder="Filter by Status"
-                  onChange={this.onStatusChange}
-                  style={{ minWidth: "300px" }}
-                  labelInValue
-                >
-                  <Select.Option value={1} key={1}>
-                    Live
-                  </Select.Option>
-                  <Select.Option value={2} key={2}>
-                    Draft
-                  </Select.Option>
-                </Select>
-              </Form.Item>
-            </Form>
+            <Filters fields={this.fields} />
           </Row>
           <Row>
             <Table
@@ -237,11 +219,6 @@ class DonDonList extends React.Component {
               columns={columnName}
               rowKey={row => row.id}
               pagination={false}
-              // footer={() => (
-              //   <MButton>
-              //     <Link to="/tracks/create">Create Track</Link>
-              //   </MButton>
-              // )}
             />
           </Row>
           <div style={{ marginTop: "20px", textAlign: "right" }}>
