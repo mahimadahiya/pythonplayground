@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Table, Card, Pagination, Alert, Button } from "antd";
 import { fetchSimulationList } from "../../../actions";
 import history from "../../../history";
+import qs from "querystring";
+import adminPanelApi from "../../../apis/adminPanel";
 
 class SimulationList extends React.Component {
   componentWillMount = async () => {
@@ -15,6 +17,25 @@ class SimulationList extends React.Component {
 
   onAddClick = (e, id) => {
     history.push("/simulation/add/" + id);
+  };
+
+  onEditClick = (e, id) => {
+    history.push("/simulation/edit/" + id);
+  };
+
+  onDeleteClick = async (e, row) => {
+    console.log(row);
+    const formData = {
+      id: row.expert_response_id,
+      name: row.expert_response_name,
+      flag: 0,
+      keywords: row.expert_response_keywords
+    };
+    await adminPanelApi(this.props.user.Authorization).post(
+      "/v1/admin/edit/expert_response",
+      qs.stringify(formData)
+    );
+    this.props.fetchSimulationList(this.props.user.Authorization);
   };
 
   tableColumnName = () => {
@@ -34,7 +55,7 @@ class SimulationList extends React.Component {
           let message = null;
           if (row.expert_response_status && row.expert_response_status <= 3) {
             status = "warning";
-            message = "Draft";
+            message = "Under Process";
           } else if (row.expert_response_status === 4) {
             status = "success";
             message = row.expert_response_name;
@@ -53,6 +74,23 @@ class SimulationList extends React.Component {
                     showIcon
                     style={{ width: "60%", display: "inline", marginRight: 20 }}
                   />
+                  {status === "success" || status === "warning" ? (
+                    <span>
+                      <Button
+                        type="primary"
+                        onClick={e => this.onEditClick(e, row.id)}
+                        style={{ marginRight: 10 }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        type="danger"
+                        onClick={e => this.onDeleteClick(e, row)}
+                      >
+                        Delete
+                      </Button>
+                    </span>
+                  ) : null}
                   {status === "error" ? (
                     <Button
                       type="primary"
