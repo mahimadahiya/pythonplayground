@@ -7,8 +7,13 @@ import qs from "querystring";
 import adminPanelApi from "../../../apis/adminPanel";
 
 class SimulationList extends React.Component {
+  state = {
+    loading: true
+  };
+
   componentWillMount = async () => {
     await this.props.fetchSimulationList(this.props.user.Authorization, 0);
+    this.setState({ loading: false });
   };
 
   componentDidMount() {
@@ -122,9 +127,11 @@ class SimulationList extends React.Component {
     return column;
   };
 
-  handlePageChange = pageNumber => {
+  handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
-    this.props.fetchSimulationList(this.props.user.Authorization, offset);
+    this.setState({ loading: true });
+    await this.props.fetchSimulationList(this.props.user.Authorization, offset);
+    this.setState({ loading: false });
   };
 
   render() {
@@ -132,7 +139,7 @@ class SimulationList extends React.Component {
     const tableData = this.props.simulations;
     return (
       <div>
-        <Card type="inner">
+        <Card type="inner" loading={this.state.loading}>
           <Table
             dataSource={tableData}
             columns={columnName}

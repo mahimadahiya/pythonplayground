@@ -2,14 +2,50 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Divider, Card, Table, Pagination } from "antd";
-
 import { fetchQuestionList } from "../../../actions";
+import Filters from "../../Elements/Helper/Filters";
+import MButton from "../../Elements/MButton";
 
 class QuestionList extends React.Component {
-  componentWillMount = () => {
-    this.props.heading("Questions");
-    this.props.fetchQuestionList(this.props.user.Authorization, { offset: 0 });
+  state = {
+    loading: true
   };
+
+  componentWillMount = async () => {
+    this.props.heading("Questions");
+    await this.props.fetchQuestionList(this.props.user.Authorization, {
+      offset: 0
+    });
+    this.setState({ loading: false });
+  };
+
+  onSearch = e => {
+    this.setState(
+      {
+        searchText: e.target.value,
+        loading: true
+      },
+      () => {
+        setTimeout(async () => {
+          await this.props.fetchQuestionList(this.props.user.Authorization, {
+            searchText: this.state.searchText,
+            offset: 0
+          });
+          this.setState({ loading: false });
+        }, 1000);
+      }
+    );
+  };
+
+  fields = [
+    {
+      key: "1",
+      type: "input",
+      label: "Search Question",
+      placeholder: "Search Question",
+      onChange: this.onSearch
+    }
+  ];
 
   tableColumnName = () => {
     const column = [
@@ -47,9 +83,13 @@ class QuestionList extends React.Component {
     return column;
   };
 
-  handlePageChange = pageNumber => {
+  handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
-    this.props.fetchQuestionList(this.props.user.Authorization, { offset });
+    this.setState({ loading: true });
+    await this.props.fetchQuestionList(this.props.user.Authorization, {
+      offset
+    });
+    this.setState({ loading: false });
   };
 
   render() {
@@ -57,12 +97,22 @@ class QuestionList extends React.Component {
     const tableData = this.props.questions;
     return (
       <div>
-        <Card type="inner">
+        <Filters fields={this.fields} />
+        <Card
+          type="inner"
+          loading={this.state.loading}
+          style={{ marginTop: 20 }}
+        >
           <Table
             dataSource={tableData}
             columns={columnName}
             rowKey={row => row.id}
             pagination={false}
+            footer={() => (
+              <MButton>
+                <Link to="/questions/add">Add Question</Link>
+              </MButton>
+            )}
           />
           <div style={{ marginTop: "20px", textAlign: "right" }}>
             <Pagination

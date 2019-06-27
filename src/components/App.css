@@ -26,12 +26,6 @@
   /* margin: auto; */
 }
 
-div {
-  user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-}
 img {
   user-select: none;
   -moz-user-select: none;

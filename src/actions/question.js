@@ -4,9 +4,18 @@ import qs from "querystring";
 import history from "../history";
 
 export const fetchQuestionList = (authToken, values) => async dispatch => {
-  const response = await adminPanelApi(authToken).get(
-    `/v1/admin/questions?offset=${values.offset}`
-  );
+  let response = null;
+  if (values.searchText) {
+    response = await adminPanelApi(authToken).get(
+      `/v1/admin/questions?offset=${values.offset}&search=${
+        values.searchText
+      }&filters={}`
+    );
+  } else {
+    response = await adminPanelApi(authToken).get(
+      `/v1/admin/questions?offset=${values.offset}&filters={}`
+    );
+  }
   dispatch({
     type: ACTION_TYPE.FETCH_QUESTIONS,
     payload: response.data

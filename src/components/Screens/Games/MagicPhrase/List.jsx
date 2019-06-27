@@ -97,9 +97,10 @@ class DonDonList extends React.Component {
     );
   };
 
-  handlePageChange = pageNumber => {
+  handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
-    this.props.fetchMagicphraseList(
+    this.setState({ loading: true });
+    await this.props.fetchMagicphraseList(
       this.props.user.Authorization,
       {
         searchText: this.state.searchText,
@@ -108,6 +109,7 @@ class DonDonList extends React.Component {
       },
       offset
     );
+    this.setState({ loading: false });
   };
 
   onSearch = e => {

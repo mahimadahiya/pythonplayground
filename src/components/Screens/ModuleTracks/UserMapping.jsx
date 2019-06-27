@@ -91,18 +91,6 @@ class UserTrackMapping extends React.Component {
   }
 
   onSubmit = e => {
-    // const query = {
-    //   organization_id: values.organization_id,
-    //   mode: this.state.mode,
-    //   selectedBatches: `${values.selectedBatches}`,
-    //   selectedTracks: `${values.selectedTracks}`
-    // };
-    // this.setState({ loading: true });
-    // await this.props.createUserTrackMapping(
-    //   this.props.user.Authorization,
-    //   query
-    // );
-    // this.setState({ loading: false });
     e.preventDefault();
     this.props.form.validateFields(async (err, formProps) => {
       if (!err) {

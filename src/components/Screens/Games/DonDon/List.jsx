@@ -101,10 +101,10 @@ class DonDonList extends React.Component {
     );
   };
 
-  handlePageChange = pageNumber => {
+  handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
-    // this.setState
-    this.props.fetchDonDonList(
+    this.setState({ loading: true });
+    await this.props.fetchDonDonList(
       this.props.user.Authorization,
       {
         searchText: this.state.searchText,
@@ -113,6 +113,7 @@ class DonDonList extends React.Component {
       },
       offset
     );
+    this.setState({ loading: false });
   };
 
   onSearch = e => {
@@ -215,7 +216,7 @@ class DonDonList extends React.Component {
     return (
       <div>
         <Filters fields={this.fields} />
-        <Card style={{ marginTop: 20 }}>
+        <Card style={{ marginTop: 20 }} loading={this.state.loading}>
           <Row>
             <Table
               dataSource={this.props.list}
