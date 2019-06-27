@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Form, Select, Upload, Button, Icon, message } from "antd";
 import MButton from "../../Elements/MButton";
 import { connect } from "react-redux";
+import { createQuestion } from "../../../actions";
 
 class AddQuestion extends Component {
   state = {
@@ -20,7 +21,7 @@ class AddQuestion extends Component {
           ...formProps,
           media_url: this.state.file_url
         };
-        console.log(values);
+        this.props.createQuestion(this.props.user.Authorization, values);
       } else {
         console.log(err);
       }
@@ -114,4 +115,13 @@ class AddQuestion extends Component {
   }
 }
 
-export default connect()(Form.create()(AddQuestion));
+const mapStateToProps = state => {
+  return {
+    user: state.userAuth
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { createQuestion }
+)(Form.create()(AddQuestion));

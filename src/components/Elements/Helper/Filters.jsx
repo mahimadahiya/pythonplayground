@@ -1,17 +1,19 @@
 import React from "react";
-import { Input, Form, Select, Card } from "antd";
+import { Input, Form, Select, Card, Row, Col } from "antd";
 
 const renderInput = fields => {
   return fields.map(field => {
     if (field.type === "input") {
       return (
-        <Form.Item key={field.key} label={field.label}>
-          <Input
-            size="large"
-            onChange={field.onChange}
-            placeholder={field.placeholder}
-          />
-        </Form.Item>
+        <Col span={12} style={{ padding: "0 24px" }} key={field.key}>
+          <Form.Item label={field.label}>
+            <Input
+              size="large"
+              onChange={field.onChange}
+              placeholder={field.placeholder}
+            />
+          </Form.Item>
+        </Col>
       );
     } else {
       return null;
@@ -23,23 +25,25 @@ const renderSelect = fields => {
   return fields.map(field => {
     if (field.type === "select") {
       return (
-        <Form.Item key={field.key} label={field.label}>
-          <Select
-            size="large"
-            labelInValue={field.labelInValue}
-            onChange={field.onChange}
-            placeholder={field.placeholder}
-            style={{ minWidth: 300 }}
-          >
-            {field.options.map(option => {
-              return (
-                <Select.Option key={option.value} value={option.value}>
-                  {option.label}
-                </Select.Option>
-              );
-            })}
-          </Select>
-        </Form.Item>
+        <Col span={12} style={{ padding: "0 24px" }} key={field.key}>
+          <Form.Item label={field.label}>
+            <Select
+              size="large"
+              labelInValue={field.labelInValue}
+              onChange={field.onChange}
+              placeholder={field.placeholder}
+              style={{ minWidth: 300 }}
+            >
+              {field.options.map(option => {
+                return (
+                  <Select.Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+        </Col>
       );
     } else {
       return null;
@@ -50,8 +54,10 @@ const renderSelect = fields => {
 const Filters = props => {
   return (
     <Card>
-      {renderInput(props.fields)}
-      <Form layout="inline">{renderSelect(props.fields)}</Form>
+      <Row>
+        <Form>{renderInput(props.fields)}</Form>
+        <Form>{renderSelect(props.fields)}</Form>
+      </Row>
     </Card>
   );
 

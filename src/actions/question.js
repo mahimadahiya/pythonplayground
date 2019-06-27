@@ -9,11 +9,11 @@ export const fetchQuestionList = (authToken, values) => async dispatch => {
     response = await adminPanelApi(authToken).get(
       `/v1/admin/questions?offset=${values.offset}&search=${
         values.searchText
-      }&filters={}`
+      }&filters=${values.fields}`
     );
   } else {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/questions?offset=${values.offset}&filters={}`
+      `/v1/admin/questions?offset=${values.offset}&filters=${values.fields}`
     );
   }
   dispatch({
@@ -42,4 +42,17 @@ export const updateQuestion = (id, authToken, formValues) => async dispatch => {
     payload: response.data.result
   });
   history.push("/questions");
+};
+
+export const createQuestion = (authToken, formValues) => async dispatch => {
+  const data = qs.stringify({ fields: JSON.stringify(formValues) });
+  // console.log(data);
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/question/",
+    data
+  );
+  dispatch({
+    type: ACTION_TYPE.CREATE_QUESTION,
+    payload: response.data.result
+  });
 };

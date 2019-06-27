@@ -15,7 +15,8 @@ import { loginUser, logoutUser } from "./authActions";
 import {
   fetchQuestionList,
   fetchQuestionDetail,
-  updateQuestion
+  updateQuestion,
+  createQuestion
 } from "./question";
 import {
   createSimulationOrgMapping,
@@ -45,6 +46,7 @@ export {
   fetchQuestionList,
   fetchQuestionDetail,
   updateQuestion,
+  createQuestion,
   fetchDonDonList,
   fetchMagicphraseList,
   loginUser,

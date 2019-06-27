@@ -1,21 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Divider, Card, Table, Pagination } from "antd";
+import { Divider, Card, Table, Pagination, Button } from "antd";
 import { fetchQuestionList } from "../../../actions";
 import Filters from "../../Elements/Helper/Filters";
 import MButton from "../../Elements/MButton";
+import qs from 'querystring'
 
 class QuestionList extends React.Component {
   state = {
-    loading: true
+    loading: true,
+    searchText: "",
+    parameterId: null,
+    categoryId: null,
+    quizType: null,
+    status: null
   };
 
   componentWillMount = async () => {
     this.props.heading("Questions");
-    await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset: 0
-    });
+    this.fetchRequest = await this.props.fetchQuestionList(
+      this.props.user.Authorization,
+      {
+        offset: 0,
+        fields: JSON.stringify({})
+      }
+    );
     this.setState({ loading: false });
   };
 
@@ -37,6 +47,52 @@ class QuestionList extends React.Component {
     );
   };
 
+  onCategoryChange = e => {
+    this.setState({
+      categoryId: e.target.value
+    });
+  };
+
+  onParameterChange = e => {
+    this.setState({
+      parameterId: e.target.value
+    });
+  };
+
+  onQuizTypeChange = val => {
+    this.setState({
+      quizType: val
+    });
+  };
+
+  onStatusChange = val => {
+    this.setState({
+      status: val
+    });
+  };
+
+  clean(obj) {
+    for (var propName in obj) {
+      if (obj[propName] === null || obj[propName] === undefined) {
+        delete obj[propName];
+      }
+    }
+  }
+
+  onFilterClick = async () => {
+    const data = `{"questionsparameters__parameter_id":${this.state.parameterId},"questionscategories__category_id":${this.state.categoryId},"quiz_type":${this.state.quizType},"status":${this.state.status}}`
+    const fields = data;
+
+    this.clean(fields);
+
+    await this.props.fetchQuestionList(this.props.user.Authorization, {
+      searchText: this.state.searchText,
+      fields,
+      offset: 0
+    });
+    this.setState({ loading: false });
+  };
+
   fields = [
     {
       key: "1",
@@ -44,6 +100,76 @@ class QuestionList extends React.Component {
       label: "Search Question",
       placeholder: "Search Question",
       onChange: this.onSearch
+    },
+    {
+      key: "2",
+      type: "input",
+      inputType: "number",
+      label: "Parameter ID",
+      placeholder: "Enter Parameter ID",
+      onChange: this.onParameterChange
+    },
+    {
+      key: "3",
+      type: "input",
+      inputType: "number",
+      label: "Category ID",
+      placeholder: "Enter Category ID",
+      onChange: this.onCategoryChange
+    },
+    {
+      key: "4",
+      type: "select",
+      label: "Quiz Type",
+      labelInValue: false,
+      placeholder: "Select Quiz Type",
+      onChange: this.onQuizTypeChange,
+      options: [
+        {
+          key: "all",
+          value: null,
+          label: "All"
+        },
+        {
+          key: "mcq",
+          value: "mcq",
+          label: "MCQ"
+        },
+        {
+          key: "dd",
+          value: "dd",
+          label: "Drag & Drop"
+        },
+        {
+          key: "kp",
+          value: "kp",
+          label: "Key Phrases"
+        }
+      ]
+    },
+    {
+      key: "5",
+      type: "select",
+      label: "Status",
+      placeholder: "Select status",
+      onChange: this.onStatusChange,
+      options: [
+        {
+          key: "all",
+          value: null,
+          label: "All"
+        },
+        {
+          key: "live",
+          value: 2,
+          label: "Live"
+        },
+        {
+          key: "draft",
+          value: 1,
+          label: "Draft"
+        }
+      ]
     }
   ];
 
@@ -97,7 +223,10 @@ class QuestionList extends React.Component {
     const tableData = this.props.questions;
     return (
       <div>
-        <Filters fields={this.fields} />
+        <Card>
+          <Filters fields={this.fields} />
+          <Button onClick={this.onFilterClick}>Filter</Button>
+        </Card>
         <Card
           type="inner"
           loading={this.state.loading}
