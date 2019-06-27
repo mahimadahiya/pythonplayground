@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Card, Form, Input, Switch, Upload, message, Button, Icon } from "antd";
+import { Card, Form, Input } from "antd";
 import MButton from "../../Elements/MButton";
 import adminPanelApi from "../../../apis/adminPanel";
 import history from "../../../history";

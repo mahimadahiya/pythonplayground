@@ -21,7 +21,6 @@ import EditMagicPhrase from "../Screens/Games/MagicPhrase/Edit";
 import QuestionEdit from "../Screens/Questions/edit";
 import AddResponse from "../Screens/Simulation/AddResponse";
 import EditResponse from "../Screens/Simulation/EditResponse";
-import QuestionEdit from "../Screens/Questions/edit";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
