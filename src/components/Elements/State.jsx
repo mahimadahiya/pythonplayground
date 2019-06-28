@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Select } from "antd";
 import { connect } from "react-redux";
 import { fetchStates } from "../../actions";
@@ -18,8 +18,9 @@ const renderOptions = states => {
 };
 
 const State = props => {
-  console.log("called");
-  getStates(props.fetchStates, props.user, props.states, props.regions);
+  useEffect(() => {
+    getStates(props.fetchStates, props.user, props.states, props.regions);
+  }, [props.regions]);
   return (
     <div>
       <Form.Item label="State">
