@@ -43,10 +43,15 @@ export const updateQuestion = (id, authToken, formValues) => async dispatch => {
     type: ACTION_TYPE.UPDATE_QUESTION,
     payload: response.data.result
   });
-  history.push("/question/map/choices/" + id);
+  if (formValues.status || formValues.flag) {
+    history.push("/questions");
+  } else {
+    history.push("/question/map/choices/" + id);
+  }
 };
 
 export const createQuestion = (authToken, formValues) => async dispatch => {
+  formValues["status"] = 1;
   const data = qs.stringify({ fields: JSON.stringify(formValues) });
   const response = await adminPanelApi(authToken).post(
     "/v1/admin/question/",

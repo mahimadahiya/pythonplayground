@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Divider, Card, Table, Pagination, Button } from "antd";
-import { fetchQuestionList } from "../../../actions";
+import { Divider, Card, Table, Pagination, Button, Popconfirm } from "antd";
+import { fetchQuestionList, updateQuestion } from "../../../actions";
 import Filters from "../../Elements/Helper/Filters";
 import MButton from "../../Elements/MButton";
 
@@ -177,6 +177,42 @@ class QuestionList extends React.Component {
     }
   ];
 
+  onPublish = async id => {
+    this.setState({ loading: true });
+    await this.props.updateQuestion(id, this.props.user.Authorization, {
+      status: 2
+    });
+    await this.props.fetchQuestionList(this.props.user.Authorization, {
+      offset: 0,
+      fields: `{}`
+    });
+    this.setState({ loading: false });
+  };
+
+  onUnpublish = async id => {
+    this.setState({ loading: true });
+    await this.props.updateQuestion(id, this.props.user.Authorization, {
+      status: 1
+    });
+    await this.props.fetchQuestionList(this.props.user.Authorization, {
+      offset: 0,
+      fields: `{}`
+    });
+    this.setState({ loading: false });
+  };
+
+  onDelete = async id => {
+    this.setState({ loading: true });
+    await this.props.updateQuestion(id, this.props.user.Authorization, {
+      flag: 0
+    });
+    await this.props.fetchQuestionList(this.props.user.Authorization, {
+      offset: 0,
+      fields: `{}`
+    });
+    this.setState({ loading: false });
+  };
+
   tableColumnName = () => {
     const column = [
       {
@@ -202,12 +238,27 @@ class QuestionList extends React.Component {
           <span>
             <Link to={`/question/edit/${record.id}`}>Edit</Link>
             <Divider type="vertical" />
-            <Link to={`/tracks/delete/${record.id}`}>Delete</Link>
+            <Popconfirm
+              title="Delete"
+              onConfirm={() => this.onDelete(record.id)}
+            >
+              <Button type="link">Delete</Button>
+            </Popconfirm>
             <Divider type="vertical" />
             <Link to={`/question/map/choices/${record.id}`}>Map Choices</Link>
             <Divider type="vertical" />
-            <Link to={`/question/publish/${record.id}`}>Publish</Link>
-            <Divider type="vertical" />
+            <Popconfirm
+              title={record.status === 1 ? "Publish" : "Unpublish"}
+              onConfirm={
+                record.status === 1
+                  ? () => this.onPublish(record.id)
+                  : () => this.onUnpublish(record.id)
+              }
+            >
+              <Button type="link">
+                {record.status === 1 ? "Publish" : "Unpublish"}
+              </Button>
+            </Popconfirm>
           </span>
         )
       }
@@ -232,7 +283,13 @@ class QuestionList extends React.Component {
         <Card>
           <Filters fields={this.fields} />
           <div style={{ textAlign: "right" }}>
-            <Button onClick={this.onFilterClick} type="primary">
+            <Button
+              onClick={this.onFilterClick}
+              type="primary"
+              shape="round"
+              size="large"
+              style={{ marginTop: 10, marginRight: 10 }}
+            >
               Filter
             </Button>
           </div>
@@ -275,5 +332,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchQuestionList }
+  { fetchQuestionList, updateQuestion }
 )(QuestionList);
