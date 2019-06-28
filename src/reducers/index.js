@@ -7,6 +7,7 @@ import userTrackReducer from "./userTrackReducer";
 import simulationReducer from "./simulationReducer";
 import dondonReducer from "./dondonReducer";
 import magicphraseReducer from "./magicphraseReducer";
+import regionReducer from "./regionReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   userTrack: userTrackReducer,
   simulation: simulationReducer,
   dondon: dondonReducer,
-  magicphrase: magicphraseReducer
+  magicphrase: magicphraseReducer,
+  region: regionReducer
 });

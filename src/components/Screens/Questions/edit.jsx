@@ -1,14 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Card,
-  Select,
-  Form,
-  Descriptions
-} from "antd";
+import { Card, Select, Form, Descriptions } from "antd";
 
 import { fetchQuestionDetail, updateQuestion } from "../../../actions";
 import MButton from "../../Elements/MButton";
+import Region from "../../Elements/Region";
 
 class QuestionEdit extends React.Component {
   state = { quiz_type: "", loading: true };
@@ -17,7 +13,7 @@ class QuestionEdit extends React.Component {
       this.props.match.params.id,
       this.props.user.Authorization
     );
-    this.setState({ loading: false })
+    this.setState({ loading: false });
   };
 
   onStatusChange = value => {
@@ -52,10 +48,16 @@ class QuestionEdit extends React.Component {
           <Descriptions.Item label="Status">{status}</Descriptions.Item>
           <Descriptions.Item label="Quiz Type">{quiz_type}</Descriptions.Item>
           <Descriptions.Item label="Flag">{flag}</Descriptions.Item>
-          <Descriptions.Item label="Text" span="3">{text}</Descriptions.Item>
+          <Descriptions.Item label="Text" span="3">
+            {text}
+          </Descriptions.Item>
         </Descriptions>
       );
     }
+  };
+
+  onChange = val => {
+    console.log("from edit", val);
   };
 
   renderFormItems = () => {
@@ -79,19 +81,21 @@ class QuestionEdit extends React.Component {
             </Select.Option>
           </Select>
         </Form.Item>
+        <Region mode="multiple" onChange={this.onChange} />
         <Form.Item>
           <MButton>Update Question</MButton>
         </Form.Item>
       </div>
     );
-
-  }
+  };
 
   render() {
     return (
       <div>
         <Card title="Edit Question">
-          <Card loading={this.state.loading}>{this.renderQuestionDescription()}</Card>
+          <Card loading={this.state.loading}>
+            {this.renderQuestionDescription()}
+          </Card>
           <Card title="Update">
             <Form onSubmit={this.onSubmit}>{this.renderFormItems()}</Form>
           </Card>
