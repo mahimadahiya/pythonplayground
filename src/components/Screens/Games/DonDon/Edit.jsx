@@ -14,7 +14,8 @@ class Edit extends Component {
     choice1: null,
     choice2: null,
     status: 1,
-    id: null
+    id: null,
+    loading: true,
   };
 
   componentDidMount() {
@@ -49,6 +50,7 @@ class Edit extends Component {
         choice2: record.choice2
       });
     }
+    this.setState({ loading: false })
   }
 
   setEntityType = e => {
@@ -139,7 +141,7 @@ class Edit extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Card>
+      <Card loading={this.state.loading}>
         <Form onSubmit={this.onSubmit}>
           <Form.Item label="Text">
             {getFieldDecorator("text", {
@@ -204,49 +206,49 @@ class Edit extends Component {
               </Form.Item>
             </div>
           ) : (
-            <div>
-              <Form.Item label="Choice 1">
-                <Upload
-                  {...this.uploadProps}
-                  onChange={this.onUploadChangeChoice1}
-                >
-                  <Button>
-                    <Icon type="upload" /> Click to Upload
+              <div>
+                <Form.Item label="Choice 1">
+                  <Upload
+                    {...this.uploadProps}
+                    onChange={this.onUploadChangeChoice1}
+                  >
+                    <Button>
+                      <Icon type="upload" /> Click to Upload
                   </Button>
-                </Upload>
-                <div>
-                  {this.state.choice1 ? (
-                    <img
-                      src={this.state.choice1}
-                      alt="choice 1"
-                      height="100px"
-                      width="100px"
-                    />
-                  ) : null}
-                </div>
-              </Form.Item>
-              <Form.Item label="Choice 2">
-                <Upload
-                  {...this.uploadProps}
-                  onChange={this.onUploadChangeChoice2}
-                >
-                  <Button>
-                    <Icon type="upload" /> Click to Upload
+                  </Upload>
+                  <div>
+                    {this.state.choice1 ? (
+                      <img
+                        src={this.state.choice1}
+                        alt="choice 1"
+                        height="100px"
+                        width="100px"
+                      />
+                    ) : null}
+                  </div>
+                </Form.Item>
+                <Form.Item label="Choice 2">
+                  <Upload
+                    {...this.uploadProps}
+                    onChange={this.onUploadChangeChoice2}
+                  >
+                    <Button>
+                      <Icon type="upload" /> Click to Upload
                   </Button>
-                </Upload>
-                <div>
-                  {this.state.choice2 ? (
-                    <img
-                      src={this.state.choice2}
-                      alt="choice 2"
-                      height="100px"
-                      width="100px"
-                    />
-                  ) : null}
-                </div>
-              </Form.Item>
-            </div>
-          )}
+                  </Upload>
+                  <div>
+                    {this.state.choice2 ? (
+                      <img
+                        src={this.state.choice2}
+                        alt="choice 2"
+                        height="100px"
+                        width="100px"
+                      />
+                    ) : null}
+                  </div>
+                </Form.Item>
+              </div>
+            )}
           <div style={{ textAlign: "right" }}>
             <MButton>Update</MButton>
           </div>

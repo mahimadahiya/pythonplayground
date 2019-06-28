@@ -8,6 +8,11 @@ import qs from "querystring";
 import { fetchSimulation } from "../../../actions";
 
 class EditResponse extends Component {
+
+  state = {
+    loading: true
+  }
+
   async componentDidMount() {
     this.id = this.props.match.params.id;
     this.props.heading("Edit Simulation");
@@ -17,6 +22,7 @@ class EditResponse extends Component {
       name: record.expert_response_name,
       keywords: record.expert_response_keywords
     });
+    this.setState({ loading: false })
   }
 
   onSubmit = e => {
@@ -42,7 +48,7 @@ class EditResponse extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <React.Fragment>
-        <Card>
+        <Card loading={this.state.loading}>
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="Name">
               {getFieldDecorator("name", {

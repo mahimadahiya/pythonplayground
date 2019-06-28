@@ -173,13 +173,13 @@ class MapQuestionChoices extends React.Component {
               <Switch
                 disabled={
                   this.state.correctChoice !== "" &&
-                  i !== reverseMapAlphabet[this.state.correctChoice]
+                    i !== reverseMapAlphabet[this.state.correctChoice]
                     ? true
                     : false
                 }
                 checked={
                   this.state.correctChoice !== "" &&
-                  i === reverseMapAlphabet[this.state.correctChoice]
+                    i === reverseMapAlphabet[this.state.correctChoice]
                     ? true
                     : false
                 }

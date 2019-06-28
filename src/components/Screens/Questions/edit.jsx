@@ -11,12 +11,13 @@ import { fetchQuestionDetail, updateQuestion } from "../../../actions";
 import MButton from "../../Elements/MButton";
 
 class QuestionEdit extends React.Component {
-  state = { quiz_type: "" };
-  componentWillMount = () => {
-    this.props.fetchQuestionDetail(
+  state = { quiz_type: "", loading: true };
+  componentWillMount = async () => {
+    await this.props.fetchQuestionDetail(
       this.props.match.params.id,
       this.props.user.Authorization
     );
+    this.setState({ loading: false })
   };
 
   onStatusChange = value => {
@@ -90,7 +91,7 @@ class QuestionEdit extends React.Component {
     return (
       <div>
         <Card title="Edit Question">
-          <Card>{this.renderQuestionDescription()}</Card>
+          <Card loading={this.state.loading}>{this.renderQuestionDescription()}</Card>
           <Card title="Update">
             <Form onSubmit={this.onSubmit}>{this.renderFormItems()}</Form>
           </Card>

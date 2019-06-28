@@ -5,7 +5,6 @@ import { Divider, Card, Table, Pagination, Button } from "antd";
 import { fetchQuestionList } from "../../../actions";
 import Filters from "../../Elements/Helper/Filters";
 import MButton from "../../Elements/MButton";
-import qs from 'querystring'
 
 class QuestionList extends React.Component {
   state = {
@@ -80,14 +79,14 @@ class QuestionList extends React.Component {
   }
 
   onFilterClick = async () => {
-    const data = `{"questionsparameters__parameter_id":${this.state.parameterId},"questionscategories__category_id":${this.state.categoryId},"quiz_type":${this.state.quizType},"status":${this.state.status}}`
+    const data = { "questionsparameters__parameter_id": this.state.parameterId, "questionscategories__category_id": this.state.categoryId, "quiz_type": this.state.quizType, "status": this.state.status }
     const fields = data;
 
     this.clean(fields);
 
     await this.props.fetchQuestionList(this.props.user.Authorization, {
       searchText: this.state.searchText,
-      fields,
+      fields: JSON.stringify(fields),
       offset: 0
     });
     this.setState({ loading: false });
@@ -202,6 +201,8 @@ class QuestionList extends React.Component {
             <Divider type="vertical" />
             <Link to={`/question/map/choices/${record.id}`}>Map Choices</Link>
             <Divider type="vertical" />
+            <Link to={`/question/publish/${record.id}`}>Publish</Link>
+            <Divider type="vertical" />
           </span>
         )
       }
@@ -225,7 +226,10 @@ class QuestionList extends React.Component {
       <div>
         <Card>
           <Filters fields={this.fields} />
-          <Button onClick={this.onFilterClick}>Filter</Button>
+          <div style={{ textAlign: 'right' }}>
+
+            <Button onClick={this.onFilterClick} type="primary">Filter</Button>
+          </div>
         </Card>
         <Card
           type="inner"
