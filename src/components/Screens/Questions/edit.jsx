@@ -1,13 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Select, Form, Descriptions } from "antd";
+import { Card, Select, Form, Descriptions, Input } from "antd";
 
 import { fetchQuestionDetail, updateQuestion } from "../../../actions";
 import MButton from "../../Elements/MButton";
 import Region from "../../Elements/Region";
+import State from "../../Elements/State";
 
 class QuestionEdit extends React.Component {
-  state = { quiz_type: "", loading: true };
+  state = { quiz_type: "", loading: true, regions: [], states: [] };
   componentWillMount = async () => {
     await this.props.fetchQuestionDetail(
       this.props.match.params.id,
@@ -56,32 +57,54 @@ class QuestionEdit extends React.Component {
     }
   };
 
-  onChange = val => {
-    console.log("from edit", val);
+  onChangeRegion = val => {
+    this.setState({ regions: val });
+  };
+
+  onChangeState = val => {
+    this.setState({ states: val });
   };
 
   renderFormItems = () => {
+    const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <Form.Item>
-          <Select
-            allowClear
-            showSearch
-            placeholder="Set Question Type"
-            onChange={this.onStatusChange}
-          >
-            <Select.Option key="dd" value="dd">
-              Drag and Drop
-            </Select.Option>
-            <Select.Option key="kp" value="kp">
-              Key Phrase
-            </Select.Option>
-            <Select.Option key="mcq" value="mcq">
-              MCQ
-            </Select.Option>
-          </Select>
+        <Form.Item label="Text">
+          {getFieldDecorator("text", {
+            rules: [
+              {
+                required: true,
+                message: "Text is required"
+              }
+            ]
+          })(<Input placeholder="Enter text" />)}
         </Form.Item>
-        <Region mode="multiple" onChange={this.onChange} />
+        <Form.Item label="Keywords">
+          {getFieldDecorator("keywords", {
+            rules: [
+              {
+                required: true,
+                message: "Keywords are required"
+              }
+            ]
+          })(<Input placeholder="Enter keywords separated by commas" />)}
+        </Form.Item>
+        <Form.Item label="Article">
+          {getFieldDecorator("article", {
+            rules: [
+              {
+                required: true,
+                message: "Article is required"
+              }
+            ]
+          })(<Input placeholder="Enter article" />)}
+        </Form.Item>
+        <Region mode="multiple" onChange={this.onChangeRegion} />
+        <State
+          mode="multiple"
+          regions={this.state.regions}
+          onChange={this.onChangeState}
+        />
         <Form.Item>
           <MButton>Update Question</MButton>
         </Form.Item>
@@ -115,4 +138,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { fetchQuestionDetail, updateQuestion }
-)(QuestionEdit);
+)(Form.create()(QuestionEdit));

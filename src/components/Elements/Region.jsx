@@ -7,7 +7,6 @@ const getRegions = async (fetchRegions, user, regions) => {
   if (regions.length === 0) {
     await fetchRegions(user.Authorization);
   }
-  console.log(regions);
 };
 
 const renderOptions = regions => {

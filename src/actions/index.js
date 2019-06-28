@@ -30,7 +30,7 @@ import {
 import { fetchDonDonList } from "./dondonActions";
 import { fetchMagicphraseList } from "./magicPhraseActions";
 
-import { fetchRegions } from './regionActions'
+import { fetchRegions, fetchStates } from "./regionActions";
 
 export {
   getOrganizationModules,
@@ -52,6 +52,7 @@ export {
   fetchDonDonList,
   fetchMagicphraseList,
   fetchRegions,
+  fetchStates,
   loginUser,
   logoutUser
 };
