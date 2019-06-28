@@ -13,7 +13,9 @@ export const fetchQuestionList = (authToken, values) => async dispatch => {
     );
   } else {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/questions?offset=${values.offset}&filters=${values.fields === undefined ? '{}' : values.fields}`
+      `/v1/admin/questions?offset=${values.offset}&filters=${
+        values.fields === undefined ? "{}" : values.fields
+      }`
     );
   }
   dispatch({
@@ -41,7 +43,7 @@ export const updateQuestion = (id, authToken, formValues) => async dispatch => {
     type: ACTION_TYPE.UPDATE_QUESTION,
     payload: response.data.result
   });
-  history.push("/questions");
+  history.push("/question/map/choices/" + id);
 };
 
 export const createQuestion = (authToken, formValues) => async dispatch => {
