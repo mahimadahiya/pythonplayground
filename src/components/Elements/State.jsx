@@ -17,7 +17,8 @@ const renderOptions = states => {
   });
 };
 
-const State = React.memo(props => {
+const State = props => {
+  console.log("called");
   getStates(props.fetchStates, props.user, props.states, props.regions);
   return (
     <div>
@@ -32,7 +33,7 @@ const State = React.memo(props => {
       </Form.Item>
     </div>
   );
-});
+};
 
 const mapStateToProps = state => {
   return {

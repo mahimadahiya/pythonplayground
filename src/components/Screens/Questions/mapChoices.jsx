@@ -13,6 +13,7 @@ import {
 } from "antd";
 import { connect } from "react-redux";
 import { updateQuestion, fetchQuestionDetail } from "../../../actions";
+import history from "../../../history";
 
 const mapAlphabet = {
   0: `a`,
@@ -206,17 +207,18 @@ class MapQuestionChoices extends React.Component {
       </Col>
     ));
   };
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
     const query = {
       choices: JSON.stringify(this.state.choices),
       correct_choice: this.state.correctChoice
     };
-    this.props.updateQuestion(
+    await this.props.updateQuestion(
       this.props.match.params.id,
       this.props.user.Authorization,
       query
     );
+    history.push("/question/" + this.props.match.params.id);
   };
 
   render() {
