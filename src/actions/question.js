@@ -13,7 +13,7 @@ export const fetchQuestionList = (authToken, values) => async dispatch => {
     );
   } else {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/questions?offset=${values.offset}&filters=${values.fields}`
+      `/v1/admin/questions?offset=${values.offset}&filters=${values.fields === undefined ? '{}' : values.fields}`
     );
   }
   dispatch({

@@ -45,6 +45,7 @@ class MapQuestionChoices extends React.Component {
     ],
     correctChoice: "",
     loadedChoices: false,
+    loading: true,
     questionDetail: {}
   };
 
@@ -53,6 +54,7 @@ class MapQuestionChoices extends React.Component {
       this.props.match.params.id,
       this.props.user.Authorization
     );
+    this.setState({ loading: false });
   }
 
   componentDidUpdate() {
@@ -173,13 +175,13 @@ class MapQuestionChoices extends React.Component {
               <Switch
                 disabled={
                   this.state.correctChoice !== "" &&
-                    i !== reverseMapAlphabet[this.state.correctChoice]
+                  i !== reverseMapAlphabet[this.state.correctChoice]
                     ? true
                     : false
                 }
                 checked={
                   this.state.correctChoice !== "" &&
-                    i === reverseMapAlphabet[this.state.correctChoice]
+                  i === reverseMapAlphabet[this.state.correctChoice]
                     ? true
                     : false
                 }
@@ -220,7 +222,7 @@ class MapQuestionChoices extends React.Component {
   render() {
     return (
       <div>
-        <Card>
+        <Card loading={this.state.loading}>
           <Form onSubmit={this.handleSubmit}>
             <Row type="flex" justify="space-around" gutter={16}>
               {this.createUI()}

@@ -22,7 +22,7 @@ class QuestionList extends React.Component {
       this.props.user.Authorization,
       {
         offset: 0,
-        fields: JSON.stringify({})
+        fields: `{}`
       }
     );
     this.setState({ loading: false });
@@ -79,7 +79,12 @@ class QuestionList extends React.Component {
   }
 
   onFilterClick = async () => {
-    const data = { "questionsparameters__parameter_id": this.state.parameterId, "questionscategories__category_id": this.state.categoryId, "quiz_type": this.state.quizType, "status": this.state.status }
+    const data = {
+      questionsparameters__parameter_id: this.state.parameterId,
+      questionscategories__category_id: this.state.categoryId,
+      quiz_type: this.state.quizType,
+      status: this.state.status
+    };
     const fields = data;
 
     this.clean(fields);
@@ -226,9 +231,10 @@ class QuestionList extends React.Component {
       <div>
         <Card>
           <Filters fields={this.fields} />
-          <div style={{ textAlign: 'right' }}>
-
-            <Button onClick={this.onFilterClick} type="primary">Filter</Button>
+          <div style={{ textAlign: "right" }}>
+            <Button onClick={this.onFilterClick} type="primary">
+              Filter
+            </Button>
           </div>
         </Card>
         <Card
