@@ -46,13 +46,10 @@ export const updateQuestion = (id, authToken, formValues) => async dispatch => {
 
 export const createQuestion = (authToken, formValues) => async dispatch => {
   const data = qs.stringify({ fields: JSON.stringify(formValues) });
-  // console.log(data);
   const response = await adminPanelApi(authToken).post(
     "/v1/admin/question/",
     data
   );
-  dispatch({
-    type: ACTION_TYPE.CREATE_QUESTION,
-    payload: response.data.result
-  });
+  const id = response.data.result.id;
+  history.push("/question/edit/" + id);
 };
