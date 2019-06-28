@@ -10,6 +10,7 @@ import State from "../../Elements/State";
 class QuestionEdit extends React.Component {
   state = { quiz_type: "", loading: true, regions: [], states: [] };
   componentWillMount = async () => {
+    this.props.heading("Update Question");
     await this.props.fetchQuestionDetail(
       this.props.match.params.id,
       this.props.user.Authorization
