@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Select, Form, Descriptions, Input } from "antd";
+import { Card, Form, Descriptions, Input, Drawer } from "antd";
 
 import { fetchQuestionDetail, updateQuestion } from "../../../actions";
 import MButton from "../../Elements/MButton";
@@ -14,6 +14,12 @@ class QuestionEdit extends React.Component {
       this.props.match.params.id,
       this.props.user.Authorization
     );
+    console.log(this.props.question);
+    this.props.form.setFieldsValue({
+      text: this.props.question.question.text,
+      keywords: this.props.question.question.keywords,
+      article: this.props.question.question.article_id
+    });
     this.setState({ loading: false });
   };
 
@@ -23,11 +29,21 @@ class QuestionEdit extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.updateQuestion(
-      this.props.match.params.id,
-      this.props.user.Authorization,
-      this.state
-    );
+    this.props.form.validateFields((err, formProps) => {
+      if (!err) {
+        const values = {
+          ...formProps,
+          regions: JSON.stringify(this.state.regions),
+          states: JSON.stringify(this.state.states)
+        };
+        console.log(values);
+        this.props.updateQuestion(
+          this.props.match.params.id,
+          this.props.user.Authorization,
+          values
+        );
+      }
+    });
   };
 
   renderQuestionDescription = () => {
@@ -70,34 +86,17 @@ class QuestionEdit extends React.Component {
     return (
       <div>
         <Form.Item label="Text">
-          {getFieldDecorator("text", {
-            rules: [
-              {
-                required: true,
-                message: "Text is required"
-              }
-            ]
-          })(<Input placeholder="Enter text" />)}
+          {getFieldDecorator("text")(<Input placeholder="Enter text" />)}
         </Form.Item>
         <Form.Item label="Keywords">
-          {getFieldDecorator("keywords", {
-            rules: [
-              {
-                required: true,
-                message: "Keywords are required"
-              }
-            ]
-          })(<Input placeholder="Enter keywords separated by commas" />)}
+          {getFieldDecorator("keywords")(
+            <Input placeholder="Enter keywords separated by commas" />
+          )}
         </Form.Item>
         <Form.Item label="Article">
-          {getFieldDecorator("article", {
-            rules: [
-              {
-                required: true,
-                message: "Article is required"
-              }
-            ]
-          })(<Input placeholder="Enter article" />)}
+          {getFieldDecorator("article")(
+            <Input placeholder="Enter article" type="number" />
+          )}
         </Form.Item>
         <Region mode="multiple" onChange={this.onChangeRegion} />
         <State
@@ -114,7 +113,7 @@ class QuestionEdit extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{}}>
         <Card title="Edit Question">
           <Card loading={this.state.loading}>
             {this.renderQuestionDescription()}
@@ -123,6 +122,13 @@ class QuestionEdit extends React.Component {
             <Form onSubmit={this.onSubmit}>{this.renderFormItems()}</Form>
           </Card>
         </Card>
+        {/* <Drawer
+          placement="right"
+          visible={true}
+          closable={false}
+          zIndex={0}
+          mask={false}
+        /> */}
       </div>
     );
   }
