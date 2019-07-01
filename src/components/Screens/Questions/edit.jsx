@@ -7,6 +7,7 @@ import MButton from "../../Elements/MButton";
 import Region from "../../Elements/Region";
 import State from "../../Elements/State";
 import Complexity from "../../Elements/Complexity";
+import ContentComplexityLevel from "../../Elements/ContentComplexityLevel";
 
 class QuestionEdit extends React.Component {
   state = {
@@ -14,7 +15,8 @@ class QuestionEdit extends React.Component {
     loading: true,
     regions: [],
     states: [],
-    complexity: null
+    complexity: null,
+    levels: []
   };
   componentWillMount = async () => {
     this.props.heading("Update Question");
@@ -45,7 +47,8 @@ class QuestionEdit extends React.Component {
           ...formProps,
           regions: JSON.stringify(this.state.regions),
           states: JSON.stringify(this.state.states),
-          complexity: this.state.complexity
+          complexity: this.state.complexity,
+          contentcomplexitylevels: JSON.stringify(this.state.levels)
         };
         this.props.updateQuestion(
           this.props.match.params.id,
@@ -95,6 +98,10 @@ class QuestionEdit extends React.Component {
     this.setState({ complexity: val });
   };
 
+  onChangeLevel = val => {
+    this.setState({ levels: val });
+  };
+
   renderFormItems = () => {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -128,6 +135,7 @@ class QuestionEdit extends React.Component {
             />
           </Col>
         </Row>
+        <ContentComplexityLevel onChange={this.onChangeLevel} mode="multiple" />
         <Form.Item>
           <MButton>Update Question</MButton>
         </Form.Item>

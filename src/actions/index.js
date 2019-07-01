@@ -32,6 +32,8 @@ import { fetchMagicphraseList } from "./magicPhraseActions";
 
 import { fetchRegions, fetchStates } from "./regionActions";
 
+import { fetchContentComplexityLevel } from "./contentActions";
+
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -53,6 +55,7 @@ export {
   fetchMagicphraseList,
   fetchRegions,
   fetchStates,
+  fetchContentComplexityLevel,
   loginUser,
   logoutUser
 };

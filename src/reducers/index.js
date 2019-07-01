@@ -8,6 +8,7 @@ import simulationReducer from "./simulationReducer";
 import dondonReducer from "./dondonReducer";
 import magicphraseReducer from "./magicphraseReducer";
 import regionReducer from "./regionReducer";
+import contentReducer from "./contentReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   simulation: simulationReducer,
   dondon: dondonReducer,
   magicphrase: magicphraseReducer,
-  region: regionReducer
+  region: regionReducer,
+  contentComplexityLevel: contentReducer
 });

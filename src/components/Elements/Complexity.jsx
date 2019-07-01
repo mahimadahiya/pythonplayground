@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Select } from "antd";
 
 const Complexity = props => {
-  console.log(props.value);
   return (
     <div>
       <Form.Item label="Complexity">
