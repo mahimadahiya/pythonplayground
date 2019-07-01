@@ -18,6 +18,7 @@ const renderOptions = parameters => {
 };
 
 const Parameters = props => {
+  console.log(props);
   useEffect(() => {
     getParameters(props.fetchParameters, props.user, props.categories);
   }, [props.categories]);
@@ -27,6 +28,7 @@ const Parameters = props => {
         <Select
           placeholder="Select a parameter"
           mode={props.mode}
+          value={props.value}
           onChange={props.onChange}
         >
           {renderOptions(props.parameters)}

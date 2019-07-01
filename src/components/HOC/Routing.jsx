@@ -23,6 +23,7 @@ import AddResponse from "../Screens/Simulation/AddResponse";
 import EditResponse from "../Screens/Simulation/EditResponse";
 import AddQuestion from "../Screens/Questions/AddQuestion";
 import QuestionDetails from "../Screens/Questions/QuestionDetails";
+import MapCategories from "../Screens/Questions/MapCategories";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -119,6 +120,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/question/edit/:id"
               component={QuestionEdit}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/question/map/:id"
+              component={MapCategories}
               user={user}
               exact
             />

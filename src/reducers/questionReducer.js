@@ -3,7 +3,7 @@ import _ from "lodash";
 
 const INITIAL_STATE = {
   questionsList: {},
-  questionDetail: {}
+  questionDetail: null
 };
 
 export default (state = INITIAL_STATE, action) => {

@@ -10,6 +10,7 @@ import Complexity from "../../Elements/Complexity";
 import ContentComplexityLevel from "../../Elements/ContentComplexityLevel";
 import Categories from "../../Elements/Categories";
 import Parameters from "../../Elements/Parameters";
+import Tags from "../../Elements/Tags";
 
 class QuestionEdit extends React.Component {
   state = {
@@ -18,9 +19,7 @@ class QuestionEdit extends React.Component {
     regions: [],
     states: [],
     complexity: null,
-    levels: [],
-    categories: [],
-    parameters: []
+    levels: []
   };
   componentWillMount = async () => {
     this.props.heading("Update Question");
@@ -64,7 +63,7 @@ class QuestionEdit extends React.Component {
   };
 
   renderQuestionDescription = () => {
-    if (this.props.question.question) {
+    if (this.props.question) {
       const {
         id,
         text,
@@ -106,14 +105,6 @@ class QuestionEdit extends React.Component {
     this.setState({ levels: val });
   };
 
-  onChangeCategory = val => {
-    this.setState({ categories: val });
-  };
-
-  onChangeParameter = val => {
-    this.setState({ parameters: val });
-  };
-
   renderFormItems = () => {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -148,12 +139,6 @@ class QuestionEdit extends React.Component {
           </Col>
         </Row>
         <ContentComplexityLevel onChange={this.onChangeLevel} mode="multiple" />
-        <Categories onChange={this.onChangeCategory} mode="multiple" />
-        <Parameters
-          onChange={this.onChangeParameter}
-          mode="multiple"
-          categories={this.state.categories}
-        />
         <Form.Item>
           <MButton>Update Question</MButton>
         </Form.Item>

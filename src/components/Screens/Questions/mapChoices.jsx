@@ -218,7 +218,7 @@ class MapQuestionChoices extends React.Component {
       this.props.user.Authorization,
       query
     );
-    history.push("/question/" + this.props.match.params.id);
+    history.push("/question/map/" + this.props.match.params.id);
   };
 
   render() {
