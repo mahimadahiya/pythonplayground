@@ -1,14 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Form, Descriptions, Input, Drawer } from "antd";
+import { Card, Form, Descriptions, Input, Drawer, Row, Col } from "antd";
 
 import { fetchQuestionDetail, updateQuestion } from "../../../actions";
 import MButton from "../../Elements/MButton";
 import Region from "../../Elements/Region";
 import State from "../../Elements/State";
+import Complexity from "../../Elements/Complexity";
 
 class QuestionEdit extends React.Component {
-  state = { quiz_type: "", loading: true, regions: [], states: [] };
+  state = {
+    quiz_type: "",
+    loading: true,
+    regions: [],
+    states: [],
+    complexity: null
+  };
   componentWillMount = async () => {
     this.props.heading("Update Question");
     await this.props.fetchQuestionDetail(
@@ -20,7 +27,10 @@ class QuestionEdit extends React.Component {
       keywords: this.props.question.question.keywords,
       article: this.props.question.question.article_id
     });
-    this.setState({ loading: false });
+    this.setState({
+      loading: false,
+      complexity: this.props.question.question.complexity
+    });
   };
 
   onStatusChange = value => {
@@ -34,7 +44,8 @@ class QuestionEdit extends React.Component {
         const values = {
           ...formProps,
           regions: JSON.stringify(this.state.regions),
-          states: JSON.stringify(this.state.states)
+          states: JSON.stringify(this.state.states),
+          complexity: this.state.complexity
         };
         this.props.updateQuestion(
           this.props.match.params.id,
@@ -80,6 +91,10 @@ class QuestionEdit extends React.Component {
     this.setState({ states: val });
   };
 
+  onChangeComplexity = val => {
+    this.setState({ complexity: val });
+  };
+
   renderFormItems = () => {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -98,11 +113,21 @@ class QuestionEdit extends React.Component {
           )}
         </Form.Item>
         <Region mode="multiple" onChange={this.onChangeRegion} />
-        <State
-          mode="multiple"
-          regions={this.state.regions}
-          onChange={this.onChangeState}
-        />
+        <Row>
+          <Col>
+            <State
+              mode="multiple"
+              regions={this.state.regions}
+              onChange={this.onChangeState}
+            />
+          </Col>
+          <Col>
+            <Complexity
+              onChange={this.onChangeComplexity}
+              value={this.state.complexity}
+            />
+          </Col>
+        </Row>
         <Form.Item>
           <MButton>Update Question</MButton>
         </Form.Item>
