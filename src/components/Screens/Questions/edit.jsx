@@ -15,7 +15,6 @@ class QuestionEdit extends React.Component {
       this.props.match.params.id,
       this.props.user.Authorization
     );
-    console.log(this.props.question);
     this.props.form.setFieldsValue({
       text: this.props.question.question.text,
       keywords: this.props.question.question.keywords,
@@ -37,7 +36,6 @@ class QuestionEdit extends React.Component {
           regions: JSON.stringify(this.state.regions),
           states: JSON.stringify(this.state.states)
         };
-        console.log(values);
         this.props.updateQuestion(
           this.props.match.params.id,
           this.props.user.Authorization,

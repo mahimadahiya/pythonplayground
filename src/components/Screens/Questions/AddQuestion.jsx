@@ -30,7 +30,6 @@ class AddQuestion extends Component {
 
   onUploadMedia = info => {
     if (info.file.status === "done") {
-      console.log(info.file.response.url);
       message.success(`${info.file.name} file uploaded successfully`);
       this.setState({ file_url: info.file.response.url });
     } else if (info.file.status === "error") {
