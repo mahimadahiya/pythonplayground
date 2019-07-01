@@ -11,7 +11,11 @@ const getLevels = async (user, fetchContentComplexityLevel, levels) => {
 
 const renderLevels = levels => {
   return levels.map(level => {
-    return <Select.Option value={level.id}>{level.description}</Select.Option>;
+    return (
+      <Select.Option key={level.id} value={level.id}>
+        {level.description}
+      </Select.Option>
+    );
   });
 };
 

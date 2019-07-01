@@ -9,6 +9,7 @@ import dondonReducer from "./dondonReducer";
 import magicphraseReducer from "./magicphraseReducer";
 import regionReducer from "./regionReducer";
 import contentReducer from "./contentReducer";
+import categoryReducer from "./categoryReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
   dondon: dondonReducer,
   magicphrase: magicphraseReducer,
   region: regionReducer,
-  contentComplexityLevel: contentReducer
+  contentComplexityLevel: contentReducer,
+  category: categoryReducer
 });
