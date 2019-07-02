@@ -38,12 +38,15 @@ class MapCategories extends React.Component {
       return tag.tag_id;
     });
 
-    this.setState({
-      categories,
-      parameters,
-      tags,
-      loaded: true
-    });
+    this.setState(
+      {
+        categories,
+        parameters,
+        tags,
+        loaded: true
+      },
+      () => console.log(this.state)
+    );
   }
 
   onChangeCategory = val => {

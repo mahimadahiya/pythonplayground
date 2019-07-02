@@ -21,6 +21,7 @@ const Tags = props => {
   useEffect(() => {
     getTags(props.fetchTags, props.user, props.parameters);
   }, [props.parameters]);
+  console.log(props);
   return (
     <div>
       <Form.Item label="Tags">
@@ -28,7 +29,7 @@ const Tags = props => {
           placeholder="Select a tag"
           mode={props.mode}
           onChange={props.onChange}
-          value={props.tags}
+          value={props.value}
         >
           {renderOptions(props.tags)}
         </Select>
