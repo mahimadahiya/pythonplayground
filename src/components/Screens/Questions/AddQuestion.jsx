@@ -37,6 +37,12 @@ class AddQuestion extends Component {
     }
   };
 
+  onSelectMedia = val => {
+    this.setState({
+      type: val
+    });
+  };
+
   uploadProps = {
     name: "file",
     data: { folder_name: "extras/" },
@@ -86,7 +92,13 @@ class AddQuestion extends Component {
                   }
                 ]
               })(
-                <Select placeholder="Select Media Type">
+                <Select
+                  placeholder="Select Media Type"
+                  onChange={this.onSelectMedia}
+                >
+                  <Select.Option value="text" key="text">
+                    Text
+                  </Select.Option>
                   <Select.Option value="image" key="image">
                     Image
                   </Select.Option>
@@ -99,6 +111,7 @@ class AddQuestion extends Component {
                 </Select>
               )}
             </Form.Item>
+            {/* {this.state.type === "text" ? null : ( */}
             <Form.Item label="Media">
               <Upload {...this.uploadProps} onChange={this.onUploadMedia}>
                 <Button>
@@ -106,6 +119,7 @@ class AddQuestion extends Component {
                 </Button>
               </Upload>
             </Form.Item>
+            {/* )} */}
             <MButton>Add</MButton>
           </Form>
         </Card>

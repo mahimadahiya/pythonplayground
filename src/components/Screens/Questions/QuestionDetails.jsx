@@ -1,9 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Descriptions, Card } from "antd";
+import { fetchQuestionDetail } from "../../../actions";
+
+const getQuestionDetails = async (id, user, fetchQuestionDetail) => {
+  await fetchQuestionDetail(id, user);
+};
 
 const QuestionDetails = props => {
-  if (props.question.question) {
+  const id = props.match.params.id;
+  React.useEffect(() => {
+    getQuestionDetails(id, props.user.Authorization, props.fetchQuestionDetail);
+  }, [id]);
+
+  if (props.question) {
     const {
       id,
       text,
@@ -33,14 +43,18 @@ const QuestionDetails = props => {
       </div>
     );
   } else {
-    return <div />;
+    return <Card loading />;
   }
 };
 
 const mapStateToProps = state => {
   return {
-    question: state.question.questionDetail
+    question: state.question.questionDetail,
+    user: state.userAuth
   };
 };
 
-export default connect(mapStateToProps)(QuestionDetails);
+export default connect(
+  mapStateToProps,
+  { fetchQuestionDetail }
+)(QuestionDetails);

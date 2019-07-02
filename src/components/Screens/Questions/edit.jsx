@@ -27,7 +27,7 @@ class QuestionEdit extends React.Component {
       this.props.match.params.id,
       this.props.user.Authorization
     );
-    this.props.form.setFieldsValue({
+    await this.props.form.setFieldsValue({
       text: this.props.question.question.text,
       keywords: this.props.question.question.keywords,
       article: this.props.question.question.article_id
