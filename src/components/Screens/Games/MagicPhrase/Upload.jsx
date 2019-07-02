@@ -15,7 +15,7 @@ class UploadComponent extends Component {
   };
 
   componentDidMount() {
-    this.props.heading("DonDon Upload");
+    this.props.heading("MagicPhrase Upload");
   }
 
   setEntityType = e => {

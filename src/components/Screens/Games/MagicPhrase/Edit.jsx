@@ -33,6 +33,7 @@ class Edit extends Component {
       bucket3: record.bucket3
     });
     this.setState({
+      id,
       entityType: record.entity_type,
       type: record.type,
       status: record.status
