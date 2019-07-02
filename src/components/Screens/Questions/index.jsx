@@ -294,13 +294,10 @@ class QuestionList extends React.Component {
             </Button>
           </div>
         </Card>
-        <Card
-          type="inner"
-          loading={this.state.loading}
-          style={{ marginTop: 20 }}
-        >
+        <Card type="inner" style={{ marginTop: 20 }}>
           <Table
             dataSource={tableData}
+            loading={this.state.loading}
             columns={columnName}
             rowKey={row => row.id}
             pagination={false}

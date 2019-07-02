@@ -24,6 +24,7 @@ import EditResponse from "../Screens/Simulation/EditResponse";
 import AddQuestion from "../Screens/Questions/AddQuestion";
 import QuestionDetails from "../Screens/Questions/QuestionDetails";
 import MapCategories from "../Screens/Questions/MapCategories";
+import ComprehensionUpload from "../Screens/Comprehension/ComprehensionUpload";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -168,6 +169,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/games/magicphrase/edit/:id"
               component={EditMagicPhrase}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/comprehension/upload"
+              component={ComprehensionUpload}
               user={user}
               exact
             />

@@ -139,11 +139,12 @@ class SimulationList extends React.Component {
     const tableData = this.props.simulations;
     return (
       <div>
-        <Card type="inner" loading={this.state.loading}>
+        <Card type="inner">
           <Table
             dataSource={tableData}
             columns={columnName}
             rowKey={row => row.id}
+            loading={this.state.loading}
             pagination={false}
           />
           <div style={{ marginTop: "20px", textAlign: "right" }}>

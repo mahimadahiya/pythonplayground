@@ -216,9 +216,10 @@ class DonDonList extends React.Component {
     return (
       <div>
         <Filters fields={this.fields} />
-        <Card style={{ marginTop: 20 }} loading={this.state.loading}>
+        <Card style={{ marginTop: 20 }} >
           <Row>
             <Table
+              loading={this.state.loading}
               dataSource={this.props.list}
               columns={columnName}
               rowKey={row => row.id}

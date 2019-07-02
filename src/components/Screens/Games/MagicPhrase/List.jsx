@@ -211,12 +211,13 @@ class DonDonList extends React.Component {
     const columnName = this.tableColumnName();
     return (
       <div>
-        <Card type="inner" loading={this.state.loading}>
+        <Card type="inner">
           <Row>
             <Filters fields={this.fields} />
           </Row>
           <Row>
             <Table
+              loading={this.state.loading}
               dataSource={this.props.list}
               columns={columnName}
               rowKey={row => row.id}
