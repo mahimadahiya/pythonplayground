@@ -113,13 +113,6 @@ class UploadComponent extends Component {
               rules: [{ required: true, message: "Please enter instructions" }]
             })(<Input size="large" placeholder="Enter Instructions" />)}
           </Form.Item>
-          <Form.Item label="Entity ID">
-            {getFieldDecorator("entity_id", {
-              rules: [{ required: true, message: "Please enter Entity ID" }]
-            })(
-              <Input size="large" type="number" placeholder="Enter Entity ID" />
-            )}
-          </Form.Item>
           <Form.Item label="Entity Type">
             <Switch
               unCheckedChildren="BM"
@@ -127,6 +120,42 @@ class UploadComponent extends Component {
               onChange={this.setEntityType}
             />
           </Form.Item>
+          {this.state.entityType === 2 ? (
+            <Form.Item label="Course ID">
+              {getFieldDecorator("entity_id", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please enter Course ID"
+                  }
+                ]
+              })(
+                <Input
+                  size="large"
+                  type="number"
+                  placeholder="Enter Course ID"
+                />
+              )}
+            </Form.Item>
+          ) : (
+            <Form.Item label="Parameter ID">
+              {getFieldDecorator("entity_id", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please enter Parameter ID"
+                  }
+                ]
+              })(
+                <Input
+                  size="large"
+                  type="number"
+                  placeholder="Enter Parameter ID"
+                />
+              )}
+            </Form.Item>
+          )}
+
           <Form.Item label="Bucket 1">
             {getFieldDecorator("bucket1", {
               rules: [{ required: true, message: "Please enter Bucket 1" }]
