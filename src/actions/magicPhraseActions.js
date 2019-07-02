@@ -35,3 +35,13 @@ export const fetchMagicphraseList = (
     payload: response.data
   });
 };
+
+export const fetchMagicphraseDetails = (authToken, id) => async dispatch => {
+  const response = await pyLearningApi(authToken).get(
+    "/game/ctp/show?id=" + id
+  );
+  dispatch({
+    type: ACTION_TYPE.FETCH_MAGICPHRASE_DETAILS,
+    payload: response.data
+  });
+};

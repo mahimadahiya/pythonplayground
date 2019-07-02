@@ -4,6 +4,7 @@ import pyLearningApi from "../../../../apis/pylearning";
 import { connect } from "react-redux";
 import qs from "querystring";
 import MButton from "../../../Elements/MButton";
+import history from "../../../../history";
 
 class UploadComponent extends Component {
   state = {
@@ -117,6 +118,7 @@ class UploadComponent extends Component {
       } else {
         console.log(err);
       }
+      history.push("/games/magicphrase");
     });
   };
 

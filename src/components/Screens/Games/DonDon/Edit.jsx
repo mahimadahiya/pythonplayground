@@ -4,7 +4,7 @@ import pyLearningApi from "../../../../apis/pylearning";
 import { connect } from "react-redux";
 import qs from "querystring";
 import MButton from "../../../Elements/MButton";
-import { fetchDonDonList } from "../../../../actions";
+import { fetchDonDonDetails } from "../../../../actions";
 import history from "../../../../history";
 
 class Edit extends Component {
@@ -15,42 +15,40 @@ class Edit extends Component {
     choice2: null,
     status: 1,
     id: null,
-    loading: true,
+    loading: true
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.heading("DonDon Edit");
     const id = this.props.match.params.id;
-    const recordList = this.props.list.filter(item => {
-      return item.id.toString() === id;
-    });
-    const record = recordList[0];
+    await this.props.fetchDonDonDetails(this.props.user.Authorization, id);
+    const { details } = this.props;
     this.props.form.setFieldsValue({
-      text: record.text,
-      instructions: record.instructions,
-      entity_id: record.entity_id,
-      bucket1: record.bucket1,
-      bucket2: record.bucket2
+      text: details.text,
+      instructions: details.instructions,
+      entity_id: details.entity_id,
+      bucket1: details.bucket1,
+      bucket2: details.bucket2
     });
     this.setState({
-      entityType: record.entity_type,
-      type: record.type,
-      status: record.status,
+      entityType: details.entity_type,
+      type: details.type,
+      status: details.status,
       id
     });
 
-    if (record.type === "text") {
+    if (details.type === "text") {
       this.props.form.setFieldsValue({
-        choice1: record.choice1,
-        choice2: record.choice2
+        choice1: details.choice1,
+        choice2: details.choice2
       });
     } else {
       this.setState({
-        choice1: record.choice1,
-        choice2: record.choice2
+        choice1: details.choice1,
+        choice2: details.choice2
       });
     }
-    this.setState({ loading: false })
+    this.setState({ loading: false });
   }
 
   setEntityType = e => {
@@ -206,49 +204,49 @@ class Edit extends Component {
               </Form.Item>
             </div>
           ) : (
-              <div>
-                <Form.Item label="Choice 1">
-                  <Upload
-                    {...this.uploadProps}
-                    onChange={this.onUploadChangeChoice1}
-                  >
-                    <Button>
-                      <Icon type="upload" /> Click to Upload
+            <div>
+              <Form.Item label="Choice 1">
+                <Upload
+                  {...this.uploadProps}
+                  onChange={this.onUploadChangeChoice1}
+                >
+                  <Button>
+                    <Icon type="upload" /> Click to Upload
                   </Button>
-                  </Upload>
-                  <div>
-                    {this.state.choice1 ? (
-                      <img
-                        src={this.state.choice1}
-                        alt="choice 1"
-                        height="100px"
-                        width="100px"
-                      />
-                    ) : null}
-                  </div>
-                </Form.Item>
-                <Form.Item label="Choice 2">
-                  <Upload
-                    {...this.uploadProps}
-                    onChange={this.onUploadChangeChoice2}
-                  >
-                    <Button>
-                      <Icon type="upload" /> Click to Upload
+                </Upload>
+                <div>
+                  {this.state.choice1 ? (
+                    <img
+                      src={this.state.choice1}
+                      alt="choice 1"
+                      height="100px"
+                      width="100px"
+                    />
+                  ) : null}
+                </div>
+              </Form.Item>
+              <Form.Item label="Choice 2">
+                <Upload
+                  {...this.uploadProps}
+                  onChange={this.onUploadChangeChoice2}
+                >
+                  <Button>
+                    <Icon type="upload" /> Click to Upload
                   </Button>
-                  </Upload>
-                  <div>
-                    {this.state.choice2 ? (
-                      <img
-                        src={this.state.choice2}
-                        alt="choice 2"
-                        height="100px"
-                        width="100px"
-                      />
-                    ) : null}
-                  </div>
-                </Form.Item>
-              </div>
-            )}
+                </Upload>
+                <div>
+                  {this.state.choice2 ? (
+                    <img
+                      src={this.state.choice2}
+                      alt="choice 2"
+                      height="100px"
+                      width="100px"
+                    />
+                  ) : null}
+                </div>
+              </Form.Item>
+            </div>
+          )}
           <div style={{ textAlign: "right" }}>
             <MButton>Update</MButton>
           </div>
@@ -261,11 +259,11 @@ class Edit extends Component {
 const mapStateToProps = state => {
   return {
     user: state.userAuth,
-    list: state.dondon.list
+    details: state.dondon.dondonDetails
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchDonDonList }
+  { fetchDonDonDetails }
 )(Form.create()(Edit));

@@ -2,7 +2,8 @@ import * as ACTION_TYPE from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   list: [],
-  count: 0
+  count: 0,
+  details: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -13,7 +14,11 @@ export default (state = INITIAL_STATE, action) => {
         list: action.payload.results,
         count: action.payload.count
       };
-
+    case ACTION_TYPE.FETCH_MAGICPHRASE_DETAILS:
+      return {
+        ...state,
+        details: action.payload.result
+      };
     default:
       return state;
   }

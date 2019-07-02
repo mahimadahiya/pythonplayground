@@ -4,7 +4,8 @@ import pyLearningApi from "../../../../apis/pylearning";
 import { connect } from "react-redux";
 import qs from "querystring";
 import MButton from "../../../Elements/MButton";
-import { fetchMagicphraseList } from "../../../../actions";
+import { fetchMagicphraseDetails } from "../../../../actions";
+import history from "../../../../history";
 
 class Edit extends Component {
   state = {
@@ -18,37 +19,35 @@ class Edit extends Component {
     media: null
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.heading("MagicPhrase Edit");
     const id = this.props.match.params.id;
-    const recordList = this.props.list.filter(item => {
-      return item.id.toString() === id;
-    });
-    const record = recordList[0];
+    await this.props.fetchMagicphraseDetails(this.props.user.Authorization, id);
+    const { details } = this.props;
     this.props.form.setFieldsValue({
-      title: record.title,
-      entity_id: record.entity_id,
-      bucket1: record.bucket1,
-      bucket2: record.bucket2,
-      bucket3: record.bucket3
+      title: details.title,
+      entity_id: details.entity_id,
+      bucket1: details.bucket1,
+      bucket2: details.bucket2,
+      bucket3: details.bucket3
     });
     this.setState({
       id,
-      entityType: record.entity_type,
-      type: record.type,
-      status: record.status
+      entityType: details.entity_type,
+      type: details.type,
+      status: details.status
     });
-    if (record.type === "image") {
+    if (details.type === "image") {
       this.setState({
-        choice1: record.choice1,
-        choice2: record.choice2,
-        choice3: record.choice3
+        choice1: details.choice1,
+        choice2: details.choice2,
+        choice3: details.choice3
       });
     } else {
       this.props.form.setFieldsValue({
-        choice1: record.choice1,
-        choice2: record.choice2,
-        choice3: record.choice3
+        choice1: details.choice1,
+        choice2: details.choice2,
+        choice3: details.choice3
       });
     }
   }
@@ -148,6 +147,7 @@ class Edit extends Component {
       } else {
         console.log(err);
       }
+      history.push("/games/magicphrase");
     });
   };
 
@@ -310,11 +310,11 @@ class Edit extends Component {
 const mapStateToProps = state => {
   return {
     user: state.userAuth,
-    list: state.magicphrase.list
+    details: state.magicphrase.details
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchMagicphraseList }
+  { fetchMagicphraseDetails }
 )(Form.create()(Edit));

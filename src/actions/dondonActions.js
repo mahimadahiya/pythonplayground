@@ -34,3 +34,10 @@ export const fetchDonDonList = (
   }
   dispatch({ type: ACTION_TYPE.FETCH_DONDON_LIST, payload: response.data });
 };
+
+export const fetchDonDonDetails = (authToken, id) => async dispatch => {
+  const response = await pyLearningApi(authToken).get(
+    "/game/dondon/show?id=" + id
+  );
+  dispatch({ type: ACTION_TYPE.FETCH_DONDON_DETAILS, payload: response.data });
+};

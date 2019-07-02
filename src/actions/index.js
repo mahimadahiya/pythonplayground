@@ -27,8 +27,11 @@ import {
   clearSimulations
 } from "./simulationActions";
 
-import { fetchDonDonList } from "./dondonActions";
-import { fetchMagicphraseList } from "./magicPhraseActions";
+import { fetchDonDonList, fetchDonDonDetails } from "./dondonActions";
+import {
+  fetchMagicphraseList,
+  fetchMagicphraseDetails
+} from "./magicPhraseActions";
 
 import { fetchRegions, fetchStates } from "./regionActions";
 
@@ -53,7 +56,9 @@ export {
   updateQuestion,
   createQuestion,
   fetchDonDonList,
+  fetchDonDonDetails,
   fetchMagicphraseList,
+  fetchMagicphraseDetails,
   fetchRegions,
   fetchStates,
   fetchCategories,
