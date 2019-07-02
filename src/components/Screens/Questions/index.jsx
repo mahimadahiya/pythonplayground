@@ -217,8 +217,8 @@ class QuestionList extends React.Component {
     const column = [
       {
         title: "ID",
-        dataIndex: "id",
-        key: "id"
+        key: "id",
+        render: record => <a href={`/question/${record.id}`}>{record.id}</a>
       },
       {
         title: "Text",
