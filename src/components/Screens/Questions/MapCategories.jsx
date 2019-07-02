@@ -1,5 +1,5 @@
 import React from "react";
-import { Steps, Button, message, Card, Form } from "antd";
+import { Steps, Button, Card, Form } from "antd";
 import { fetchQuestionDetail, updateQuestion } from "../../../actions";
 import Categories from "../../Elements/Categories";
 import history from "../../../history";

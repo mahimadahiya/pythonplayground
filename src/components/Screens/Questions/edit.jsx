@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Form, Descriptions, Input, Drawer, Row, Col } from "antd";
+import { Card, Form, Descriptions, Input, Row, Col } from "antd";
 
 import { fetchQuestionDetail, updateQuestion } from "../../../actions";
 import MButton from "../../Elements/MButton";
@@ -8,9 +8,6 @@ import Region from "../../Elements/Region";
 import State from "../../Elements/State";
 import Complexity from "../../Elements/Complexity";
 import ContentComplexityLevel from "../../Elements/ContentComplexityLevel";
-import Categories from "../../Elements/Categories";
-import Parameters from "../../Elements/Parameters";
-import Tags from "../../Elements/Tags";
 
 class QuestionEdit extends React.Component {
   state = {
