@@ -94,17 +94,17 @@ class SideBar extends React.Component {
       ]
     },
     {
-      key: "sub4",
+      key: "sub5",
       icon: "unordered-list",
       label: "Comprehension",
       menuList: [
         {
-          key: "sub4-1",
+          key: "sub5-1",
           label: "List",
           onClick: () => history.push("/comprehension")
         },
         {
-          key: "sub4-2",
+          key: "sub5-2",
           label: "Upload",
           onClick: () => history.push("/comprehension/upload")
         }

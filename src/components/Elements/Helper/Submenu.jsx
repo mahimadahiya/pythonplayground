@@ -79,6 +79,20 @@ const Submenu = props => {
               Upload
             </Menu.Item>
           </SubMenu>
+          <SubMenu key="sub4-3" title="MTF">
+            <Menu.Item
+              key="sub4-3-1"
+              onClick={() => history.push("/games/mtf")}
+            >
+              List
+            </Menu.Item>
+            <Menu.Item
+              key="sub4-3-2"
+              onClick={() => history.push("/games/mtf/add")}
+            >
+              Upload
+            </Menu.Item>
+          </SubMenu>
         </SubMenu>
       </Menu>
     </React.Fragment>
