@@ -10,6 +10,7 @@ import magicphraseReducer from "./magicphraseReducer";
 import regionReducer from "./regionReducer";
 import contentReducer from "./contentReducer";
 import categoryReducer from "./categoryReducer";
+import mtfReducer from "./mtfReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   magicphrase: magicphraseReducer,
   region: regionReducer,
   contentComplexityLevel: contentReducer,
-  category: categoryReducer
+  category: categoryReducer,
+  mtf: mtfReducer
 });

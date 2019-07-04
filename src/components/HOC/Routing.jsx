@@ -26,6 +26,7 @@ import QuestionDetails from "../Screens/Questions/QuestionDetails";
 import MapCategories from "../Screens/Questions/MapCategories";
 import ComprehensionUpload from "../Screens/Comprehension/ComprehensionUpload";
 import Add from "../Screens/Games/MTF/Add";
+import List from "../Screens/Games/MTF/List";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -170,6 +171,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/games/magicphrase/edit/:id"
               component={EditMagicPhrase}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/games/mtf"
+              component={List}
               user={user}
               exact
             />

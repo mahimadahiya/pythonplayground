@@ -13,6 +13,8 @@ import {
   Upload
 } from "antd";
 import MButton from "../../../Elements/MButton";
+import { addMTF } from "../../../../actions";
+import { connect } from "react-redux";
 
 class Add extends Component {
   state = {
@@ -36,7 +38,8 @@ class Add extends Component {
     ],
     answers: [
       {
-        matches: null
+        matches: null,
+        id: 1
       }
     ]
   };
@@ -51,23 +54,23 @@ class Add extends Component {
       const column1 = this.state.choices1.map((choice, i) => {
         return {
           ...choice,
-          id: i
+          id: i + 1
         };
       });
       const column2 = this.state.choices2.map((choice, i) => {
         return {
           ...choice,
-          id: i
+          id: i + 1
         };
       });
       if (!err) {
         const values = {
           ...formProps,
-          column1,
-          column2,
-          answers: this.state.answers
+          column1: JSON.stringify(column1),
+          column2: JSON.stringify(column2),
+          answers: JSON.stringify(this.state.answers)
         };
-        console.log(values);
+        this.props.addMTF(this.props.user.Authorization, values);
       }
     });
   };
@@ -133,6 +136,7 @@ class Add extends Component {
   onAnswerChange = (value, id) => {
     let answers = this.state.answers;
     answers[id].matches = value;
+    answers[id].id = id + 1;
     this.setState({
       answers
     });
@@ -198,7 +202,7 @@ class Add extends Component {
     }
     if (info.file.status === "done") {
       message.success(`${info.file.name} file uploaded successfully`);
-      let choices2 = [...this.state.choices1];
+      let choices2 = [...this.state.choices2];
       choices2[i] = {
         ...choices2[i],
         choice: info.file.response.url
@@ -427,4 +431,13 @@ class Add extends Component {
   }
 }
 
-export default Form.create()(Add);
+const mapStateToProps = state => {
+  return {
+    user: state.userAuth
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { addMTF }
+)(Form.create()(Add));
