@@ -68,7 +68,8 @@ class Add extends Component {
           ...formProps,
           column1: JSON.stringify(column1),
           column2: JSON.stringify(column2),
-          answers: JSON.stringify(this.state.answers)
+          answers: JSON.stringify(this.state.answers),
+          entity_type: this.state.entity_type
         };
         this.props.addMTF(this.props.user.Authorization, values);
       }
