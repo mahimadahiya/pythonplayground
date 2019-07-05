@@ -11,6 +11,7 @@ import regionReducer from "./regionReducer";
 import contentReducer from "./contentReducer";
 import categoryReducer from "./categoryReducer";
 import mtfReducer from "./mtfReducer";
+import quadReducer from "./quadReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -24,5 +25,6 @@ export default combineReducers({
   region: regionReducer,
   contentComplexityLevel: contentReducer,
   category: categoryReducer,
-  mtf: mtfReducer
+  mtf: mtfReducer,
+  quad: quadReducer
 });

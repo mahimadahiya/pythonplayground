@@ -76,3 +76,8 @@ export const ADD_MTF = "ADD_MTF";
 export const FETCH_MTF_LIST = "FETCH_MTF_LIST";
 export const MTF_EDIT = "MTF_EDIT";
 export const FETCH_MTF_DETAILS = "FETCH_MTF_DETAILS";
+
+export const ADD_QUAD = "ADD_QUAD";
+export const FETCH_QUAD_LIST = "FETCH_QUAD_LIST";
+export const QUAD_EDIT = "QUAD_EDIT";
+export const FETCH_QUAD_DETAILS = "FETCH_QUAD_DETAILS";

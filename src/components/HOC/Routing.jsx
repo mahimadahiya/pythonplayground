@@ -25,9 +25,12 @@ import AddQuestion from "../Screens/Questions/AddQuestion";
 import QuestionDetails from "../Screens/Questions/QuestionDetails";
 import MapCategories from "../Screens/Questions/MapCategories";
 import ComprehensionUpload from "../Screens/Comprehension/ComprehensionUpload";
-import Add from "../Screens/Games/MTF/Add";
-import List from "../Screens/Games/MTF/List";
-import Edit from "../Screens/Games/MTF/Edit";
+import AddMTF from "../Screens/Games/MTF/Add";
+import ListMTF from "../Screens/Games/MTF/List";
+import EditMTF from "../Screens/Games/MTF/Edit";
+// import AddQuad from "../Screens/Games/Quad/Add";
+import ListQuad from "../Screens/Games/Quad/List";
+// import EditQuad from "../Screens/Games/Quad/Edit";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -177,22 +180,40 @@ class Routing extends React.Component {
             />
             <PrivateRoute
               path="/games/mtf"
-              component={List}
+              component={ListMTF}
               user={user}
               exact
             />
             <PrivateRoute
               path="/games/mtf/add"
-              component={Add}
+              component={AddMTF}
               user={user}
               exact
             />
             <PrivateRoute
               path="/games/mtf/edit/:id"
-              component={Edit}
+              component={EditMTF}
               user={user}
               exact
             />
+            <PrivateRoute
+              path="/games/quad"
+              component={ListQuad}
+              user={user}
+              exact
+            />
+            {/* <PrivateRoute
+              path="/games/quad/add"
+              component={AddQuad}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/games/quad/edit/:id"
+              component={EditQuad}
+              user={user}
+              exact
+            /> */}
             <PrivateRoute
               path="/comprehension/upload"
               component={ComprehensionUpload}

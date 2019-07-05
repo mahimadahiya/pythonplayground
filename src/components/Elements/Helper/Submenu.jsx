@@ -43,7 +43,7 @@ const Submenu = props => {
       >
         {renderSubmenus(props.list, props.collapsed)}
         <SubMenu
-          key="sub4"
+          key="sub5"
           title={
             <span>
               <Icon type="play-circle" />
@@ -51,44 +51,58 @@ const Submenu = props => {
             </span>
           }
         >
-          <SubMenu key="sub4-1" title="Don Don">
+          <SubMenu key="sub5-1" title="Don Don">
             <Menu.Item
-              key="sub4-1-1"
+              key="sub5-1-1"
               onClick={() => history.push("/games/dondon")}
             >
               List
             </Menu.Item>
             <Menu.Item
-              key="sub4-1-2"
+              key="sub5-1-2"
               onClick={() => history.push("/games/dondon/upload")}
             >
               Upload
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub4-2" title="Magic Phrase">
+          <SubMenu key="sub5-2" title="Magic Phrase">
             <Menu.Item
-              key="sub4-2-1"
+              key="sub5-2-1"
               onClick={() => history.push("/games/magicphrase")}
             >
               List
             </Menu.Item>
             <Menu.Item
-              key="sub4-2-2"
+              key="sub5-2-2"
               onClick={() => history.push("/games/magicphrase/upload")}
             >
               Upload
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub4-3" title="MTF">
+          <SubMenu key="sub5-3" title="MTF">
             <Menu.Item
-              key="sub4-3-1"
+              key="sub5-3-1"
               onClick={() => history.push("/games/mtf")}
             >
               List
             </Menu.Item>
             <Menu.Item
-              key="sub4-3-2"
+              key="sub5-3-2"
               onClick={() => history.push("/games/mtf/add")}
+            >
+              Upload
+            </Menu.Item>
+          </SubMenu>
+          <SubMenu key="sub5-4" title="Quad">
+            <Menu.Item
+              key="sub5-4-1"
+              onClick={() => history.push("/games/quad")}
+            >
+              List
+            </Menu.Item>
+            <Menu.Item
+              key="sub5-4-2"
+              onClick={() => history.push("/games/quad/add")}
             >
               Upload
             </Menu.Item>

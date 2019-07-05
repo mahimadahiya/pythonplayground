@@ -38,6 +38,12 @@ import { fetchRegions, fetchStates } from "./regionActions";
 import { fetchContentComplexityLevel } from "./contentActions";
 import { fetchCategories, fetchParameters, fetchTags } from "./categoryActions";
 import { addMTF, fetchMTFList, editMTF, fetchMTFDetails } from "./mtfActions";
+import {
+  addQuad,
+  fetchQuadList,
+  editQuad,
+  fetchQuadDetails
+} from "./quadActions";
 
 export {
   getOrganizationModules,
@@ -71,7 +77,11 @@ export {
   addMTF,
   fetchMTFList,
   editMTF,
-  fetchMTFDetails
+  fetchMTFDetails,
+  addQuad,
+  fetchQuadList,
+  editQuad,
+  fetchQuadDetails
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
