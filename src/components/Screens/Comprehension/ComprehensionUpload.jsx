@@ -13,7 +13,8 @@ class ComprehensionUpload extends Component {
 
   render() {
     console.log(this.state);
-    return <ReactQuill onChange={this.handleChange} style={{ height: 800 }} />;
+    // return <ReactQuill onChange={this.handleChange} style={{ height: 800 }} />;
+    return <div />;
   }
 }
 
