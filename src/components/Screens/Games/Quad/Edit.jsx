@@ -378,7 +378,6 @@ class Edit extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log("state", this.state);
     return (
       <React.Fragment>
         <Card loading={this.state.loading}>
