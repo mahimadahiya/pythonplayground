@@ -15,6 +15,7 @@ import {
 import MButton from "../../../Elements/MButton";
 import { addMTF } from "../../../../actions";
 import { connect } from "react-redux";
+import history from "../../../../history";
 
 class Add extends Component {
   state = {
@@ -73,6 +74,7 @@ class Add extends Component {
         };
         this.props.addMTF(this.props.user.Authorization, values);
       }
+      history.push("/games/mtf");
     });
   };
 

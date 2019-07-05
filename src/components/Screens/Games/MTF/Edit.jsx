@@ -15,6 +15,7 @@ import {
 import MButton from "../../../Elements/MButton";
 import { editMTF, fetchMTFDetails } from "../../../../actions";
 import { connect } from "react-redux";
+import history from '../../../../history'
 
 class Edit extends Component {
 	state = {
@@ -41,13 +42,45 @@ class Edit extends Component {
 				matches: null,
 				id: 1
 			}
-		]
+		],
+		loading: true,
+		status: 1
 	};
 
 	async componentDidMount() {
 		this.props.heading("MTF Edit");
 		await this.props.fetchMTFDetails(this.props.user.Authorization, this.props.match.params.id);
 		console.log(this.props.mtfDetail)
+		const { mtfDetail } = this.props
+		this.props.form.setFieldsValue({
+			text: mtfDetail.text,
+			entity_id: mtfDetail.entity_id
+		})
+		const choices1Count = mtfDetail.column1.length;
+		const choices1 = []
+		for(let i=0; i<choices1Count; i++) {
+			choices1.push(mtfDetail.column1[i])
+		}
+		const choices2Count = mtfDetail.column2.length;
+		const choices2 = []
+		for (let i = 0; i < choices2Count; i++) {
+			choices2.push(mtfDetail.column2[i])
+		}
+		const answersCount = mtfDetail.answers.length;
+		const answers = []
+		for (let i = 0; i < answersCount; i++) {
+			answers.push(mtfDetail.answers[i])
+		}
+		this.setState({
+			entity_type: mtfDetail.entity_type,
+			status: mtfDetail.status,
+			choices1Count,
+			choices1,
+			choices2Count,
+			choices2,
+			answers,
+			loading: false
+		})
 	}
 
 	onSubmit = e => {
@@ -68,12 +101,16 @@ class Edit extends Component {
 			if (!err) {
 				const values = {
 					...formProps,
+					entity_type: this.state.entity_type,
 					column1: JSON.stringify(column1),
 					column2: JSON.stringify(column2),
-					answers: JSON.stringify(this.state.answers)
+					answers: JSON.stringify(this.state.answers),
+					id: this.props.match.params.id,
+					status: this.state.status
 				};
-				this.props.addMTF(this.props.user.Authorization, values);
+				this.props.editMTF(this.props.user.Authorization, values);
 			}
+			history.push('/games/mtf')
 		});
 	};
 
@@ -229,6 +266,7 @@ class Edit extends Component {
 							<Switch
 								unCheckedChildren="Text"
 								checkedChildren="Image"
+								checked={this.state.choices1[i].type === 'image'}
 								onChange={value => this.onTypeChange(value, i)}
 							/>
 						</Col>
@@ -278,6 +316,7 @@ class Edit extends Component {
 							<Switch
 								unCheckedChildren="Text"
 								checkedChildren="Image"
+								checked={this.state.choices2[i].type === 'image'}
 								onChange={value => this.onTypeChange2(value, i)}
 							/>
 						</Col>
@@ -327,6 +366,7 @@ class Edit extends Component {
 							<Form.Item>
 								<Select
 									mode="multiple"
+									value={this.state.answers[i].matches}
 									placeholder="Select options from column 2"
 									onChange={value => this.onAnswerChange(value, i)}
 								>
@@ -352,22 +392,35 @@ class Edit extends Component {
 		});
 	};
 
+	setStatus = e => {
+		this.setState({ status: e === true ? 1 : 2 });
+	};
+
 	render() {
 		const { getFieldDecorator } = this.props.form;
-
+		console.log('state', this.state)
 		return (
 			<React.Fragment>
-				<Card>
+				<Card loading={this.state.loading}>
 					<Form onSubmit={this.onSubmit}>
 						<Form.Item label="Text">
 							{getFieldDecorator("text", {
 								rules: [{ required: true, message: "Please enter text" }]
 							})(<Input placeholder="Enter text" size="large" />)}
 						</Form.Item>
+						<Form.Item label="Status">
+							<Switch
+								unCheckedChildren="Draft"
+								checkedChildren="Live"
+								checked={this.state.status === 1 ? true : false}
+								onChange={this.setStatus}
+							/>
+						</Form.Item>
 						<Form.Item label="Entity Type">
 							<Switch
 								unCheckedChildren="BM"
 								checkedChildren="FM"
+								checked={this.state.entity_type === 2}
 								onChange={this.onEntityTypeChange}
 							/>
 						</Form.Item>
@@ -425,7 +478,7 @@ class Edit extends Component {
 							</Col>
 						</Row>
 						<Form.Item label="Match">{this.createAnswers()}</Form.Item>
-						<MButton>Add</MButton>
+						<MButton>Edit</MButton>
 					</Form>
 				</Card>
 			</React.Fragment>
