@@ -1,10 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Divider, Card, Table, Pagination, Button, Popconfirm } from "antd";
+import {
+  Divider,
+  Card,
+  Table,
+  Pagination,
+  Button,
+  Popconfirm,
+  Form,
+  Row,
+  Col
+} from "antd";
 import { fetchQuestionList, updateQuestion } from "../../../actions";
 import Filters from "../../Elements/Helper/Filters";
 import MButton from "../../Elements/MButton";
+import Categories from "../../Elements/Categories";
 
 class QuestionList extends React.Component {
   state = {
@@ -46,9 +57,9 @@ class QuestionList extends React.Component {
     );
   };
 
-  onCategoryChange = e => {
+  onCategoryChange = value => {
     this.setState({
-      categoryId: e.target.value
+      categoryId: value
     });
   };
 
@@ -113,14 +124,14 @@ class QuestionList extends React.Component {
       placeholder: "Enter Parameter ID",
       onChange: this.onParameterChange
     },
-    {
-      key: "3",
-      type: "input",
-      inputType: "number",
-      label: "Category ID",
-      placeholder: "Enter Category ID",
-      onChange: this.onCategoryChange
-    },
+    // {
+    //   key: "3",
+    //   type: "input",
+    //   inputType: "number",
+    //   label: "Category ID",
+    //   placeholder: "Enter Category ID",
+    //   onChange: this.onCategoryChange
+    // },
     {
       key: "4",
       type: "select",
@@ -282,6 +293,17 @@ class QuestionList extends React.Component {
       <div>
         <Card>
           <Filters fields={this.fields} />
+          <Form>
+            <Row>
+              <Col span={12} style={{ padding: "0 24px" }}>
+                <Categories
+                  onChange={this.onCategoryChange}
+                  mode="single"
+                  value={this.state.categoryId}
+                />
+              </Col>
+            </Row>
+          </Form>
           <div style={{ textAlign: "right" }}>
             <Button
               onClick={this.onFilterClick}

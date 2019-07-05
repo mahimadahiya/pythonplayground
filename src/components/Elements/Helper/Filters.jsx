@@ -53,12 +53,10 @@ const renderSelect = fields => {
 
 const Filters = props => {
   return (
-    <Card>
-      <Row>
-        <Form>{renderInput(props.fields)}</Form>
-        <Form>{renderSelect(props.fields)}</Form>
-      </Row>
-    </Card>
+    <Row>
+      <Form>{renderInput(props.fields)}</Form>
+      <Form>{renderSelect(props.fields)}</Form>
+    </Row>
   );
 
   // switch (props.component) {
