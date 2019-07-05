@@ -40,9 +40,14 @@ export const fetchMTFList = (authToken, params, offset) => async dispatch => {
   dispatch({ type: ACTION_TYPE.FETCH_MTF_LIST, payload: response.data });
 };
 
-// export const fetchDonDonDetails = (authToken, id) => async dispatch => {
-// 	const response = await pyLearningApi(authToken).get(
-// 		"/game/list/type1?id=" + id
-// 	);
-// 	dispatch({ type: ACTION_TYPE.FETCH_DONDON_DETAILS, payload: response.data });
-// };
+export const fetchMTFDetails = (authToken, id) => async dispatch => {
+	const response = await pyLearningApi(authToken).get(
+		"/game/show_details/mtf?id=" + id
+	);
+	dispatch({ type: ACTION_TYPE.FETCH_MTF_DETAILS, payload: response.data });
+};
+
+export const editMTF = (authToken, values) => async dispatch => {
+  await pyLearningApi(authToken).post('/game/mtf/panel/type1/edit', qs.stringify(values));
+  dispatch({ type: ACTION_TYPE.MTF_EDIT })
+}

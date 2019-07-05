@@ -74,3 +74,5 @@ export const FETCH_TAGS = "FETCH_TAGS";
 
 export const ADD_MTF = "ADD_MTF";
 export const FETCH_MTF_LIST = "FETCH_MTF_LIST";
+export const MTF_EDIT = "MTF_EDIT";
+export const FETCH_MTF_DETAILS = "FETCH_MTF_DETAILS";

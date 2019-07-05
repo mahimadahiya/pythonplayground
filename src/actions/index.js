@@ -37,7 +37,7 @@ import { fetchRegions, fetchStates } from "./regionActions";
 
 import { fetchContentComplexityLevel } from "./contentActions";
 import { fetchCategories, fetchParameters, fetchTags } from "./categoryActions";
-import { addMTF, fetchMTFList } from "./mtfActions";
+import { addMTF, fetchMTFList, editMTF, fetchMTFDetails } from "./mtfActions";
 
 export {
   getOrganizationModules,
@@ -69,7 +69,9 @@ export {
   loginUser,
   logoutUser,
   addMTF,
-  fetchMTFList
+  fetchMTFList,
+  editMTF,
+  fetchMTFDetails
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

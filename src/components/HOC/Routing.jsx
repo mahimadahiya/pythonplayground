@@ -27,6 +27,7 @@ import MapCategories from "../Screens/Questions/MapCategories";
 import ComprehensionUpload from "../Screens/Comprehension/ComprehensionUpload";
 import Add from "../Screens/Games/MTF/Add";
 import List from "../Screens/Games/MTF/List";
+import Edit from "../Screens/Games/MTF/Edit";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -183,6 +184,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/games/mtf/add"
               component={Add}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/games/mtf/edit/:id"
+              component={Edit}
               user={user}
               exact
             />
