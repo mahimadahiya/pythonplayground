@@ -28,7 +28,7 @@ import ComprehensionUpload from "../Screens/Comprehension/ComprehensionUpload";
 import AddMTF from "../Screens/Games/MTF/Add";
 import ListMTF from "../Screens/Games/MTF/List";
 import EditMTF from "../Screens/Games/MTF/Edit";
-// import AddQuad from "../Screens/Games/Quad/Add";
+import AddQuad from "../Screens/Games/Quad/Add";
 import ListQuad from "../Screens/Games/Quad/List";
 // import EditQuad from "../Screens/Games/Quad/Edit";
 const Sidebar = React.lazy(() => import("./Sidebar"));
@@ -202,12 +202,13 @@ class Routing extends React.Component {
               user={user}
               exact
             />
-            {/* <PrivateRoute
+            <PrivateRoute
               path="/games/quad/add"
               component={AddQuad}
               user={user}
               exact
             />
+            {/*
             <PrivateRoute
               path="/games/quad/edit/:id"
               component={EditQuad}
