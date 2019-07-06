@@ -45,6 +45,8 @@ import {
   fetchQuadDetails
 } from "./quadActions";
 
+import { fetchComprehensionsList } from "./comprehensionActions";
+
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -81,7 +83,8 @@ export {
   addQuad,
   fetchQuadList,
   editQuad,
-  fetchQuadDetails
+  fetchQuadDetails,
+  fetchComprehensionsList
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
