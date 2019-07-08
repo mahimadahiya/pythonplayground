@@ -108,7 +108,8 @@ class MapQuestionChoices extends React.Component {
         ...choices[i],
         media_type: info.file.type,
         media_url: info.file.response.url,
-        type: "media"
+        type: "media",
+        id: mapAlphabet[i]
       };
       this.setState({
         choices
@@ -209,8 +210,14 @@ class MapQuestionChoices extends React.Component {
   };
   handleSubmit = async event => {
     event.preventDefault();
+    const choices = this.state.choices.filter(choice => {
+      if (choice.media_url.length > 0 || choice.choice.length > 0) {
+        return true;
+      }
+      return false;
+    });
     const query = {
-      choices: JSON.stringify(this.state.choices),
+      choices: JSON.stringify(choices),
       correct_choice: this.state.correctChoice
     };
     await this.props.updateQuestion(
