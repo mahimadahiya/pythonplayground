@@ -12,6 +12,7 @@ import contentReducer from "./contentReducer";
 import categoryReducer from "./categoryReducer";
 import mtfReducer from "./mtfReducer";
 import quadReducer from "./quadReducer";
+import comprehensionReducer from "./comprehensionReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -26,5 +27,6 @@ export default combineReducers({
   contentComplexityLevel: contentReducer,
   category: categoryReducer,
   mtf: mtfReducer,
-  quad: quadReducer
+  quad: quadReducer,
+  comprehension: comprehensionReducer
 });

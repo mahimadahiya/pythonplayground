@@ -1,26 +1,35 @@
 import React from "react";
 import { connect } from "react-redux";
 import qs from "querystring";
-import { Table, Card, Pagination, Row, Button, Icon } from "antd";
+import { Table, Card, Pagination, Row, Button, Col, Form } from "antd";
 import { fetchComprehensionsList } from "../../../actions";
 import history from "../../../history";
 // import pyLearningApi from "../../../../apis/pylearning";
-// import Filters from "../../../Elements/Helper/Filters";
+import Filters from "../../Elements/Helper/Filters";
+import Categories from "../../Elements/Categories";
+
+//TODO: Filters not working yet
 
 class ComprehensionList extends React.Component {
-  state = { loading: true, searchText: "", entity_type: null, status: null };
+  state = {
+    loading: true,
+    searchText: "",
+    entity_type: null,
+    status: null,
+    parameterId: null,
+    categoryId: null
+  };
 
   componentWillMount = async () => {
-    // if (this.props.list.length === 0) {
-    await this.props.fetchComprehensionsList(
-      this.props.user.Authorization,
-      // { searchText: "" },
-      0
-    );
-    this.setState({ loading: false });
-    // } else {
-    //   this.setState({ loading: false });
-    // }
+    if (this.props.list.length === 0) {
+      await this.props.fetchComprehensionsList(this.props.user.Authorization, {
+        offset: 0,
+        fields: "{}"
+      });
+      this.setState({ loading: false });
+    } else {
+      this.setState({ loading: false });
+    }
   };
 
   componentDidMount() {
@@ -93,118 +102,140 @@ class ComprehensionList extends React.Component {
   handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
     this.setState({ loading: true });
-    await this.props.fetchComprehensionsList(
-      this.props.user.Authorization,
-      // {
-      //   searchText: this.state.searchText,
-      //   entity_type: this.state.entity_type,
-      //   status: this.state.status
-      // },
+    await this.props.fetchQuestionList(this.props.user.Authorization, {
       offset
-    );
+    });
     this.setState({ loading: false });
   };
 
-  // onSearch = e => {
-  //   this.setState(
-  //     {
-  //       searchText: e.target.value
-  //     },
-  //     () => {
-  //       setTimeout(() => {
-  //         this.props.fetchDonDonList(
-  //           this.props.user.Authorization,
-  //           {
-  //             searchText: this.state.searchText,
-  //             entity_type: this.state.entity_type,
-  //             status: this.state.status
-  //           },
-  //           0
-  //         );
-  //       }, 1000);
-  //     }
-  //   );
-  // };
+  onSearch = e => {
+    this.setState(
+      {
+        searchText: e.target.value,
+        loading: true
+      },
+      () => {
+        setTimeout(async () => {
+          await this.props.fetchQuestionList(this.props.user.Authorization, {
+            searchText: this.state.searchText,
+            offset: 0
+          });
+          this.setState({ loading: false });
+        }, 1000);
+      }
+    );
+  };
 
-  // onEntityChange = value => {
-  //   this.setState(
-  //     {
-  //       entity_type: value.key
-  //     },
-  //     () => {
-  //       setTimeout(() => {
-  //         this.props.fetchDonDonList(
-  //           this.props.user.Authorization,
-  //           {
-  //             searchText: this.state.searchText,
-  //             entity_type: this.state.entity_type,
-  //             status: this.state.status
-  //           },
-  //           0
-  //         );
-  //       }, 1000);
-  //     }
-  //   );
-  // };
+  onCategoryChange = value => {
+    this.setState({
+      categoryId: value
+    });
+  };
 
-  // onStatusChange = value => {
-  //   this.setState(
-  //     {
-  //       status: value.key
-  //     },
-  //     () => {
-  //       setTimeout(() => {
-  //         this.props.fetchDonDonList(
-  //           this.props.user.Authorization,
-  //           {
-  //             searchText: this.state.searchText,
-  //             entity_type: this.state.entity_type,
-  //             status: this.state.status
-  //           },
-  //           0
-  //         );
-  //       }, 1000);
-  //     }
-  //   );
-  // };
+  onParameterChange = e => {
+    this.setState({
+      parameterId: e.target.value
+    });
+  };
 
-  // fields = [
-  //   {
-  //     type: "input",
-  //     label: "Search",
-  //     placeholder: "Search by ID or Text",
-  //     onChange: this.onSearch,
-  //     key: 1
-  //   },
-  //   {
-  //     type: "select",
-  //     label: "Entity Type",
-  //     placeholder: "Filter by Entity Type",
-  //     onChange: this.onEntityChange,
-  //     labelInValue: true,
-  //     options: [
-  //       { value: null, label: "None" },
-  //       { value: 1, label: "BM" },
-  //       { value: 2, label: "FM" }
-  //     ],
-  //     key: 2
-  //   },
-  //   {
-  //     type: "select",
-  //     label: "Status",
-  //     placeholder: "Filter by Status",
-  //     onChange: this.onStatusChange,
-  //     labelInValue: true,
-  //     options: [{ value: 1, label: "Live" }, { value: 2, label: "Draft" }],
-  //     key: 3
-  //   }
-  // ];
+  clean(obj) {
+    for (var propName in obj) {
+      if (obj[propName] === null || obj[propName] === undefined) {
+        delete obj[propName];
+      }
+    }
+  }
+
+  onFilterClick = async () => {
+    const data = {
+      questionsparameters__parameter_id: this.state.parameterId,
+      questionscategories__category_id: this.state.categoryId,
+      quiz_type: this.state.quizType,
+      status: this.state.status
+    };
+    const fields = data;
+
+    this.clean(fields);
+
+    await this.props.fetchComprehensionsList(this.props.user.Authorization, {
+      searchText: this.state.searchText,
+      fields: JSON.stringify(fields),
+      offset: 0
+    });
+    this.setState({ loading: false });
+  };
+
+  fields = [
+    {
+      key: "1",
+      type: "input",
+      label: "Search by Name or ID",
+      placeholder: "Search by Name or ID",
+      onChange: this.onSearch
+    },
+    {
+      key: "2",
+      type: "input",
+      inputType: "number",
+      label: "Parameter ID",
+      placeholder: "Enter Parameter ID",
+      onChange: this.onParameterChange
+    },
+    {
+      key: "5",
+      type: "select",
+      label: "Status",
+      placeholder: "Select status",
+      onChange: this.onStatusChange,
+      options: [
+        {
+          key: "all",
+          value: null,
+          label: "All"
+        },
+        {
+          key: "live",
+          value: 2,
+          label: "Live"
+        },
+        {
+          key: "draft",
+          value: 1,
+          label: "Draft"
+        }
+      ]
+    }
+  ];
 
   render() {
     const columnName = this.tableColumnName();
     return (
       <div>
-        {/* <Filters fields={this.fields} /> */}
+        <Card>
+          <Filters fields={this.fields} />
+          <Form>
+            <Row>
+              <Col span={12} style={{ padding: "0 24px" }}>
+                <Categories
+                  onChange={this.onCategoryChange}
+                  mode="single"
+                  value={this.state.categoryId}
+                />
+              </Col>
+            </Row>
+          </Form>
+          <div style={{ textAlign: "right" }}>
+            <Button
+              onClick={this.onFilterClick}
+              type="primary"
+              shape="round"
+              size="large"
+              style={{ marginTop: 10, marginRight: 10 }}
+            >
+              Filter
+            </Button>
+          </div>
+        </Card>
         <Card style={{ marginTop: 20 }}>
           <Row>
             <Table
@@ -229,8 +260,8 @@ class ComprehensionList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    // list: state.comprehensions.list,
-    // count: state.comprehensions.count,
+    list: state.comprehension.list,
+    count: state.comprehension.count,
     user: state.userAuth
   };
 };

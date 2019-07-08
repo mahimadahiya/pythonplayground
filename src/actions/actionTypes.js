@@ -81,3 +81,6 @@ export const ADD_QUAD = "ADD_QUAD";
 export const FETCH_QUAD_LIST = "FETCH_QUAD_LIST";
 export const QUAD_EDIT = "QUAD_EDIT";
 export const FETCH_QUAD_DETAILS = "FETCH_QUAD_DETAILS";
+
+// Comprehension
+export const FETCH_COMPREHENSION_LIST = "FETCH_COMPREHENSION_LIST";

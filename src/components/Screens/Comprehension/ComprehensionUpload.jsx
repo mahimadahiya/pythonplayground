@@ -27,7 +27,7 @@ class ComprehensionUpload extends Component {
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMtYXBpLmlhdWdtZW50b3IuY29tL3YxL2F1dGgvc2lnbmluIiwianRpIjoiNmM2OWU2Nzk0NzFmM2RjNmE2OTA1MTc1ZTNlYmU4NTQiLCJleHAiOjE1OTE2OTQzOTEsImlhdCI6MTU2MDEzODU5MSwibmJmIjoxNTYwMTM4NTkxfQ.L1vLFQIhdtW0U1wMlOAkNrjDUOL7zE0Glc2ogRbXhBY",
       key: "TcS99L07QkDezB5n4Qdw"
     },
-    accept: ".png,.jpg"
+    accept: ".png,.jpg,.mp4"
   };
 
   onUploadImage = info => {
@@ -64,7 +64,15 @@ class ComprehensionUpload extends Component {
               </Upload>
             </div>
           ) : null}
-          {this.state.type === "video" ? <div>video</div> : null}
+          {this.state.type === "video" ? (
+            <div style={{ textAlign: "center" }}>
+              <Upload {...this.uploadProps} onChange={this.onUploadImage}>
+                <Button size="large">
+                  <Icon type="upload" /> Click to Upload
+                </Button>
+              </Upload>
+            </div>
+          ) : null}
           {this.state.type === "html" ? (
             <ReactQuill onChange={this.handleChange} style={{ height: 300 }} />
           ) : null}
