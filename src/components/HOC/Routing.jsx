@@ -31,7 +31,7 @@ import EditMTF from "../Screens/Games/MTF/Edit";
 import AddQuad from "../Screens/Games/Quad/Add";
 import ListQuad from "../Screens/Games/Quad/List";
 import ComprehensionList from "../Screens/Comprehension/ComprehensionList";
-// import EditQuad from "../Screens/Games/Quad/Edit";
+import EditQuad from "../Screens/Games/Quad/Edit";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -209,13 +209,13 @@ class Routing extends React.Component {
               user={user}
               exact
             />
-            {/*
+
             <PrivateRoute
               path="/games/quad/edit/:id"
               component={EditQuad}
               user={user}
               exact
-            /> */}
+            />
             <PrivateRoute
               path="/comprehension"
               component={ComprehensionList}

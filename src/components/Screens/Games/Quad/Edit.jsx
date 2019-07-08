@@ -84,7 +84,7 @@ class Edit extends Component {
       text: quadDetail.text,
       entity_id: quadDetail.entity_id
     });
-    const choices1Count = mtfDetail.quadrant_details.length;
+    const choices1Count = quadDetail.quadrant_details.length;
     const choices1 = [];
     for (let i = 0; i < choices1Count; i++) {
       choices1.push(quadDetail.quadrant_details[i]);
@@ -100,8 +100,8 @@ class Edit extends Component {
       answers.push(quadDetail.answers[i]);
     }
     this.setState({
-      entity_type: mtfDetail.entity_type,
-      status: mtfDetail.status,
+      entity_type: quadDetail.entity_type,
+      status: quadDetail.status,
       choices1,
       choices2Count,
       choices2,

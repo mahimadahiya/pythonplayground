@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
     case ACTION_TYPE.FETCH_QUAD_DETAILS:
       return {
         ...state,
-        mtfDetail: action.payload.result
+        quadDetail: action.payload.result
       };
     default:
       return state;
