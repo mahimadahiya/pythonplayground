@@ -190,7 +190,7 @@ class List extends React.Component {
       onChange: this.onEntityChange,
       labelInValue: true,
       options: [
-        { value: null, label: "None" },
+        { value: null, label: "All" },
         { value: 1, label: "BM" },
         { value: 2, label: "FM" }
       ],
@@ -202,7 +202,11 @@ class List extends React.Component {
       placeholder: "Filter by Status",
       onChange: this.onStatusChange,
       labelInValue: true,
-      options: [{ value: 1, label: "Live" }, { value: 2, label: "Draft" }],
+      options: [
+        { value: null, label: "All" },
+        { value: 1, label: "Live" },
+        { value: 2, label: "Draft" }
+      ],
       key: 3
     }
   ];
