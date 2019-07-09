@@ -92,24 +92,24 @@ class SideBar extends React.Component {
           label: "Map Simulation"
         }
       ]
+    },
+    {
+      key: "sub4",
+      icon: "unordered-list",
+      label: "Comprehension",
+      menuList: [
+        {
+          key: "sub4-1",
+          label: "List",
+          onClick: () => history.push("/comprehension")
+        },
+        {
+          key: "sub4-2",
+          label: "Upload",
+          onClick: () => history.push("/comprehension/upload")
+        }
+      ]
     }
-    // {
-    //   key: "sub4",
-    //   icon: "unordered-list",
-    //   label: "Comprehension",
-    //   menuList: [
-    //     {
-    //       key: "sub4-1",
-    //       label: "List",
-    //       onClick: () => history.push("/comprehension")
-    //     },
-    //     {
-    //       key: "sub4-2",
-    //       label: "Upload",
-    //       onClick: () => history.push("/comprehension/upload")
-    //     }
-    //   ]
-    // }
   ];
 
   render() {
