@@ -1,16 +1,21 @@
 import React, { Component } from "react";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
-import { Select, Form, Card, Upload, Button, Icon, message } from "antd";
+import { Select, Form, Card, Upload, Button, Icon, message, Input } from "antd";
+import { connect } from "react-redux";
+import MButton from "../../Elements/MButton";
+import { addComprehension } from "../../../actions";
 
 class ComprehensionUpload extends Component {
   state = {
-    text: "",
-    type: "image"
+    name: "",
+    type: "image",
+    html: null,
+    url: ""
   };
 
   handleChange = val => {
-    this.setState({ text: val });
+    this.setState({ html: val });
   };
 
   onSelectType = val => {
@@ -39,47 +44,91 @@ class ComprehensionUpload extends Component {
     }
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields(async (err, formProps) => {
+      if (!err) {
+        let values = {
+          ...formProps,
+          type: this.state.type
+        };
+        switch (this.state.type) {
+          case "image":
+            values = { ...values, url: this.state.url };
+            break;
+          case "html":
+            break;
+          default:
+            break;
+        }
+        await this.props.addComprehension(
+          this.props.user.Authorization,
+          values,
+          this.state.html
+        );
+      } else {
+        console.log(err);
+      }
+    });
+  };
+
+  handleTextChange = e => {
+    this.setState({ text: e.target.value });
+  };
+
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
       <React.Fragment>
         <Card title={<b>Upload Comprehension</b>} style={{ height: 800 }}>
-          <Form.Item label="Type">
-            <Select
-              placeholder="Select type"
-              style={{ minWidth: 100 }}
-              onChange={this.onSelectType}
-              value={this.state.type}
-            >
-              <Select.Option value="image">Image</Select.Option>
-              <Select.Option value="video">Video</Select.Option>
-              <Select.Option value="html">HTML</Select.Option>
-            </Select>
-          </Form.Item>
-          {this.state.type === "image" ? (
-            <div style={{ textAlign: "center" }}>
-              <Upload {...this.uploadProps} onChange={this.onUploadImage}>
-                <Button size="large">
-                  <Icon type="upload" /> Click to Upload
-                </Button>
-              </Upload>
-            </div>
-          ) : null}
-          {this.state.type === "video" ? (
-            <div style={{ textAlign: "center" }}>
-              <Upload {...this.uploadProps} onChange={this.onUploadImage}>
-                <Button size="large">
-                  <Icon type="upload" /> Click to Upload
-                </Button>
-              </Upload>
-            </div>
-          ) : null}
-          {this.state.type === "html" ? (
-            <ReactQuill onChange={this.handleChange} style={{ height: 300 }} />
-          ) : null}
+          <Form onSubmit={this.onSubmit}>
+            <Form.Item label="Name">
+              {getFieldDecorator("name", {
+                rules: [{ required: true, message: "Name is required" }]
+              })(<Input placeholder="Enter name" />)}
+            </Form.Item>
+            <Form.Item label="Type">
+              <Select
+                placeholder="Select type"
+                style={{ minWidth: 100 }}
+                onChange={this.onSelectType}
+                value={this.state.type}
+              >
+                <Select.Option value="image">Image</Select.Option>
+                <Select.Option value="html">HTML</Select.Option>
+              </Select>
+            </Form.Item>
+
+            {this.state.type === "image" ? (
+              <div style={{ textAlign: "center" }}>
+                <Upload {...this.uploadProps} onChange={this.onUploadImage}>
+                  <Button size="large">
+                    <Icon type="upload" /> Click to Upload
+                  </Button>
+                </Upload>
+              </div>
+            ) : null}
+            {this.state.type === "html" ? (
+              <ReactQuill
+                onChange={this.handleChange}
+                style={{ height: 300 }}
+              />
+            ) : null}
+            <MButton style={{ marginTop: 30 }}>Submit</MButton>
+          </Form>
         </Card>
       </React.Fragment>
     );
   }
 }
 
-export default ComprehensionUpload;
+const mapStateToProps = state => {
+  return {
+    user: state.userAuth
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { addComprehension }
+)(Form.create()(ComprehensionUpload));
