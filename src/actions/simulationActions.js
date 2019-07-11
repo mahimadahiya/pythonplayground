@@ -64,7 +64,7 @@ export const fetchSimulationList = (authToken, offset) => async dispatch => {
       })
       .catch(err => (flag = 1));
   }
-  if (flag == 0) {
+  if (flag === 0) {
     dispatch({
       type: ACTION_TYPE.FETCH_SIMULATION_LIST,
       payload: response.data
