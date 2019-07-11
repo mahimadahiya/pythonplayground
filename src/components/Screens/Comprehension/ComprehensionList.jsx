@@ -212,11 +212,15 @@ class ComprehensionList extends React.Component {
   ];
 
   onComprehensionTypeChange = async val => {
-    await this.setState({ comprehension_type: val === true ? 2 : 1 });
+    await this.setState({
+      comprehension_type: val === true ? 2 : 1,
+      loading: true
+    });
     await this.props.fetchComprehensionsList(this.props.user.Authorization, {
       offset: 0,
       fields: { comprehension_type: this.state.comprehension_type }
     });
+    await this.setState({ loading: false });
   };
 
   onArticleChange = e => {
@@ -267,8 +271,10 @@ class ComprehensionList extends React.Component {
             </Row>
           ) : (
             <Col span={8} style={{ padding: "0 24px" }}>
+              <label htmlFor="article">Article ID</label>
               <Input
                 placeholder="FM Article ID"
+                name="article"
                 onChange={this.onArticleChange}
                 value={this.state.articleId}
               />
