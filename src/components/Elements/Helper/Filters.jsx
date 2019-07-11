@@ -7,11 +7,7 @@ const renderInput = fields => {
       return (
         <Col span={8} style={{ padding: "0 24px" }} key={field.key}>
           <Form.Item label={field.label}>
-            <Input
-              size="large"
-              onChange={field.onChange}
-              placeholder={field.placeholder}
-            />
+            <Input onChange={field.onChange} placeholder={field.placeholder} />
           </Form.Item>
         </Col>
       );
@@ -28,11 +24,10 @@ const renderSelect = fields => {
         <Col span={8} style={{ padding: "0 24px" }} key={field.key}>
           <Form.Item label={field.label}>
             <Select
-              size="large"
               labelInValue={field.labelInValue}
               onChange={field.onChange}
               placeholder={field.placeholder}
-              style={{ minWidth: 300 }}
+              // style={{ minWidth: 300 }}
             >
               {field.options.map(option => {
                 return (
@@ -53,10 +48,10 @@ const renderSelect = fields => {
 
 const Filters = props => {
   return (
-    <Row>
+    <>
       <Form>{renderInput(props.fields)}</Form>
       <Form>{renderSelect(props.fields)}</Form>
-    </Row>
+    </>
   );
 
   // switch (props.component) {

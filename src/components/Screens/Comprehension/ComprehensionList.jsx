@@ -227,26 +227,30 @@ class ComprehensionList extends React.Component {
     return (
       <div>
         <Card>
-          <Filters fields={this.fields} />
           <Form>
-            <Form.Item label="Comprehension Type" style={{ padding: "0 24px" }}>
-              <Switch
-                unCheckedChildren="BM"
-                checkedChildren="FM"
-                checked={this.state.comprehension_type === 2}
-                onChange={this.onComprehensionTypeChange}
-              />
-            </Form.Item>
+            <Row>
+              <Filters fields={this.fields} />
+              <Col span={8} style={{ padding: "0 24px" }}>
+                <Form.Item label="Comprehension Type">
+                  <Switch
+                    unCheckedChildren="BM"
+                    checkedChildren="FM"
+                    checked={this.state.comprehension_type === 2}
+                    onChange={this.onComprehensionTypeChange}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
             {this.state.comprehension_type === 1 ? (
               <Row>
-                <Col span={12} style={{ padding: "0 24px" }}>
+                <Col span={8} style={{ padding: "0 24px" }}>
                   <Categories
                     onChange={this.onCategoryChange}
                     mode="single"
                     value={this.state.categoryId}
                   />
                 </Col>
-                <Col span={12} style={{ padding: "0 24px" }}>
+                <Col span={8} style={{ padding: "0 24px" }}>
                   <Parameters
                     onChange={this.onParameterChange}
                     mode="single"
@@ -256,17 +260,16 @@ class ComprehensionList extends React.Component {
                 </Col>
               </Row>
             ) : (
-              <Row>
-                <Col span={12} style={{ padding: "0 24px" }}>
-                  <Input
-                    placeholder="FM Article ID"
-                    onChange={this.onArticleChange}
-                    value={this.state.articleId}
-                  />
-                </Col>
-              </Row>
+              <Col span={8} style={{ padding: "0 24px" }}>
+                <Input
+                  placeholder="FM Article ID"
+                  onChange={this.onArticleChange}
+                  value={this.state.articleId}
+                />
+              </Col>
             )}
           </Form>
+
           <div style={{ textAlign: "right" }}>
             <Button
               onClick={this.onFilterClick}

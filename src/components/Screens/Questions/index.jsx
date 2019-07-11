@@ -293,17 +293,17 @@ class QuestionList extends React.Component {
     return (
       <div>
         <Card>
-          <Filters fields={this.fields} />
           <Form>
             <Row>
-              <Col span={12} style={{ padding: "0 24px" }}>
+              <Filters fields={this.fields} />
+              <Col span={8} style={{ padding: "0 24px" }}>
                 <Categories
                   onChange={this.onCategoryChange}
                   mode="single"
                   value={this.state.categoryId}
                 />
               </Col>
-              <Col span={12} style={{ padding: "0 24px" }}>
+              <Col span={8} style={{ padding: "0 24px" }}>
                 <Parameters
                   onChange={this.onParameterChange}
                   mode="single"

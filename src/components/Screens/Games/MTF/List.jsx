@@ -218,8 +218,6 @@ class List extends React.Component {
         <Card type="inner">
           <Row>
             <Filters fields={this.fields} />
-          </Row>
-          <Row>
             <Table
               loading={this.state.loading}
               dataSource={this.props.list}

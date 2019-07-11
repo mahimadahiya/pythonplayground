@@ -220,9 +220,9 @@ class DonDonList extends React.Component {
     const columnName = this.tableColumnName();
     return (
       <div>
-        <Filters fields={this.fields} />
         <Card style={{ marginTop: 20 }}>
           <Row>
+            <Filters fields={this.fields} />
             <Table
               loading={this.state.loading}
               dataSource={this.props.list}
