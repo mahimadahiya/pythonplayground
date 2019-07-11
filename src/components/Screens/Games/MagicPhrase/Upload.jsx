@@ -15,10 +15,6 @@ class UploadComponent extends Component {
     media: null
   };
 
-  componentDidMount() {
-    this.props.heading("MagicPhrase Upload");
-  }
-
   setEntityType = e => {
     this.setState({
       entityType: e === true ? 2 : 1

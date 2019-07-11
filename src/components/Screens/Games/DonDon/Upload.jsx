@@ -14,10 +14,6 @@ class UploadComponent extends Component {
     choice2: null
   };
 
-  componentDidMount() {
-    this.props.heading("DonDon Upload");
-  }
-
   setEntityType = e => {
     this.setState({
       entityType: e === true ? 2 : 1

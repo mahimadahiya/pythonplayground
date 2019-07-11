@@ -23,10 +23,6 @@ class DonDonList extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.props.heading("MagicPhrase List");
-  }
-
   onEdit = record => {
     history.push("/games/magicphrase/edit/" + record.id);
   };

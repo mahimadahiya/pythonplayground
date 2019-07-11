@@ -48,7 +48,6 @@ class Edit extends Component {
 	};
 
 	async componentDidMount() {
-		this.props.heading("MTF Edit");
 		await this.props.fetchMTFDetails(this.props.user.Authorization, this.props.match.params.id);
 		const { mtfDetail } = this.props
 		this.props.form.setFieldsValue({
@@ -399,7 +398,7 @@ class Edit extends Component {
 		const { getFieldDecorator } = this.props.form;
 		return (
 			<React.Fragment>
-				<Card loading={this.state.loading}>
+        <Card loading={this.state.loading} title={<div className="card-title">Edit MTF</div>}>
 					<Form onSubmit={this.onSubmit}>
 						<Form.Item label="Text">
 							{getFieldDecorator("text", {

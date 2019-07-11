@@ -71,10 +71,6 @@ class Add extends Component {
     ]
   };
 
-  componentDidMount() {
-    this.props.heading("Quad Add");
-  }
-
   onSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, formProps) => {
@@ -337,7 +333,7 @@ class Add extends Component {
 
     return (
       <React.Fragment>
-        <Card>
+        <Card title={<div className="card-title">Add Quad</div>}>
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="Text">
               {getFieldDecorator("text", {

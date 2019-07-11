@@ -23,10 +23,6 @@ class List extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.props.heading("MTF List");
-  }
-
   onEdit = record => {
     history.push("/games/mtf/edit/" + record.id);
   };
@@ -215,10 +211,12 @@ class List extends React.Component {
     const columnName = this.tableColumnName();
     return (
       <div>
-        <Card type="inner">
+        <Card title={<div className="card-title">Filters</div>}>
           <Row>
             <Filters fields={this.fields} />
           </Row>
+        </Card>
+        <Card title={<div className="card-title">MTF List</div>}>
           <Row>
             <Table
               loading={this.state.loading}

@@ -190,9 +190,7 @@ class SideBar extends React.Component {
             >
               {/* Sending Heading Prop to children to render heading on header */}
 
-              {React.cloneElement(this.props.children, {
-                heading: this.setHeading
-              })}
+              {this.props.children}
             </div>
           </Content>
         </Layout>

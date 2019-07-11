@@ -45,10 +45,6 @@ class ComprehensionList extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.props.heading("Comprehensions List");
-  }
-
   onEdit = record => {
     history.push("/comprehensions/edit/" + record.id);
   };

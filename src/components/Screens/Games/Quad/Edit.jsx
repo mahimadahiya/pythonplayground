@@ -74,7 +74,6 @@ class Edit extends Component {
   };
 
   async componentDidMount() {
-    this.props.heading("Quad Edit");
     await this.props.fetchQuadDetails(
       this.props.user.Authorization,
       this.props.match.params.id
@@ -380,7 +379,7 @@ class Edit extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <React.Fragment>
-        <Card loading={this.state.loading}>
+        <Card loading={this.state.loading} title={<div className="card-title">Edit Quad</div>}>
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="Text">
               {getFieldDecorator("text", {
