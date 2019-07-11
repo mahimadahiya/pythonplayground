@@ -3,13 +3,15 @@ import adminPanelApi from "../apis/adminPanel";
 import * as ACTION_TYPE from "./actionTypes";
 import qs from "querystring";
 import history from "../history";
+import { source } from "../apis/cancel";
 
 export const fetchModuleSimulations = (
   authToken,
   module_id
 ) => async dispatch => {
   const response = await pyLearningApi(authToken).get(
-    `/simulation/list_questions?module_id=${module_id}`
+    `/simulation/list_questions?module_id=${module_id}`,
+    { cancelToken: source.token }
   );
   dispatch({
     type: ACTION_TYPE.FETCH_MODULE_SIMULATION,
@@ -48,20 +50,27 @@ export const createSimulationOrgMapping = (
 
 export const fetchSimulationList = (authToken, offset) => async dispatch => {
   let response = null;
-
+  let flag = 0;
   if (offset) {
-    response = await adminPanelApi(authToken).get(
-      `/v1/admin/simulations?limit=10&offset=${offset}`
-    );
+    response = await adminPanelApi(authToken)
+      .get(`/v1/admin/simulations?limit=10&offset=${offset}`, {
+        cancelToken: source.token
+      })
+      .catch(err => (flag = 1));
   } else {
-    response = await adminPanelApi(authToken).get(`/v1/admin/simulations`);
+    response = await adminPanelApi(authToken)
+      .get(`/v1/admin/simulations`, {
+        cancelToken: source.token
+      })
+      .catch(err => (flag = 1));
   }
-
-  dispatch({
-    type: ACTION_TYPE.FETCH_SIMULATION_LIST,
-    payload: response.data
-  });
-  history.push("/simulation");
+  if (flag == 0) {
+    dispatch({
+      type: ACTION_TYPE.FETCH_SIMULATION_LIST,
+      payload: response.data
+    });
+    history.push("/simulation");
+  }
 };
 
 export const fetchSimulation = (authToken, id) => async dispatch => {

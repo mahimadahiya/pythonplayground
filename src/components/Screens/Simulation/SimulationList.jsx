@@ -5,13 +5,14 @@ import { fetchSimulationList } from "../../../actions";
 import history from "../../../history";
 import qs from "querystring";
 import adminPanelApi from "../../../apis/adminPanel";
+import { source } from "../../../apis/cancel";
 
 class SimulationList extends React.Component {
   state = {
     loading: true
   };
 
-  componentWillMount = async () => {
+  componentDidMount = async () => {
     await this.props.fetchSimulationList(this.props.user.Authorization, 0);
     this.setState({ loading: false });
   };
@@ -122,6 +123,10 @@ class SimulationList extends React.Component {
     ];
     return column;
   };
+
+  componentWillUnmount() {
+    source.cancel();
+  }
 
   handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
