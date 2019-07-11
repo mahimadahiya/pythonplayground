@@ -20,7 +20,6 @@ class AddResponse extends Component {
 
   componentWillMount() {
     this.id = this.props.match.params.id;
-    this.props.heading("Add Simulation");
   }
 
   uploadPropsAudio = {
@@ -83,7 +82,7 @@ class AddResponse extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <React.Fragment>
-        <Card>
+        <Card title={<div className="card-title">Add Response</div>}>
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="Name">
               {getFieldDecorator("name", {

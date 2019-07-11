@@ -9,10 +9,6 @@ class AddQuestion extends Component {
     file_url: null
   };
 
-  componentDidMount() {
-    this.props.heading("Add Question");
-  }
-
   onSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(async (err, formProps) => {
@@ -59,7 +55,7 @@ class AddQuestion extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <React.Fragment>
-        <Card>
+        <Card title={<div className="card-title">Add Question</div>}>
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="Quiz Type">
               {getFieldDecorator("quiz_type", {

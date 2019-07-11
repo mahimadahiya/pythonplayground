@@ -111,3 +111,8 @@ img {
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
+
+.card-title {
+  font-weight: 900;
+  font-size: 18px;
+}

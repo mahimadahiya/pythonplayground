@@ -215,10 +215,12 @@ class DonDonList extends React.Component {
     const columnName = this.tableColumnName();
     return (
       <div>
-        <Card type="inner">
+        <Card title={<div className="card-title">Filters</div>}>
           <Row>
             <Filters fields={this.fields} />
           </Row>
+        </Card>
+        <Card title={<div className="card-title">MagicPhrase List</div>} style={{marginTop: 20}}>
           <Row>
             <Table
               loading={this.state.loading}

@@ -58,7 +58,7 @@ const QuestionDetails = props => {
     } = props.question.question;
     return (
       <div>
-        <Card>
+        <Card title={<div className="card-title">Question Details</div>}>
           <Descriptions bordered title="Details" border size="small">
             <Descriptions.Item label="ID">{id}</Descriptions.Item>
             <Descriptions.Item label="Media Type">

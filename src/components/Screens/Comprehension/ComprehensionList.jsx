@@ -233,7 +233,7 @@ class ComprehensionList extends React.Component {
     const columnName = this.tableColumnName();
     return (
       <div>
-        <Card>
+        <Card title={<div className="card-title">Filters</div>}>
           <Row>
             <Form>
               <Col span={8} style={{ padding: "0 24px" }}>
@@ -293,7 +293,10 @@ class ComprehensionList extends React.Component {
             </Button>
           </div>
         </Card>
-        <Card style={{ marginTop: 20 }}>
+        <Card
+          style={{ marginTop: 20 }}
+          title={<div className="card-title">Comprehension List</div>}
+        >
           <Row>
             <Table
               loading={this.state.loading}

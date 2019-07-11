@@ -16,10 +16,6 @@ class SimulationList extends React.Component {
     this.setState({ loading: false });
   };
 
-  componentDidMount() {
-    this.props.heading("Simulation List");
-  }
-
   onAddClick = (e, id) => {
     history.push("/simulation/add/" + id);
   };
@@ -139,7 +135,7 @@ class SimulationList extends React.Component {
     const tableData = this.props.simulations;
     return (
       <div>
-        <Card type="inner">
+        <Card title={<div className="card-title">Simulation List</div>}>
           <Table
             dataSource={tableData}
             columns={columnName}

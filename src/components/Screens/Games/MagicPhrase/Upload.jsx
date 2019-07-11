@@ -125,7 +125,7 @@ class UploadComponent extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Card>
+      <Card title={<div className="card-title">Upload MagicPhrase</div>}>
         <Form onSubmit={this.onSubmit}>
           <Form.Item label="Title">
             {getFieldDecorator("title", {

@@ -55,10 +55,6 @@ class UserTrackMapping extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.props.heading("Map Users");
-  }
-
   onTrackSelect = e => {
     this.setState({ selectedTracks: e });
   };
@@ -104,7 +100,7 @@ class UserTrackMapping extends React.Component {
           selected_tracks: JSON.stringify(formProps.selectedTracks),
           selected_users: JSON.stringify(users),
           module_lock_status: this.state.module_lock_status,
-          notify_user: this.state.notify_user,
+          notify_user: this.state.notify_user
         };
         await this.props.createUserTrackMapping(
           this.props.user.Authorization,
@@ -249,7 +245,7 @@ class UserTrackMapping extends React.Component {
 
   onNotifyChange = e => {
     const status = e ? 1 : 0;
-    console.log(status)
+    console.log(status);
     this.setState({ notify_user: status });
   };
 
@@ -275,7 +271,7 @@ class UserTrackMapping extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <Card>
+        <Card title={<div className="card-title">Map User</div>}>
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="Organizations">
               {getFieldDecorator("organization_id", {

@@ -25,7 +25,6 @@ class SituationMapping extends Component {
 
   componentDidMount() {
     this.props.fetchOrganizations(this.props.user.Authorization);
-    this.props.heading("Simulation Mapping");
   }
 
   componentDidUpdate() {
@@ -161,7 +160,7 @@ class SituationMapping extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <Card>
+        <Card title={<div className="card-title">Map Simulations</div>}>
           <Form onSubmit={this.onSubmit} style={{ padding: 20 }}>
             <Form.Item label="Organization Names">
               {getFieldDecorator("organization", {

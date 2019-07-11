@@ -15,7 +15,6 @@ class EditResponse extends Component {
 
   async componentDidMount() {
     this.id = this.props.match.params.id;
-    this.props.heading("Edit Simulation");
     await this.props.fetchSimulation(this.props.user.Authorization, this.id);
     const record = this.props.simulation;
     this.props.form.setFieldsValue({
@@ -48,7 +47,7 @@ class EditResponse extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <React.Fragment>
-        <Card loading={this.state.loading}>
+        <Card loading={this.state.loading} title={<div className="card-title">Edit Response</div>}>
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="Name">
               {getFieldDecorator("name", {

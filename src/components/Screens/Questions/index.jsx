@@ -29,7 +29,6 @@ class QuestionList extends React.Component {
   };
 
   componentWillMount = async () => {
-    this.props.heading("Questions");
     this.fetchRequest = await this.props.fetchQuestionList(
       this.props.user.Authorization,
       {
@@ -292,7 +291,7 @@ class QuestionList extends React.Component {
     const tableData = this.props.questions;
     return (
       <div>
-        <Card>
+        <Card title={<div className="card-title">Filters</div>}>
           <Form>
             <Row>
               <Filters fields={this.fields} />
@@ -325,7 +324,7 @@ class QuestionList extends React.Component {
             </Button>
           </div>
         </Card>
-        <Card type="inner" style={{ marginTop: 20 }}>
+        <Card type="inner" style={{ marginTop: 20 }} title={<div className="card-title">Questions List</div>}>
           <Table
             dataSource={tableData}
             loading={this.state.loading}

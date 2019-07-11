@@ -231,7 +231,10 @@ class MapQuestionChoices extends React.Component {
   render() {
     return (
       <div>
-        <Card loading={this.state.loading}>
+        <Card
+          loading={this.state.loading}
+          title={<div className="card-title">Map Choices</div>}
+        >
           <Form onSubmit={this.handleSubmit}>
             <Row type="flex" justify="space-around" gutter={16}>
               {this.createUI()}

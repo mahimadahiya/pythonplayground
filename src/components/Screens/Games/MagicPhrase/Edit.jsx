@@ -20,7 +20,6 @@ class Edit extends Component {
   };
 
   async componentDidMount() {
-    this.props.heading("MagicPhrase Edit");
     const id = this.props.match.params.id;
     await this.props.fetchMagicphraseDetails(this.props.user.Authorization, id);
     const { details } = this.props;
@@ -158,7 +157,7 @@ class Edit extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Card>
+      <Card title={<div className="card-title">Edit MagicPhrase</div>}>
         <Form onSubmit={this.onSubmit}>
           <Form.Item label="Title">
             {getFieldDecorator("title", {

@@ -19,7 +19,6 @@ class QuestionEdit extends React.Component {
     levels: []
   };
   componentWillMount = async () => {
-    this.props.heading("Update Question");
     await this.props.fetchQuestionDetail(
       this.props.match.params.id,
       this.props.user.Authorization
@@ -145,8 +144,8 @@ class QuestionEdit extends React.Component {
 
   render() {
     return (
-      <div style={{}}>
-        <Card title="Edit Question">
+      <div>
+        <Card title={<div className="card-title">Update Question</div>}>
           <Card loading={this.state.loading}>
             {this.renderQuestionDescription()}
           </Card>
@@ -154,13 +153,6 @@ class QuestionEdit extends React.Component {
             <Form onSubmit={this.onSubmit}>{this.renderFormItems()}</Form>
           </Card>
         </Card>
-        {/* <Drawer
-          placement="right"
-          visible={true}
-          closable={false}
-          zIndex={0}
-          mask={false}
-        /> */}
       </div>
     );
   }

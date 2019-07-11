@@ -23,7 +23,6 @@ class CreateTrack extends React.Component {
         loading: false
       });
     }
-    this.props.heading("Create Track");
   }
 
   onSubmit = e => {
@@ -59,7 +58,10 @@ class CreateTrack extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <Card loading={this.state.loading}>
+        <Card
+          loading={this.state.loading}
+          title={<div className="card-title">Create Track</div>}
+        >
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="Track Name">
               {getFieldDecorator("name", {

@@ -30,7 +30,6 @@ class ModuleMapping extends React.Component {
   };
 
   async componentDidMount() {
-    this.props.heading("Map Module");
     await this.props.fetchModuleTracks(this.props.user.Authorization);
     await this.fetchTrack();
     const orgId = this.state.track.organization_id;
@@ -71,7 +70,10 @@ class ModuleMapping extends React.Component {
       <div>
         <div>
           <div>
-            <Card title="Details" loading={this.state.loading}>
+            <Card
+              title={<div className="card-title">Details</div>}
+              loading={this.state.loading}
+            >
               <Descriptions bordered column="2">
                 <Descriptions.Item label="Name">
                   {this.state.track.name}
@@ -89,7 +91,7 @@ class ModuleMapping extends React.Component {
           <div>
             {this.props.modules ? (
               <Card
-                title="Select Modules"
+                title={<div className="card-title">Select Modules</div>}
                 style={{ marginTop: "10px" }}
                 loading={this.state.loading}
               >

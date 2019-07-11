@@ -23,10 +23,6 @@ class DonDonList extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.props.heading("Don Don List");
-  }
-
   onEdit = record => {
     history.push("/games/dondon/edit/" + record.id);
   };
@@ -220,10 +216,17 @@ class DonDonList extends React.Component {
     const columnName = this.tableColumnName();
     return (
       <div>
-        <Card style={{ marginTop: 20 }}>
+        <Card
+          title={<div className="card-title">Filters</div>}
+        >
           <Row>
             <Filters fields={this.fields} />
           </Row>
+        </Card>
+        <Card
+          style={{ marginTop: 20 }}
+          title={<div className="card-title">DonDon List</div>}
+        >
           <Row>
             <Table
               loading={this.state.loading}

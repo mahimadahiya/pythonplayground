@@ -38,14 +38,12 @@ class MapCategories extends React.Component {
       return tag.tag_id;
     });
 
-    this.setState(
-      {
-        categories,
-        parameters,
-        tags,
-        loaded: true
-      }
-    );
+    this.setState({
+      categories,
+      parameters,
+      tags,
+      loaded: true
+    });
   }
 
   onChangeCategory = val => {
@@ -156,7 +154,12 @@ class MapCategories extends React.Component {
     const { current } = this.state;
     return (
       <div>
-        <Card loading={!this.state.loaded}>{this.renderForm(current)}</Card>
+        <Card
+          loading={!this.state.loaded}
+          title={<div className="card-title">Map Categories</div>}
+        >
+          {this.renderForm(current)}
+        </Card>
       </div>
     );
   }

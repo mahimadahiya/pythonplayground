@@ -17,9 +17,6 @@ class TrackList extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.props.heading("Tracks");
-  }
 
   tableColumnName = () => {
     const column = [
@@ -72,7 +69,11 @@ class TrackList extends React.Component {
     const tableData = this.props.tracks;
     return (
       <div>
-        <Card type="inner" loading={this.state.loading}>
+        <Card
+          type="inner"
+          loading={this.state.loading}
+          title={<div className="card-title">Track List</div>}
+        >
           <Table
             dataSource={tableData}
             columns={columnName}

@@ -19,7 +19,6 @@ class Edit extends Component {
   };
 
   async componentDidMount() {
-    this.props.heading("DonDon Edit");
     const id = this.props.match.params.id;
     await this.props.fetchDonDonDetails(this.props.user.Authorization, id);
     const { details } = this.props;
@@ -139,7 +138,10 @@ class Edit extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Card loading={this.state.loading}>
+      <Card
+        loading={this.state.loading}
+        title={<div className="card-title">Edit DonDon</div>}
+      >
         <Form onSubmit={this.onSubmit}>
           <Form.Item label="Text">
             {getFieldDecorator("text", {
