@@ -223,6 +223,8 @@ class DonDonList extends React.Component {
         <Card style={{ marginTop: 20 }}>
           <Row>
             <Filters fields={this.fields} />
+          </Row>
+          <Row>
             <Table
               loading={this.state.loading}
               dataSource={this.props.list}
