@@ -150,18 +150,6 @@ class SideBar extends React.Component {
                 type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
                 onClick={this.onCollapse}
               />
-              {this.state.heading ? (
-                <div
-                  style={{
-                    fontSize: "24px",
-                    fontWeight: "bolder",
-                    textAlign: "center",
-                    flex: 1
-                  }}
-                >
-                  {this.state.heading}
-                </div>
-              ) : null}
               <span style={{ textAlign: "right" }}>
                 <span style={{ fontSize: "16px" }}>
                   <Dropdown overlay={this.userMenu} trigger={["click"]}>
