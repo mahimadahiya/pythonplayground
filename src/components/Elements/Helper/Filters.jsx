@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Form, Select, Card, Row, Col } from "antd";
+import { Input, Form, Select, Col } from "antd";
 
 const renderInput = fields => {
   return fields.map(field => {

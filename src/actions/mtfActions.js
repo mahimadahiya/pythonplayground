@@ -3,7 +3,7 @@ import pyLearningApi from "../apis/pylearning";
 import qs from "querystring";
 
 export const addMTF = (authToken, values) => async dispatch => {
-  const response = await pyLearningApi(authToken).post(
+  await pyLearningApi(authToken).post(
     "/game/mtf/panel/type1/add",
     qs.stringify(values)
   );
@@ -41,13 +41,16 @@ export const fetchMTFList = (authToken, params, offset) => async dispatch => {
 };
 
 export const fetchMTFDetails = (authToken, id) => async dispatch => {
-	const response = await pyLearningApi(authToken).get(
-		"/game/show_details/mtf?id=" + id
-	);
-	dispatch({ type: ACTION_TYPE.FETCH_MTF_DETAILS, payload: response.data });
+  const response = await pyLearningApi(authToken).get(
+    "/game/show_details/mtf?id=" + id
+  );
+  dispatch({ type: ACTION_TYPE.FETCH_MTF_DETAILS, payload: response.data });
 };
 
 export const editMTF = (authToken, values) => async dispatch => {
-  await pyLearningApi(authToken).post('/game/mtf/panel/type1/edit', qs.stringify(values));
-  dispatch({ type: ACTION_TYPE.MTF_EDIT })
-}
+  await pyLearningApi(authToken).post(
+    "/game/mtf/panel/type1/edit",
+    qs.stringify(values)
+  );
+  dispatch({ type: ACTION_TYPE.MTF_EDIT });
+};

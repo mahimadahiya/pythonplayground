@@ -3,7 +3,7 @@ import pyLearningApi from "../apis/pylearning";
 import qs from "querystring";
 
 export const addQuad = (authToken, values) => async dispatch => {
-  const response = await pyLearningApi(authToken).post(
+  await pyLearningApi(authToken).post(
     "/game/mtf/panel/type2/add",
     qs.stringify(values)
   );
