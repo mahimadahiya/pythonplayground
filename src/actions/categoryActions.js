@@ -10,10 +10,16 @@ export const fetchCategories = authToken => async dispatch => {
 };
 
 export const fetchParameters = (authToken, categories) => async dispatch => {
-  categories = JSON.stringify(categories);
-  const response = await adminPanelApi(authToken).get(
-    `/v1/admin/parameters?category_id=${categories}`
-  );
+  let response = null;
+
+  if (categories[0] === null) {
+    response = await adminPanelApi(authToken).get(`/v1/admin/parameters`);
+  } else {
+    categories = JSON.stringify(categories);
+    response = await adminPanelApi(authToken).get(
+      `/v1/admin/parameters?category_id=${categories}`
+    );
+  }
   dispatch({ type: ACTION_TYPE.FETCH_PARAMETERS, payload: response.data });
 };
 

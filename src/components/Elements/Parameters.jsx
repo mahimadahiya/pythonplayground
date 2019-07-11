@@ -17,11 +17,23 @@ const renderOptions = parameters => {
   });
 };
 
+const filterParameters = (val, option, parameters) => {
+  const filteredList = parameters.filter(({ name }) => {
+    if (name.toLowerCase().includes(val) || option.key.includes(val)) {
+      return true;
+    }
+    return false;
+  });
+  for (var i = 0; i < filteredList.length; i++) {
+    if (filteredList[i].id.toString() === option.key) return true;
+  }
+  return false;
+};
+
 const Parameters = props => {
-  console.log(props);
   useEffect(() => {
     getParameters(props.fetchParameters, props.user, props.categories);
-  }, [props.categories]);
+  }, [props.categories[0]]);
   return (
     <div>
       <Form.Item label="Parameters">
@@ -30,6 +42,10 @@ const Parameters = props => {
           mode={props.mode}
           value={props.value}
           onChange={props.onChange}
+          showSearch
+          filterOption={(val, option) =>
+            filterParameters(val, option, props.parameters)
+          }
         >
           {renderOptions(props.parameters)}
         </Select>

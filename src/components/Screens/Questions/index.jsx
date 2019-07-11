@@ -16,6 +16,7 @@ import { fetchQuestionList, updateQuestion } from "../../../actions";
 import Filters from "../../Elements/Helper/Filters";
 import MButton from "../../Elements/MButton";
 import Categories from "../../Elements/Categories";
+import Parameters from "../../Elements/Parameters";
 
 class QuestionList extends React.Component {
   state = {
@@ -63,9 +64,9 @@ class QuestionList extends React.Component {
     });
   };
 
-  onParameterChange = e => {
+  onParameterChange = value => {
     this.setState({
-      parameterId: e.target.value
+      parameterId: value
     });
   };
 
@@ -300,6 +301,14 @@ class QuestionList extends React.Component {
                   onChange={this.onCategoryChange}
                   mode="single"
                   value={this.state.categoryId}
+                />
+              </Col>
+              <Col span={12} style={{ padding: "0 24px" }}>
+                <Parameters
+                  onChange={this.onParameterChange}
+                  mode="single"
+                  categories={[this.state.categoryId]}
+                  value={this.state.parameterId}
                 />
               </Col>
             </Row>

@@ -44,8 +44,7 @@ class MapCategories extends React.Component {
         parameters,
         tags,
         loaded: true
-      },
-      () => console.log(this.state)
+      }
     );
   }
 
