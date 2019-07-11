@@ -37,7 +37,7 @@ class ComprehensionList extends React.Component {
     if (this.props.list.length === 0) {
       await this.props.fetchComprehensionsList(this.props.user.Authorization, {
         offset: 0,
-        fields: "{}"
+        fields: { comprehension_type: this.state.comprehension_type }
       });
       this.setState({ loading: false });
     } else {
@@ -115,8 +115,14 @@ class ComprehensionList extends React.Component {
   handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
     this.setState({ loading: true });
-    await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset
+    const fields = {
+      comprehension_type: this.state.comprehension_type,
+      comprehensionfmarticle__fmarticle_id: this.state.articleId
+    };
+    console.log(fields);
+    await this.props.fetchComprehensionsList(this.props.user.Authorization, {
+      offset,
+      fields
     });
     this.setState({ loading: false });
   };
@@ -160,19 +166,12 @@ class ComprehensionList extends React.Component {
   }
 
   onFilterClick = async () => {
-    const data = {
-      questionsparameters__parameter_id: this.state.parameterId,
-      questionscategories__category_id: this.state.categoryId,
-      quiz_type: this.state.quizType,
-      status: this.state.status
-    };
-    const fields = data;
-
-    this.clean(fields);
-
     await this.props.fetchComprehensionsList(this.props.user.Authorization, {
       searchText: this.state.searchText,
-      fields: JSON.stringify(fields),
+      fields: {
+        comprehension_type: this.state.comprehension_type,
+        comprehensionfmarticle__fmarticle_id: this.state.articleId
+      },
       offset: 0
     });
     this.setState({ loading: false });
@@ -212,8 +211,12 @@ class ComprehensionList extends React.Component {
     }
   ];
 
-  onComprehensionTypeChange = val => {
-    this.setState({ comprehension_type: val === true ? 2 : 1 });
+  onComprehensionTypeChange = async val => {
+    await this.setState({ comprehension_type: val === true ? 2 : 1 });
+    await this.props.fetchComprehensionsList(this.props.user.Authorization, {
+      offset: 0,
+      fields: { comprehension_type: this.state.comprehension_type }
+    });
   };
 
   onArticleChange = e => {
@@ -227,9 +230,8 @@ class ComprehensionList extends React.Component {
     return (
       <div>
         <Card>
-          <Form>
-            <Row>
-              <Filters fields={this.fields} />
+          <Row>
+            <Form>
               <Col span={8} style={{ padding: "0 24px" }}>
                 <Form.Item label="Comprehension Type">
                   <Switch
@@ -240,9 +242,12 @@ class ComprehensionList extends React.Component {
                   />
                 </Form.Item>
               </Col>
-            </Row>
-            {this.state.comprehension_type === 1 ? (
-              <Row>
+            </Form>
+            <Filters fields={this.fields} />
+          </Row>
+          {this.state.comprehension_type === 1 ? (
+            <Row>
+              <Form>
                 <Col span={8} style={{ padding: "0 24px" }}>
                   <Categories
                     onChange={this.onCategoryChange}
@@ -258,17 +263,17 @@ class ComprehensionList extends React.Component {
                     value={this.state.parameterId}
                   />
                 </Col>
-              </Row>
-            ) : (
-              <Col span={8} style={{ padding: "0 24px" }}>
-                <Input
-                  placeholder="FM Article ID"
-                  onChange={this.onArticleChange}
-                  value={this.state.articleId}
-                />
-              </Col>
-            )}
-          </Form>
+              </Form>
+            </Row>
+          ) : (
+            <Col span={8} style={{ padding: "0 24px" }}>
+              <Input
+                placeholder="FM Article ID"
+                onChange={this.onArticleChange}
+                value={this.state.articleId}
+              />
+            </Col>
+          )}
 
           <div style={{ textAlign: "right" }}>
             <Button
