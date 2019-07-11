@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
-import { Select, Form, Card, Upload, Button, Icon, message, Input } from "antd";
+import {
+  Select,
+  Form,
+  Card,
+  Upload,
+  Button,
+  Icon,
+  message,
+  Input,
+  Switch
+} from "antd";
 import { connect } from "react-redux";
 import MButton from "../../Elements/MButton";
 import { addComprehension } from "../../../actions";
@@ -11,6 +21,7 @@ class ComprehensionUpload extends Component {
     name: "",
     type: "image",
     html: null,
+    comprehension_type: 1,
     url: ""
   };
 
@@ -50,7 +61,8 @@ class ComprehensionUpload extends Component {
       if (!err) {
         let values = {
           ...formProps,
-          type: this.state.type
+          type: this.state.type,
+          comprehension_type: this.state.comprehension_type
         };
         switch (this.state.type) {
           case "image":
@@ -76,6 +88,12 @@ class ComprehensionUpload extends Component {
     this.setState({ text: e.target.value });
   };
 
+  onSelectComprehensionType = val => {
+    this.setState({
+      comprehension_type: val === true ? 2 : 1
+    });
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -99,6 +117,15 @@ class ComprehensionUpload extends Component {
               </Select>
             </Form.Item>
 
+            <Form.Item label="Comprehension Type">
+              <Switch
+                unCheckedChildren="BM"
+                checkedChildren="FM"
+                onChange={this.onSelectComprehensionType}
+                checked={this.state.comprehension_type === 2}
+              />
+            </Form.Item>
+
             {this.state.type === "image" ? (
               <div style={{ textAlign: "center" }}>
                 <Upload {...this.uploadProps} onChange={this.onUploadImage}>
@@ -111,10 +138,10 @@ class ComprehensionUpload extends Component {
             {this.state.type === "html" ? (
               <ReactQuill
                 onChange={this.handleChange}
-                style={{ height: 300 }}
+                style={{ height: 300, marginBottom: 50 }}
               />
             ) : null}
-            <MButton style={{ marginTop: 30 }}>Submit</MButton>
+            <MButton>Submit</MButton>
           </Form>
         </Card>
       </React.Fragment>
