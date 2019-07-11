@@ -5,7 +5,7 @@ const renderInput = fields => {
   return fields.map(field => {
     if (field.type === "input") {
       return (
-        <Col span={12} style={{ padding: "0 24px" }} key={field.key}>
+        <Col span={8} style={{ padding: "0 24px" }} key={field.key}>
           <Form.Item label={field.label}>
             <Input
               size="large"
@@ -25,7 +25,7 @@ const renderSelect = fields => {
   return fields.map(field => {
     if (field.type === "select") {
       return (
-        <Col span={12} style={{ padding: "0 24px" }} key={field.key}>
+        <Col span={8} style={{ padding: "0 24px" }} key={field.key}>
           <Form.Item label={field.label}>
             <Select
               size="large"

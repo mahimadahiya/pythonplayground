@@ -1,12 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import qs from "querystring";
-import { Table, Card, Pagination, Row, Button, Col, Form } from "antd";
+import {
+  Table,
+  Card,
+  Pagination,
+  Row,
+  Button,
+  Col,
+  Form,
+  Switch,
+  Input
+} from "antd";
 import { fetchComprehensionsList } from "../../../actions";
 import history from "../../../history";
 // import pyLearningApi from "../../../../apis/pylearning";
 import Filters from "../../Elements/Helper/Filters";
 import Categories from "../../Elements/Categories";
+import Parameters from "../../Elements/Parameters";
 
 //TODO: Filters not working yet
 
@@ -17,7 +28,9 @@ class ComprehensionList extends React.Component {
     entity_type: null,
     status: null,
     parameterId: null,
-    categoryId: null
+    categoryId: null,
+    comprehension_type: 1,
+    articleId: null
   };
 
   componentWillMount = async () => {
@@ -174,14 +187,6 @@ class ComprehensionList extends React.Component {
       onChange: this.onSearch
     },
     {
-      key: "2",
-      type: "input",
-      inputType: "number",
-      label: "Parameter ID",
-      placeholder: "Enter Parameter ID",
-      onChange: this.onParameterChange
-    },
-    {
       key: "5",
       type: "select",
       label: "Status",
@@ -207,6 +212,16 @@ class ComprehensionList extends React.Component {
     }
   ];
 
+  onComprehensionTypeChange = val => {
+    this.setState({ comprehension_type: val === true ? 2 : 1 });
+  };
+
+  onArticleChange = e => {
+    this.setState({
+      articleId: e.target.value
+    });
+  };
+
   render() {
     const columnName = this.tableColumnName();
     return (
@@ -214,15 +229,43 @@ class ComprehensionList extends React.Component {
         <Card>
           <Filters fields={this.fields} />
           <Form>
-            <Row>
-              <Col span={12} style={{ padding: "0 24px" }}>
-                <Categories
-                  onChange={this.onCategoryChange}
-                  mode="single"
-                  value={this.state.categoryId}
-                />
-              </Col>
-            </Row>
+            <Form.Item label="Comprehension Type" style={{ padding: "0 24px" }}>
+              <Switch
+                unCheckedChildren="BM"
+                checkedChildren="FM"
+                checked={this.state.comprehension_type === 2}
+                onChange={this.onComprehensionTypeChange}
+              />
+            </Form.Item>
+            {this.state.comprehension_type === 1 ? (
+              <Row>
+                <Col span={12} style={{ padding: "0 24px" }}>
+                  <Categories
+                    onChange={this.onCategoryChange}
+                    mode="single"
+                    value={this.state.categoryId}
+                  />
+                </Col>
+                <Col span={12} style={{ padding: "0 24px" }}>
+                  <Parameters
+                    onChange={this.onParameterChange}
+                    mode="single"
+                    categories={[this.state.categoryId]}
+                    value={this.state.parameterId}
+                  />
+                </Col>
+              </Row>
+            ) : (
+              <Row>
+                <Col span={12} style={{ padding: "0 24px" }}>
+                  <Input
+                    placeholder="FM Article ID"
+                    onChange={this.onArticleChange}
+                    value={this.state.articleId}
+                  />
+                </Col>
+              </Row>
+            )}
           </Form>
           <div style={{ textAlign: "right" }}>
             <Button
