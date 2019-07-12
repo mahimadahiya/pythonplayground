@@ -230,19 +230,17 @@ class ComprehensionList extends React.Component {
       <div>
         <Card title={<div className="card-title">Filters</div>}>
           <Row>
-            <Form>
-              <Col span={8} style={{ padding: "0 24px" }}>
-                <Form.Item label="Comprehension Type">
-                  <Switch
-                    unCheckedChildren="BM"
-                    checkedChildren="FM"
-                    checked={this.state.comprehension_type === 2}
-                    onChange={this.onComprehensionTypeChange}
-                  />
-                </Form.Item>
-              </Col>
-            </Form>
             <Filters fields={this.fields} />
+            <Col span={8} style={{ padding: "0 24px" }}>
+              <Form.Item label="Comprehension Type">
+                <Switch
+                  unCheckedChildren="BM"
+                  checkedChildren="FM"
+                  checked={this.state.comprehension_type === 2}
+                  onChange={this.onComprehensionTypeChange}
+                />
+              </Form.Item>
+            </Col>
           </Row>
           {this.state.comprehension_type === 1 ? (
             <Row>
