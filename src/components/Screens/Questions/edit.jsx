@@ -118,16 +118,18 @@ class QuestionEdit extends React.Component {
             <Input placeholder="Enter article" type="number" />
           )}
         </Form.Item>
-        <Region mode="multiple" onChange={this.onChangeRegion} />
-        <Row>
-          <Col>
+        <Row type="flex" justify="space-between">
+          <Col span={7}>
+            <Region mode="multiple" onChange={this.onChangeRegion} />
+          </Col>
+          <Col span={7}>
             <State
               mode="multiple"
               regions={this.state.regions}
               onChange={this.onChangeState}
             />
           </Col>
-          <Col>
+          <Col span={7}>
             <Complexity
               onChange={this.onChangeComplexity}
               value={this.state.complexity}
