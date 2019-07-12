@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Form, Card, Row, Col } from "antd";
+import { Form, Card, Row, Col, Input } from "antd";
 import Complexity from "../../Elements/Complexity";
 import Gender from "../../Elements/Gender";
 
@@ -14,10 +14,16 @@ class ComprehensionEdit extends Component {
 	};
 
 	render() {
+		const { getFieldDecorator } = this.props.form;
 		return (
 			<>
 				<Card title={<div className="card-title">Edit Comprehension</div>}>
 					<Form onSubmit={this.onSubmit}>
+						<Form.Item label="Name">
+							{getFieldDecorator("name", {
+								rules: [{ required: true, message: "Name is required" }]
+							})(<Input placeholder="Name" />)}
+						</Form.Item>
 						<Row gutter={48}>
 							<Col span={8}>
 								<Complexity onChange={this.onChangeComplexity} />
@@ -33,4 +39,4 @@ class ComprehensionEdit extends Component {
 	}
 }
 
-export default connect()(ComprehensionEdit);
+export default connect()(Form.create()(ComprehensionEdit));
