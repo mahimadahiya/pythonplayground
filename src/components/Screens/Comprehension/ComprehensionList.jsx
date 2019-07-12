@@ -114,9 +114,9 @@ class ComprehensionList extends React.Component {
       comprehension_type: this.state.comprehension_type,
       comprehensionfmarticle__fmarticle_id: this.state.articleId
     };
-    console.log(fields);
     await this.props.fetchComprehensionsList(this.props.user.Authorization, {
       offset,
+      searchText: this.state.searchText,
       fields
     });
     this.setState({ loading: false });
@@ -130,10 +130,18 @@ class ComprehensionList extends React.Component {
       },
       () => {
         setTimeout(async () => {
-          await this.props.fetchQuestionList(this.props.user.Authorization, {
-            searchText: this.state.searchText,
-            offset: 0
-          });
+          const fields = {
+            comprehension_type: this.state.comprehension_type,
+            comprehensionfmarticle__fmarticle_id: this.state.articleId
+          };
+          await this.props.fetchComprehensionsList(
+            this.props.user.Authorization,
+            {
+              offset: 0,
+              searchText: this.state.searchText,
+              fields
+            }
+          );
           this.setState({ loading: false });
         }, 1000);
       }
