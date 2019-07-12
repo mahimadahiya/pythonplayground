@@ -1,6 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Card, Form, Input, Switch, Upload, message, Button, Icon } from "antd";
+import {
+  Card,
+  Form,
+  Input,
+  Switch,
+  Upload,
+  message,
+  Button,
+  Icon,
+  Row,
+  Col
+} from "antd";
 import MButton from "../../Elements/MButton";
 import adminPanelApi from "../../../apis/adminPanel";
 import history from "../../../history";
@@ -104,34 +115,40 @@ class AddResponse extends Component {
                 ]
               })(<Input placeholder="Enter keywords" size="large" />)}
             </Form.Item>
-            <Form.Item label="Media Type">
-              <Switch
-                unCheckedChildren="Audio"
-                checkedChildren="Video"
-                onChange={this.setMediaType}
-              />
-            </Form.Item>
-            <Form.Item label="Media">
-              {this.state.mediaType === 0 ? (
-                <Upload
-                  {...this.uploadPropsAudio}
-                  onChange={this.onUploadMedia}
-                >
-                  <Button>
-                    <Icon type="upload" /> Click to Upload
-                  </Button>
-                </Upload>
-              ) : (
-                <Upload
-                  {...this.uploadPropsVideo}
-                  onChange={this.onUploadMedia}
-                >
-                  <Button>
-                    <Icon type="upload" /> Click to Upload
-                  </Button>
-                </Upload>
-              )}
-            </Form.Item>
+            <Row gutter={48}>
+              <Col span={4}>
+                <Form.Item label="Media Type">
+                  <Switch
+                    unCheckedChildren="Audio"
+                    checkedChildren="Video"
+                    onChange={this.setMediaType}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item label="Media">
+                  {this.state.mediaType === 0 ? (
+                    <Upload
+                      {...this.uploadPropsAudio}
+                      onChange={this.onUploadMedia}
+                    >
+                      <Button>
+                        <Icon type="upload" /> Click to Upload
+                      </Button>
+                    </Upload>
+                  ) : (
+                    <Upload
+                      {...this.uploadPropsVideo}
+                      onChange={this.onUploadMedia}
+                    >
+                      <Button>
+                        <Icon type="upload" /> Click to Upload
+                      </Button>
+                    </Upload>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
             <MButton>Add</MButton>
           </Form>
         </Card>
