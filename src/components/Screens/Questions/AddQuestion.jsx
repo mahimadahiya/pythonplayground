@@ -1,5 +1,15 @@
 import React, { Component } from "react";
-import { Card, Form, Select, Upload, Button, Icon, message } from "antd";
+import {
+  Card,
+  Form,
+  Select,
+  Upload,
+  Button,
+  Icon,
+  message,
+  Row,
+  Col
+} from "antd";
 import MButton from "../../Elements/MButton";
 import { connect } from "react-redux";
 import { createQuestion } from "../../../actions";
@@ -57,65 +67,71 @@ class AddQuestion extends Component {
       <React.Fragment>
         <Card title={<div className="card-title">Add Question</div>}>
           <Form onSubmit={this.onSubmit}>
-            <Form.Item label="Quiz Type">
-              {getFieldDecorator("quiz_type", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please select a Quiz Type"
-                  }
-                ]
-              })(
-                <Select placeholder="Select Quiz Type">
-                  <Select.Option value="mcq" key="mcq">
-                    MCQ
-                  </Select.Option>
-                  <Select.Option value="dd" key="dd">
-                    Drag & Drop
-                  </Select.Option>
-                  <Select.Option value="kp" key="kp">
-                    Key Phrases
-                  </Select.Option>
-                </Select>
-              )}
-            </Form.Item>
-            <Form.Item label="Quiz Type">
-              {getFieldDecorator("media_type", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please select a Media Type"
-                  }
-                ]
-              })(
-                <Select
-                  placeholder="Select Media Type"
-                  onChange={this.onSelectMedia}
-                >
-                  <Select.Option value="text" key="text">
-                    Text
-                  </Select.Option>
-                  <Select.Option value="image" key="image">
-                    Image
-                  </Select.Option>
-                  <Select.Option value="audio" key="audio">
-                    Audio
-                  </Select.Option>
-                  <Select.Option value="video" key="video">
-                    Video
-                  </Select.Option>
-                </Select>
-              )}
-            </Form.Item>
-            {/* {this.state.type === "text" ? null : ( */}
-            <Form.Item label="Media">
-              <Upload {...this.uploadProps} onChange={this.onUploadMedia}>
-                <Button>
-                  <Icon type="upload" /> Click to Upload
-                </Button>
-              </Upload>
-            </Form.Item>
-            {/* )} */}
+            <Row type="flex" justify="space-between">
+              <Col span={7}>
+                <Form.Item label="Quiz Type">
+                  {getFieldDecorator("quiz_type", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please select a Quiz Type"
+                      }
+                    ]
+                  })(
+                    <Select placeholder="Select Quiz Type">
+                      <Select.Option value="mcq" key="mcq">
+                        MCQ
+                      </Select.Option>
+                      <Select.Option value="dd" key="dd">
+                        Drag & Drop
+                      </Select.Option>
+                      <Select.Option value="kp" key="kp">
+                        Key Phrases
+                      </Select.Option>
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={7}>
+                <Form.Item label="Quiz Type">
+                  {getFieldDecorator("media_type", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please select a Media Type"
+                      }
+                    ]
+                  })(
+                    <Select
+                      placeholder="Select Media Type"
+                      onChange={this.onSelectMedia}
+                    >
+                      <Select.Option value="text" key="text">
+                        Text
+                      </Select.Option>
+                      <Select.Option value="image" key="image">
+                        Image
+                      </Select.Option>
+                      <Select.Option value="audio" key="audio">
+                        Audio
+                      </Select.Option>
+                      <Select.Option value="video" key="video">
+                        Video
+                      </Select.Option>
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={7}>
+                <Form.Item label="Media">
+                  <Upload {...this.uploadProps} onChange={this.onUploadMedia}>
+                    <Button>
+                      <Icon type="upload" /> Click to Upload
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+            </Row>
             <MButton>Add</MButton>
           </Form>
         </Card>
