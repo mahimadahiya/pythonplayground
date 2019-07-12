@@ -10,7 +10,9 @@ import {
   Icon,
   message,
   Input,
-  Switch
+  Switch,
+  Row,
+  Col
 } from "antd";
 import { connect } from "react-redux";
 import MButton from "../../Elements/MButton";
@@ -105,29 +107,33 @@ class ComprehensionUpload extends Component {
                 rules: [{ required: true, message: "Name is required" }]
               })(<Input placeholder="Enter name" />)}
             </Form.Item>
-            <Form.Item label="Type">
-              <Select
-                placeholder="Select type"
-                style={{ minWidth: 100 }}
-                onChange={this.onSelectType}
-                value={this.state.type}
-              >
-                <Select.Option value="image">Image</Select.Option>
-                <Select.Option value="html">HTML</Select.Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item label="Comprehension Type">
-              <Switch
-                unCheckedChildren="BM"
-                checkedChildren="FM"
-                onChange={this.onSelectComprehensionType}
-                checked={this.state.comprehension_type === 2}
-              />
-            </Form.Item>
-
+            <Row gutter={48}>
+              <Col span={8}>
+                <Form.Item label="Type">
+                  <Select
+                    placeholder="Select type"
+                    style={{ minWidth: 100 }}
+                    onChange={this.onSelectType}
+                    value={this.state.type}
+                  >
+                    <Select.Option value="image">Image</Select.Option>
+                    <Select.Option value="html">HTML</Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item label="Comprehension Type">
+                  <Switch
+                    unCheckedChildren="BM"
+                    checkedChildren="FM"
+                    onChange={this.onSelectComprehensionType}
+                    checked={this.state.comprehension_type === 2}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
             {this.state.type === "image" ? (
-              <div style={{ textAlign: "center" }}>
+              <div style={{ marginBottom: 30 }}>
                 <Upload {...this.uploadProps} onChange={this.onUploadImage}>
                   <Button size="large">
                     <Icon type="upload" /> Click to Upload
