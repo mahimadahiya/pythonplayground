@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom'
 import {
   Table,
   Card,
@@ -9,7 +10,9 @@ import {
   Col,
   Form,
   Switch,
-  Input
+  Input,
+  Divider,
+  Popconfirm
 } from "antd";
 import { fetchComprehensionsList } from "../../../actions";
 import history from "../../../history";
@@ -73,24 +76,37 @@ class ComprehensionList extends React.Component {
         title: "Complexity",
         dataIndex: "complexity",
         key: "complexity"
+      },
+      {
+        title: "Actions",
+        key: "action",
+        width: 360,
+        render: record => (
+          <span>
+            <Link to={`/comprehension/edit/${record.id}`}>Edit</Link>
+            <Divider type="vertical" />
+            <Popconfirm
+              title="Delete"
+              onConfirm={() => this.onDelete(record.id)}
+            >
+              <Button type="link">Delete</Button>
+            </Popconfirm>
+            <Divider type="vertical" />
+            <Popconfirm
+              title={record.status === 1 ? "Publish" : "Unpublish"}
+              onConfirm={
+                record.status === 1
+                  ? () => this.onPublish(record.id)
+                  : () => this.onUnpublish(record.id)
+              }
+            >
+              <Button type="link">
+                {record.status === 1 ? "Publish" : "Unpublish"}
+              </Button>
+            </Popconfirm>
+          </span>
+        )
       }
-      // {
-      //   title: "Actions",
-      //   key: "action",
-
-      //   render: record => (
-      //     <span>
-      //       <Button
-      //         type="link"
-      //         onClick={() => this.onEdit(record)}
-      //         style={{ marginRight: 10 }}
-      //       >
-      //         Edit
-      //       </Button>
-      //       <Icon type="delete" onClick={() => this.onDelete(record)} />
-      //     </span>
-      //   )
-      // }
     ];
     return column;
   };
