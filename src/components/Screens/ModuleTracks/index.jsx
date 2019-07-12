@@ -70,7 +70,6 @@ class TrackList extends React.Component {
     return (
       <div>
         <Card
-          type="inner"
           loading={this.state.loading}
           title={<div className="card-title">Track List</div>}
         >

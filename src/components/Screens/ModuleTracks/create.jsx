@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Form, Input, Select, DatePicker } from "antd";
+import { Card, Form, Input, Select, DatePicker, Row, Col } from "antd";
 import { dateFormat } from "../Form/FieldFormats";
 
 import { createModuleTrack, fetchOrganizations } from "../../../actions";
@@ -73,45 +73,50 @@ class CreateTrack extends React.Component {
                 ]
               })(<Input placeholder="Type Track Name" />)}
             </Form.Item>
-            <Form.Item label="Organization">
-              {getFieldDecorator("organization_id", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please select an Organization"
-                  }
-                ]
-              })(
-                <Select
-                  placeholder="Select an Organization"
-                  allowClear
-                  showSearch
-                  filterOption={this.filterOrganizations}
-                >
-                  {this.props.organizations.map(organization => {
-                    return (
-                      <Select.Option
-                        value={organization.id}
-                        key={organization.id}
-                      >{`${organization.name} (${
-                        organization.id
-                      })`}</Select.Option>
-                    );
-                  })}
-                </Select>
-              )}
-            </Form.Item>
-            <Form.Item label="Going Live at">
-              {getFieldDecorator("going_live_at", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please select date and time"
-                  }
-                ]
-              })(<DatePicker showTime />)}
-            </Form.Item>
-
+            <Row type="flex" justify="space-between">
+              <Col span={17}>
+                <Form.Item label="Organization">
+                  {getFieldDecorator("organization_id", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please select an Organization"
+                      }
+                    ]
+                  })(
+                    <Select
+                      placeholder="Select an Organization"
+                      allowClear
+                      showSearch
+                      filterOption={this.filterOrganizations}
+                    >
+                      {this.props.organizations.map(organization => {
+                        return (
+                          <Select.Option
+                            value={organization.id}
+                            key={organization.id}
+                          >{`${organization.name} (${
+                            organization.id
+                          })`}</Select.Option>
+                        );
+                      })}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item label="Going Live at">
+                  {getFieldDecorator("going_live_at", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please select date and time"
+                      }
+                    ]
+                  })(<DatePicker showTime style={{ width: "100%" }} />)}
+                </Form.Item>
+              </Col>
+            </Row>
             <Form.Item>
               <MButton>Create Track</MButton>
             </Form.Item>
