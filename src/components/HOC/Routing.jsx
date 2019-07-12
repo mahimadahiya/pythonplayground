@@ -32,6 +32,7 @@ import AddQuad from "../Screens/Games/Quad/Add";
 import ListQuad from "../Screens/Games/Quad/List";
 import ComprehensionList from "../Screens/Comprehension/ComprehensionList";
 import EditQuad from "../Screens/Games/Quad/Edit";
+import ComprehensionEdit from "../Screens/Comprehension/ComprehensionEdit";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -225,6 +226,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/comprehension/upload"
               component={ComprehensionUpload}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/comprehension/edit/:id"
+              component={ComprehensionEdit}
               user={user}
               exact
             />
