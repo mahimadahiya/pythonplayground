@@ -43,7 +43,7 @@ const Categories = props => {
           placeholder="Select a category"
           onChange={props.onChange}
           mode={props.mode}
-          value={props.value === null ? null : props.value}
+          value={props.value}
           showSearch
           filterOption={(val, option) =>
             filterCategories(val, option, props.categories)
