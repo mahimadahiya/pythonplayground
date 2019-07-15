@@ -26,7 +26,6 @@ class ComprehensionList extends React.Component {
   state = {
     loading: true,
     searchText: "",
-    entity_type: null,
     status: null,
     parameterId: null,
     categoryId: null,
@@ -193,9 +192,9 @@ class ComprehensionList extends React.Component {
     });
   };
 
-  onParameterChange = e => {
+  onParameterChange = value => {
     this.setState({
-      parameterId: e.target.value
+      parameterId: value
     });
   };
 
@@ -208,15 +207,34 @@ class ComprehensionList extends React.Component {
   }
 
   onFilterClick = async () => {
-    await this.props.fetchComprehensionsList(this.props.user.Authorization, {
-      searchText: this.state.searchText,
-      fields: {
-        comprehension_type: this.state.comprehension_type,
-        comprehensionfmarticle__fmarticle_id: this.state.articleId
-      },
-      offset: 0
-    });
+    if (this.state.comprehension_type === 2) {
+      await this.props.fetchComprehensionsList(this.props.user.Authorization, {
+        searchText: this.state.searchText,
+        fields: {
+          status: this.state.status,
+          comprehension_type: this.state.comprehension_type,
+          comprehensionfmarticle__fmarticle_id: this.state.articleId
+        },
+        offset: 0
+      });
+    } else {
+      await this.props.fetchComprehensionsList(this.props.user.Authorization, {
+        searchText: this.state.searchText,
+        fields: {
+          status: this.state.status,
+          comprehension_type: this.state.comprehension_type,
+          comprehensionparameter__parameter_id: this.state.parameterId,
+          comprehensioncategory__category_id: this.state.categoryId
+        },
+        offset: 0
+      });
+    }
     this.setState({ loading: false });
+  };
+
+  onStatusChange = val => {
+    console.log("called");
+    this.setState({ status: val });
   };
 
   fields = [

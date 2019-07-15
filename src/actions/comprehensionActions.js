@@ -16,13 +16,16 @@ export const fetchComprehensionsList = (
   values
 ) => async dispatch => {
   let response = null;
+  // let filters = {
 
-  let filters = {
-    comprehension_type: values.fields.comprehension_type,
-    comprehensionfmarticle__fmarticle_id:
-      values.fields.comprehensionfmarticle__fmarticle_id
-  };
-
+  // }
+  // let filters = {
+  //   comprehension_type: values.fields.comprehension_type,
+  //   comprehensionfmarticle__fmarticle_id:
+  //     values.fields.comprehensionfmarticle__fmarticle_id
+  // };
+  let filters = values.fields;
+  console.log(filters);
   clean(filters);
   filters = JSON.stringify(filters);
 
