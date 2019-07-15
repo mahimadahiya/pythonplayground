@@ -25,7 +25,8 @@ class QuestionList extends React.Component {
     parameterId: null,
     categoryId: null,
     quizType: null,
-    status: null
+    status: null,
+    offset: 0
   };
 
   componentWillMount = async () => {
@@ -194,7 +195,7 @@ class QuestionList extends React.Component {
       status: 2
     });
     await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset: 0,
+      offset: this.state.offset,
       fields: `{}`
     });
     this.setState({ loading: false });
@@ -206,7 +207,7 @@ class QuestionList extends React.Component {
       status: 1
     });
     await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset: 0,
+      offset: this.state.offset,
       fields: `{}`
     });
     this.setState({ loading: false });
@@ -218,7 +219,7 @@ class QuestionList extends React.Component {
       flag: 0
     });
     await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset: 0,
+      offset: this.state.offset,
       fields: `{}`
     });
     this.setState({ loading: false });
@@ -283,7 +284,7 @@ class QuestionList extends React.Component {
     await this.props.fetchQuestionList(this.props.user.Authorization, {
       offset
     });
-    this.setState({ loading: false });
+    this.setState({ loading: false, offset });
   };
 
   render() {
@@ -346,6 +347,7 @@ class QuestionList extends React.Component {
           />
           <div style={{ marginTop: "20px", textAlign: "right" }}>
             <Pagination
+              current={(this.state.offset + 10) / 10}
               onChange={this.handlePageChange}
               total={this.props.count}
             />
