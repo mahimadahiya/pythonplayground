@@ -292,9 +292,11 @@ class QuestionList extends React.Component {
     return (
       <div>
         <Card title={<div className="card-title">Filters</div>}>
-          <Form>
-            <Row>
-              <Filters fields={this.fields} />
+          <Row>
+            <Filters fields={this.fields} />
+          </Row>
+          <Row>
+            <Form>
               <Col span={8} style={{ padding: "0 24px" }}>
                 <Categories
                   onChange={this.onCategoryChange}
@@ -310,8 +312,9 @@ class QuestionList extends React.Component {
                   value={this.state.parameterId}
                 />
               </Col>
-            </Row>
-          </Form>
+            </Form>
+          </Row>
+
           <div style={{ textAlign: "right" }}>
             <Button
               onClick={this.onFilterClick}
@@ -324,7 +327,11 @@ class QuestionList extends React.Component {
             </Button>
           </div>
         </Card>
-        <Card type="inner" style={{ marginTop: 20 }} title={<div className="card-title">Questions List</div>}>
+        <Card
+          type="inner"
+          style={{ marginTop: 20 }}
+          title={<div className="card-title">Questions List</div>}
+        >
           <Table
             dataSource={tableData}
             loading={this.state.loading}

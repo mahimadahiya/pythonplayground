@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import {
   Table,
   Card,
@@ -14,9 +14,8 @@ import {
   Divider,
   Popconfirm
 } from "antd";
-import { fetchComprehensionsList } from "../../../actions";
+import { fetchComprehensionsList, updateComprehension } from "../../../actions";
 import history from "../../../history";
-// import pyLearningApi from "../../../../apis/pylearning";
 import Filters from "../../Elements/Helper/Filters";
 import Categories from "../../Elements/Categories";
 import Parameters from "../../Elements/Parameters";
@@ -111,17 +110,41 @@ class ComprehensionList extends React.Component {
     return column;
   };
 
-  // onDelete = async record => {
-  //   await pyLearningApi(this.props.user.Authorization).post(
-  //     "/v2/game/dondon/upload/delete",
-  //     qs.stringify({ id: record.id })
-  //   );
-  //   this.props.fetchDonDonList(
-  //     this.props.user.Authorization,
-  //     { searchText: "" },
-  //     0
-  //   );
-  // };
+  onDelete = async id => {
+    this.setState({ loading: true });
+    await this.props.updateComprehension(id, this.props.user.Authorization, {
+      flag: 0
+    });
+    await this.props.fetchComprehensionsList(this.props.user.Authorization, {
+      offset: 0,
+      fields: { comprehension_type: this.state.comprehension_type }
+    });
+    this.setState({ loading: false });
+  };
+
+  onPublish = async id => {
+    this.setState({ loading: true });
+    await this.props.updateComprehension(id, this.props.user.Authorization, {
+      status: 2
+    });
+    await this.props.fetchComprehensionsList(this.props.user.Authorization, {
+      offset: 0,
+      fields: { comprehension_type: this.state.comprehension_type }
+    });
+    this.setState({ loading: false });
+  };
+
+  onUnpublish = async id => {
+    this.setState({ loading: true });
+    await this.props.updateComprehension(id, this.props.user.Authorization, {
+      status: 1
+    });
+    await this.props.fetchComprehensionsList(this.props.user.Authorization, {
+      offset: 0,
+      fields: { comprehension_type: this.state.comprehension_type }
+    });
+    this.setState({ loading: false });
+  };
 
   handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
@@ -345,5 +368,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchComprehensionsList }
+  { fetchComprehensionsList, updateComprehension }
 )(ComprehensionList);

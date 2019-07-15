@@ -84,8 +84,8 @@ export const updateComprehension = (
     type: ACTION_TYPE.UPDATE_COMPREHENSION,
     payload: response.data.result
   });
-  if (formValues.status || formValues.flag) {
-    history.push("/comprehensions");
+  if (formValues.status || formValues.flag !== null) {
+    history.push("/comprehension");
   } else {
     history.push("/comprehension/map/" + id);
   }
