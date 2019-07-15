@@ -53,12 +53,12 @@ class SideBar extends React.Component {
       label: "Tracks",
       menuList: [
         {
-          key: "sub1-1",
+          key: "/tracks",
           onClick: () => history.push("/tracks"),
           label: "List"
         },
         {
-          key: "sub1-2",
+          key: "/tracks/map/user",
           onClick: () => history.push("/tracks/map/user"),
           label: "Map User"
         }
@@ -70,7 +70,7 @@ class SideBar extends React.Component {
       label: "Questions",
       menuList: [
         {
-          key: "sub2-1",
+          key: "/questions",
           onClick: () => history.push("/questions"),
           label: "List"
         }
@@ -82,12 +82,12 @@ class SideBar extends React.Component {
       label: "Simulation",
       menuList: [
         {
-          key: "sub3-1",
+          key: "/simulation",
           onClick: () => history.push("/simulation"),
           label: "List"
         },
         {
-          key: "sub3-2",
+          key: "/simulation/map",
           onClick: () => history.push("/simulation/map"),
           label: "Map Simulation"
         }
@@ -99,19 +99,18 @@ class SideBar extends React.Component {
       label: "Comprehension",
       menuList: [
         {
-          key: "sub4-1",
+          key: "/comprehension",
           label: "List",
           onClick: () => history.push("/comprehension")
         },
         {
-          key: "sub4-2",
+          key: "/comprehension/upload",
           label: "Upload",
           onClick: () => history.push("/comprehension/upload")
         }
       ]
     }
   ];
-
   render() {
     return (
       <Layout>
