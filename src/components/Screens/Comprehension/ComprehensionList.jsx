@@ -73,7 +73,21 @@ class ComprehensionList extends React.Component {
       {
         title: "Complexity",
         dataIndex: "complexity",
-        key: "complexity"
+        key: "complexity",
+        render: complexity => {
+          switch (complexity) {
+            case `1`:
+              return "Very Easy";
+            case `2`:
+              return "Easy";
+            case `3`:
+              return "Medium";
+            case `4`:
+              return "Tough";
+            default:
+              return complexity;
+          }
+        }
       },
       {
         title: "Actions",
