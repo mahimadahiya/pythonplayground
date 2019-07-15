@@ -23,8 +23,9 @@ import AddResponse from "../Screens/Simulation/AddResponse";
 import EditResponse from "../Screens/Simulation/EditResponse";
 import AddQuestion from "../Screens/Questions/AddQuestion";
 import QuestionDetails from "../Screens/Questions/QuestionDetails";
-import MapCategories from "../Screens/Questions/MapCategories";
+import MapCategoriesQuestion from "../Screens/Questions/MapCategories";
 import ComprehensionUpload from "../Screens/Comprehension/ComprehensionUpload";
+import MapCategoriesComprehension from "../Screens/Comprehension/MapCategories";
 import AddMTF from "../Screens/Games/MTF/Add";
 import ListMTF from "../Screens/Games/MTF/List";
 import EditMTF from "../Screens/Games/MTF/Edit";
@@ -134,7 +135,7 @@ class Routing extends React.Component {
             />
             <PrivateRoute
               path="/question/map/:id"
-              component={MapCategories}
+              component={MapCategoriesQuestion}
               user={user}
               exact
             />
@@ -232,6 +233,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/comprehension/edit/:id"
               component={ComprehensionEdit}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/comprehension/map/:id"
+              component={MapCategoriesComprehension}
               user={user}
               exact
             />
