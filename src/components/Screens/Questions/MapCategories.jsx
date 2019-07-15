@@ -69,7 +69,6 @@ class MapCategories extends React.Component {
   }
 
   onSubmit = async () => {
-    console.log(this.state);
     const values = {
       categories: JSON.stringify(this.state.categories),
       parameters: JSON.stringify(this.state.parameters),

@@ -22,7 +22,6 @@ class ComprehensionEdit extends Component {
       this.props.match.params.id,
       this.props.user.Authorization
     );
-    console.log(this.props.comprehensionDetail);
     const comprehension = this.props.comprehensionDetail.comprehension;
     this.setState({
       complexity: comprehension.complexity,
