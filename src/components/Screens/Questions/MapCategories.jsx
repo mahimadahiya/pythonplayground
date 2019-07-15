@@ -86,7 +86,7 @@ class MapCategories extends React.Component {
   renderForm = current => {
     const steps = [
       {
-        title: "First",
+        title: "Categories",
         content: (
           <Categories
             onChange={this.onChangeCategory}
@@ -96,7 +96,7 @@ class MapCategories extends React.Component {
         )
       },
       {
-        title: "Second",
+        title: "Parameters",
         content: (
           <Parameters
             onChange={this.onChangeParameter}
@@ -107,7 +107,7 @@ class MapCategories extends React.Component {
         )
       },
       {
-        title: "Last",
+        title: "Tags",
         content: (
           <Tags
             onChange={this.onChangeTags}

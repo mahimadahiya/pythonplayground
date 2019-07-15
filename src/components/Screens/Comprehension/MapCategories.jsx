@@ -1,6 +1,9 @@
 import React from "react";
 import { Steps, Button, Card, Form } from "antd";
-import { updateComprehension } from "../../../actions";
+import {
+  updateComprehension,
+  fetchComprehensionDetail
+} from "../../../actions";
 import Categories from "../../Elements/Categories";
 import history from "../../../history";
 import { connect } from "react-redux";
@@ -18,33 +21,35 @@ class MapCategories extends React.Component {
     loaded: false
   };
 
-  // async componentDidMount() {
-  // 	if (!this.props.question) {
-  // 		await this.props.fetchQuestionDetail(
-  // 			this.props.match.params.id,
-  // 			this.props.user.Authorization
-  // 		);
-  // 	}
+  async componentDidMount() {
+    if (!this.props.comprehensionDetail) {
+      await this.props.fetchComprehensionDetail(
+        this.props.match.params.id,
+        this.props.user.Authorization
+      );
+    }
 
-  // 	const categories = this.props.question.categories.map(category => {
-  // 		return category.category_id;
-  // 	});
+    let { categories, parameters, tags } = this.props.comprehensionDetail;
 
-  // 	const parameters = this.props.question.parameters.map(parameter => {
-  // 		return parameter.parameter_id;
-  // 	});
+    categories = categories.map(category => {
+      return category.category_id;
+    });
 
-  // 	const tags = this.props.question.tags.map(tag => {
-  // 		return tag.tag_id;
-  // 	});
+    parameters = parameters.map(parameter => {
+      return parameter.parameter_id;
+    });
 
-  // 	this.setState({
-  // 		categories,
-  // 		parameters,
-  // 		tags,
-  // 		loaded: true
-  // 	});
-  // }
+    tags = tags.map(tag => {
+      return tag.tag_id;
+    });
+
+    this.setState({
+      categories,
+      parameters,
+      tags,
+      loaded: true
+    });
+  }
 
   onChangeCategory = val => {
     this.setState({ categories: val });
@@ -86,7 +91,7 @@ class MapCategories extends React.Component {
   renderForm = current => {
     const steps = [
       {
-        title: "First",
+        title: "Categories",
         content: (
           <Categories
             onChange={this.onChangeCategory}
@@ -96,7 +101,7 @@ class MapCategories extends React.Component {
         )
       },
       {
-        title: "Second",
+        title: "Parameters",
         content: (
           <Parameters
             onChange={this.onChangeParameter}
@@ -107,7 +112,7 @@ class MapCategories extends React.Component {
         )
       },
       {
-        title: "Last",
+        title: "Tags",
         content: (
           <Tags
             onChange={this.onChangeTags}
@@ -155,7 +160,7 @@ class MapCategories extends React.Component {
     return (
       <div>
         <Card
-          // loading={!this.state.loaded}
+          loading={!this.state.loaded}
           title={<div className="card-title">Map Categories</div>}
         >
           {this.renderForm(current)}
@@ -167,12 +172,12 @@ class MapCategories extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.userAuth
-    // question: state.question.questionDetail
+    user: state.userAuth,
+    comprehensionDetail: state.comprehension.comprehensionDetail
   };
 };
 
 export default connect(
   mapStateToProps,
-  { updateComprehension }
+  { updateComprehension, fetchComprehensionDetail }
 )(MapCategories);
