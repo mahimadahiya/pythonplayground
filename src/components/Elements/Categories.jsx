@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { fetchCategories } from "../../actions";
 import { Form, Select } from "antd";
 
-const getCategores = async (user, fetchCategories, categories) => {
+const getCategories = async (user, fetchCategories, categories) => {
   // if (categories.length === 0) {
   await fetchCategories(user.Authorization);
   // }
@@ -34,7 +34,7 @@ const filterCategories = (val, option, categories) => {
 
 const Categories = props => {
   React.useEffect(() => {
-    getCategores(props.user, props.fetchCategories, props.categories);
+    getCategories(props.user, props.fetchCategories, props.categories);
   }, []);
   return (
     <div>

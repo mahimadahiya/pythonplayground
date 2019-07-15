@@ -48,7 +48,8 @@ import {
 import {
   fetchComprehensionsList,
   addComprehension,
-  updateComprehension
+  updateComprehension,
+  fetchComprehensionDetail
 } from "./comprehensionActions";
 
 export {
@@ -90,7 +91,8 @@ export {
   fetchQuadDetails,
   fetchComprehensionsList,
   addComprehension,
-  updateComprehension
+  updateComprehension,
+  fetchComprehensionDetail
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

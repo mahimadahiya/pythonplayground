@@ -90,3 +90,13 @@ export const updateComprehension = (
     history.push("/comprehension/map/" + id);
   }
 };
+
+export const fetchComprehensionDetail = (id, authToken) => async dispatch => {
+  const response = await adminPanelApi(authToken).get(
+    `/v1/admin/comprehension/${id}`
+  );
+  dispatch({
+    type: ACTION_TYPE.FETCH_COMPREHENSION_DETAIL,
+    payload: response.data.result
+  });
+};
