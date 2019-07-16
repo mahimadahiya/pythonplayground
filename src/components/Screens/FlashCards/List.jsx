@@ -18,7 +18,7 @@ import { fetchFlashCardsList } from "../../../actions";
 import history from "../../../history";
 import Filters from "../../Elements/Helper/Filters";
 
-class ComprehensionList extends React.Component {
+class FlashCardsList extends React.Component {
   state = {
     loading: true,
     searchText: "",
@@ -177,7 +177,7 @@ class ComprehensionList extends React.Component {
 
   onEntityChange = value => {
     this.setState({
-      flashcardmapping__entity_type: value.key
+      flashcardmapping__entity_type: value
     });
   };
 
@@ -203,7 +203,7 @@ class ComprehensionList extends React.Component {
 
   fields = [
     {
-      key: "1",
+      key: 1,
       type: "input",
       label: "Search by Name or ID",
       placeholder: "Search by Name or ID",
@@ -215,7 +215,6 @@ class ComprehensionList extends React.Component {
       label: "Entity Type",
       placeholder: "Filter by Entity Type",
       onChange: this.onEntityChange,
-      labelInValue: true,
       options: [
         { value: null, label: "All" },
         { value: 1, label: "BM" },
@@ -255,7 +254,7 @@ class ComprehensionList extends React.Component {
         </Card>
         <Card
           style={{ marginTop: 20 }}
-          title={<div className="card-title">Comprehension List</div>}
+          title={<div className="card-title">Flash Cards List</div>}
         >
           <Row>
             <Table
@@ -289,4 +288,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { fetchFlashCardsList }
-)(ComprehensionList);
+)(FlashCardsList);
