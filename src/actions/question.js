@@ -43,7 +43,7 @@ export const updateQuestion = (id, authToken, formValues) => async dispatch => {
     type: ACTION_TYPE.UPDATE_QUESTION,
     payload: response.data.result
   });
-  if (formValues.status || formValues.flag) {
+  if (formValues.status || formValues.flag !== null) {
     history.push("/questions");
   } else {
     history.push("/question/map/choices/" + id);

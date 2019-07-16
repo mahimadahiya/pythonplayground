@@ -9,7 +9,8 @@ import { source } from "../../../apis/cancel";
 
 class SimulationList extends React.Component {
   state = {
-    loading: true
+    loading: true,
+    offset: 0
   };
 
   componentDidMount = async () => {
@@ -37,7 +38,10 @@ class SimulationList extends React.Component {
       "/v1/admin/edit/expert_response",
       qs.stringify(formData)
     );
-    this.props.fetchSimulationList(this.props.user.Authorization);
+    this.props.fetchSimulationList(
+      this.props.user.Authorization,
+      this.state.offset
+    );
   };
 
   tableColumnName = () => {
@@ -74,7 +78,10 @@ class SimulationList extends React.Component {
                     message={message}
                     type={status}
                     showIcon
-                    style={{ width: "60%", display: "inline", marginRight: 20 }}
+                    style={{
+                      display: "inline",
+                      marginRight: 20
+                    }}
                   />
                   {status === "success" || status === "warning" ? (
                     <span>
@@ -132,7 +139,7 @@ class SimulationList extends React.Component {
     const offset = pageNumber * 10 - 10;
     this.setState({ loading: true });
     await this.props.fetchSimulationList(this.props.user.Authorization, offset);
-    this.setState({ loading: false });
+    this.setState({ loading: false, offset });
   };
 
   render() {
@@ -152,6 +159,7 @@ class SimulationList extends React.Component {
             <Pagination
               onChange={this.handlePageChange}
               total={this.props.count}
+              current={(this.state.offset + 10) / 10}
             />
           </div>
         </Card>
