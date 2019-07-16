@@ -21,7 +21,8 @@ class QuestionEdit extends React.Component {
     states: [],
     list: [],
     complexity: null,
-    levels: []
+    levels: [],
+    comprehension_id: null
   };
   componentWillMount = async () => {
     await this.props.fetchAllComprehensions(this.props.user.Authorization);
@@ -37,7 +38,8 @@ class QuestionEdit extends React.Component {
     this.setState({
       loading: false,
       complexity: this.props.question.question.complexity,
-      list: this.props.full_list
+      list: this.props.full_list,
+      comprehension_id: this.props.question.question.comprehension_id
     });
   };
 
@@ -54,7 +56,8 @@ class QuestionEdit extends React.Component {
           regions: JSON.stringify(this.state.regions),
           states: JSON.stringify(this.state.states),
           complexity: this.state.complexity,
-          contentcomplexitylevels: JSON.stringify(this.state.levels)
+          contentcomplexitylevels: JSON.stringify(this.state.levels),
+          comprehension_id: this.state.comprehension_id
         };
         this.props.updateQuestion(
           this.props.match.params.id,
@@ -132,6 +135,10 @@ class QuestionEdit extends React.Component {
     return false;
   };
 
+  onComprehensionSelect = value => {
+    this.setState({ comprehension_id: value });
+  };
+
   renderFormItems = () => {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -168,17 +175,17 @@ class QuestionEdit extends React.Component {
           </Col>
           <Col span={7}>
             <Form.Item label="Comprehension ID">
-              {getFieldDecorator("comprehension_id")(
-                <Select
-                  placeholder="Select comprehension"
-                  showSearch
-                  filterOption={this.filterComprehensions}
-                >
-                  {this.state.list.length !== 0
-                    ? this.renderComprehensions()
-                    : null}
-                </Select>
-              )}
+              <Select
+                placeholder="Select comprehension"
+                showSearch
+                value={this.state.comprehension_id}
+                onChange={this.onComprehensionSelect}
+                filterOption={this.filterComprehensions}
+              >
+                {this.state.list.length !== 0
+                  ? this.renderComprehensions()
+                  : null}
+              </Select>
             </Form.Item>
           </Col>
           <Col span={7}>
