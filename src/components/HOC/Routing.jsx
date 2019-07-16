@@ -36,6 +36,7 @@ import EditQuad from "../Screens/Games/Quad/Edit";
 import ComprehensionEdit from "../Screens/Comprehension/ComprehensionEdit";
 import FlashCardList from "../Screens/FlashCards/List";
 import FlashCardAdd from "../Screens//FlashCards/Add";
+import FlashCardEdit from "../Screens//FlashCards/Edit";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -253,6 +254,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/flashcard/add"
               component={FlashCardAdd}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/flashcard/edit/:id"
+              component={FlashCardEdit}
               user={user}
               exact
             />

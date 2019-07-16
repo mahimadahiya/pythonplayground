@@ -15,12 +15,9 @@ import {
 import MButton from "../../Elements/MButton";
 import { addFlashCard } from "../../../actions";
 import { connect } from "react-redux";
-import history from "../../../history";
 
 class Add extends Component {
   state = {
-    entity_type: 1,
-    entity_id: null,
     icon_url: null,
     content_data: [
       {
@@ -129,12 +126,9 @@ class Add extends Component {
     e.preventDefault();
     this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
-        console.log(this.state);
-        console.log(formProps);
         const values = {
           ...formProps,
           icon_url: this.state.icon_url,
-          entity_type: this.state.entity_type,
           content_data: JSON.stringify(this.state.content_data)
         };
         await this.props.addFlashCard(this.props.user.Authorization, values);
@@ -210,38 +204,7 @@ class Add extends Component {
                 rules: [{ required: true, message: "Please enter title" }]
               })(<Input placeholder="Enter title" size="large" />)}
             </Form.Item>
-            <Form.Item label="Entity Type">
-              <Switch
-                unCheckedChildren="BM"
-                checkedChildren="FM"
-                onChange={this.onEntityTypeChange}
-              />
-            </Form.Item>
-            {this.state.entity_type === 1 ? (
-              <Form.Item label="Parameter ID">
-                {getFieldDecorator("entity_id", {
-                  rules: [{ required: true, message: "Enter Parameter ID" }]
-                })(
-                  <Input
-                    placeholder="Enter Parameter ID"
-                    type="number"
-                    size="large"
-                  />
-                )}
-              </Form.Item>
-            ) : (
-              <Form.Item label="Course ID">
-                {getFieldDecorator("entity_id", {
-                  rules: [{ required: true, message: "Enter Course ID" }]
-                })(
-                  <Input
-                    placeholder="Enter Course ID"
-                    type="number"
-                    size="large"
-                  />
-                )}
-              </Form.Item>
-            )}
+
             <Form.Item label="Upload Icon">
               <Upload {...this.uploadProps} onChange={this.onUploadChangeIcon}>
                 <Button>
