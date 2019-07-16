@@ -103,3 +103,11 @@ export const fetchComprehensionDetail = (id, authToken) => async dispatch => {
     payload: response.data.result
   });
 };
+
+export const fetchAllComprehensions = (authToken) => async dispatch => {
+  const response = await adminPanelApi(authToken).get('/v1/admin/comprehensions?limit=1000000')
+  dispatch({
+    type: ACTION_TYPE.FETCH_ALL_COMPREHENSIONS,
+    payload: response.data.results
+  })
+}

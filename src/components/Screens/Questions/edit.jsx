@@ -1,8 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Form, Descriptions, Input, Row, Col } from "antd";
+import { Card, Form, Descriptions, Input, Row, Col, Select } from "antd";
 
-import { fetchQuestionDetail, updateQuestion } from "../../../actions";
+import {
+  fetchQuestionDetail,
+  updateQuestion,
+  fetchAllComprehensions
+} from "../../../actions";
 import MButton from "../../Elements/MButton";
 import Region from "../../Elements/Region";
 import State from "../../Elements/State";
@@ -15,10 +19,12 @@ class QuestionEdit extends React.Component {
     loading: true,
     regions: [],
     states: [],
+    list: [],
     complexity: null,
     levels: []
   };
   componentWillMount = async () => {
+    await this.props.fetchAllComprehensions(this.props.user.Authorization);
     await this.props.fetchQuestionDetail(
       this.props.match.params.id,
       this.props.user.Authorization
@@ -30,7 +36,8 @@ class QuestionEdit extends React.Component {
     });
     this.setState({
       loading: false,
-      complexity: this.props.question.question.complexity
+      complexity: this.props.question.question.complexity,
+      list: this.props.full_list
     });
   };
 
@@ -101,6 +108,30 @@ class QuestionEdit extends React.Component {
     this.setState({ levels: val });
   };
 
+  renderComprehensions = () => {
+    return this.state.list.map(item => (
+      <Select.Option value={item.id} key={item.id}>
+        {item.name}
+      </Select.Option>
+    ));
+  };
+
+  filterComprehensions = (val, option) => {
+    const filteredList = this.state.list.filter(({ name }) => {
+      if (
+        name.toLowerCase().includes(val) ||
+        option.key.toString().includes(val)
+      ) {
+        return true;
+      }
+      return false;
+    });
+    for (var i = 0; i < filteredList.length; i++) {
+      if (filteredList[i].id.toString() === option.key.toString()) return true;
+    }
+    return false;
+  };
+
   renderFormItems = () => {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -118,7 +149,7 @@ class QuestionEdit extends React.Component {
             <Input placeholder="Enter article" type="number" />
           )}
         </Form.Item>
-        <Row type="flex" justify="space-between">
+        <Row gutter={48}>
           <Col span={7}>
             <Region mode="multiple" onChange={this.onChangeRegion} />
           </Col>
@@ -135,8 +166,28 @@ class QuestionEdit extends React.Component {
               value={this.state.complexity}
             />
           </Col>
+          <Col span={7}>
+            <Form.Item label="Comprehension ID">
+              {getFieldDecorator("comprehension_id")(
+                <Select
+                  placeholder="Select comprehension"
+                  showSearch
+                  filterOption={this.filterComprehensions}
+                >
+                  {this.state.list.length !== 0
+                    ? this.renderComprehensions()
+                    : null}
+                </Select>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={7}>
+            <ContentComplexityLevel
+              onChange={this.onChangeLevel}
+              mode="multiple"
+            />
+          </Col>
         </Row>
-        <ContentComplexityLevel onChange={this.onChangeLevel} mode="multiple" />
         <Form.Item>
           <MButton>Update Question</MButton>
         </Form.Item>
@@ -145,9 +196,13 @@ class QuestionEdit extends React.Component {
   };
 
   render() {
+    console.log(this.state.list);
     return (
       <div>
-        <Card title={<div className="card-title">Update Question</div>}>
+        <Card
+          title={<div className="card-title">Update Question</div>}
+          loading={this.state.loading}
+        >
           <Card loading={this.state.loading}>
             {this.renderQuestionDescription()}
           </Card>
@@ -163,11 +218,12 @@ class QuestionEdit extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.userAuth,
-    question: state.question.questionDetail
+    question: state.question.questionDetail,
+    full_list: state.comprehension.full_list
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchQuestionDetail, updateQuestion }
+  { fetchQuestionDetail, updateQuestion, fetchAllComprehensions }
 )(Form.create()(QuestionEdit));

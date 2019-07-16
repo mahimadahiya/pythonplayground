@@ -49,7 +49,8 @@ import {
   fetchComprehensionsList,
   addComprehension,
   updateComprehension,
-  fetchComprehensionDetail
+  fetchComprehensionDetail,
+  fetchAllComprehensions
 } from "./comprehensionActions";
 
 import { fetchFlashCardsList } from "./flashActions";
@@ -94,6 +95,7 @@ export {
   fetchComprehensionsList,
   addComprehension,
   updateComprehension,
+  fetchAllComprehensions,
   fetchComprehensionDetail,
   fetchFlashCardsList
 };

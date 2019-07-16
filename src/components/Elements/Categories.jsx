@@ -4,9 +4,7 @@ import { fetchCategories } from "../../actions";
 import { Form, Select } from "antd";
 
 const getCategories = async (user, fetchCategories, categories) => {
-  // if (categories.length === 0) {
   await fetchCategories(user.Authorization);
-  // }
 };
 
 const renderCategories = categories => {
