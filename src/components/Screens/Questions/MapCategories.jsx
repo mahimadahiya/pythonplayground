@@ -12,8 +12,8 @@ const { Step } = Steps;
 class MapCategories extends React.Component {
   state = {
     current: 0,
-    categories: null,
-    parameters: null,
+    categories: [],
+    parameters: [],
     tags: null,
     loaded: false
   };

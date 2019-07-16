@@ -12,7 +12,7 @@ export const fetchCategories = authToken => async dispatch => {
 export const fetchParameters = (authToken, categories) => async dispatch => {
   let response = null;
 
-  if (categories[0] === null) {
+  if (categories[0] === null || categories[0].length === 0) {
     response = await adminPanelApi(authToken).get(`/v1/admin/parameters`);
   } else {
     categories = JSON.stringify(categories);

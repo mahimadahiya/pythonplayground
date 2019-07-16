@@ -27,8 +27,8 @@ class ComprehensionList extends React.Component {
     loading: true,
     searchText: "",
     status: null,
-    parameterId: null,
-    categoryId: null,
+    parameterId: [],
+    categoryId: [],
     comprehension_type: 1,
     articleId: null
   };
