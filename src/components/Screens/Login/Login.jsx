@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import history from "../../../history";
 import { loginUser, logoutUser } from "../../../actions";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo-blue.png";
 import MButton from "../../Elements/MButton";
 
 class NormalLoginForm extends React.Component {
