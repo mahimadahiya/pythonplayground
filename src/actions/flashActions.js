@@ -1,5 +1,6 @@
 import * as ACTION_TYPE from "./actionTypes";
 import pyLearningApi from "../apis/pylearning";
+import qs from "querystring";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -31,4 +32,9 @@ export const fetchFlashCardsList = (authToken, values) => async dispatch => {
     type: ACTION_TYPE.FETCH_FLASHCARDS_LIST,
     payload: response.data
   });
+};
+
+export const addFlashCard = (authToken, values) => async dispatch => {
+  await pyLearningApi(authToken).post("/flashcard/add", qs.stringify(values));
+  dispatch({ type: ACTION_TYPE.ADD_FLASH });
 };

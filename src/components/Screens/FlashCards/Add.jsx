@@ -125,6 +125,23 @@ class Add extends Component {
     });
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields(async (err, formProps) => {
+      if (!err) {
+        console.log(this.state);
+        console.log(formProps);
+        const values = {
+          ...formProps,
+          icon_url: this.state.icon_url,
+          entity_type: this.state.entity_type,
+          content_data: JSON.stringify(this.state.content_data)
+        };
+        await this.props.addFlashCard(this.props.user.Authorization, values);
+      }
+    });
+  };
+
   createContentData = () => {
     return this.state.content_data.map((col, i) => {
       return (
@@ -184,7 +201,6 @@ class Add extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.state);
     return (
       <React.Fragment>
         <Card title={<div className="card-title">Add Flash Card</div>}>
@@ -266,6 +282,6 @@ const mapStateToProps = state => {
 };
 
 export default connect(
-  mapStateToProps
-  // { addMTF }
+  mapStateToProps,
+  { addFlashCard }
 )(Form.create()(Add));
