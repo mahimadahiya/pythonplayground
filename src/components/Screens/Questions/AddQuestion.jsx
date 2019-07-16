@@ -23,10 +23,15 @@ class AddQuestion extends Component {
     e.preventDefault();
     this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
-        const values = {
-          ...formProps,
-          media_url: this.state.file_url
+        let values = {
+          quiz_type: formProps.quiz_type
         };
+        if (formProps.media_type !== "text") {
+          values = {
+            ...formProps,
+            media_url: this.state.file_url
+          };
+        }
         this.props.createQuestion(this.props.user.Authorization, values);
       } else {
         console.log(err);
