@@ -43,7 +43,7 @@ const Submenu = props => {
       >
         {renderSubmenus(props.list, props.collapsed)}
         <SubMenu
-          key="sub5"
+          key="games"
           title={
             <span>
               <Icon type="play-circle" />
@@ -51,7 +51,7 @@ const Submenu = props => {
             </span>
           }
         >
-          <SubMenu key="sub5-1" title="Don Don">
+          <SubMenu key="dondon" title="Don Don">
             <Menu.Item
               key="/games/dondon"
               onClick={() => history.push("/games/dondon")}
@@ -65,7 +65,7 @@ const Submenu = props => {
               Upload
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub5-2" title="Magic Phrase">
+          <SubMenu key="magicphrase" title="Magic Phrase">
             <Menu.Item
               key="/games/magicphrase"
               onClick={() => history.push("/games/magicphrase")}
@@ -79,7 +79,7 @@ const Submenu = props => {
               Upload
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub5-3" title="MTF">
+          <SubMenu key="mtf" title="MTF">
             <Menu.Item
               key="/games/mtf"
               onClick={() => history.push("/games/mtf")}
@@ -93,7 +93,7 @@ const Submenu = props => {
               Upload
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub5-4" title="Quad">
+          <SubMenu key="quad" title="Quad">
             <Menu.Item
               key="/games/quad"
               onClick={() => history.push("/games/quad")}

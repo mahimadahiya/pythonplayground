@@ -13,6 +13,7 @@ import categoryReducer from "./categoryReducer";
 import mtfReducer from "./mtfReducer";
 import quadReducer from "./quadReducer";
 import comprehensionReducer from "./comprehensionReducer";
+import flashReducer from "./flashReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -28,5 +29,6 @@ export default combineReducers({
   category: categoryReducer,
   mtf: mtfReducer,
   quad: quadReducer,
-  comprehension: comprehensionReducer
+  comprehension: comprehensionReducer,
+  flashcard: flashReducer
 });

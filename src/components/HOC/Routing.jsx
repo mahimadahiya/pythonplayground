@@ -34,6 +34,7 @@ import ListQuad from "../Screens/Games/Quad/List";
 import ComprehensionList from "../Screens/Comprehension/ComprehensionList";
 import EditQuad from "../Screens/Games/Quad/Edit";
 import ComprehensionEdit from "../Screens/Comprehension/ComprehensionEdit";
+import FlashCardList from "../Screens/FlashCards/List";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -239,6 +240,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/comprehension/map/:id"
               component={MapCategoriesComprehension}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/flashcard"
+              component={FlashCardList}
               user={user}
               exact
             />

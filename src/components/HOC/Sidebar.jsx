@@ -109,6 +109,18 @@ class SideBar extends React.Component {
           onClick: () => history.push("/comprehension/upload")
         }
       ]
+    },
+    {
+      key: "flashcards",
+      icon: "credit-card",
+      label: "Flash Cards",
+      menuList: [
+        {
+          key: "/flashcard",
+          label: "List",
+          onClick: () => history.push("/flashcard")
+        }
+      ]
     }
   ];
   render() {

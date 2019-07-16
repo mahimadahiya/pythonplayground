@@ -52,6 +52,8 @@ import {
   fetchComprehensionDetail
 } from "./comprehensionActions";
 
+import { fetchFlashCardsList } from "./flashActions";
+
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -92,7 +94,8 @@ export {
   fetchComprehensionsList,
   addComprehension,
   updateComprehension,
-  fetchComprehensionDetail
+  fetchComprehensionDetail,
+  fetchFlashCardsList
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
