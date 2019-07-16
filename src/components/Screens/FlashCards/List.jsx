@@ -14,7 +14,7 @@ import {
   Divider,
   Popconfirm
 } from "antd";
-import { fetchFlashCardsList } from "../../../actions";
+import { fetchFlashCardsList, deleteFlashCard } from "../../../actions";
 import history from "../../../history";
 import Filters from "../../Elements/Helper/Filters";
 
@@ -93,15 +93,18 @@ class FlashCardsList extends React.Component {
   };
 
   onDelete = async id => {
-    // this.setState({ loading: true });
-    // await this.props.updateComprehension(id, this.props.user.Authorization, {
-    // 	flag: 0
-    // });
-    // await this.props.fetchComprehensionsList(this.props.user.Authorization, {
-    // 	offset: 0,
-    // 	fields: { comprehension_type: this.state.comprehension_type }
-    // });
-    // this.setState({ loading: false });
+    this.setState({ loading: true });
+    await this.props.deleteFlashCard(this.props.user.Authorization, {
+      flash_card_id: id
+    });
+    await this.props.fetchFlashCardsList(this.props.user.Authorization, {
+      offset: 0,
+      fields: {
+        flashcardmapping__entity_id: this.state.flashcardmapping__entity_id,
+        flashcardmapping__entity_type: this.state.flashcardmapping__entity_type
+      }
+    });
+    this.setState({ loading: false });
   };
 
   onPublish = async id => {
@@ -279,13 +282,13 @@ class FlashCardsList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    list: state.comprehension.list,
-    count: state.comprehension.count,
+    list: state.flashcard.list,
+    count: state.flashcard.count,
     user: state.userAuth
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchFlashCardsList }
+  { fetchFlashCardsList, deleteFlashCard }
 )(FlashCardsList);

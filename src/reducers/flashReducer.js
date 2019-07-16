@@ -6,8 +6,9 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  switch (action) {
+  switch (action.type) {
     case ACTION_TYPE.FETCH_FLASHCARDS_LIST:
+      console.log("here");
       return {
         ...state,
         list: action.payload.results,

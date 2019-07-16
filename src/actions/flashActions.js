@@ -38,3 +38,8 @@ export const addFlashCard = (authToken, values) => async dispatch => {
   await pyLearningApi(authToken).post("/flashcard/add", qs.stringify(values));
   dispatch({ type: ACTION_TYPE.ADD_FLASH });
 };
+
+export const deleteFlashCard = (authToken, value) => async dispatch => {
+  await pyLearningApi(authToken).post("/flashcard/delete", qs.stringify(value));
+  dispatch({ type: ACTION_TYPE.DELETE_FLASH });
+};
