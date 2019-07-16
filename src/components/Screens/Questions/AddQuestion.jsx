@@ -93,7 +93,7 @@ class AddQuestion extends Component {
                 </Form.Item>
               </Col>
               <Col span={7}>
-                <Form.Item label="Quiz Type">
+                <Form.Item label="Media Type">
                   {getFieldDecorator("media_type", {
                     rules: [
                       {
