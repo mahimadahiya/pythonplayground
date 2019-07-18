@@ -68,3 +68,30 @@ export const editFlashCard = (authToken, values) => async dispatch => {
     history.push("/flashcard");
   }
 };
+
+export const fetchModulesFlash = (authToken, entity_type) => async dispatch => {
+  let response = null;
+  if (entity_type === 1) {
+    response = await pyLearningApi(authToken).get("/module/list/react");
+    dispatch({
+      type: ACTION_TYPE.FETCH_MODULES_FLASH,
+      payload: response.data.result.category_list
+    });
+  } else {
+    response = await pyLearningApi(authToken).get("/react/fmcourse/list/");
+    dispatch({
+      type: ACTION_TYPE.FETCH_MODULES_FLASH,
+      payload: response.data.result
+    });
+  }
+};
+
+export const fetchMappedCards = (authToken, values) => async dispatch => {
+  const response = await pyLearningApi(authToken).get("/flash_card/mapped", {
+    params: {
+      entity_id: values.entity_id,
+      entity_type: values.entity_type
+    }
+  });
+  dispatch({ type: ACTION_TYPE.FETCH_MAPPED_CARDS, payload: response.data });
+};

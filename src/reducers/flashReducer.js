@@ -3,7 +3,9 @@ import * as ACTION_TYPE from "../actions/actionTypes";
 const INITIAL_STATE = {
   list: [],
   count: 0,
-  flash: null
+  flash: null,
+  modules: [],
+  mappedCards: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -18,6 +20,16 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         flash: action.payload.result
+      };
+    case ACTION_TYPE.FETCH_MODULES_FLASH:
+      return {
+        ...state,
+        modules: action.payload
+      };
+    case ACTION_TYPE.FETCH_MAPPED_CARDS:
+      return {
+        ...state,
+        mappedCards: action.payload.result
       };
     default:
       return state;

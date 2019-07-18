@@ -38,7 +38,7 @@ class UserTrackMapping extends React.Component {
     loading: true,
     loadingUsers: false,
     pageNumber: 1,
-    module_lock_status: 1,
+    module_lock_status: 1
   };
 
   setMode = e => {
@@ -98,7 +98,7 @@ class UserTrackMapping extends React.Component {
           selected_org_id: this.state.organization_id,
           selected_tracks: JSON.stringify(formProps.selectedTracks),
           selected_users: JSON.stringify(users),
-          module_lock_status: this.state.module_lock_status,
+          module_lock_status: this.state.module_lock_status
         };
         await this.props.createUserTrackMapping(
           this.props.user.Authorization,
@@ -394,7 +394,7 @@ class UserTrackMapping extends React.Component {
                 onChange={this.onModuleLockChange}
               />
             </FormItem>
-            
+
             <Form.Item>
               <MButton>Map User</MButton>
             </Form.Item>
