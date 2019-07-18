@@ -6,8 +6,6 @@ import {
   Row,
   Col,
   Icon,
-  Switch,
-  Select,
   message,
   Button,
   Upload

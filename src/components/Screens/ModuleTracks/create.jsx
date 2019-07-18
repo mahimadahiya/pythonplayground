@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Form, Input, Select, DatePicker, Row, Col } from "antd";
+import { Card, Form, Input, Select, DatePicker, Row, Col, Switch } from "antd";
 import { dateFormat } from "../Form/FieldFormats";
 
 import { createModuleTrack, fetchOrganizations } from "../../../actions";
@@ -9,7 +9,8 @@ import MButton from "../../Elements/MButton";
 
 class CreateTrack extends React.Component {
   state = {
-    loading: true
+    loading: true,
+    notify_user: 0
   };
 
   async componentDidMount() {
@@ -25,6 +26,12 @@ class CreateTrack extends React.Component {
     }
   }
 
+  onNotifyChange = e => {
+    const status = e ? 1 : 0;
+    console.log(status);
+    this.setState({ notify_user: status });
+  };
+
   onSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, formProps) => {
@@ -32,7 +39,8 @@ class CreateTrack extends React.Component {
         const selectedDate = moment(formProps.going_live_at).format(dateFormat);
         const formValues = {
           ...formProps,
-          going_live_at: selectedDate
+          going_live_at: selectedDate,
+          notify_user: this.state.notify_user
         };
         this.props.createModuleTrack(this.props.user.Authorization, formValues);
       } else {
@@ -114,6 +122,13 @@ class CreateTrack extends React.Component {
                       }
                     ]
                   })(<DatePicker showTime style={{ width: "100%" }} />)}
+                </Form.Item>
+                <Form.Item>
+                  <Switch
+                    checkedChildren="Notify Users"
+                    unCheckedChildren="Notify Users"
+                    onChange={this.onNotifyChange}
+                  />
                 </Form.Item>
               </Col>
             </Row>

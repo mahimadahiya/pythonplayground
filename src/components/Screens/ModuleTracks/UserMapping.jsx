@@ -39,7 +39,6 @@ class UserTrackMapping extends React.Component {
     loadingUsers: false,
     pageNumber: 1,
     module_lock_status: 1,
-    notify_user: 0
   };
 
   setMode = e => {
@@ -100,7 +99,6 @@ class UserTrackMapping extends React.Component {
           selected_tracks: JSON.stringify(formProps.selectedTracks),
           selected_users: JSON.stringify(users),
           module_lock_status: this.state.module_lock_status,
-          notify_user: this.state.notify_user
         };
         await this.props.createUserTrackMapping(
           this.props.user.Authorization,
@@ -241,12 +239,6 @@ class UserTrackMapping extends React.Component {
   onModuleLockChange = e => {
     const status = e ? 0 : 1;
     this.setState({ module_lock_status: status });
-  };
-
-  onNotifyChange = e => {
-    const status = e ? 1 : 0;
-    console.log(status);
-    this.setState({ notify_user: status });
   };
 
   handlePageChange = async pageNumber => {
@@ -402,13 +394,7 @@ class UserTrackMapping extends React.Component {
                 onChange={this.onModuleLockChange}
               />
             </FormItem>
-            <FormItem>
-              <Switch
-                checkedChildren="Notify Users"
-                unCheckedChildren="Notify Users"
-                onChange={this.onNotifyChange}
-              />
-            </FormItem>
+            
             <Form.Item>
               <MButton>Map User</MButton>
             </Form.Item>
