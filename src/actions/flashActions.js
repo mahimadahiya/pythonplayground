@@ -1,6 +1,7 @@
 import * as ACTION_TYPE from "./actionTypes";
 import pyLearningApi from "../apis/pylearning";
 import qs from "querystring";
+import history from "../history";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -35,8 +36,14 @@ export const fetchFlashCardsList = (authToken, values) => async dispatch => {
 };
 
 export const addFlashCard = (authToken, values) => async dispatch => {
-  await pyLearningApi(authToken).post("/flashcard/add", qs.stringify(values));
+  const result = await pyLearningApi(authToken).post(
+    "/flashcard/add",
+    qs.stringify(values)
+  );
   dispatch({ type: ACTION_TYPE.ADD_FLASH });
+  if (result.status === 200) {
+    history.push("/flashcard");
+  }
 };
 
 export const deleteFlashCard = (authToken, value) => async dispatch => {
@@ -49,4 +56,15 @@ export const fetchFlashDetails = (authToken, id) => async dispatch => {
     `/flash_card/show_details?flash_card_id=${id}`
   );
   dispatch({ type: ACTION_TYPE.FETCH_FLASH_DETAILS, payload: response.data });
+};
+
+export const editFlashCard = (authToken, values) => async dispatch => {
+  const result = await pyLearningApi(authToken).post(
+    "/flashcard/edit",
+    qs.stringify(values)
+  );
+  dispatch({ type: ACTION_TYPE.EDIT_FLASH });
+  if (result.status === 200) {
+    history.push("/flashcard");
+  }
 };

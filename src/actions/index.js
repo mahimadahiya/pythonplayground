@@ -57,7 +57,8 @@ import {
   fetchFlashCardsList,
   addFlashCard,
   deleteFlashCard,
-  fetchFlashDetails
+  fetchFlashDetails,
+  editFlashCard
 } from "./flashActions";
 
 export {
@@ -105,7 +106,8 @@ export {
   fetchFlashCardsList,
   addFlashCard,
   deleteFlashCard,
-  fetchFlashDetails
+  fetchFlashDetails,
+  editFlashCard
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

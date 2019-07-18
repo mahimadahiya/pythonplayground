@@ -23,7 +23,8 @@ class FlashCardsList extends React.Component {
     loading: true,
     searchText: "",
     flashcardmapping__entity_type: null,
-    flashcardmapping__entity_id: null
+    flashcardmapping__entity_id: null,
+    offset: 0
   };
 
   componentWillMount = async () => {
@@ -72,19 +73,6 @@ class FlashCardsList extends React.Component {
             >
               <Button type="link">Delete</Button>
             </Popconfirm>
-            <Divider type="vertical" />
-            <Popconfirm
-              title={record.status === 1 ? "Publish" : "Unpublish"}
-              onConfirm={
-                record.status === 1
-                  ? () => this.onPublish(record.id)
-                  : () => this.onUnpublish(record.id)
-              }
-            >
-              <Button type="link">
-                {record.status === 1 ? "Publish" : "Unpublish"}
-              </Button>
-            </Popconfirm>
           </span>
         )
       }
@@ -98,37 +86,13 @@ class FlashCardsList extends React.Component {
       flash_card_id: id
     });
     await this.props.fetchFlashCardsList(this.props.user.Authorization, {
-      offset: 0,
+      offset: this.state.offset,
       fields: {
         flashcardmapping__entity_id: this.state.flashcardmapping__entity_id,
         flashcardmapping__entity_type: this.state.flashcardmapping__entity_type
       }
     });
     this.setState({ loading: false });
-  };
-
-  onPublish = async id => {
-    // this.setState({ loading: true });
-    // await this.props.updateComprehension(id, this.props.user.Authorization, {
-    // 	status: 2
-    // });
-    // await this.props.fetchComprehensionsList(this.props.user.Authorization, {
-    // 	offset: 0,
-    // 	fields: { comprehension_type: this.state.comprehension_type }
-    // });
-    // this.setState({ loading: false });
-  };
-
-  onUnpublish = async id => {
-    // this.setState({ loading: true });
-    // await this.props.updateComprehension(id, this.props.user.Authorization, {
-    // 	status: 1
-    // });
-    // await this.props.fetchComprehensionsList(this.props.user.Authorization, {
-    // 	offset: 0,
-    // 	fields: { comprehension_type: this.state.comprehension_type }
-    // });
-    // this.setState({ loading: false });
   };
 
   handlePageChange = async pageNumber => {
@@ -143,7 +107,7 @@ class FlashCardsList extends React.Component {
       searchText: this.state.searchText,
       fields
     });
-    this.setState({ loading: false });
+    this.setState({ loading: false, offset });
   };
 
   onSearch = e => {
@@ -272,6 +236,7 @@ class FlashCardsList extends React.Component {
             <Pagination
               onChange={this.handlePageChange}
               total={this.props.count}
+              current={(this.state.offset + 10) / 10}
             />
           </div>
         </Card>
