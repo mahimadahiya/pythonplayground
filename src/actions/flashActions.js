@@ -102,7 +102,7 @@ export const mapFlashCards = (authToken, values) => async dispatch => {
     qs.stringify(values)
   );
   dispatch({ type: "MAP_FLASH_CARDS" });
-  if (response === 200) {
+  if (response.status === 200) {
     history.push("/flashcard");
   }
 };
