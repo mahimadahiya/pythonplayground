@@ -93,6 +93,7 @@ class UserTrackMapping extends React.Component {
             twoToneColor="#ff0000"
             onClick={() => {
               const cards = this.state.selectedFlashCards.filter(card => {
+                console.log({ card, record });
                 return card.flash_card_id !== record.flash_card_id;
               });
               this.setState({
@@ -161,8 +162,9 @@ class UserTrackMapping extends React.Component {
       entity_id: this.state.entity_id,
       entity_type: this.state.entity_type
     });
+    const cards = _.uniqBy(this.props.mappedCards, "flash_card_id");
     this.setState({
-      selectedFlashCards: this.props.mappedCards
+      selectedFlashCards: cards
     });
   };
 
@@ -223,9 +225,9 @@ class UserTrackMapping extends React.Component {
                   rules: [{ required: true, message: "Course ID is required" }]
                 })(
                   <Select
-										placeholder="Select a course ID"
-										showSearch
-										filterOption={this.filterModules}
+                    placeholder="Select a course ID"
+                    showSearch
+                    filterOption={this.filterModules}
                     onChange={this.onEntityChange}
                   >
                     {this.state.modules.map(module => (
