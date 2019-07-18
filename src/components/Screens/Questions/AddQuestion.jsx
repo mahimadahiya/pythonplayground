@@ -16,7 +16,8 @@ import { createQuestion } from "../../../actions";
 
 class AddQuestion extends Component {
   state = {
-    file_url: null
+    file_url: null,
+    type: "text"
   };
 
   onSubmit = e => {
@@ -72,7 +73,7 @@ class AddQuestion extends Component {
       <React.Fragment>
         <Card title={<div className="card-title">Add Question</div>}>
           <Form onSubmit={this.onSubmit}>
-            <Row type="flex" justify="space-between">
+            <Row gutter={48}>
               <Col span={7}>
                 <Form.Item label="Quiz Type">
                   {getFieldDecorator("quiz_type", {
@@ -127,15 +128,17 @@ class AddQuestion extends Component {
                   )}
                 </Form.Item>
               </Col>
-              <Col span={7}>
-                <Form.Item label="Media">
-                  <Upload {...this.uploadProps} onChange={this.onUploadMedia}>
-                    <Button>
-                      <Icon type="upload" /> Click to Upload
-                    </Button>
-                  </Upload>
-                </Form.Item>
-              </Col>
+              {this.state.type !== "text" ? (
+                <Col span={7}>
+                  <Form.Item label="Media">
+                    <Upload {...this.uploadProps} onChange={this.onUploadMedia}>
+                      <Button>
+                        <Icon type="upload" /> Click to Upload
+                      </Button>
+                    </Upload>
+                  </Form.Item>
+                </Col>
+              ) : null}
             </Row>
             <MButton>Add</MButton>
           </Form>
