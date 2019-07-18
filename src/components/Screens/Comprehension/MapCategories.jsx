@@ -1,5 +1,5 @@
 import React from "react";
-import { Steps, Button, Card, Form } from "antd";
+import { Steps, Button, Card, Form, Modal } from "antd";
 import {
   updateComprehension,
   fetchComprehensionDetail
@@ -18,7 +18,8 @@ class MapCategories extends React.Component {
     categories: [],
     parameters: [],
     tags: [],
-    loaded: false
+    loaded: false,
+    addQuestionModal: false
   };
 
   async componentDidMount() {
@@ -140,9 +141,11 @@ class MapCategories extends React.Component {
             </Button>
           )}
           {current === steps.length - 1 && (
-            <Button type="primary" onClick={this.onSubmit}>
-              Submit
-            </Button>
+            <div>
+              <Button type="primary" onClick={this.onSubmit}>
+                Submit
+              </Button>
+            </div>
           )}
           {current > 0 && (
             <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
@@ -153,6 +156,7 @@ class MapCategories extends React.Component {
       </div>
     );
   };
+
 
   render() {
     const { current } = this.state;
