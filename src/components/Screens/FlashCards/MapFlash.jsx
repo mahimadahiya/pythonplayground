@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import _ from "lodash";
 import {
   fetchModulesFlash,
   fetchFlashCardsList,
-  fetchMappedCards
+  fetchMappedCards,
+  mapFlashCards
 } from "../../../actions";
 
 import {
@@ -16,7 +17,6 @@ import {
   Table,
   Icon,
   Pagination,
-  Tag,
   Switch
 } from "antd";
 import MButton from "../../Elements/MButton";
@@ -41,27 +41,49 @@ class UserTrackMapping extends React.Component {
     this.setState({ modules: this.props.modules });
   }
 
+  filterModules = (val, option) => {
+    const filteredList = this.state.modules.filter(({ name }) => {
+      if (name.toLowerCase().includes(val) || option.key.includes(val)) {
+        return true;
+      }
+      return false;
+    });
+    for (var i = 0; i < filteredList.length; i++) {
+      if (filteredList[i].id.toString() === option.key) return true;
+    }
+    return false;
+  };
+
   columns = [
     {
       title: "ID",
-      dataIndex: "id"
+      dataIndex: "id",
+      key: "id"
     },
     {
       title: "Title",
-      dataIndex: "title"
+      dataIndex: "title",
+      key: "title"
     }
   ];
 
   columnsSelected = [
     {
+      key: "id",
       title: "ID",
-      dataIndex: "flash_card_id"
+      render: record => {
+        return record.flash_card_id;
+      }
     },
     {
+      key: "title",
       title: "Title",
-      dataIndex: "flash_card__title"
+      render: record => {
+        return record.flash_card__title;
+      }
     },
     {
+      key: "del",
       title: "",
       render: record => (
         <div style={{ textAlign: "center" }}>
@@ -69,14 +91,14 @@ class UserTrackMapping extends React.Component {
             type="delete"
             theme="twoTone"
             twoToneColor="#ff0000"
-            // onClick={() => {
-            // 	const users = this.state.selectedUsers.filter(user => {
-            // 		return user.id !== record.id;
-            // 	});
-            // 	this.setState({
-            // 		selectedUsers: users
-            // 	});
-            // }}
+            onClick={() => {
+              const cards = this.state.selectedFlashCards.filter(card => {
+                return card.flash_card_id !== record.flash_card_id;
+              });
+              this.setState({
+                selectedFlashCards: cards
+              });
+            }}
           />
         </div>
       )
@@ -85,22 +107,22 @@ class UserTrackMapping extends React.Component {
 
   rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      const cards = [...this.state.selectedFlashCards, ...selectedRows];
-      const filteredCards = cards.filter(function(item, pos) {
-        return cards.indexOf(item) === pos;
+      const newCards = selectedRows.map(row => {
+        return {
+          flash_card_id: row.id,
+          flash_card__title: row.title
+        };
       });
+      let cards = [...this.state.selectedFlashCards, ...newCards];
+      cards = _.uniqBy(cards, "flash_card_id");
       this.setState({
-        selectedFlashCards: filteredCards
+        selectedFlashCards: cards
       });
     },
-    getCheckboxProps: record => ({
-      disabled: record.name === "Disabled User", // Column configuration not to be checked
-      name: record.name
-    }),
     onSelect: (record, selected) => {
       if (!selected) {
-        const cards = this.state.selectedFlashCards.filter(user => {
-          return user.id !== record.id;
+        const cards = this.state.selectedFlashCards.filter(card => {
+          return card.flash_card_id !== record.id;
         });
         this.setState({
           selectedFlashCards: cards
@@ -117,7 +139,7 @@ class UserTrackMapping extends React.Component {
     });
     this.setState({
       loadingUsers: false,
-      pageNumber
+      offset
     });
   };
 
@@ -144,8 +166,24 @@ class UserTrackMapping extends React.Component {
     });
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields(async (err, formProps) => {
+      if (!err) {
+        const flash_card_id = this.state.selectedFlashCards.map(
+          card => card.flash_card_id
+        );
+        const values = {
+          entity_type: this.state.entity_type,
+          entity_id: this.state.entity_id,
+          flash_card_id: JSON.stringify(flash_card_id)
+        };
+        await this.props.mapFlashCards(this.props.user.Authorization, values);
+      }
+    });
+  };
+
   render() {
-    console.log(this.props);
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
@@ -167,6 +205,8 @@ class UserTrackMapping extends React.Component {
                 })(
                   <Select
                     placeholder="Select a parameter ID"
+                    showSearch
+                    filterOption={this.filterModules}
                     onChange={this.onEntityChange}
                   >
                     {this.state.modules.map(module => (
@@ -183,7 +223,9 @@ class UserTrackMapping extends React.Component {
                   rules: [{ required: true, message: "Course ID is required" }]
                 })(
                   <Select
-                    placeholder="Select a course ID"
+										placeholder="Select a course ID"
+										showSearch
+										filterOption={this.filterModules}
                     onChange={this.onEntityChange}
                   >
                     {this.state.modules.map(module => (
@@ -213,7 +255,7 @@ class UserTrackMapping extends React.Component {
                   <Pagination
                     onChange={this.handlePageChange}
                     total={this.props.flashcard_list_count}
-                    current={this.state.pageNumber}
+                    current={(this.state.offset + 10) / 10}
                   />
                 </Card>
               </Col>
@@ -228,7 +270,7 @@ class UserTrackMapping extends React.Component {
                   headStyle={{ textAlign: "center" }}
                 >
                   <Table
-                    rowKey={record => record.id}
+                    rowKey={record => record.flash_card_id}
                     pagination={false}
                     columns={this.columnsSelected}
                     dataSource={this.state.selectedFlashCards}
@@ -262,6 +304,7 @@ export default connect(
   {
     fetchModulesFlash,
     fetchFlashCardsList,
-    fetchMappedCards
+    fetchMappedCards,
+    mapFlashCards
   }
 )(Form.create()(UserTrackMapping));

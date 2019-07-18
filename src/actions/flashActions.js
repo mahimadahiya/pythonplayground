@@ -95,3 +95,14 @@ export const fetchMappedCards = (authToken, values) => async dispatch => {
   });
   dispatch({ type: ACTION_TYPE.FETCH_MAPPED_CARDS, payload: response.data });
 };
+
+export const mapFlashCards = (authToken, values) => async dispatch => {
+  const response = await pyLearningApi(authToken).post(
+    "/flash_card/map/",
+    qs.stringify(values)
+  );
+  dispatch({ type: "MAP_FLASH_CARDS" });
+  if (response === 200) {
+    history.push("/flashcard");
+  }
+};

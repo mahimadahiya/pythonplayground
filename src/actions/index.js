@@ -60,7 +60,8 @@ import {
   fetchFlashDetails,
   editFlashCard,
   fetchModulesFlash,
-  fetchMappedCards
+  fetchMappedCards,
+  mapFlashCards
 } from "./flashActions";
 
 export {
@@ -111,7 +112,8 @@ export {
   fetchFlashDetails,
   editFlashCard,
   fetchModulesFlash,
-  fetchMappedCards
+  fetchMappedCards,
+  mapFlashCards
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
