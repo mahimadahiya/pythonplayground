@@ -1,15 +1,26 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchComprehensionDetail } from "../../../actions/comprehensionActions";
+import {
+  fetchComprehensionDetail,
+  fetchMappedQuestions
+} from "../../../actions/comprehensionActions";
 
 export const useFetchComprehensionDetail = id => {
   const user = useSelector(state => state.userAuth);
   const comprehension = useSelector(
     state => state.comprehension.comprehensionDetail
   );
+  const mappedQuestions = useSelector(
+    state => state.comprehension.mappedQuestions
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchComprehensionDetail(id, user.Authorization));
-  }, [dispatch, id, user]);
-  return comprehension;
+    if (comprehension) {
+      dispatch(
+        fetchMappedQuestions(user.Authorization, comprehension.comprehension.id)
+      );
+    }
+  }, [dispatch, id, user, comprehension]);
+  return { comprehension, mappedQuestions };
 };

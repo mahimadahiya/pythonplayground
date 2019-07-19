@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Card, Button, Modal, Descriptions, Steps } from "antd";
+import React, { useState, useEffect } from "react";
+import { Card, Button, Modal, Descriptions, Steps, Table } from "antd";
 import { useFetchComprehensionDetail } from "../../hooks/Comprehension/";
 import MapComprehensionQuestions from "./MapComprehensionQuestions";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchMappedQuestions } from "../../../actions";
 
 const { Step } = Steps;
 
@@ -28,18 +30,47 @@ const renderComprehensionDescription = ({
 };
 
 const ComprehensionDetail = props => {
-  const comprehensionDetails = useFetchComprehensionDetail(
+  const [loading, setLoading] = useState(true);
+  const columns = [
+    {
+      key: "id",
+      title: "ID",
+      render: record => {
+        return record.id;
+      }
+    },
+    {
+      key: "text",
+      title: "Text",
+      render: record => {
+        return record.text;
+      }
+    }
+  ];
+
+  const { comprehension, mappedQuestions } = useFetchComprehensionDetail(
     props.match.params.id
   );
+
+  if (comprehension && mappedQuestions && loading) setLoading(false);
+
   const [showModal, setShowModal] = useState(false);
   return (
-    <div>
+    <Card loading={loading}>
       <Card title="Comprehension Details">
-        {comprehensionDetails &&
-          renderComprehensionDescription(comprehensionDetails.comprehension)}
+        {comprehension &&
+          renderComprehensionDescription(comprehension.comprehension)}
         <Button style={{ marginTop: 20 }} onClick={() => setShowModal(true)}>
           Map Questions
         </Button>
+      </Card>
+      <Card title="Mapped Questions" style={{ marginTop: 25 }}>
+        <Table
+          rowKey={record => record.id}
+          pagination={false}
+          columns={columns}
+          dataSource={mappedQuestions}
+        />
       </Card>
       <Modal
         title="Map Questions"
@@ -51,7 +82,7 @@ const ComprehensionDetail = props => {
       >
         <MapComprehensionQuestions />
       </Modal>
-    </div>
+    </Card>
   );
 };
 
