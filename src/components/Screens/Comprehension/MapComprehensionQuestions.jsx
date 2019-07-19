@@ -6,7 +6,17 @@ import {
   mapComprehensionQuestions
 } from "../../../actions";
 import _ from "lodash";
-import { Row, Col, Card, Table, Pagination, Icon, Button } from "antd";
+import {
+  Row,
+  Col,
+  Card,
+  Table,
+  Pagination,
+  Icon,
+  Button,
+  Form,
+  Input
+} from "antd";
 
 const columns = [
   {
@@ -169,8 +179,29 @@ const MapComprehensionQuestions = props => {
     );
   };
 
+  const onSearch = async e => {
+    setLoadingQuestions(true);
+    let filters = {
+      questionsparameters__parameter_id: parameters,
+      questionscategories__category_id: categories
+    };
+    clean(filters);
+    await dispatch(
+      fetchQuestionList(user.Authorization, {
+        fields: JSON.stringify(filters),
+        offset: 0,
+        searchText: e.target.value
+      })
+    );
+    setLoadingQuestions(false);
+    setOffset(0);
+  };
+
   return (
     <>
+      <Form.Item label="Search Question">
+        <Input onChange={onSearch} />
+      </Form.Item>
       <Row>
         <Col span={12} style={{ padding: 10, paddingLeft: 0 }}>
           <Card
