@@ -10,9 +10,6 @@ export const useFetchComprehensionDetail = id => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchComprehensionDetail(id, user.Authorization));
-    return () => {
-      console.log("unmount");
-    };
   }, [dispatch, id, user]);
   return comprehension;
 };

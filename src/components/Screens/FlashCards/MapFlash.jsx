@@ -93,7 +93,6 @@ class UserTrackMapping extends React.Component {
             twoToneColor="#ff0000"
             onClick={() => {
               const cards = this.state.selectedFlashCards.filter(card => {
-                console.log({ card, record });
                 return card.flash_card_id !== record.flash_card_id;
               });
               this.setState({

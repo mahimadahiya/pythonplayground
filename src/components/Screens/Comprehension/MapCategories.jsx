@@ -1,5 +1,5 @@
 import React from "react";
-import { Steps, Button, Card, Form, Modal } from "antd";
+import { Steps, Button, Card, Form } from "antd";
 import {
   updateComprehension,
   fetchComprehensionDetail

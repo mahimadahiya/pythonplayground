@@ -194,7 +194,6 @@ class FlashCardsList extends React.Component {
   ];
 
   render() {
-    console.log(this.state);
     const columnName = this.tableColumnName();
     return (
       <div>

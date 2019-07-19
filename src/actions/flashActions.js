@@ -14,7 +14,6 @@ function clean(obj) {
 export const fetchFlashCardsList = (authToken, values) => async dispatch => {
   let response = null;
   let filters = values.fields;
-  console.log(filters);
   clean(filters);
   filters = JSON.stringify(filters);
 

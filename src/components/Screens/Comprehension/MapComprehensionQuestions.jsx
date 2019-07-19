@@ -58,7 +58,6 @@ const MapComprehensionQuestions = props => {
       });
       let questions_list = [...selectedQuestions, ...newQuestions];
       questions_list = _.uniqBy(questions_list, "id");
-      console.log(questions_list);
       setSelectedQuestions(questions_list);
     },
     onSelect: (record, selected) => {
@@ -133,7 +132,7 @@ const MapComprehensionQuestions = props => {
         comprehensionDetail.comprehension.id
       )
     );
-  }, []);
+  }, [parameters, categories, user, comprehensionDetail, dispatch]);
   if (mappedQuestions && !selectedQuestions) {
     setSelectedQuestions(mappedQuestions);
     setLoadingSelectedQuestions(false);

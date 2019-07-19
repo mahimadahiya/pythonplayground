@@ -203,7 +203,6 @@ class QuestionEdit extends React.Component {
   };
 
   render() {
-    console.log(this.state.list);
     return (
       <div>
         <Card

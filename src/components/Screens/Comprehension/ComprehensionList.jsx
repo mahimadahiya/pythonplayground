@@ -54,7 +54,10 @@ class ComprehensionList extends React.Component {
       {
         title: "ID",
         dataIndex: "id",
-        key: "id"
+        key: "id",
+        render: id => {
+          return <a href={`/comprehension/detail/${id}`}>{id}</a>;
+        }
       },
       {
         title: "Name",
@@ -247,7 +250,6 @@ class ComprehensionList extends React.Component {
   };
 
   onStatusChange = val => {
-    console.log("called");
     this.setState({ status: val });
   };
 

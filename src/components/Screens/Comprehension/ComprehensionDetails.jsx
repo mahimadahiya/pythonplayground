@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { fetchComprehensionDetail } from "../../../actions";
-import { Card, Button, Modal, Descriptions, Steps, Form } from "antd";
+import { Card, Button, Modal, Descriptions, Steps } from "antd";
 import { useFetchComprehensionDetail } from "../../hooks/Comprehension/";
-import AddQuestion from "../Questions/AddQuestion";
 import MapComprehensionQuestions from "./MapComprehensionQuestions";
 
 const { Step } = Steps;
@@ -30,12 +28,10 @@ const renderComprehensionDescription = ({
 };
 
 const ComprehensionDetail = props => {
-  console.log(props);
   const comprehensionDetails = useFetchComprehensionDetail(
     props.match.params.id
   );
   const [showModal, setShowModal] = useState(false);
-  console.log(comprehensionDetails);
   return (
     <div>
       <Card title="Comprehension Details">

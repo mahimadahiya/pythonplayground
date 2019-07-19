@@ -35,7 +35,6 @@ class Edit extends Component {
       this.props.user.Authorization,
       this.props.match.params.id
     );
-    console.log(this.props.flash);
     const flash = this.props.flash;
     this.props.form.setFieldsValue({
       title: flash.title,
