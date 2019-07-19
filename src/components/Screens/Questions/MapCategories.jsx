@@ -47,17 +47,22 @@ class MapCategories extends React.Component {
   }
 
   onChangeCategory = val => {
-    this.setState({ categories: val });
+    let categories = [];
+    categories.push(val);
+    this.setState({ categories });
   };
 
   onChangeParameter = val => {
-    this.setState({ parameters: val });
+    let parameters = [];
+    parameters.push(val);
+    this.setState({ parameters });
   };
 
   onChangeTags = val => {
-    this.setState({ tags: val });
+    let tags = [];
+    tags.push(val);
+    this.setState({ tags });
   };
-
   next() {
     const current = this.state.current + 1;
     this.setState({ current });
