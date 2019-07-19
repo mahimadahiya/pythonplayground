@@ -118,16 +118,22 @@ const MapComprehensionQuestions = props => {
 
   let parameters = null;
   let categories = null;
+  let tags = null;
   if (comprehensionDetail.parameters.length > 0) {
     parameters = comprehensionDetail.parameters[0].parameter_id;
   }
   if (comprehensionDetail.categories.length > 0) {
     categories = comprehensionDetail.categories[0].category_id;
   }
+  if (comprehensionDetail.tags.length > 0) {
+    tags = comprehensionDetail.tags[0].tag_id;
+  }
   useEffect(() => {
     let filters = {
       questionsparameters__parameter_id: parameters,
-      questionscategories__category_id: categories
+      questionscategories__category_id: categories,
+      complexity: comprehensionDetail.comprehension.complexity,
+      questionstags__tag_id: tags
     };
     clean(filters);
     dispatch(
@@ -156,7 +162,9 @@ const MapComprehensionQuestions = props => {
     const offset = pageNumber * 10 - 10;
     let filters = {
       questionsparameters__parameter_id: parameters,
-      questionscategories__category_id: categories
+      questionscategories__category_id: categories,
+      complexity: comprehensionDetail.comprehension.complexity,
+      questionstags__tag_id: tags
     };
     clean(filters);
     dispatch(
@@ -183,7 +191,9 @@ const MapComprehensionQuestions = props => {
     setLoadingQuestions(true);
     let filters = {
       questionsparameters__parameter_id: parameters,
-      questionscategories__category_id: categories
+      questionscategories__category_id: categories,
+      complexity: comprehensionDetail.comprehension.complexity,
+      questionstags__tag_id: tags
     };
     clean(filters);
     await dispatch(
