@@ -7,10 +7,6 @@ import {
   Pagination,
   Row,
   Button,
-  Col,
-  Form,
-  Switch,
-  Input,
   Divider,
   Popconfirm
 } from "antd";

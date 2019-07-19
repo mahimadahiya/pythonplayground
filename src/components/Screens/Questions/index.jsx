@@ -22,8 +22,8 @@ class QuestionList extends React.Component {
   state = {
     loading: true,
     searchText: "",
-    parameterId: [],
-    categoryId: [],
+    parameterId: null,
+    categoryId: null,
     quizType: null,
     status: null,
     offset: 0
@@ -117,14 +117,7 @@ class QuestionList extends React.Component {
       placeholder: "Search Question",
       onChange: this.onSearch
     },
-    {
-      key: "2",
-      type: "input",
-      inputType: "number",
-      label: "Parameter ID",
-      placeholder: "Enter Parameter ID",
-      onChange: this.onParameterChange
-    },
+
     {
       key: "4",
       type: "select",

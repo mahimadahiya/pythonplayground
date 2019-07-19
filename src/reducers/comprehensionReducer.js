@@ -4,7 +4,8 @@ const INITIAL_STATE = {
   list: [],
   count: 0,
   comprehensionDetail: null,
-  full_list: []
+  full_list: [],
+  mappedQuestions: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -24,6 +25,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         full_list: action.payload
+      };
+    case ACTION_TYPE.FETCH_MAPPED_QUESTIONS:
+      return {
+        ...state,
+        mappedQuestions: action.payload.question_details
       };
     default:
       return state;

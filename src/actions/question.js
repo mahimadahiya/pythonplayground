@@ -3,8 +3,17 @@ import * as ACTION_TYPE from "./actionTypes";
 import qs from "querystring";
 import history from "../history";
 
+function clean(obj) {
+  for (var propName in obj) {
+    if (obj[propName] === null || obj[propName] === undefined) {
+      delete obj[propName];
+    }
+  }
+}
+
 export const fetchQuestionList = (authToken, values) => async dispatch => {
   let response = null;
+  clean(values.fields);
   if (values.searchText) {
     response = await adminPanelApi(authToken).get(
       `/v1/admin/questions?offset=${values.offset}&search=${

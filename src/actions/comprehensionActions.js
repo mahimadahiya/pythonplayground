@@ -104,10 +104,38 @@ export const fetchComprehensionDetail = (id, authToken) => async dispatch => {
   });
 };
 
-export const fetchAllComprehensions = (authToken) => async dispatch => {
-  const response = await adminPanelApi(authToken).get('/v1/admin/comprehensions?limit=1000000')
+export const fetchAllComprehensions = authToken => async dispatch => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/comprehensions?limit=1000000"
+  );
   dispatch({
     type: ACTION_TYPE.FETCH_ALL_COMPREHENSIONS,
     payload: response.data.results
-  })
-}
+  });
+};
+
+export const fetchMappedQuestions = (authToken, id) => async dispatch => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/comprehension/question/list",
+    {
+      params: {
+        comprehension_id: id
+      }
+    }
+  );
+  dispatch({
+    type: ACTION_TYPE.FETCH_MAPPED_QUESTIONS,
+    payload: response.data.result
+  });
+};
+
+export const mapComprehensionQuestions = (
+  authToken,
+  values
+) => async dispatch => {
+  await adminPanelApi(authToken).post(
+    "/comprehension/map/question",
+    qs.stringify(values)
+  );
+  dispatch({ type: ACTION_TYPE.MAP_COMPREHENSION_QUESTIONS });
+};

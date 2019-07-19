@@ -2,8 +2,9 @@ import * as ACTION_TYPE from "../actions/actionTypes";
 import _ from "lodash";
 
 const INITIAL_STATE = {
-  questionsList: {},
-  questionDetail: null
+  questionsList: [],
+  questionDetail: null,
+  count: 0
 };
 
 export default (state = INITIAL_STATE, action) => {

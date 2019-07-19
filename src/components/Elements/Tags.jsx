@@ -26,7 +26,6 @@ const Tags = props => {
       <Form.Item label="Tags">
         <Select
           placeholder="Select a tag"
-          mode={props.mode}
           onChange={props.onChange}
           value={props.value}
         >

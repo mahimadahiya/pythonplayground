@@ -40,7 +40,6 @@ const Categories = props => {
         <Select
           placeholder="Select a category"
           onChange={props.onChange}
-          mode={props.mode}
           value={props.value}
           showSearch
           filterOption={(val, option) =>

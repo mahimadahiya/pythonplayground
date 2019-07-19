@@ -50,7 +50,9 @@ import {
   addComprehension,
   updateComprehension,
   fetchComprehensionDetail,
-  fetchAllComprehensions
+  fetchAllComprehensions,
+  fetchMappedQuestions,
+  mapComprehensionQuestions
 } from "./comprehensionActions";
 
 import {
@@ -106,6 +108,8 @@ export {
   updateComprehension,
   fetchAllComprehensions,
   fetchComprehensionDetail,
+  fetchMappedQuestions,
+  mapComprehensionQuestions,
   fetchFlashCardsList,
   addFlashCard,
   deleteFlashCard,

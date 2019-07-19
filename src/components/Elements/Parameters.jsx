@@ -39,7 +39,6 @@ const Parameters = props => {
       <Form.Item label="Parameters">
         <Select
           placeholder="Select a parameter"
-          mode={props.mode}
           value={props.value}
           onChange={props.onChange}
           showSearch
