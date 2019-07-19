@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchQuestionList, fetchMappedQuestions } from "../../../actions";
+import {
+  fetchQuestionList,
+  fetchMappedQuestions,
+  mapComprehensionQuestions
+} from "../../../actions";
 import _ from "lodash";
-import { Row, Col, Card, Table, Pagination, Icon } from "antd";
+import { Row, Col, Card, Table, Pagination, Icon, Button } from "antd";
 
 const columns = [
   {
@@ -31,7 +35,7 @@ const MapComprehensionQuestions = props => {
     true
   );
   const [offset, setOffset] = useState(0);
-  const [selectedQuestions, setSelectedQuestions] = useState([]);
+  const [selectedQuestions, setSelectedQuestions] = useState();
   const comprehensionDetail = useSelector(
     state => state.comprehension.comprehensionDetail
   );
@@ -42,6 +46,9 @@ const MapComprehensionQuestions = props => {
   const dispatch = useDispatch();
 
   const rowSelection = {
+    selectedRowKeys: selectedQuestions
+      ? selectedQuestions.map(ques => ques.id)
+      : [],
     onChange: (selectedRowKeys, selectedRows) => {
       const newQuestions = selectedRows.map(row => {
         return {
@@ -127,24 +134,25 @@ const MapComprehensionQuestions = props => {
       )
     );
   }, []);
-  if (mappedQuestions.length > 0 && selectedQuestions.length === 0) {
+  if (mappedQuestions && !selectedQuestions) {
     setSelectedQuestions(mappedQuestions);
     setLoadingSelectedQuestions(false);
+    setLoadingQuestions(false);
   }
   const questions = useSelector(state => state.question.questionsList),
     questionsCount = useSelector(state => state.question.count);
-  if (questions.length > 0 && loadingQuestions) setLoadingQuestions(false);
-  console.log(selectedQuestions);
 
   const handlePageChange = async pageNumber => {
     setLoadingQuestions(true);
     const offset = pageNumber * 10 - 10;
-    await dispatch(
+    let filters = {
+      questionsparameters__parameter_id: parameters,
+      questionscategories__category_id: categories
+    };
+    clean(filters);
+    dispatch(
       fetchQuestionList(user.Authorization, {
-        fields: JSON.stringify({
-          questionsparameters__parameter_id: parameters,
-          questionscategories__category_id: categories
-        }),
+        fields: JSON.stringify(filters),
         offset
       })
     );
@@ -152,10 +160,20 @@ const MapComprehensionQuestions = props => {
     setOffset(offset);
   };
 
+  const onSubmit = () => {
+    const question_id_list = selectedQuestions.map(question => question.id);
+    dispatch(
+      mapComprehensionQuestions(user.Authorization, {
+        question_id_list: JSON.stringify(question_id_list),
+        comprehension_id: comprehensionDetail.comprehension.id
+      })
+    );
+  };
+
   return (
     <>
       <Row>
-        <Col span={16} style={{ padding: 10, paddingLeft: 0 }}>
+        <Col span={12} style={{ padding: 10, paddingLeft: 0 }}>
           <Card
             title="Questions"
             loading={loadingQuestions}
@@ -170,16 +188,19 @@ const MapComprehensionQuestions = props => {
               dataSource={questions}
               style={{ marginBottom: 20 }}
             />
-            <Pagination
-              onChange={handlePageChange}
-              total={questionsCount}
-              current={(offset + 10) / 10}
-            />
+            <div style={{ textAlign: "right" }}>
+              <Pagination
+                style={{ marginBottom: 20, marginRight: 20 }}
+                onChange={handlePageChange}
+                total={questionsCount}
+                current={(offset + 10) / 10}
+              />
+            </div>
           </Card>
         </Col>
 
         <Col
-          span={8}
+          span={12}
           style={{ padding: 10, paddingRight: 0, marginBottom: 10 }}
         >
           <Card
@@ -197,6 +218,11 @@ const MapComprehensionQuestions = props => {
           </Card>
         </Col>
       </Row>
+      <div style={{ textAlign: "right" }}>
+        <Button shape="round" type="primary" onClick={onSubmit}>
+          Submit
+        </Button>
+      </div>
     </>
   );
 };

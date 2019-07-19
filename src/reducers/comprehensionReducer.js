@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   count: 0,
   comprehensionDetail: null,
   full_list: [],
-  mappedQuestions: []
+  mappedQuestions: null
 };
 
 export default (state = INITIAL_STATE, action) => {

@@ -16,14 +16,6 @@ export const fetchComprehensionsList = (
   values
 ) => async dispatch => {
   let response = null;
-  // let filters = {
-
-  // }
-  // let filters = {
-  //   comprehension_type: values.fields.comprehension_type,
-  //   comprehensionfmarticle__fmarticle_id:
-  //     values.fields.comprehensionfmarticle__fmarticle_id
-  // };
   let filters = values.fields;
   console.log(filters);
   clean(filters);
@@ -133,8 +125,8 @@ export const mapComprehensionQuestions = (
   authToken,
   values
 ) => async dispatch => {
-  await adminPanelApi(authToken).post(
-    "/comprehension/map/question",
+  await adminPanelApi(authToken).put(
+    "/v1/admin/comprehension/map/question",
     qs.stringify(values)
   );
   dispatch({ type: ACTION_TYPE.MAP_COMPREHENSION_QUESTIONS });

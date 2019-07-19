@@ -48,12 +48,9 @@ const ComprehensionDetail = props => {
       <Modal
         title="Map Questions"
         visible={showModal}
-        onOk={() => {
-          setShowModal(false);
-        }}
-        onCancel={() => {
-          setShowModal(false);
-        }}
+        footer={null}
+        onCancel={() => setShowModal(false)}
+        closable={true}
         width="1000px"
       >
         <MapComprehensionQuestions />
