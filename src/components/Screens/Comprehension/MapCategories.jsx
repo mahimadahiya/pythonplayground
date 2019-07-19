@@ -53,15 +53,21 @@ class MapCategories extends React.Component {
   }
 
   onChangeCategory = val => {
-    this.setState({ categories: val });
+    let categories = [];
+    categories.push(val);
+    this.setState({ categories });
   };
 
   onChangeParameter = val => {
-    this.setState({ parameters: val });
+    let parameters = [];
+    parameters.push(val);
+    this.setState({ parameters });
   };
 
   onChangeTags = val => {
-    this.setState({ tags: val });
+    let tags = [];
+    tags.push(val);
+    this.setState({ tags });
   };
 
   next() {
@@ -95,7 +101,6 @@ class MapCategories extends React.Component {
         content: (
           <Categories
             onChange={this.onChangeCategory}
-            mode="multiple"
             value={this.state.categories}
           />
         )
@@ -105,7 +110,6 @@ class MapCategories extends React.Component {
         content: (
           <Parameters
             onChange={this.onChangeParameter}
-            mode="multiple"
             value={this.state.parameters}
             categories={this.state.categories}
           />
@@ -141,11 +145,9 @@ class MapCategories extends React.Component {
             </Button>
           )}
           {current === steps.length - 1 && (
-            <div>
-              <Button type="primary" onClick={this.onSubmit}>
-                Submit
-              </Button>
-            </div>
+            <Button type="primary" onClick={this.onSubmit}>
+              Submit
+            </Button>
           )}
           {current > 0 && (
             <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
@@ -156,7 +158,6 @@ class MapCategories extends React.Component {
       </div>
     );
   };
-
 
   render() {
     const { current } = this.state;
