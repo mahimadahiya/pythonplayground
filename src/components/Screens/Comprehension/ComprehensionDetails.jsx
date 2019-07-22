@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, Button, Modal, Descriptions, Steps, Table } from "antd";
 import { useFetchComprehensionDetail } from "../../hooks/Comprehension/";
 import MapComprehensionQuestions from "./MapComprehensionQuestions";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchMappedQuestions } from "../../../actions";
 
 const { Step } = Steps;
 

@@ -65,6 +65,7 @@ import {
   fetchMappedCards,
   mapFlashCards
 } from "./flashActions";
+import adminPanelApi from "../apis/adminPanel";
 
 export {
   getOrganizationModules,
@@ -161,6 +162,21 @@ export const createModuleTrack = (authToken, formValues) => async dispatch => {
     const id = response.data.result.track_id;
     history.push(`/tracks/map/module/${id}`);
   } else dispatch({ type: ACTION_TYPE.CREATE_MODULE_TRACK_ERROR });
+};
+
+export const fetchTrackAssessments = (authToken, id) => async dispatch => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/track/assessment/list",
+    {
+      params: {
+        track_id: id
+      }
+    }
+  );
+  dispatch({
+    type: ACTION_TYPE.FETCH_TRACK_ASSESSMENTS,
+    payload: response.data.result
+  });
 };
 
 export const createModuleTrackMapping = (

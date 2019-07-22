@@ -17,13 +17,13 @@ class TrackList extends React.Component {
     }
   };
 
-
   tableColumnName = () => {
     const column = [
       {
         title: "ID",
         dataIndex: "id",
-        key: "id"
+        key: "id",
+        render: id => <Link to={`/track/${id}`}>{id}</Link>
       },
       {
         title: "Name",

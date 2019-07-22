@@ -3,6 +3,8 @@ import _ from "lodash";
 
 const INTIAL_STATE = {
   moduleTracks: [],
+  pre_assessment: null,
+  monthly_assessment: null,
   error: false
 };
 
@@ -27,6 +29,12 @@ export default (state = INTIAL_STATE, action) => {
       return {
         ...state,
         error: true
+      };
+    case ACTION_TYPE.FETCH_TRACK_ASSESSMENTS:
+      return {
+        ...state,
+        pre_assessment: action.payload.track_pre_assessment,
+        monthly_assessment: action.payload.track_monthly_assessment
       };
     default:
       return state;
