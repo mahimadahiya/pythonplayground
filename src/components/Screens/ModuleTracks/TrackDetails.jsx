@@ -26,7 +26,7 @@ const TrackDetails = props => {
   const monthly_assessment = useSelector(
     state => state.moduleTrack.monthly_assessment
   );
-  if (pre_assessment && monthly_assessment && loading) {
+  if (pre_assessment !== "" && monthly_assessment !== "" && loading) {
     setLoading(false);
   }
   return (
@@ -38,7 +38,9 @@ const TrackDetails = props => {
         } Details`}</div>
       }
     >
-      {loading ? null : (
+      {!pre_assessment || !monthly_assessment ? (
+        <div>No records found</div>
+      ) : (
         <Row type="flex" justify="space-between">
           <Col span={10}>
             <List header={<b>Pre Assessment Questions</b>}>

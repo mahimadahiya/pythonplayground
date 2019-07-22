@@ -3,8 +3,8 @@ import _ from "lodash";
 
 const INTIAL_STATE = {
   moduleTracks: [],
-  pre_assessment: null,
-  monthly_assessment: null,
+  pre_assessment: "",
+  monthly_assessment: "",
   error: false
 };
 
