@@ -34,7 +34,7 @@ class QuestionList extends React.Component {
       this.props.user.Authorization,
       {
         offset: 0,
-        fields: `{}`
+        fields: {}
       }
     );
     this.setState({ loading: false });
@@ -51,7 +51,7 @@ class QuestionList extends React.Component {
           await this.props.fetchQuestionList(this.props.user.Authorization, {
             searchText: this.state.searchText,
             offset: 0,
-            fields: "{}"
+            fields: {}
           });
           this.setState({ loading: false });
         }, 1000);

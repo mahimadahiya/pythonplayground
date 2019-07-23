@@ -13,18 +13,18 @@ function clean(obj) {
 
 export const fetchQuestionList = (authToken, values) => async dispatch => {
   let response = null;
-  clean(values.fields);
+  let filters = values.fields;
+  clean(filters);
+  filters = JSON.stringify(filters);
   if (values.searchText) {
     response = await adminPanelApi(authToken).get(
       `/v1/admin/questions?offset=${values.offset}&search=${
         values.searchText
-      }&filters=${values.fields}`
+      }&filters=${filters}`
     );
   } else {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/questions?offset=${values.offset}&filters=${
-        values.fields === undefined ? "{}" : values.fields
-      }`
+      `/v1/admin/questions?offset=${values.offset}&filters=${filters}`
     );
   }
   dispatch({

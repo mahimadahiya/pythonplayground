@@ -10,7 +10,6 @@ const ArticleCreate = props => {
   const [current, setStep] = useState(0);
   const [id, setId] = useState(null);
   useEffect(() => {
-    console.log(props.step);
     if (current !== props.step) setStep(props.step);
   }, []);
   const steps = [
