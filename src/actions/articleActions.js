@@ -60,34 +60,19 @@ export const addArticle = async (authToken, formValues, html) => {
   }
 };
 
-export const updateComprehension = (
-  id,
-  authToken,
-  formValues
-) => async dispatch => {
+export const updateArticle = async (id, authToken, formValues) => {
   const response = await adminPanelApi(authToken).put(
-    `/v1/admin/comprehension/${id}`,
+    `/v1/admin/article/${id}`,
     qs.stringify(formValues)
   );
-  dispatch({
-    type: ACTION_TYPE.UPDATE_COMPREHENSION,
-    payload: response.data.result
-  });
-  if (formValues.status || formValues.flag !== null) {
-    history.push("/comprehension");
-  } else {
-    history.push("/comprehension/map/" + id);
-  }
+  return response;
 };
 
-export const fetchComprehensionDetail = (id, authToken) => async dispatch => {
+export const fetchArticleDetail = async (id, authToken) => {
   const response = await adminPanelApi(authToken).get(
-    `/v1/admin/comprehension/${id}`
+    `/v1/admin/article/${id}`
   );
-  dispatch({
-    type: ACTION_TYPE.FETCH_COMPREHENSION_DETAIL,
-    payload: response.data.result
-  });
+  return response.data.result;
 };
 
 export const fetchAllComprehensions = authToken => async dispatch => {

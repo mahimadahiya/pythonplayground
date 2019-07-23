@@ -65,6 +65,13 @@ import {
   fetchMappedCards,
   mapFlashCards
 } from "./flashActions";
+
+import {
+  fetchArticleList,
+  fetchArticleDetail,
+  updateArticle,
+  addArticle
+} from "./articleActions";
 import adminPanelApi from "../apis/adminPanel";
 
 export {
@@ -118,7 +125,11 @@ export {
   editFlashCard,
   fetchModulesFlash,
   fetchMappedCards,
-  mapFlashCards
+  mapFlashCards,
+  fetchArticleList,
+  fetchArticleDetail,
+  updateArticle,
+  addArticle
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

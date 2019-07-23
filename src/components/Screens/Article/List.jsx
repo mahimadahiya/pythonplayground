@@ -6,7 +6,7 @@ import history from "../../../history";
 import Filters from "../../Elements/Helper/Filters";
 // import Categories from "../../Elements/Categories";
 // import Parameters from "../../Elements/Parameters";
-import { fetchArticleList } from "../../../actions/articleActions";
+import { fetchArticleList } from "../../../actions";
 import ArticleCreate from "./ArticleCreate";
 
 //TODO: Filters not working yet
@@ -28,6 +28,8 @@ const ArticleList = props => {
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [step, setStep] = useState(0);
+  const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
 
@@ -79,7 +81,16 @@ const ArticleList = props => {
       width: 360,
       render: record => (
         <span>
-          <Link to={`/article/edit/${record.id}`}>Edit</Link>
+          <Button
+            type="link"
+            onClick={() => {
+              setStep(1);
+              setId(record.id);
+              setShowModal(true);
+            }}
+          >
+            Edit
+          </Button>
           <Divider type="vertical" />
           {/* <Popconfirm
               title="Delete"
@@ -322,7 +333,10 @@ const ArticleList = props => {
           <Button
             shape="round"
             type="primary"
-            onClick={() => setShowModal(true)}
+            onClick={() => {
+              setStep(0);
+              setShowModal(true);
+            }}
           >
             Create Article
           </Button>
@@ -344,11 +358,12 @@ const ArticleList = props => {
         title="Create Article"
         visible={showModal}
         footer={null}
+        destroyOnClose={true}
         onCancel={() => setShowModal(false)}
         closable={true}
         width="1000px"
       >
-        <ArticleCreate />
+        <ArticleCreate step={step} id={id} />
       </Modal>
     </div>
   );

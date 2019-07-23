@@ -10,23 +10,14 @@ import {
   Icon,
   message,
   Input,
-  Switch,
   Row,
   Col
 } from "antd";
 import { useSelector } from "react-redux";
 import MButton from "../../Elements/MButton";
-import { addComprehension } from "../../../actions";
-import { addArticle } from "../../../actions/articleActions";
+import { addArticle } from "../../../actions";
 
 const ArticleUpload = props => {
-  // state = {
-  //   name: "",
-  //   type: "image",
-  //   html: null,
-  //   comprehension_type: 1,
-  //   url: ""
-  // };
   const [type, setType] = useState("image");
   const [html, setHTML] = useState();
   const [url, setURL] = useState("");
@@ -80,6 +71,7 @@ const ArticleUpload = props => {
         const data = await addArticle(user.Authorization, values, html);
         if (!data.err) {
           props.setId(data.id);
+          message.success("Article created successfully");
         }
       } else {
         console.log(err);
@@ -87,13 +79,10 @@ const ArticleUpload = props => {
     });
   };
 
-  // const handleTextChange = e => {
-
-  // };
   const { getFieldDecorator } = props.form;
   return (
     <React.Fragment>
-      <Card title={<b>Create Article</b>} style={{ height: 800 }}>
+      <Card title={<b>Create Article</b>}>
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", {

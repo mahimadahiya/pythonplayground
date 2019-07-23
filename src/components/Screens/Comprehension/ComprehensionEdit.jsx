@@ -33,10 +33,6 @@ class ComprehensionEdit extends Component {
     });
   }
 
-  onSubmit = e => {
-    e.preventDefault();
-  };
-
   onChangeComplexity = val => {
     this.setState({ complexity: val });
   };
