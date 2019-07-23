@@ -272,30 +272,6 @@ class Routing extends React.Component {
               exact
             />
             <PrivateRoute
-              path="/article/detail/:id"
-              component={ArticleDetail}
-              user={user}
-              exact
-            />
-            <PrivateRoute
-              path="/article/upload"
-              component={ArticleUpload}
-              user={user}
-              exact
-            />
-            <PrivateRoute
-              path="/article/edit/:id"
-              component={ArticleEdit}
-              user={user}
-              exact
-            />
-            <PrivateRoute
-              path="/article/map/:id"
-              component={MapCategoriesArticle}
-              user={user}
-              exact
-            />
-            <PrivateRoute
               path="/flashcard"
               component={FlashCardList}
               user={user}

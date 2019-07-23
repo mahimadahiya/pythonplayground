@@ -119,11 +119,6 @@ class SideBar extends React.Component {
           key: "/article",
           label: "List",
           onClick: () => history.push("/article")
-        },
-        {
-          key: "/article/upload",
-          label: "Upload",
-          onClick: () => history.push("/article/upload")
         }
       ]
     },
