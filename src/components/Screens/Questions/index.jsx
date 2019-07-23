@@ -50,7 +50,8 @@ class QuestionList extends React.Component {
         setTimeout(async () => {
           await this.props.fetchQuestionList(this.props.user.Authorization, {
             searchText: this.state.searchText,
-            offset: 0
+            offset: 0,
+            fields: "{}"
           });
           this.setState({ loading: false });
         }, 1000);

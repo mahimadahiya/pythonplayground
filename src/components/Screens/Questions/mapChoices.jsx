@@ -103,10 +103,11 @@ class MapQuestionChoices extends React.Component {
     }
     if (info.file.status === "done") {
       message.success(`${info.file.name} file uploaded successfully`);
+      const type = info.file.type.split("/")[0];
       let choices = [...this.state.choices];
       choices[i] = {
         ...choices[i],
-        media_type: info.file.type,
+        media_type: type,
         media_url: info.file.response.url,
         type: "media",
         id: mapAlphabet[i]
