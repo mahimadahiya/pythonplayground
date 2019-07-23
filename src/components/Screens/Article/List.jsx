@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  Table,
-  Card,
-  Pagination,
-  Row,
-  Button,
-  Col,
-  Form,
-  Switch,
-  Input,
-  Divider,
-  Popconfirm
-} from "antd";
-// import { fetchComprehensionsList, updateComprehension } from "../../../actions";
+import { Table, Card, Pagination, Row, Divider, Modal, Button } from "antd";
 import history from "../../../history";
 import Filters from "../../Elements/Helper/Filters";
-import Categories from "../../Elements/Categories";
-import Parameters from "../../Elements/Parameters";
+// import Categories from "../../Elements/Categories";
+// import Parameters from "../../Elements/Parameters";
 import { fetchArticleList } from "../../../actions/articleActions";
+import ArticleCreate from "./ArticleCreate";
 
 //TODO: Filters not working yet
 
@@ -39,6 +27,7 @@ const ArticleList = props => {
   const [offset, setOffset] = useState(0);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   const user = useSelector(state => state.userAuth);
 
@@ -331,11 +320,11 @@ const ArticleList = props => {
       >
         <Row style={{ marginBottom: 20 }}>
           <Button
-            type="primary"
             shape="round"
-            onClick={() => history.push("/article/upload")}
+            type="primary"
+            onClick={() => setShowModal(true)}
           >
-            Add article
+            Create Article
           </Button>
         </Row>
         <Row>
@@ -351,6 +340,16 @@ const ArticleList = props => {
           <Pagination onChange={handlePageChange} total={count} />
         </div>
       </Card>
+      <Modal
+        title="Create Article"
+        visible={showModal}
+        footer={null}
+        onCancel={() => setShowModal(false)}
+        closable={true}
+        width="1000px"
+      >
+        <ArticleCreate />
+      </Modal>
     </div>
   );
 };

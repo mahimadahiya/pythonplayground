@@ -32,7 +32,6 @@ const ArticleUpload = props => {
   const [url, setURL] = useState("");
 
   const user = useSelector(state => state.userAuth);
-  console.log(user);
 
   const handleHTMLChange = val => {
     setHTML(val);
@@ -80,7 +79,7 @@ const ArticleUpload = props => {
         }
         const data = await addArticle(user.Authorization, values, html);
         if (!data.err) {
-          console.log(data);
+          props.setId(data.id);
         }
       } else {
         console.log(err);
@@ -94,7 +93,7 @@ const ArticleUpload = props => {
   const { getFieldDecorator } = props.form;
   return (
     <React.Fragment>
-      <Card title={<b>Upload Comprehension</b>} style={{ height: 800 }}>
+      <Card title={<b>Create Article</b>} style={{ height: 800 }}>
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", {

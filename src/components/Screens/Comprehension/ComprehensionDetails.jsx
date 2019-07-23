@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Card, Button, Modal, Descriptions, Steps, Table } from "antd";
+import { Card, Button, Modal, Descriptions, Table } from "antd";
 import { useFetchComprehensionDetail } from "../../hooks/Comprehension/";
 import MapComprehensionQuestions from "./MapComprehensionQuestions";
-
-const { Step } = Steps;
 
 const renderComprehensionDescription = ({
   name,
