@@ -31,15 +31,11 @@ export const fetchArticleList = async (authToken, values) => {
   return { list: response.data.results, count: response.data.count };
 };
 
-export const addComprehension = (
-  authToken,
-  formValues,
-  html
-) => async dispatch => {
+export const addArticle = async (authToken, formValues, html) => {
   let response = null;
   if (html) {
     response = await adminPanelApi(authToken).post(
-      "/v1/admin/comprehension/",
+      "/v1/admin/article/",
       qs.stringify({
         fields: JSON.stringify(formValues),
         html
@@ -47,16 +43,21 @@ export const addComprehension = (
     );
   } else {
     response = await adminPanelApi(authToken).post(
-      "/v1/admin/comprehension/",
+      "/v1/admin/article/",
       qs.stringify({
         fields: JSON.stringify(formValues)
       })
     );
   }
   if (response.status === 201) {
-    history.push("/comprehension/edit/" + response.data.result.id);
+    return {
+      id: response.data.result.id
+    };
+  } else {
+    return {
+      err: true
+    };
   }
-  return { type: ACTION_TYPE.ADD_COMPREHENSION };
 };
 
 export const updateComprehension = (

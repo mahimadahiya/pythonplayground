@@ -329,6 +329,15 @@ const ArticleList = props => {
         style={{ marginTop: 20 }}
         title={<div className="card-title">Article List</div>}
       >
+        <Row style={{ marginBottom: 20 }}>
+          <Button
+            type="primary"
+            shape="round"
+            onClick={() => history.push("/article/upload")}
+          >
+            Add article
+          </Button>
+        </Row>
         <Row>
           <Table
             loading={loading}
