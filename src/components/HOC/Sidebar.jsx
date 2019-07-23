@@ -77,7 +77,7 @@ class SideBar extends React.Component {
       ]
     },
     {
-      key: "sub3",
+      key: "simulation",
       icon: "smile",
       label: "Simulation",
       menuList: [
@@ -94,7 +94,7 @@ class SideBar extends React.Component {
       ]
     },
     {
-      key: "sub4",
+      key: "comprehension",
       icon: "unordered-list",
       label: "Comprehension",
       menuList: [
@@ -107,6 +107,23 @@ class SideBar extends React.Component {
           key: "/comprehension/upload",
           label: "Upload",
           onClick: () => history.push("/comprehension/upload")
+        }
+      ]
+    },
+    {
+      key: "article",
+      icon: "file-text",
+      label: "Article",
+      menuList: [
+        {
+          key: "/article",
+          label: "List",
+          onClick: () => history.push("/article")
+        },
+        {
+          key: "/article/upload",
+          label: "Upload",
+          onClick: () => history.push("/article/upload")
         }
       ]
     },

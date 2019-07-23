@@ -39,6 +39,11 @@ import FlashCardAdd from "../Screens//FlashCards/Add";
 import FlashCardEdit from "../Screens//FlashCards/Edit";
 import MapFlash from "../Screens/FlashCards/MapFlash";
 import ComprehensionDetail from "../Screens/Comprehension/ComprehensionDetails";
+import ArticleDetail from "../Screens/Article/ArticleDetail";
+import ArticleList from "../Screens/Article/List";
+import ArticleEdit from "../Screens/Article/Edit";
+import ArticleUpload from "../Screens/Article/Upload";
+import MapCategoriesArticle from "../Screens/Article/MapCategoriesArticle";
 import TrackDetails from "../Screens/ModuleTracks/TrackDetails";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
@@ -257,6 +262,36 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/comprehension/map/:id"
               component={MapCategoriesComprehension}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/article"
+              component={ArticleList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/article/detail/:id"
+              component={ArticleDetail}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/article/upload"
+              component={ArticleUpload}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/article/edit/:id"
+              component={ArticleEdit}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/article/map/:id"
+              component={MapCategoriesArticle}
               user={user}
               exact
             />
