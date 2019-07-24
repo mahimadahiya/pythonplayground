@@ -10,13 +10,14 @@ import {
   Modal,
   Button,
   Form,
-  Col
+  Col,
+  Popconfirm
 } from "antd";
 import history from "../../../history";
 import Filters from "../../Elements/Helper/Filters";
 import Categories from "../../Elements/Categories";
 import Parameters from "../../Elements/Parameters";
-import { fetchArticleList } from "../../../actions";
+import { fetchArticleList, updateArticle } from "../../../actions";
 import ArticleCreate from "./ArticleCreate";
 
 //TODO: Filters not working yet
@@ -107,65 +108,47 @@ const ArticleList = props => {
             Edit
           </Button>
           <Divider type="vertical" />
-          {/* <Popconfirm
-              title="Delete"
-              onConfirm={() => onDelete(record.id)}
-            >
-              <Button type="link">Delete</Button>
-            </Popconfirm> */}
+          <Popconfirm title="Delete" onConfirm={() => onDelete(record.id)}>
+            <Button type="link">Delete</Button>
+          </Popconfirm>
           <Divider type="vertical" />
-          {/* <Popconfirm
-              title={record.status === 1 ? "Publish" : "Unpublish"}
-              onConfirm={
-                record.status === 1
-                  ? () => this.onPublish(record.id)
-                  : () => this.onUnpublish(record.id)
-              }
-            >
-              <Button type="link">
-                {record.status === 1 ? "Publish" : "Unpublish"}
-              </Button>
-            </Popconfirm> */}
+          <Popconfirm
+            title={record.status === 1 ? "Publish" : "Unpublish"}
+            onConfirm={
+              record.status === 1
+                ? () => onPublish(record.id)
+                : () => onUnpublish(record.id)
+            }
+          >
+            <Button type="link">
+              {record.status === 1 ? "Publish" : "Unpublish"}
+            </Button>
+          </Popconfirm>
         </span>
       )
     }
   ];
 
-  // const onDelete = async id => {
-  //   this.setState({ loading: true });
-  //   await this.props.updateComprehension(id, this.props.user.Authorization, {
-  //     flag: 0
-  //   });
-  //   await this.props.fetchComprehensionsList(this.props.user.Authorization, {
-  //     offset: 0,
-  //     fields: { comprehension_type: this.state.comprehension_type }
-  //   });
-  //   this.setState({ loading: false });
-  // };
+  const onDelete = async id => {
+    await updateArticle(id, user.Authorization, {
+      flag: 0
+    });
+    setFilter(true);
+  };
 
-  // onPublish = async id => {
-  //   this.setState({ loading: true });
-  //   await this.props.updateComprehension(id, this.props.user.Authorization, {
-  //     status: 2
-  //   });
-  //   await this.props.fetchComprehensionsList(this.props.user.Authorization, {
-  //     offset: 0,
-  //     fields: { comprehension_type: this.state.comprehension_type }
-  //   });
-  //   this.setState({ loading: false });
-  // };
+  const onPublish = async id => {
+    await updateArticle(id, user.Authorization, {
+      status: 4
+    });
+    setFilter(true);
+  };
 
-  // onUnpublish = async id => {
-  //   this.setState({ loading: true });
-  //   await this.props.updateComprehension(id, this.props.user.Authorization, {
-  //     status: 1
-  //   });
-  //   await this.props.fetchComprehensionsList(this.props.user.Authorization, {
-  //     offset: 0,
-  //     fields: { comprehension_type: this.state.comprehension_type }
-  //   });
-  //   this.setState({ loading: false });
-  // };
+  const onUnpublish = async id => {
+    await updateArticle(id, user.Authorization, {
+      status: 1
+    });
+    setFilter(true);
+  };
 
   const handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
