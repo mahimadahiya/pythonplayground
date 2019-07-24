@@ -23,8 +23,9 @@ const ArticleEdit = props => {
           objective: data.Articles.objective
         });
         setGender(data.Articles.gender);
+        setComplexity(data.Articles.complexity);
         setLoading(false);
-      } 
+      }
     };
 
     fetchDetails();
@@ -54,7 +55,7 @@ const ArticleEdit = props => {
         );
         console.log(response);
         message.success("Article updated successfully");
-        props.setStep(2)
+        props.setStep(2);
       } else {
         console.log(err);
       }

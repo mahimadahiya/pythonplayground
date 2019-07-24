@@ -12,7 +12,7 @@ import {
   Popconfirm
 } from "antd";
 import { fetchOrganizationList, updateArticle } from "../../../actions";
-import ArticleCreate from "../Article/ArticleCreate";
+import OrganizationCreate from "../Organization/OrganizationCreate";
 
 const ArticleList = props => {
   const [loading, setLoading] = useState(true);
@@ -73,11 +73,10 @@ const ArticleList = props => {
         <span>
           <Button
             type="link"
-            // onClick={() => {
-            //   setStep(1);
-            //   setId(record.id);
-            //   setShowModal(true);
-            // }}
+            onClick={() => {
+              setId(record.id);
+              setShowModal(true);
+            }}
           >
             Edit
           </Button>
@@ -168,10 +167,9 @@ const ArticleList = props => {
           <Button
             shape="round"
             type="primary"
-            // onClick={() => {
-            //   setStep(0);
-            //   setShowModal(true);
-            // }}
+            onClick={() => {
+              setShowModal(true);
+            }}
           >
             Create Organization
           </Button>
@@ -198,7 +196,7 @@ const ArticleList = props => {
         closable={true}
         width="1000px"
       >
-        <ArticleCreate step={step} id={id} />
+        <OrganizationCreate id={id}/>
       </Modal>
     </div>
   );
