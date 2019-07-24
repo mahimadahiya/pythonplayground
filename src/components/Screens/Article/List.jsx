@@ -130,6 +130,7 @@ const ArticleList = props => {
   ];
 
   const onDelete = async id => {
+    setLoading(true);
     await updateArticle(id, user.Authorization, {
       flag: 0
     });
@@ -137,6 +138,7 @@ const ArticleList = props => {
   };
 
   const onPublish = async id => {
+    setLoading(true);
     await updateArticle(id, user.Authorization, {
       status: 4
     });
@@ -144,6 +146,7 @@ const ArticleList = props => {
   };
 
   const onUnpublish = async id => {
+    setLoading(true);
     await updateArticle(id, user.Authorization, {
       status: 1
     });
@@ -257,6 +260,11 @@ const ArticleList = props => {
     }
   ];
 
+  const onCloseModal = () => {
+    setShowModal(false);
+    setFilter(true);
+  };
+
   return (
     <div>
       <Card title={<div className="card-title">Filters</div>}>
@@ -329,7 +337,7 @@ const ArticleList = props => {
         visible={showModal}
         footer={null}
         destroyOnClose={true}
-        onCancel={() => setShowModal(false)}
+        onCancel={onCloseModal}
         closable={true}
         width="1000px"
       >

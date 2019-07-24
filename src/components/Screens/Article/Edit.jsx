@@ -9,7 +9,6 @@ const ArticleEdit = props => {
   const [complexity, setComplexity] = useState(null);
   const [gender, setGender] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [err, setError] = useState(null);
   const user = useSelector(state => state.userAuth);
 
   useEffect(() => {
@@ -24,18 +23,12 @@ const ArticleEdit = props => {
         });
         setGender(data.Articles.gender);
         setLoading(false);
-      } else setError(true);
+      } 
     };
 
     fetchDetails();
   }, []);
 
-  if (err)
-    return (
-      <div>
-        Please complete previous step first. Close the modal and try again
-      </div>
-    );
 
   const onChangeComplexity = val => {
     setComplexity(val);
@@ -61,6 +54,7 @@ const ArticleEdit = props => {
         );
         console.log(response);
         message.success("Article updated successfully");
+        props.setStep(2)
       } else {
         console.log(err);
       }

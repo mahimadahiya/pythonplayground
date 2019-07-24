@@ -72,6 +72,7 @@ const ArticleUpload = props => {
         if (!data.err) {
           props.setId(data.id);
           message.success("Article created successfully");
+          props.setStep(1)
         }
       } else {
         console.log(err);

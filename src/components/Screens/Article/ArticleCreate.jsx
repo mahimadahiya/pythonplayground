@@ -15,11 +15,11 @@ const ArticleCreate = props => {
   const steps = [
     {
       title: "Create",
-      content: <ArticleUpload setId={setId} />
+      content: <ArticleUpload setId={setId} setStep={setStep} />
     },
     {
       title: "Edit",
-      content: <ArticleEdit id={id || props.id} />
+      content: <ArticleEdit id={id || props.id} setStep={setStep} />
     },
     {
       title: "Map",
@@ -43,13 +43,6 @@ const ArticleCreate = props => {
         style={{ marginTop: 20, marginBottom: 20 }}
       >
         {steps[current].content}
-      </div>
-      <div className="steps-action">
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={next}>
-            Next
-          </Button>
-        )}
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const MapCategoriesArticle = props => {
   const [parameters, setParameters] = useState([]);
   const [tags, setTags] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [err, setErr] = useState(null);
+  const [done, setDone] = useState(false)
 
   const user = useSelector(state => state.userAuth);
 
@@ -43,44 +43,12 @@ const MapCategoriesArticle = props => {
         setLoaded(true);
       };
       fetchDetail();
-    } else {
-      setErr(true);
-    }
+    } 
   }, []);
 
-  if (err) {
-    return <div>No Article Id found</div>;
+  if (done) {
+    return <div>All done. Please close the modal now.</div>
   }
-
-  // async componentDidMount() {
-  //   if (!this.props.comprehensionDetail) {
-  //     await this.props.fetchComprehensionDetail(
-  //       this.props.match.params.id,
-  //       this.props.user.Authorization
-  //     );
-  //   }
-
-  //   let { categories, parameters, tags } = this.props.comprehensionDetail;
-
-  //   categories = categories.map(category => {
-  //     return category.category_id;
-  //   });
-
-  //   parameters = parameters.map(parameter => {
-  //     return parameter.parameter_id;
-  //   });
-
-  //   tags = tags.map(tag => {
-  //     return tag.tag_id;
-  //   });
-
-  //   this.setState({
-  //     categories,
-  //     parameters,
-  //     tags,
-  //     loaded: true
-  //   });
-  // }
 
   const onChangeCategory = val => {
     let categories = [];
@@ -117,6 +85,7 @@ const MapCategoriesArticle = props => {
     const response = await updateArticle(props.id, user.Authorization, values);
     if (response.status === 200) {
       message.success("Article updated successfully");
+      setDone(true)
     }
   };
 
