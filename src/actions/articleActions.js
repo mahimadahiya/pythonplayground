@@ -1,7 +1,6 @@
 import * as ACTION_TYPE from "./actionTypes";
 import adminPanelApi from "../apis/adminPanel";
 import qs from "querystring";
-import history from "../history";
 
 function clean(obj) {
   for (var propName in obj) {

@@ -41,9 +41,6 @@ import MapFlash from "../Screens/FlashCards/MapFlash";
 import ComprehensionDetail from "../Screens/Comprehension/ComprehensionDetails";
 import ArticleDetail from "../Screens/Article/ArticleDetail";
 import ArticleList from "../Screens/Article/List";
-import ArticleEdit from "../Screens/Article/Edit";
-import ArticleUpload from "../Screens/Article/Upload";
-import MapCategoriesArticle from "../Screens/Article/MapCategoriesArticle";
 import TrackDetails from "../Screens/ModuleTracks/TrackDetails";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
@@ -268,6 +265,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/article"
               component={ArticleList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/article/detail/:id"
+              component={ArticleDetail}
               user={user}
               exact
             />

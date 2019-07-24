@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Steps, Button, Card, Form, message } from "antd";
 import { updateArticle, fetchArticleDetail } from "../../../actions";
 import Categories from "../../Elements/Categories";
-import history from "../../../history";
 import { useSelector } from "react-redux";
 import Parameters from "../../Elements/Parameters";
 import Tags from "../../Elements/Tags";
