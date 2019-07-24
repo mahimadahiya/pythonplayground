@@ -60,6 +60,7 @@ export const addArticle = async (authToken, formValues, html) => {
 };
 
 export const updateArticle = async (id, authToken, formValues) => {
+  clean(formValues);
   const response = await adminPanelApi(authToken).put(
     `/v1/admin/article/${id}`,
     qs.stringify(formValues)

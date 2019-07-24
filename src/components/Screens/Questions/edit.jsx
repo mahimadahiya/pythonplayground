@@ -151,6 +151,11 @@ class QuestionEdit extends React.Component {
             <Input placeholder="Enter keywords separated by commas" />
           )}
         </Form.Item>
+        <Form.Item label="Comments">
+          {getFieldDecorator("comments")(
+            <Input placeholder="Enter comments" />
+          )}
+        </Form.Item>
         <Form.Item label="Article">
           {getFieldDecorator("article")(
             <Input placeholder="Enter article" type="number" />

@@ -4,6 +4,7 @@ import { Form, Card, Row, Col, Input, message } from "antd";
 import Gender from "../../Elements/Gender";
 import MButton from "../../Elements/MButton";
 import { updateArticle, fetchArticleDetail } from "../../../actions";
+import Complexity from "../../Elements/Complexity";
 
 const ArticleEdit = props => {
   const [complexity, setComplexity] = useState(null);
@@ -29,13 +30,12 @@ const ArticleEdit = props => {
     fetchDetails();
   }, []);
 
+  const onChangeGender = val => {
+    setGender(val);
+  };
 
   const onChangeComplexity = val => {
     setComplexity(val);
-  };
-
-  const onChangeGender = val => {
-    setGender(val);
   };
 
   const onSubmit = e => {
@@ -83,6 +83,9 @@ const ArticleEdit = props => {
           <Row gutter={48}>
             <Col span={8}>
               <Gender onChange={onChangeGender} value={gender} />
+            </Col>
+            <Col span={8}>
+              <Complexity onChange={onChangeComplexity} value={complexity} />
             </Col>
           </Row>
           <MButton>Submit</MButton>

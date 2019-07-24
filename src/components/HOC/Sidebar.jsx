@@ -123,6 +123,18 @@ class SideBar extends React.Component {
       ]
     },
     {
+      key: "organizations",
+      icon: "bank",
+      label: "Organizations",
+      menuList: [
+        {
+          key: "/organization",
+          label: "List",
+          onClick: () => history.push("/organization")
+        }
+      ]
+    },
+    {
       key: "flashcards",
       icon: "credit-card",
       label: "Flash Cards",

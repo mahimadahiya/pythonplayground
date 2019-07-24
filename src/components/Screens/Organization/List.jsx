@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import Filters from "../../Elements/Helper/Filters";
 import {
   Table,
   Card,
@@ -8,31 +9,20 @@ import {
   Divider,
   Modal,
   Button,
-  Form,
-  Col,
   Popconfirm
 } from "antd";
-import Filters from "../../Elements/Helper/Filters";
-import Categories from "../../Elements/Categories";
-import Parameters from "../../Elements/Parameters";
-import { fetchArticleList, updateArticle } from "../../../actions";
-import ArticleCreate from "./ArticleCreate";
-
-//TODO: Filters not working yet
+import { fetchOrganizationList, updateArticle } from "../../../actions";
+import ArticleCreate from "../Article/ArticleCreate";
 
 const ArticleList = props => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const [status, setStatus] = useState(null);
-  const [parameterId, setParameterId] = useState(null);
-  const [categoryId, setCategoryId] = useState(null);
   const [offset, setOffset] = useState(0);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [step, setStep] = useState(0);
   const [id, setId] = useState(null);
-  const [type, setType] = useState(null);
   const [filter, setFilter] = useState(true);
 
   const user = useSelector(state => state.userAuth);
@@ -40,17 +30,9 @@ const ArticleList = props => {
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
-      const fields = {
-        articlesparameters__parameter_id: parameterId,
-        articlescategories__category_id: categoryId,
-        status,
-        type
-      };
-      clean(fields);
-      const result = await fetchArticleList(user.Authorization, {
+      const result = await fetchOrganizationList(user.Authorization, {
         offset,
-        searchText,
-        fields
+        searchText
       });
       const list = result.list.filter(item => {
         return item.flag !== 0;
@@ -71,7 +53,7 @@ const ArticleList = props => {
       dataIndex: "id",
       key: "id",
       render: id => {
-        return <a href={`/article/detail/${id}`}>{id}</a>;
+        return <a href={`/organization/detail/${id}`}>{id}</a>;
       }
     },
     {
@@ -84,11 +66,6 @@ const ArticleList = props => {
       }
     },
     {
-      title: "Type",
-      dataIndex: "type",
-      key: "type"
-    },
-    {
       title: "Actions",
       key: "action",
       width: 360,
@@ -96,11 +73,11 @@ const ArticleList = props => {
         <span>
           <Button
             type="link"
-            onClick={() => {
-              setStep(1);
-              setId(record.id);
-              setShowModal(true);
-            }}
+            // onClick={() => {
+            //   setStep(1);
+            //   setId(record.id);
+            //   setShowModal(true);
+            // }}
           >
             Edit
           </Button>
@@ -161,34 +138,6 @@ const ArticleList = props => {
     setFilter(true);
   };
 
-  const onCategoryChange = value => {
-    setCategoryId(value);
-  };
-
-  const onParameterChange = value => {
-    setParameterId(value);
-  };
-
-  const clean = obj => {
-    for (var propName in obj) {
-      if (obj[propName] === null || obj[propName] === undefined) {
-        delete obj[propName];
-      }
-    }
-  };
-
-  const onFilterClick = async () => {
-    setFilter(true);
-  };
-
-  const onStatusChange = val => {
-    setStatus(val);
-  };
-
-  const onTypeChange = val => {
-    setType(val);
-  };
-
   const fields = [
     {
       key: "1",
@@ -196,64 +145,6 @@ const ArticleList = props => {
       label: "Search by Name or ID",
       placeholder: "Search by Name or ID",
       onChange: onSearch
-    },
-    {
-      key: "2",
-      type: "select",
-      label: "Status",
-      placeholder: "Select status",
-      onChange: onStatusChange,
-      options: [
-        {
-          key: "all",
-          value: null,
-          label: "All"
-        },
-        {
-          key: "live",
-          value: 4,
-          label: "Live"
-        },
-        {
-          key: "draft",
-          value: 1,
-          label: "Draft"
-        }
-      ]
-    },
-    {
-      key: "3",
-      type: "select",
-      label: "Article Type",
-      placeholder: "Select Article Type",
-      onChange: onTypeChange,
-      options: [
-        {
-          key: "all",
-          value: null,
-          label: "All"
-        },
-        {
-          key: "image",
-          value: "image",
-          label: "Image"
-        },
-        {
-          key: "audio",
-          value: "audio",
-          label: "Audio"
-        },
-        {
-          key: "video",
-          value: "video",
-          label: "Video"
-        },
-        {
-          key: "html",
-          value: "html",
-          label: "HTML"
-        }
-      ]
     }
   ];
 
@@ -268,52 +159,21 @@ const ArticleList = props => {
         <Row>
           <Filters fields={fields} />
         </Row>
-        <Row>
-          <Form>
-            <Col span={8} style={{ padding: "0 24px" }}>
-              <Categories
-                onChange={onCategoryChange}
-                mode="single"
-                value={categoryId}
-              />
-            </Col>
-            <Col span={8} style={{ padding: "0 24px" }}>
-              <Parameters
-                onChange={onParameterChange}
-                mode="single"
-                categories={[categoryId]}
-                value={parameterId}
-              />
-            </Col>
-          </Form>
-        </Row>
-
-        <div style={{ textAlign: "right" }}>
-          <Button
-            onClick={onFilterClick}
-            type="primary"
-            shape="round"
-            size="large"
-            style={{ marginTop: 10, marginRight: 10 }}
-          >
-            Filter
-          </Button>
-        </div>
       </Card>
       <Card
         style={{ marginTop: 20 }}
-        title={<div className="card-title">Article List</div>}
+        title={<div className="card-title">Organization List</div>}
       >
         <Row style={{ marginBottom: 20 }}>
           <Button
             shape="round"
             type="primary"
-            onClick={() => {
-              setStep(0);
-              setShowModal(true);
-            }}
+            // onClick={() => {
+            //   setStep(0);
+            //   setShowModal(true);
+            // }}
           >
-            Create Article
+            Create Organization
           </Button>
         </Row>
         <Row>
@@ -330,7 +190,7 @@ const ArticleList = props => {
         </div>
       </Card>
       <Modal
-        title="Create Article"
+        title="Create Organization"
         visible={showModal}
         footer={null}
         destroyOnClose={true}

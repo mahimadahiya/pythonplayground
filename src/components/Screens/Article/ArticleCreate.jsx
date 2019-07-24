@@ -1,4 +1,4 @@
-import { Steps, Button } from "antd";
+import { Steps } from "antd";
 import React, { useState, useEffect } from "react";
 import ArticleUpload from "./Upload";
 import ArticleEdit from "./Edit";
@@ -26,11 +26,7 @@ const ArticleCreate = props => {
       content: <MapCategoriesArticle id={id || props.id} />
     }
   ];
-
-  const next = () => {
-    setStep(current + 1);
-  };
-
+  
   return (
     <div>
       <Steps current={current}>

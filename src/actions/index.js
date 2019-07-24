@@ -72,6 +72,7 @@ import {
   updateArticle,
   addArticle
 } from "./articleActions";
+import { fetchOrganizationList } from "./adminOrganizationActions";
 import adminPanelApi from "../apis/adminPanel";
 
 export {
@@ -129,7 +130,8 @@ export {
   fetchArticleList,
   fetchArticleDetail,
   updateArticle,
-  addArticle
+  addArticle,
+  fetchOrganizationList
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
