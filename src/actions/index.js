@@ -72,7 +72,13 @@ import {
   updateArticle,
   addArticle
 } from "./articleActions";
-import { fetchOrganizationList } from "./adminOrganizationActions";
+import {
+  fetchOrganizationList,
+  fetchOrganizationDetails,
+  fetchCourses,
+  fetchIndustries,
+  createOrganization
+} from "./adminOrganizationActions";
 import adminPanelApi from "../apis/adminPanel";
 
 export {
@@ -131,7 +137,11 @@ export {
   fetchArticleDetail,
   updateArticle,
   addArticle,
-  fetchOrganizationList
+  fetchOrganizationList,
+  fetchOrganizationDetails,
+  fetchCourses,
+  fetchIndustries,
+  createOrganization
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

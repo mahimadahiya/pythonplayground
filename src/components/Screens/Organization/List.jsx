@@ -14,7 +14,7 @@ import {
 import { fetchOrganizationList, updateArticle } from "../../../actions";
 import OrganizationCreate from "../Organization/OrganizationCreate";
 
-const ArticleList = props => {
+const ArticleList = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [offset, setOffset] = useState(0);

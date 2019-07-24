@@ -24,13 +24,17 @@ const Region = props => {
   return (
     <div>
       <Form.Item label="Region">
-        <Select
-          placeholder="Select a region"
-          mode={props.mode}
-          onChange={props.onChange}
-        >
-          {renderOptions(props.regions)}
-        </Select>
+        {props.form.getFieldDecorator("region", {
+          rules: [{ required: true, message: "Region is required" }]
+        })(
+          <Select
+            placeholder="Select a region"
+            mode={props.mode}
+            onChange={props.onChange}
+          >
+            {renderOptions(props.regions)}
+          </Select>
+        )}
       </Form.Item>
     </div>
   );
@@ -46,4 +50,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { fetchRegions }
-)(Region);
+)(Form.create()(Region));
