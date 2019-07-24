@@ -54,7 +54,10 @@ const ArticleList = props => {
         searchText,
         fields
       });
-      setList(result.list);
+      const list = result.list.filter(item => {
+        return item.flag !== 0;
+      });
+      setList(list);
       setCount(result.count);
       setLoading(false);
     };
