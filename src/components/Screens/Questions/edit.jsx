@@ -33,7 +33,8 @@ class QuestionEdit extends React.Component {
     await this.props.form.setFieldsValue({
       text: this.props.question.question.text,
       keywords: this.props.question.question.keywords,
-      article: this.props.question.question.article_id
+      article: this.props.question.question.article_id,
+      comments: this.props.question.question.comments
     });
     this.setState({
       loading: false,
