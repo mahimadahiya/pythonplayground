@@ -54,7 +54,7 @@ const CategoryList = () => {
       dataIndex: "id",
       key: "id",
       render: id => {
-        return <Link to={`/categories/${id}`}>{id}</Link>;
+        return <Link to={`/category/${id}`}>{id}</Link>;
       }
     },
     {
