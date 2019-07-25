@@ -3,12 +3,18 @@ import { useSelector } from "react-redux";
 import { Form, Card, Row, Col, Input, message } from "antd";
 import Gender from "../../Elements/Gender";
 import MButton from "../../Elements/MButton";
+import ContentComplexityLevel from "../../Elements/ContentComplexityLevel";
 import { updateArticle, fetchArticleDetail } from "../../../actions";
 import Complexity from "../../Elements/Complexity";
+import Region from "../../Elements/Region";
+import State from "../../Elements/State";
 
 const ArticleEdit = props => {
   const [complexity, setComplexity] = useState(null);
   const [gender, setGender] = useState(null);
+  const [region, setRegion] = useState([]);
+  const [state, setState] = useState([]);
+  const [contentComplexityLevel, setContentComplexityLevel] = useState(null);
   const [loading, setLoading] = useState(true);
   const user = useSelector(state => state.userAuth);
 
@@ -39,6 +45,10 @@ const ArticleEdit = props => {
     setComplexity(val);
   };
 
+  const onChangeContentComplexityLevel = val => {
+    setContentComplexityLevel(val);
+  };
+
   const onSubmit = e => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
@@ -46,7 +56,10 @@ const ArticleEdit = props => {
         const values = {
           ...formProps,
           complexity,
-          gender
+          gender,
+          contentComplexityLevels: JSON.stringify(contentComplexityLevel),
+          regions: JSON.stringify(region),
+          states: JSON.stringify(state)
         };
         const response = await updateArticle(
           props.id,
@@ -60,6 +73,14 @@ const ArticleEdit = props => {
         console.log(err);
       }
     });
+  };
+
+  const onChangeRegion = val => {
+    setRegion(val);
+  };
+
+  const onChangeState = val => {
+    setState(val);
   };
 
   const { getFieldDecorator } = props.form;
@@ -87,6 +108,28 @@ const ArticleEdit = props => {
             </Col>
             <Col span={8}>
               <Complexity onChange={onChangeComplexity} value={complexity} />
+            </Col>
+            <Col span={8}>
+              <ContentComplexityLevel
+                onChange={onChangeContentComplexityLevel}
+                mode="multiple"
+                value={contentComplexityLevel}
+              />
+            </Col>
+            <Col span={8}>
+              <Region
+                onChange={onChangeRegion}
+                mode="multiple"
+                value={region}
+              />
+            </Col>
+            <Col span={8}>
+              <State
+                onChange={onChangeState}
+                value={state}
+                mode="multiple"
+                regions={region}
+              />
             </Col>
           </Row>
           <MButton>Submit</MButton>
