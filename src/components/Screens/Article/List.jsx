@@ -63,7 +63,7 @@ const ArticleList = props => {
       fetchList();
       setFilter(false);
     }
-  }, [user, offset, searchText, filter]);
+  }, [user, offset, searchText, filter, parameterId, categoryId, status, type]);
 
   const column = [
     {

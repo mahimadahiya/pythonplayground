@@ -44,7 +44,7 @@ const QuestionDetails = props => {
   const id = props.match.params.id;
   React.useEffect(() => {
     getQuestionDetails(id, props.user.Authorization, props.fetchQuestionDetail);
-  }, [id]);
+  }, [id, props.user, props.fetchQuestionDetail]);
 
   if (props.question) {
     const {

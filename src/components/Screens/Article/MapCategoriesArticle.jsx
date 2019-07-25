@@ -44,7 +44,7 @@ const MapCategoriesArticle = props => {
       };
       fetchDetail();
     } 
-  }, []);
+  }, [props.id, user.Authorization]);
 
   if (done) {
     return <div>All done. Please close the modal now.</div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Filters from "../../Elements/Helper/Filters";
 import { Table, Card, Pagination, Row, Modal, Button } from "antd";
-import { fetchOrganizationList, updateArticle } from "../../../actions";
+import { fetchOrganizationList } from "../../../actions";
 import OrganizationCreate from "../Organization/OrganizationCreate";
 
 const ArticleList = () => {
