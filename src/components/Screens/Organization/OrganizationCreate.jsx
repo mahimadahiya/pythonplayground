@@ -67,7 +67,7 @@ const OrganizationCreate = props => {
   const { getFieldDecorator } = props.form;
   return (
     <div>
-      <Card loading={loading}>
+      <Card>
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", {

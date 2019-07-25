@@ -44,6 +44,7 @@ import ArticleList from "../Screens/Article/List";
 import TrackDetails from "../Screens/ModuleTracks/TrackDetails";
 import OrganizationList from '../Screens/Organization/List'
 import OrganizationDetails from "../Screens/Organization/OrganizationDetails";
+import CategoryList from "../Screens/MasterTable/Category/Category";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -303,6 +304,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/organization"
               component={OrganizationList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/categories"
+              component={CategoryList}
               user={user}
               exact
             />

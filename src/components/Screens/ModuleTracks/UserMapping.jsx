@@ -227,6 +227,9 @@ class UserTrackMapping extends React.Component {
       disabled: record.name === "Disabled User", // Column configuration not to be checked
       name: record.name
     }),
+    onSelectAll: (selected, selectedRows, changeRows) => {
+      console.log({ selected, selectedRows, changeRows });
+    },
     onSelect: (record, selected) => {
       if (!selected) {
         const users = this.state.selectedUsers.filter(user => {

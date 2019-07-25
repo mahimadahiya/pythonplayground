@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import Filters from "../../Elements/Helper/Filters";
+import Filters from "../../../Elements/Helper/Filters";
+import { Link } from "react-router-dom";
 import { Table, Card, Pagination, Row, Modal, Button } from "antd";
-import { fetchOrganizationList } from "../../../actions";
-import OrganizationCreate from "../Organization/OrganizationCreate";
+import { fetchCategoryList } from "../../../../actions";
+import CategoryCreate from "./CategoryCreate";
 
-const OrganizationList = () => {
+const CategoryList = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [offset, setOffset] = useState(0);
@@ -20,9 +21,9 @@ const OrganizationList = () => {
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
-      const result = await fetchOrganizationList(user.Authorization, {
-        offset,
-        searchText
+      const result = await fetchCategoryList(user.Authorization, {
+        searchText,
+        offset
       });
       const list = result.list.filter(item => {
         return item.flag !== 0;
@@ -43,7 +44,7 @@ const OrganizationList = () => {
       dataIndex: "id",
       key: "id",
       render: id => {
-        return <a href={`/organization/detail/${id}`}>{id}</a>;
+        return <Link to={`/categories/${id}`}>{id}</Link>;
       }
     },
     {
@@ -146,9 +147,9 @@ const OrganizationList = () => {
         closable={true}
         width="1000px"
       >
-        <OrganizationCreate id={id} />
+        <CategoryCreate id={id} />
       </Modal>
     </div>
   );
 };
-export default OrganizationList;
+export default CategoryList;

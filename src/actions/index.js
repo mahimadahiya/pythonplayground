@@ -81,6 +81,8 @@ import {
 } from "./adminOrganizationActions";
 import adminPanelApi from "../apis/adminPanel";
 
+import { fetchCategoryList, fetchCategoryDetails } from "./masterActions";
+
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -141,7 +143,9 @@ export {
   fetchOrganizationDetails,
   fetchCourses,
   fetchIndustries,
-  createOrganization
+  createOrganization,
+  fetchCategoryList,
+  fetchCategoryDetails
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
