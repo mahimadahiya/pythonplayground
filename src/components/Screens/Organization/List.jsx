@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Filters from "../../Elements/Helper/Filters";
-import {
-  Table,
-  Card,
-  Pagination,
-  Row,
-  Divider,
-  Modal,
-  Button,
-  Popconfirm
-} from "antd";
+import { Table, Card, Pagination, Row, Modal, Button } from "antd";
 import { fetchOrganizationList, updateArticle } from "../../../actions";
 import OrganizationCreate from "../Organization/OrganizationCreate";
 
@@ -21,7 +12,6 @@ const ArticleList = () => {
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [step, setStep] = useState(0);
   const [id, setId] = useState(null);
   const [filter, setFilter] = useState(true);
 
@@ -80,51 +70,10 @@ const ArticleList = () => {
           >
             Edit
           </Button>
-          <Divider type="vertical" />
-          <Popconfirm title="Delete" onConfirm={() => onDelete(record.id)}>
-            <Button type="link">Delete</Button>
-          </Popconfirm>
-          <Divider type="vertical" />
-          <Popconfirm
-            title={record.status === 1 ? "Publish" : "Unpublish"}
-            onConfirm={
-              record.status === 1
-                ? () => onPublish(record.id)
-                : () => onUnpublish(record.id)
-            }
-          >
-            <Button type="link">
-              {record.status === 1 ? "Publish" : "Unpublish"}
-            </Button>
-          </Popconfirm>
         </span>
       )
     }
   ];
-
-  const onDelete = async id => {
-    setLoading(true);
-    await updateArticle(id, user.Authorization, {
-      flag: 0
-    });
-    setFilter(true);
-  };
-
-  const onPublish = async id => {
-    setLoading(true);
-    await updateArticle(id, user.Authorization, {
-      status: 4
-    });
-    setFilter(true);
-  };
-
-  const onUnpublish = async id => {
-    setLoading(true);
-    await updateArticle(id, user.Authorization, {
-      status: 1
-    });
-    setFilter(true);
-  };
 
   const handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
