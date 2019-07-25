@@ -20,7 +20,10 @@ import {
   Icon,
   Pagination,
   Tag,
-  Switch
+  Checkbox,
+  Tooltip,
+  Popconfirm,
+  Button
 } from "antd";
 import MButton from "../../Elements/MButton";
 import FormItem from "antd/lib/form/FormItem";
@@ -38,7 +41,7 @@ class UserTrackMapping extends React.Component {
     loading: true,
     loadingUsers: false,
     pageNumber: 1,
-    module_lock_status: 1
+    module_lock_status: 0
   };
 
   setMode = e => {
@@ -237,7 +240,7 @@ class UserTrackMapping extends React.Component {
   };
 
   onModuleLockChange = e => {
-    const status = e ? 0 : 1;
+    const status = e.target.value === false ? 0 : 1;
     this.setState({ module_lock_status: status });
   };
 
@@ -388,15 +391,31 @@ class UserTrackMapping extends React.Component {
               </Col>
             </Row>
             <FormItem>
-              <Switch
-                checkedChildren="Default Unlocked"
-                unCheckedChildren="Default Locked"
-                onChange={this.onModuleLockChange}
-              />
+              <Tooltip title="When checked, module will be mapped in unlock state">
+                <Checkbox
+                  onChange={this.onModuleLockChange}
+                  checked={this.state.module_lock_status === 1}
+                >
+                  Module Lock status
+                </Checkbox>
+              </Tooltip>
             </FormItem>
 
             <Form.Item>
-              <MButton>Map User</MButton>
+              <Popconfirm
+                onConfirm={this.onSubmit}
+                okText="Map User"
+                title={
+                  <ul>
+                    <li>Total Users: {this.props.count}</li>
+                    <li>Selected Users: {this.state.selectedUsers.length}</li>
+                  </ul>
+                }
+              >
+                <Button shape="round" type="primary">
+                  Map User
+                </Button>
+              </Popconfirm>
             </Form.Item>
           </Form>
         </Card>
