@@ -37,7 +37,7 @@ const CategoryDetails = props => {
             {description}
           </Descriptions.Item>
           <Descriptions.Item label="Icon">
-            <img src={icon} height="100" />
+            <a href={icon}>View image</a>
           </Descriptions.Item>
         </Descriptions>
       </Card>

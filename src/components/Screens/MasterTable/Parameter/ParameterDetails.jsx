@@ -39,10 +39,10 @@ const ParameterDetails = props => {
             {description}
           </Descriptions.Item>
           <Descriptions.Item label="Icon">
-            <img src={icon} height="100" />
+            <a href={icon}>View image</a>
           </Descriptions.Item>
           <Descriptions.Item label="Image">
-            <img src={image} height="100" />
+            <a href={image}>View image</a>
           </Descriptions.Item>
         </Descriptions>
       </Card>
