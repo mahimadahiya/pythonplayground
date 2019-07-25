@@ -11,12 +11,11 @@ import {
 } from "antd";
 import { useSelector } from "react-redux";
 import MButton from "../../../Elements/MButton";
-import { fetchCategoryDetails, createCategory } from "../../../../actions";
 import {
-  editCategory,
   createParameter,
-  editParameter
-} from "../../../../actions/masterActions";
+  editParameter,
+  fetchParameterDetails
+} from "../../../../actions";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -37,21 +36,22 @@ const CategoryCreate = props => {
     const fetchDetails = async () => {
       console.log("herer");
       setLoading(true);
-      const details = await fetchCategoryDetails(user.Authorization, props.id);
+      const details = await fetchParameterDetails(user.Authorization, props.id);
       console.log(props.form.getFieldValue("name"));
 
       props.form.setFieldsValue({
-        name: details.result.Category.name,
-        description: details.result.Category.description
+        name: details.result.parameter.name,
+        description: details.result.parameter.description
       });
-      setIconUrl(details.result.Category.icon_url);
+      setIconUrl(details.result.parameter.icon_url);
+      setImageUrl(details.result.parameter.image_url);
     };
     setLoading(false);
 
     if (props.id) {
       fetchDetails();
     }
-  }, [fetchCategoryDetails, props.id]);
+  }, [fetchParameterDetails, props.id]);
 
   const onSubmit = e => {
     e.preventDefault();

@@ -89,7 +89,13 @@ import {
   fetchParameterList,
   createParameter,
   editParameter,
-  deleteParameter
+  deleteParameter,
+  fetchParameterDetails,
+  createTag,
+  deleteTag,
+  fetchTagDetails,
+  editTag,
+  fetchTagList
 } from "./masterActions";
 
 export {
@@ -160,7 +166,13 @@ export {
   fetchParameterList,
   createParameter,
   editParameter,
-  deleteParameter
+  deleteParameter,
+  fetchParameterDetails,
+  createTag,
+  deleteTag,
+  fetchTagDetails,
+  editTag,
+  fetchTagList
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -150,9 +150,9 @@ class SideBar extends React.Component {
           onClick: () => history.push("/parameters")
         },
         {
-          key: "/flashcard/map",
-          label: "Map",
-          onClick: () => history.push("/flashcard/map")
+          key: "/tags",
+          label: "Tags",
+          onClick: () => history.push("/tags")
         }
       ]
     },
