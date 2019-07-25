@@ -42,9 +42,10 @@ import ComprehensionDetail from "../Screens/Comprehension/ComprehensionDetails";
 import ArticleDetail from "../Screens/Article/ArticleDetail";
 import ArticleList from "../Screens/Article/List";
 import TrackDetails from "../Screens/ModuleTracks/TrackDetails";
-import OrganizationList from '../Screens/Organization/List'
+import OrganizationList from "../Screens/Organization/List";
 import OrganizationDetails from "../Screens/Organization/OrganizationDetails";
 import CategoryList from "../Screens/MasterTable/Category/Category";
+import ParameterList from "../Screens/MasterTable/Parameter/Parameter";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -310,6 +311,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/categories"
               component={CategoryList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/parameters"
+              component={ParameterList}
               user={user}
               exact
             />

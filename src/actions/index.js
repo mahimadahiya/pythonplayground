@@ -81,7 +81,16 @@ import {
 } from "./adminOrganizationActions";
 import adminPanelApi from "../apis/adminPanel";
 
-import { fetchCategoryList, fetchCategoryDetails } from "./masterActions";
+import {
+  fetchCategoryList,
+  fetchCategoryDetails,
+  createCategory,
+  deleteCategory,
+  fetchParameterList,
+  createParameter,
+  editParameter,
+  deleteParameter
+} from "./masterActions";
 
 export {
   getOrganizationModules,
@@ -145,7 +154,13 @@ export {
   fetchIndustries,
   createOrganization,
   fetchCategoryList,
-  fetchCategoryDetails
+  fetchCategoryDetails,
+  createCategory,
+  deleteCategory,
+  fetchParameterList,
+  createParameter,
+  editParameter,
+  deleteParameter
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

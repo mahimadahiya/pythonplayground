@@ -182,7 +182,7 @@ class QuestionList extends React.Component {
     });
     await this.props.fetchQuestionList(this.props.user.Authorization, {
       offset: this.state.offset,
-      fields: `{}`
+      fields: {}
     });
     this.setState({ loading: false });
   };
@@ -194,7 +194,7 @@ class QuestionList extends React.Component {
     });
     await this.props.fetchQuestionList(this.props.user.Authorization, {
       offset: this.state.offset,
-      fields: `{}`
+      fields: {}
     });
     this.setState({ loading: false });
   };
@@ -206,7 +206,7 @@ class QuestionList extends React.Component {
     });
     await this.props.fetchQuestionList(this.props.user.Authorization, {
       offset: this.state.offset,
-      fields: `{}`
+      fields: {}
     });
     this.setState({ loading: false });
   };
@@ -268,7 +268,8 @@ class QuestionList extends React.Component {
     const offset = pageNumber * 10 - 10;
     this.setState({ loading: true });
     await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset
+      offset,
+      fields: {}
     });
     this.setState({ loading: false, offset });
   };
@@ -331,12 +332,16 @@ class QuestionList extends React.Component {
               </MButton>
             )}
           />
-          <div style={{ marginTop: "20px", textAlign: "right" }}>
-            <Pagination
-              current={(this.state.offset + 10) / 10}
-              onChange={this.handlePageChange}
-              total={this.props.count}
-            />
+          <div style={{ marginTop: "20px" }}>
+            Showing {this.state.offset + 1}-{this.state.offset + 10} results
+            from {this.props.count} records
+            <span style={{ textAlign: "right" }}>
+              <Pagination
+                current={(this.state.offset + 10) / 10}
+                onChange={this.handlePageChange}
+                total={this.props.count}
+              />
+            </span>
           </div>
         </Card>
       </div>

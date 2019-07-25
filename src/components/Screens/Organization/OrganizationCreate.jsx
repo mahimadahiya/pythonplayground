@@ -7,6 +7,14 @@ import Industries from "../../Elements/Industries";
 import MButton from "../../Elements/MButton";
 import { createOrganization, fetchOrganizationDetails } from "../../../actions";
 
+function clean(obj) {
+  for (var propName in obj) {
+    if (obj[propName] === null || obj[propName] === undefined) {
+      delete obj[propName];
+    }
+  }
+}
+
 const OrganizationCreate = props => {
   const user = useSelector(state => state.userAuth);
   const [region, setRegion] = useState(null);
@@ -44,6 +52,7 @@ const OrganizationCreate = props => {
           industry_type_id: industry,
           region_id: region
         };
+        clean(values);
         const response = await createOrganization(user.Authorization, values);
         if (response.status === 201) {
           message.success("Organization created successfully");

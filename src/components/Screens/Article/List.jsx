@@ -325,8 +325,18 @@ const ArticleList = props => {
             pagination={false}
           />
         </Row>
-        <div style={{ marginTop: "20px", textAlign: "right" }}>
+        {/* <div style={{ marginTop: "20px", textAlign: "right" }}>
           <Pagination onChange={handlePageChange} total={count} />
+        </div> */}
+        <div style={{ marginTop: "20px" }}>
+          Showing {offset + 1}-{offset + 10} results from {count} records
+          <span style={{ textAlign: "right" }}>
+            <Pagination
+              current={(offset + 10) / 10}
+              onChange={handlePageChange}
+              total={count}
+            />
+          </span>
         </div>
       </Card>
       <Modal

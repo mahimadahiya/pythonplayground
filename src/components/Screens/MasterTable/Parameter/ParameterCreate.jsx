@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, message, Card, Upload, Button, Icon } from "antd";
+import {
+  Form,
+  Input,
+  message,
+  Card,
+  Upload,
+  Button,
+  Icon,
+  Checkbox
+} from "antd";
 import { useSelector } from "react-redux";
 import MButton from "../../../Elements/MButton";
 import { fetchCategoryDetails, createCategory } from "../../../../actions";
-import { editCategory } from "../../../../actions/masterActions";
+import {
+  editCategory,
+  createParameter,
+  editParameter
+} from "../../../../actions/masterActions";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -16,6 +29,8 @@ function clean(obj) {
 const CategoryCreate = props => {
   const user = useSelector(state => state.userAuth);
   const [iconUrl, setIconUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [sameImage, setSameImage] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -46,23 +61,24 @@ const CategoryCreate = props => {
           name: formValues.name,
           description: formValues.description,
           icon_url: iconUrl,
+          image_url: imageUrl,
           flag: 1
         };
         clean(values);
         if (!props.id) {
-          const response = await createCategory(user.Authorization, {
+          const response = await createParameter(user.Authorization, {
             fields: JSON.stringify(values)
           });
           if (response.status === 201) {
-            message.success("Category created successfully");
+            message.success("Parameter created successfully");
           }
         } else {
-          const response = await editCategory(user.Authorization, {
+          const response = await editParameter(user.Authorization, {
             fields: JSON.stringify(values),
             id: props.id
           });
           if (response.status === 200) {
-            message.success("Category updated successfully");
+            message.success("Parameter updated successfully");
           }
         }
       }
@@ -90,6 +106,23 @@ const CategoryCreate = props => {
     }
   };
 
+  const onUploadImage = info => {
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} file uploaded successfully`);
+      setImageUrl(info.file.response.url);
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  };
+
+  const onImageChecked = e => {
+    setSameImage(e.target.checked);
+  };
+
+  if (sameImage && iconUrl && !imageUrl) {
+    setImageUrl(iconUrl);
+  }
+
   const { getFieldDecorator } = props.form;
   return (
     <div>
@@ -112,6 +145,21 @@ const CategoryCreate = props => {
               </Button>
               {iconUrl ? <a href={iconUrl}>View image</a> : null}
             </Upload>
+          </Form.Item>
+          <Form.Item label="Image">
+            <Upload
+              {...uploadProps}
+              onChange={onUploadImage}
+              disabled={sameImage}
+            >
+              <Button>
+                <Icon type="upload" /> Click to Upload
+              </Button>
+              {imageUrl ? <a href={imageUrl}>View image</a> : null}
+            </Upload>
+            <div>
+              <Checkbox onChange={onImageChecked}>Same as icon</Checkbox>
+            </div>
           </Form.Item>
           <MButton>{props.id ? "Edit" : "Create"}</MButton>
         </Form>

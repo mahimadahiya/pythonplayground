@@ -10,13 +10,12 @@ import {
   Modal,
   Button,
   Divider,
-  Icon,
   Popconfirm
 } from "antd";
-import { fetchCategoryList, deleteCategory } from "../../../../actions";
-import CategoryCreate from "./CategoryCreate";
+import { fetchParameterList, deleteParameter } from "../../../../actions";
+import ParameterCreate from "./ParameterCreate";
 
-const CategoryList = () => {
+const ParameterList = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [offset, setOffset] = useState(0);
@@ -31,7 +30,7 @@ const CategoryList = () => {
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
-      const result = await fetchCategoryList(user.Authorization, {
+      const result = await fetchParameterList(user.Authorization, {
         searchText,
         offset
       });
@@ -54,7 +53,7 @@ const CategoryList = () => {
       dataIndex: "id",
       key: "id",
       render: id => {
-        return <Link to={`/categories/${id}`}>{id}</Link>;
+        return <Link to={`/parameter/${id}`}>{id}</Link>;
       }
     },
     {
@@ -91,7 +90,7 @@ const CategoryList = () => {
   ];
 
   const onDelete = async id => {
-    await deleteCategory(user.Authorization, id);
+    await deleteParameter(user.Authorization, id);
     setFilter(true);
   };
 
@@ -131,7 +130,7 @@ const CategoryList = () => {
       </Card>
       <Card
         style={{ marginTop: 20 }}
-        title={<div className="card-title">Category List</div>}
+        title={<div className="card-title">Parameter List</div>}
       >
         <Row style={{ marginBottom: 20 }}>
           <Button
@@ -141,7 +140,7 @@ const CategoryList = () => {
               setShowModal(true);
             }}
           >
-            Create Category
+            Create Parameter
           </Button>
         </Row>
         <Row>
@@ -166,9 +165,9 @@ const CategoryList = () => {
         closable={true}
         width="1000px"
       >
-        <CategoryCreate id={id} />
+        <ParameterCreate id={id} />
       </Modal>
     </div>
   );
 };
-export default CategoryList;
+export default ParameterList;

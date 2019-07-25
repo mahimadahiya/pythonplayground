@@ -18,6 +18,23 @@ export const fetchCategoryList = async (authToken, values) => {
   return { list: response.data.results, count: response.data.count };
 };
 
+export const fetchParameterList = async (authToken, values) => {
+  let response = null;
+
+  if (values.searchText.length > 0) {
+    response = await adminPanelApi(authToken).get(
+      `/v1/admin/paginated/parameters?offset=${values.offset}&search=${
+        values.searchText
+      }`
+    );
+  } else {
+    response = await adminPanelApi(authToken).get(
+      `/v1/admin/paginated/parameters?offset=${values.offset}`
+    );
+  }
+  return { list: response.data.results, count: response.data.count };
+};
+
 export const fetchCategoryDetails = async (authToken, id) => {
   const response = await adminPanelApi(authToken).get(
     `/v1/admin/category/${id}`
@@ -25,4 +42,52 @@ export const fetchCategoryDetails = async (authToken, id) => {
   if (response.status === 200) {
     return response.data;
   }
+};
+
+export const createCategory = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/category/",
+    qs.stringify(values)
+  );
+  return response;
+};
+
+export const createParameter = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/parameter/",
+    qs.stringify(values)
+  );
+  return response;
+};
+
+export const editCategory = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).put(
+    `/v1/admin/category/${values.id}`,
+    qs.stringify(values)
+  );
+  return response;
+};
+
+export const editParameter = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).put(
+    `/v1/admin/parameter/${values.id}`,
+    qs.stringify(values)
+  );
+  return response;
+};
+
+export const deleteCategory = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).put(
+    `/v1/admin/category/${id}`,
+    qs.stringify({ flag: 0 })
+  );
+  return response;
+};
+
+export const deleteParameter = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).put(
+    `/v1/admin/parameter/${id}`,
+    qs.stringify({ flag: 0 })
+  );
+  return response;
 };
