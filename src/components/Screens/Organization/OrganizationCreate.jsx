@@ -1,17 +1,38 @@
-import React, { useState } from "react";
-import { Form, Input, message } from "antd";
+import React, { useState, useEffect } from "react";
+import { Form, Input, message, Card } from "antd";
 import { useSelector } from "react-redux";
 import Region from "../../Elements/Region";
 import Courses from "../../Elements/Courses";
 import Industries from "../../Elements/Industries";
 import MButton from "../../Elements/MButton";
-import { createOrganization } from "../../../actions";
+import { createOrganization, fetchOrganizationDetails } from "../../../actions";
 
 const OrganizationCreate = props => {
   const user = useSelector(state => state.userAuth);
   const [region, setRegion] = useState(null);
   const [course, setCourse] = useState(null);
   const [industry, setIndustry] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      setLoading(true);
+      const details = await fetchOrganizationDetails(
+        user.Authorization,
+        props.id
+      );
+      props.form.setFieldsValue({
+        name: details.result.organization.name
+      });
+      setRegion(details.result.organization.region_id);
+      setCourse(details.result.organization.course_id);
+      setIndustry(details.result.organization.industry_type_id);
+      setLoading(false);
+    };
+    if (props.id) {
+      fetchDetails();
+    }
+  }, [fetchOrganizationDetails, props.id]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -20,7 +41,7 @@ const OrganizationCreate = props => {
         const values = {
           name: formValues.name,
           course_id: course,
-          // industry_id: industry,
+          industry_type_id: industry,
           region_id: region
         };
         const response = await createOrganization(user.Authorization, values);
@@ -46,20 +67,22 @@ const OrganizationCreate = props => {
   const { getFieldDecorator } = props.form;
   return (
     <div>
-      <Form onSubmit={onSubmit}>
-        <Form.Item label="Name">
-          {getFieldDecorator("name", {
-            rules: [{ required: true, message: "Name is required" }]
-          })(<Input placeholder="Enter name of organization" />)}
-        </Form.Item>
-        <Region mode="single" onChange={onChangeRegion} />
+      <Card loading={loading}>
+        <Form onSubmit={onSubmit}>
+          <Form.Item label="Name">
+            {getFieldDecorator("name", {
+              rules: [{ required: true, message: "Name is required" }]
+            })(<Input placeholder="Enter name of organization" />)}
+          </Form.Item>
+          <Region mode="single" onChange={onChangeRegion} value={region} />
 
-        <Courses onChange={onChangeCourse} />
+          <Courses onChange={onChangeCourse} value={course} />
 
-        <Industries onChange={onChangeIndustry} />
+          <Industries onChange={onChangeIndustry} value={industry} />
 
-        <MButton>Create</MButton>
-      </Form>
+          <MButton>{props.id ? "Edit" : "Create"}</MButton>
+        </Form>
+      </Card>
     </div>
   );
 };

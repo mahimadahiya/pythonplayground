@@ -149,6 +149,7 @@ const ArticleList = () => {
 
   const onCloseModal = () => {
     setShowModal(false);
+    setId(null);
     setFilter(true);
   };
 
@@ -196,7 +197,7 @@ const ArticleList = () => {
         closable={true}
         width="1000px"
       >
-        <OrganizationCreate id={id}/>
+        <OrganizationCreate id={id} />
       </Modal>
     </div>
   );

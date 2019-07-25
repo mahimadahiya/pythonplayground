@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Select } from "antd";
 import { connect } from "react-redux";
 import { fetchRegions } from "../../actions";
@@ -21,6 +21,11 @@ const renderOptions = regions => {
 
 const Region = props => {
   getRegions(props.fetchRegions, props.user, props.regions);
+  useEffect(() => {
+    props.form.setFieldsValue({
+      region: props.value
+    });
+  }, [props.value]);
   return (
     <div>
       <Form.Item label="Region">

@@ -11,9 +11,12 @@ const Courses = props => {
     const fetchData = async () => {
       const data = await fetchCourses(user.Authorization);
       setCourses(data);
+      props.form.setFieldsValue({
+        course: props.value
+      });
     };
     fetchData();
-  }, [user]);
+  }, [user, props.value, props.form.setFieldsValue]);
   return (
     <div>
       <Form.Item label="Course">
@@ -23,7 +26,9 @@ const Courses = props => {
           <Select placeholder="Select a course" onChange={props.onChange}>
             {courses.length > 0 &&
               courses.map(course => (
-                <Select.Option key={course.id}>{course.name}</Select.Option>
+                <Select.Option key={course.id} value={course.id}>
+                  {course.name}
+                </Select.Option>
               ))}
           </Select>
         )}

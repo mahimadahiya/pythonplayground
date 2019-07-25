@@ -11,9 +11,12 @@ const Industries = props => {
     const fetchData = async () => {
       const data = await fetchIndustries(user.Authorization);
       setIndustries(data);
+      props.form.setFieldsValue({
+        industry: props.value
+      });
     };
     fetchData();
-  }, [user]);
+  }, [user, props.value, props.form.setFieldsValue]);
   const { getFieldDecorator } = props.form;
   return (
     <div>
@@ -24,7 +27,9 @@ const Industries = props => {
           <Select placeholder="Select an industry" onChange={props.onChange}>
             {industries.length > 0 &&
               industries.map(industry => (
-                <Select.Option key={industry.id}>{industry.name}</Select.Option>
+                <Select.Option key={industry.id} value={industry.id}>
+                  {industry.name}
+                </Select.Option>
               ))}
           </Select>
         )}
