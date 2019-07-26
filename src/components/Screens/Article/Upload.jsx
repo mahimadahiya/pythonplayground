@@ -16,6 +16,7 @@ import {
 import { useSelector } from "react-redux";
 import MButton from "../../Elements/MButton";
 import { addArticle } from "../../../actions";
+import { quillFormats, quillModules } from "../../Elements/Toolbar";
 
 const ArticleUpload = props => {
   const [type, setType] = useState("image");
@@ -72,7 +73,7 @@ const ArticleUpload = props => {
         if (!data.err) {
           props.setId(data.id);
           message.success("Article created successfully");
-          props.setStep(1)
+          props.setStep(1);
         }
       } else {
         console.log(err);
@@ -122,6 +123,8 @@ const ArticleUpload = props => {
           {type === "html" ? (
             <ReactQuill
               onChange={handleHTMLChange}
+              modules={quillModules}
+              formats={quillFormats}
               style={{ height: 300, marginBottom: 50 }}
             />
           ) : null}
