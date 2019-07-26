@@ -131,11 +131,11 @@ const CategoryCreate = props => {
           <Form.Item label="Name">
             {getFieldDecorator("name", {
               rules: [{ required: true, message: "Name is required" }]
-            })(<Input placeholder="Enter name of category" />)}
+            })(<Input placeholder="Enter name of parameter" />)}
           </Form.Item>
           <Form.Item label="Description">
             {getFieldDecorator("description")(
-              <Input placeholder="Enter description of category" />
+              <Input placeholder="Enter description of parameter" />
             )}
           </Form.Item>
           <Form.Item label="Icon">
@@ -147,19 +147,19 @@ const CategoryCreate = props => {
             </Upload>
           </Form.Item>
           <Form.Item label="Image">
+            <span style={{ marginRight: 15 }}>
+              <Checkbox onChange={onImageChecked}>Same as icon</Checkbox>
+            </span>
             <Upload
               {...uploadProps}
               onChange={onUploadImage}
               disabled={sameImage}
             >
-              <Button>
+              <Button style={{ marginRight: 15 }}>
                 <Icon type="upload" /> Click to Upload
               </Button>
               {imageUrl ? <a href={imageUrl}>View image</a> : null}
             </Upload>
-            <div>
-              <Checkbox onChange={onImageChecked}>Same as icon</Checkbox>
-            </div>
           </Form.Item>
           <MButton>{props.id ? "Edit" : "Create"}</MButton>
         </Form>

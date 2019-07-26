@@ -158,7 +158,7 @@ const CategoryList = () => {
         </div>
       </Card>
       <Modal
-        title="Create Organization"
+        title="Create Category"
         visible={showModal}
         footer={null}
         destroyOnClose={true}

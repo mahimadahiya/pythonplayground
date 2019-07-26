@@ -157,7 +157,7 @@ const ParameterList = () => {
         </div>
       </Card>
       <Modal
-        title="Create Organization"
+        title="Create Parameter"
         visible={showModal}
         footer={null}
         destroyOnClose={true}

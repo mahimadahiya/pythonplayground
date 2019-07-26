@@ -78,7 +78,7 @@ const TagCreate = props => {
           <Form.Item label="Name">
             {getFieldDecorator("name", {
               rules: [{ required: true, message: "Name is required" }]
-            })(<Input placeholder="Enter name of category" />)}
+            })(<Input placeholder="Enter name of Tag" />)}
           </Form.Item>
           <MButton>{props.id ? "Edit" : "Create"}</MButton>
         </Form>
