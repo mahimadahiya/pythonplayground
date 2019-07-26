@@ -104,7 +104,7 @@ class QuestionList extends React.Component {
 
     await this.props.fetchQuestionList(this.props.user.Authorization, {
       searchText: this.state.searchText,
-      fields: JSON.stringify(fields),
+      fields: fields,
       offset: 0
     });
     this.setState({ loading: false });
