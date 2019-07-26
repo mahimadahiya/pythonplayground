@@ -180,9 +180,20 @@ class QuestionList extends React.Component {
     await this.props.updateQuestion(id, this.props.user.Authorization, {
       status: 2
     });
+    const data = {
+      questionsparameters__parameter_id: this.state.parameterId,
+      questionscategories__category_id: this.state.categoryId,
+      quiz_type: this.state.quizType,
+      status: this.state.status
+    };
+    const fields = data;
+
+    this.clean(fields);
+
     await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset: this.state.offset,
-      fields: {}
+      searchText: this.state.searchText,
+      fields,
+      offset: this.state.offset
     });
     this.setState({ loading: false });
   };
@@ -192,9 +203,20 @@ class QuestionList extends React.Component {
     await this.props.updateQuestion(id, this.props.user.Authorization, {
       status: 1
     });
+    const data = {
+      questionsparameters__parameter_id: this.state.parameterId,
+      questionscategories__category_id: this.state.categoryId,
+      quiz_type: this.state.quizType,
+      status: this.state.status
+    };
+    const fields = data;
+
+    this.clean(fields);
+
     await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset: this.state.offset,
-      fields: {}
+      searchText: this.state.searchText,
+      fields,
+      offset: this.state.offset
     });
     this.setState({ loading: false });
   };
@@ -204,9 +226,20 @@ class QuestionList extends React.Component {
     await this.props.updateQuestion(id, this.props.user.Authorization, {
       flag: 0
     });
+    const data = {
+      questionsparameters__parameter_id: this.state.parameterId,
+      questionscategories__category_id: this.state.categoryId,
+      quiz_type: this.state.quizType,
+      status: this.state.status
+    };
+    const fields = data;
+
+    this.clean(fields);
+
     await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset: this.state.offset,
-      fields: {}
+      searchText: this.state.searchText,
+      fields,
+      offset: this.state.offset
     });
     this.setState({ loading: false });
   };
@@ -267,9 +300,20 @@ class QuestionList extends React.Component {
   handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
     this.setState({ loading: true });
+    const data = {
+      questionsparameters__parameter_id: this.state.parameterId,
+      questionscategories__category_id: this.state.categoryId,
+      quiz_type: this.state.quizType,
+      status: this.state.status
+    };
+    const fields = data;
+
+    this.clean(fields);
+
     await this.props.fetchQuestionList(this.props.user.Authorization, {
-      offset,
-      fields: {}
+      searchText: this.state.searchText,
+      fields,
+      offset: this.state.offset
     });
     this.setState({ loading: false, offset });
   };
