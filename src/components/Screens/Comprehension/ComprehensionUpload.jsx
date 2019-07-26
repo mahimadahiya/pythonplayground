@@ -17,6 +17,7 @@ import {
 import { connect } from "react-redux";
 import MButton from "../../Elements/MButton";
 import { addComprehension } from "../../../actions";
+import { quillFormats, quillModules } from "../../Elements/Toolbar";
 
 class ComprehensionUpload extends Component {
   state = {
@@ -149,6 +150,8 @@ class ComprehensionUpload extends Component {
             {this.state.type === "html" ? (
               <ReactQuill
                 onChange={this.handleChange}
+                formats={quillFormats}
+                modules={quillModules}
                 style={{ height: 300, marginBottom: 50 }}
               />
             ) : null}
