@@ -1,11 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "../../actions";
 import { Form, Select } from "antd";
-
-const getCategories = async (user, fetchCategories, categories) => {
-  await fetchCategories(user.Authorization);
-};
 
 const renderCategories = categories => {
   return categories.map(category => {
@@ -31,9 +27,12 @@ const filterCategories = (val, option, categories) => {
 };
 
 const Categories = props => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.userAuth);
+  const categories = useSelector(state => state.category.categories);
   React.useEffect(() => {
-    getCategories(props.user, props.fetchCategories, props.categories);
-  }, []);
+    dispatch(fetchCategories(user.Authorization));
+  }, [user, dispatch]);
   return (
     <div>
       <Form.Item label="Categories">
@@ -43,24 +42,14 @@ const Categories = props => {
           value={props.value}
           showSearch
           filterOption={(val, option) =>
-            filterCategories(val, option, props.categories)
+            filterCategories(val, option, categories)
           }
         >
-          {renderCategories(props.categories)}
+          {renderCategories(categories)}
         </Select>
       </Form.Item>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    user: state.userAuth,
-    categories: state.category.categories
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchCategories }
-)(Categories);
+export default Categories;

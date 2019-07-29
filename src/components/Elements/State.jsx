@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { Form, Select } from "antd";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchStates } from "../../actions";
-
-const getStates = async (fetchStates, user, states, regions) => {
-  await fetchStates(user.Authorization, regions);
-};
 
 const renderOptions = states => {
   return states.map(state => {
@@ -18,9 +14,12 @@ const renderOptions = states => {
 };
 
 const State = props => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.userAuth);
+  const states = useSelector(state => state.region.states);
   useEffect(() => {
-    getStates(props.fetchStates, props.user, props.states, props.regions);
-  }, [props.regions]);
+    dispatch(fetchStates(user.Authorization, props.regions));
+  }, [user, dispatch, props.regions]);
   return (
     <div>
       <Form.Item label="State">
@@ -29,21 +28,11 @@ const State = props => {
           mode={props.mode}
           onChange={props.onChange}
         >
-          {renderOptions(props.states)}
+          {renderOptions(states)}
         </Select>
       </Form.Item>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    states: state.region.states,
-    user: state.userAuth
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchStates }
-)(State);
+export default State;

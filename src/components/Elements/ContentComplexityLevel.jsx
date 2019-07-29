@@ -1,13 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchContentComplexityLevel } from "../../actions";
 import { Select, Form } from "antd";
-
-const getLevels = async (user, fetchContentComplexityLevel, levels) => {
-  if (levels.length === 0) {
-    await fetchContentComplexityLevel(user.Authorization);
-  }
-};
 
 const renderLevels = levels => {
   return levels.map(level => {
@@ -20,9 +14,14 @@ const renderLevels = levels => {
 };
 
 const ContentComplexityLevel = props => {
+  const dispatch = useDispatch();
+
+  const user = useSelector(state => state.userAuth);
+  const levels = useSelector(state => state.contentComplexityLevel.levels);
+
   React.useEffect(() => {
-    getLevels(props.user, props.fetchContentComplexityLevel, props.levels);
-  }, [props.levels]);
+    dispatch(fetchContentComplexityLevel(user.Authorization));
+  }, [dispatch, user]);
   return (
     <div>
       <Form.Item label="Content Complexity Levels">
@@ -31,21 +30,11 @@ const ContentComplexityLevel = props => {
           onChange={props.onChange}
           mode={props.mode}
         >
-          {renderLevels(props.levels)}
+          {renderLevels(levels)}
         </Select>
       </Form.Item>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    levels: state.contentComplexityLevel.levels,
-    user: state.userAuth
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchContentComplexityLevel }
-)(ContentComplexityLevel);
+export default ContentComplexityLevel;

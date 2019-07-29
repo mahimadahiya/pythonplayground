@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { Form, Select } from "antd";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchParameters } from "../../actions";
-
-const getParameters = async (fetchParameters, user, categories) => {
-  await fetchParameters(user.Authorization, categories);
-};
 
 const renderOptions = parameters => {
   return parameters.map(parameter => {
@@ -31,9 +27,12 @@ const filterParameters = (val, option, parameters) => {
 };
 
 const Parameters = props => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.userAuth);
+  const parameters = useSelector(state => state.category.parameters);
   useEffect(() => {
-    getParameters(props.fetchParameters, props.user, props.categories);
-  }, [props.categories[0]]);
+    dispatch(fetchParameters(user.Authorization, props.categories));
+  }, [user, props.categories, dispatch]);
   return (
     <div>
       <Form.Item label="Parameters">
@@ -43,24 +42,14 @@ const Parameters = props => {
           onChange={props.onChange}
           showSearch
           filterOption={(val, option) =>
-            filterParameters(val, option, props.parameters)
+            filterParameters(val, option, parameters)
           }
         >
-          {renderOptions(props.parameters)}
+          {renderOptions(parameters)}
         </Select>
       </Form.Item>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    parameters: state.category.parameters,
-    user: state.userAuth
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchParameters }
-)(Parameters);
+export default Parameters;

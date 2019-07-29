@@ -1,13 +1,7 @@
 import React, { useEffect } from "react";
 import { Form, Select } from "antd";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchRegions } from "../../actions";
-
-const getRegions = async (fetchRegions, user, regions) => {
-  if (regions.length === 0) {
-    await fetchRegions(user.Authorization);
-  }
-};
 
 const renderOptions = regions => {
   return regions.map(region => {
@@ -20,24 +14,27 @@ const renderOptions = regions => {
 };
 
 const Region = props => {
-  getRegions(props.fetchRegions, props.user, props.regions);
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.userAuth);
+  const regions = useSelector(state => state.region.regions);
+
   useEffect(() => {
-    props.form.setFieldsValue({
-      region: props.value
-    });
-  }, [props.value]);
+    dispatch(fetchRegions(user.Authorization));
+  }, [dispatch, user]);
+
   return (
     <div>
       <Form.Item label="Region">
         {props.form.getFieldDecorator("region", {
-          rules: [{ required: true, message: "Region is required" }]
+          rules: [{ required: true, message: "Region is required" }],
+          initialValue: props.value
         })(
           <Select
             placeholder="Select a region"
             mode={props.mode}
             onChange={props.onChange}
           >
-            {renderOptions(props.regions)}
+            {renderOptions(regions)}
           </Select>
         )}
       </Form.Item>
@@ -45,14 +42,4 @@ const Region = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    regions: state.region.regions,
-    user: state.userAuth
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchRegions }
-)(Form.create()(Region));
+export default Form.create()(Region);

@@ -18,10 +18,7 @@ const Tags = props => {
   const user = useSelector(state => state.userAuth);
   const tags = useSelector(state => state.category.tags);
   useEffect(() => {
-    const fetchData = async () => {
-      dispatch(fetchTags(user.Authorization, props.parameters));
-    };
-    fetchData();
+    dispatch(fetchTags(user.Authorization, props.parameters));
   }, [user, props.parameters, dispatch]);
   return (
     <div>
