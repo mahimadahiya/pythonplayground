@@ -22,7 +22,6 @@ const MapCategoriesArticle = props => {
     if (props.id) {
       const fetchDetail = async () => {
         const data = await fetchArticleDetail(props.id, user.Authorization);
-        console.log(data);
         let { categories, parameters, tags } = data;
 
         categories = categories.map(category => {

@@ -15,8 +15,8 @@ import {
   createParameter,
   editParameter,
   fetchParameterDetails
-  // fetchModuleList
 } from "../../../../actions";
+import Categories from "../../../Elements/Categories";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -28,24 +28,25 @@ function clean(obj) {
 
 const CategoryCreate = props => {
   const user = useSelector(state => state.userAuth);
-  const [modules, setModules] = useState([]);
+  const [category, setCategory] = useState(null);
   const [iconUrl, setIconUrl] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [sameImage, setSameImage] = useState(false);
+  const [details, setDetails] = useState(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      // const modules = await fetchModuleList(user.Authorization);
-      // setModules(modules);
       if (props.id) {
         const details = await fetchParameterDetails(
           user.Authorization,
           props.id
         );
-        props.form.setFieldsValue({
-          name: details.result.parameter.name,
-          description: details.result.parameter.description
-        });
+        setDetails(details.result.parameter);
+        setCategory(
+          details.result.category[0]
+            ? details.result.category[0].category_id
+            : null
+        );
         setIconUrl(details.result.parameter.icon_url);
         setImageUrl(details.result.parameter.image_url);
       }
@@ -54,7 +55,7 @@ const CategoryCreate = props => {
     if (props.id) {
       fetchDetails();
     }
-  }, [fetchParameterDetails, props.id]);
+  }, [user, props.id]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -64,6 +65,7 @@ const CategoryCreate = props => {
           name: formValues.name,
           description: formValues.description,
           module_id: formValues.module_id,
+          category_id: category,
           icon_url: iconUrl,
           image_url: imageUrl,
           flag: 1
@@ -127,6 +129,10 @@ const CategoryCreate = props => {
     setImageUrl(iconUrl);
   }
 
+  const onChangeCategory = value => {
+    setCategory(value);
+  };
+
   const { getFieldDecorator } = props.form;
   return (
     <div>
@@ -134,19 +140,20 @@ const CategoryCreate = props => {
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", {
-              rules: [{ required: true, message: "Name is required" }]
+              rules: [{ required: true, message: "Name is required" }],
+              initialValue: details ? details.name : null
             })(<Input placeholder="Enter name of parameter" />)}
           </Form.Item>
           <Form.Item label="Description">
-            {getFieldDecorator("description")(
-              <Input placeholder="Enter description of parameter" />
-            )}
+            {getFieldDecorator("description", {
+              initialValue: details ? details.description : null
+            })(<Input placeholder="Enter description of parameter" />)}
           </Form.Item>
-          <Form.Item label="Module ID">
-            {getFieldDecorator("module_id", {
-              rules: [{ required: true, message: "Module ID is required" }]
-            })(<Input placeholder="Enter module id" />)}
-          </Form.Item>
+          <Categories
+            mode="single"
+            onChange={onChangeCategory}
+            value={category}
+          />
           <Form.Item label="Icon">
             <Upload {...uploadProps} onChange={onUploadIcon}>
               <Button>
