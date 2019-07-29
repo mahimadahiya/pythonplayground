@@ -1,5 +1,6 @@
 import { Steps } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import ArticleUpload from "./Upload";
 import ArticleEdit from "./Edit";
 import MapCategoriesArticle from "./MapCategoriesArticle";
@@ -7,29 +8,27 @@ import MapCategoriesArticle from "./MapCategoriesArticle";
 const { Step } = Steps;
 
 const ArticleCreate = props => {
-  const [current, setStep] = useState(0);
+  const step = useSelector(state => state.article.step);
   const [id, setId] = useState(null);
-  useEffect(() => {
-    if (current !== props.step) setStep(props.step);
-  }, []);
+
   const steps = [
     {
       title: "Create",
-      content: <ArticleUpload setId={setId} setStep={setStep} />
+      content: <ArticleUpload setId={setId} />
     },
     {
       title: "Edit",
-      content: <ArticleEdit id={id || props.id} setStep={setStep} />
+      content: <ArticleEdit id={id || props.id} />
     },
     {
       title: "Map",
       content: <MapCategoriesArticle id={id || props.id} />
     }
   ];
-  
+
   return (
     <div>
-      <Steps current={current}>
+      <Steps current={step}>
         {steps.map(item => (
           <Step key={item.title} title={item.title} />
         ))}
@@ -38,7 +37,7 @@ const ArticleCreate = props => {
         className="steps-content"
         style={{ marginTop: 20, marginBottom: 20 }}
       >
-        {steps[current].content}
+        {steps[step].content}
       </div>
     </div>
   );

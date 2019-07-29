@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Form, Card, Row, Col, Input, message } from "antd";
 import Gender from "../../Elements/Gender";
 import MButton from "../../Elements/MButton";
 import ContentComplexityLevel from "../../Elements/ContentComplexityLevel";
-import { updateArticle, fetchArticleDetail } from "../../../actions";
+import { updateArticle, fetchArticleDetail, setStep } from "../../../actions";
 import Complexity from "../../Elements/Complexity";
 import Region from "../../Elements/Region";
 import State from "../../Elements/State";
 
 const ArticleEdit = props => {
+  const dispatch = useDispatch();
+
   const [complexity, setComplexity] = useState(null);
   const [gender, setGender] = useState(null);
   const [region, setRegion] = useState([]);
@@ -19,7 +21,6 @@ const ArticleEdit = props => {
   const [loading, setLoading] = useState(true);
   const user = useSelector(state => state.userAuth);
   useEffect(() => {
-    props.setStep(1);
     const fetchDetails = async () => {
       if (props.id) {
         const data = await fetchArticleDetail(props.id, user.Authorization);
@@ -29,7 +30,6 @@ const ArticleEdit = props => {
         setLoading(false);
       }
     };
-
     fetchDetails();
   }, [user, props.id]);
 
@@ -57,13 +57,9 @@ const ArticleEdit = props => {
           regions: JSON.stringify(region),
           states: JSON.stringify(state)
         };
-        const response = await updateArticle(
-          props.id,
-          user.Authorization,
-          values
-        );
+        await updateArticle(props.id, user.Authorization, values);
         message.success("Article updated successfully");
-        props.setStep(2);
+        dispatch(setStep(2));
       } else {
         console.log(err);
       }

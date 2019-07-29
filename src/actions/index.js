@@ -70,7 +70,8 @@ import {
   fetchArticleList,
   fetchArticleDetail,
   updateArticle,
-  addArticle
+  addArticle,
+  setStep
 } from "./articleActions";
 import {
   fetchOrganizationList,
@@ -172,7 +173,8 @@ export {
   deleteTag,
   fetchTagDetails,
   editTag,
-  fetchTagList
+  fetchTagList,
+  setStep
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

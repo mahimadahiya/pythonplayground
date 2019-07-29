@@ -14,6 +14,7 @@ import mtfReducer from "./mtfReducer";
 import quadReducer from "./quadReducer";
 import comprehensionReducer from "./comprehensionReducer";
 import flashReducer from "./flashReducer";
+import articleReducer from "./articleReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -30,5 +31,6 @@ export default combineReducers({
   mtf: mtfReducer,
   quad: quadReducer,
   comprehension: comprehensionReducer,
-  flashcard: flashReducer
+  flashcard: flashReducer,
+  article: articleReducer
 });

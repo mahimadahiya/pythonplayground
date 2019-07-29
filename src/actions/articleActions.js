@@ -110,3 +110,10 @@ export const mapComprehensionQuestions = (
   );
   dispatch({ type: ACTION_TYPE.MAP_COMPREHENSION_QUESTIONS });
 };
+
+export const setStep = step => {
+  return {
+    type: ACTION_TYPE.ARTICLE_SETSTEP,
+    payload: step
+  };
+};

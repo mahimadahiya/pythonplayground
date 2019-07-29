@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Table,
   Card,
@@ -15,12 +15,14 @@ import {
 import Filters from "../../Elements/Helper/Filters";
 import Categories from "../../Elements/Categories";
 import Parameters from "../../Elements/Parameters";
-import { fetchArticleList, updateArticle } from "../../../actions";
+import { fetchArticleList, updateArticle, setStep } from "../../../actions";
 import ArticleCreate from "./ArticleCreate";
 
 //TODO: Filters not working yet
 
 const ArticleList = props => {
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(null);
@@ -30,7 +32,6 @@ const ArticleList = props => {
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [step, setStep] = useState(0);
   const [id, setId] = useState(null);
   const [type, setType] = useState(null);
   const [filter, setFilter] = useState(true);
@@ -97,7 +98,7 @@ const ArticleList = props => {
           <Button
             type="link"
             onClick={() => {
-              setStep(1);
+              dispatch(setStep(1));
               setId(record.id);
               setShowModal(true);
             }}
@@ -309,7 +310,7 @@ const ArticleList = props => {
             shape="round"
             type="primary"
             onClick={() => {
-              setStep(0);
+              dispatch(setStep(0));
               setShowModal(true);
             }}
           >
@@ -348,7 +349,7 @@ const ArticleList = props => {
         closable={true}
         width="1000px"
       >
-        <ArticleCreate step={step} id={id} />
+        <ArticleCreate id={id} />
       </Modal>
     </div>
   );

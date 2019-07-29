@@ -14,7 +14,7 @@ const MapCategoriesArticle = props => {
   const [parameters, setParameters] = useState([]);
   const [tags, setTags] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [done, setDone] = useState(false)
+  const [done, setDone] = useState(false);
 
   const user = useSelector(state => state.userAuth);
 
@@ -43,11 +43,11 @@ const MapCategoriesArticle = props => {
         setLoaded(true);
       };
       fetchDetail();
-    } 
+    }
   }, [props.id, user.Authorization]);
 
   if (done) {
-    return <div>All done. Please close the modal now.</div>
+    return <div>All done. Please close the modal now.</div>;
   }
 
   const onChangeCategory = val => {
@@ -85,7 +85,7 @@ const MapCategoriesArticle = props => {
     const response = await updateArticle(props.id, user.Authorization, values);
     if (response.status === 200) {
       message.success("Article updated successfully");
-      setDone(true)
+      setDone(true);
     }
   };
 

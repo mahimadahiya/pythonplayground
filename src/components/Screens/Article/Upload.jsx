@@ -13,12 +13,14 @@ import {
   Row,
   Col
 } from "antd";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import MButton from "../../Elements/MButton";
-import { addArticle } from "../../../actions";
+import { addArticle, setStep } from "../../../actions";
 import { quillFormats, quillModules } from "../../Elements/Toolbar";
 
 const ArticleUpload = props => {
+  const dispatch = useDispatch();
+
   const [type, setType] = useState("image");
   const [html, setHTML] = useState();
   const [url, setURL] = useState("");
@@ -73,7 +75,7 @@ const ArticleUpload = props => {
         if (!data.err) {
           props.setId(data.id);
           message.success("Article created successfully");
-          props.setStep(1);
+          dispatch(setStep(1));
         }
       } else {
         console.log(err);
