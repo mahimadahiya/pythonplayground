@@ -12,10 +12,9 @@ function clean(obj) {
   }
 }
 
-const [name, setName] = useState(null);
-
 const TagCreate = props => {
   const user = useSelector(state => state.userAuth);
+  const [name, setName] = useState(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
