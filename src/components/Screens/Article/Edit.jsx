@@ -14,20 +14,16 @@ const ArticleEdit = props => {
   const [gender, setGender] = useState(null);
   const [region, setRegion] = useState([]);
   const [state, setState] = useState([]);
+  const [details, setDetails] = useState(null);
   const [contentComplexityLevel, setContentComplexityLevel] = useState(null);
   const [loading, setLoading] = useState(true);
   const user = useSelector(state => state.userAuth);
-
   useEffect(() => {
+    props.setStep(1);
     const fetchDetails = async () => {
       if (props.id) {
         const data = await fetchArticleDetail(props.id, user.Authorization);
-        console.log(data);
-        props.form.setFieldsValue({
-          name: data.Articles.name,
-          takeaway: data.Articles.takeaway,
-          objective: data.Articles.objective
-        });
+        setDetails(data.Articles);
         setGender(data.Articles.gender);
         setComplexity(data.Articles.complexity);
         setLoading(false);
@@ -35,7 +31,7 @@ const ArticleEdit = props => {
     };
 
     fetchDetails();
-  }, []);
+  }, [user, props.id]);
 
   const onChangeGender = val => {
     setGender(val);
@@ -66,7 +62,6 @@ const ArticleEdit = props => {
           user.Authorization,
           values
         );
-        console.log(response);
         message.success("Article updated successfully");
         props.setStep(2);
       } else {
@@ -93,14 +88,19 @@ const ArticleEdit = props => {
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", {
-              rules: [{ required: true, message: "Name is required" }]
+              rules: [{ required: true, message: "Name is required" }],
+              initialValue: details ? details.name : null
             })(<Input placeholder="Name" />)}
           </Form.Item>
           <Form.Item label="Objective">
-            {getFieldDecorator("objective")(<Input placeholder="Objective" />)}
+            {getFieldDecorator("objective", {
+              initialValue: details ? details.objective : null
+            })(<Input placeholder="Objective" />)}
           </Form.Item>
           <Form.Item label="Takeaway">
-            {getFieldDecorator("takeaway")(<Input placeholder="Takeaway" />)}
+            {getFieldDecorator("takeaway", {
+              initialValue: details ? details.takeaway : null
+            })(<Input placeholder="Takeaway" />)}
           </Form.Item>
           <Row gutter={48}>
             <Col span={8}>

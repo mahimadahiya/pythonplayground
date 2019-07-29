@@ -5,8 +5,6 @@ import { fetchTagDetails } from "../../../../actions";
 
 const TagDetails = props => {
   const user = useSelector(state => state.userAuth);
-
-  const [loading, setLoading] = useState(true);
   const [id, setId] = useState(null);
   const [name, setName] = useState(null);
 
@@ -18,7 +16,6 @@ const TagDetails = props => {
       );
       setId(details.result.tag.id);
       setName(details.result.tag.name);
-      setLoading(false);
     };
     fetchDetails();
   }, []);

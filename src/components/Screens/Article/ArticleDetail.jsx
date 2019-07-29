@@ -24,7 +24,7 @@ const ArticleDetail = props => {
       setTag(data.tags);
     };
     fetchDetails();
-  }, []);
+  }, [props.match.params.id, user]);
 
   const renderFields = () => {
     return (

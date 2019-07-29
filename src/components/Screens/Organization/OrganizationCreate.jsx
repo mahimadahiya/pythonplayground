@@ -20,27 +20,23 @@ const OrganizationCreate = props => {
   const [region, setRegion] = useState(null);
   const [course, setCourse] = useState(null);
   const [industry, setIndustry] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      setLoading(true);
       const details = await fetchOrganizationDetails(
         user.Authorization,
         props.id
       );
-      props.form.setFieldsValue({
-        name: details.result.organization.name
-      });
+      setName(details.result.organization.name);
       setRegion(details.result.organization.region_id);
       setCourse(details.result.organization.course_id);
       setIndustry(details.result.organization.industry_type_id);
-      setLoading(false);
     };
     if (props.id) {
       fetchDetails();
     }
-  }, [fetchOrganizationDetails, props.id]);
+  }, [props.id, user]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -80,7 +76,8 @@ const OrganizationCreate = props => {
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", {
-              rules: [{ required: true, message: "Name is required" }]
+              rules: [{ required: true, message: "Name is required" }],
+              initialValue: name
             })(<Input placeholder="Enter name of organization" />)}
           </Form.Item>
           <Region mode="single" onChange={onChangeRegion} value={region} />

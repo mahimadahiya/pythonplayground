@@ -5,8 +5,6 @@ import { fetchParameterDetails } from "../../../../actions";
 
 const ParameterDetails = props => {
   const user = useSelector(state => state.userAuth);
-
-  const [loading, setLoading] = useState(true);
   const [id, setId] = useState(null);
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
@@ -24,7 +22,6 @@ const ParameterDetails = props => {
       setDescription(details.result.parameter.description);
       setIcon(details.result.parameter.icon_url);
       setImage(details.result.parameter.image_url);
-      setLoading(false);
     };
     fetchDetails();
   }, []);

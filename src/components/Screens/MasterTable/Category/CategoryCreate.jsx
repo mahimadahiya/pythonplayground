@@ -16,24 +16,18 @@ function clean(obj) {
 const CategoryCreate = props => {
   const user = useSelector(state => state.userAuth);
   const [iconUrl, setIconUrl] = useState(null);
-
+  const [details, setDetails] = useState(null);
   useEffect(() => {
     const fetchDetails = async () => {
-      console.log("herer");
       const details = await fetchCategoryDetails(user.Authorization, props.id);
-      console.log(props.form.getFieldValue("name"));
-
-      props.form.setFieldsValue({
-        name: details.result.Category.name,
-        description: details.result.Category.description
-      });
+      setDetails(details.result.Category);
       setIconUrl(details.result.Category.icon_url);
     };
 
     if (props.id) {
       fetchDetails();
     }
-  }, [fetchCategoryDetails, props.id]);
+  }, [user, props.id]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -94,13 +88,14 @@ const CategoryCreate = props => {
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", {
-              rules: [{ required: true, message: "Name is required" }]
+              rules: [{ required: true, message: "Name is required" }],
+              initialValue: details ? details.name : null
             })(<Input placeholder="Enter name of category" />)}
           </Form.Item>
           <Form.Item label="Description">
-            {getFieldDecorator("description")(
-              <Input placeholder="Enter description of category" />
-            )}
+            {getFieldDecorator("description", {
+              initialValue: details ? details.description : null
+            })(<Input placeholder="Enter description of category" />)}
           </Form.Item>
           <Form.Item label="Icon">
             <Upload {...uploadProps} onChange={onUploadIcon}>

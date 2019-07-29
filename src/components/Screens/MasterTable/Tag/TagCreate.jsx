@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Input,
-  message,
-  Card,
-  Upload,
-  Button,
-  Icon,
-  Checkbox
-} from "antd";
+import { Form, Input, message, Card } from "antd";
 import { useSelector } from "react-redux";
 import MButton from "../../../Elements/MButton";
 import { fetchTagDetails, createTag, editTag } from "../../../../actions";
@@ -23,18 +14,15 @@ function clean(obj) {
 
 const TagCreate = props => {
   const user = useSelector(state => state.userAuth);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      setLoading(true);
       const details = await fetchTagDetails(user.Authorization, props.id);
 
       props.form.setFieldsValue({
         name: details.result.tag.name
       });
     };
-    setLoading(false);
 
     if (props.id) {
       fetchDetails();

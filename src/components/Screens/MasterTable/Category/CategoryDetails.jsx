@@ -5,8 +5,6 @@ import { fetchCategoryDetails } from "../../../../actions";
 
 const CategoryDetails = props => {
   const user = useSelector(state => state.userAuth);
-
-  const [loading, setLoading] = useState(true);
   const [id, setId] = useState(null);
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
@@ -22,7 +20,6 @@ const CategoryDetails = props => {
       setName(details.result.Category.name);
       setDescription(details.result.Category.description);
       setIcon(details.result.Category.icon_url);
-      setLoading(false);
     };
     fetchDetails();
   }, []);
