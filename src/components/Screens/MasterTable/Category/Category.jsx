@@ -10,7 +10,6 @@ import {
   Modal,
   Button,
   Divider,
-  Icon,
   Popconfirm
 } from "antd";
 import { fetchCategoryList, deleteCategory } from "../../../../actions";

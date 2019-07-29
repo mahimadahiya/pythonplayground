@@ -16,12 +16,10 @@ function clean(obj) {
 const CategoryCreate = props => {
   const user = useSelector(state => state.userAuth);
   const [iconUrl, setIconUrl] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
       console.log("herer");
-      setLoading(true);
       const details = await fetchCategoryDetails(user.Authorization, props.id);
       console.log(props.form.getFieldValue("name"));
 
@@ -31,7 +29,6 @@ const CategoryCreate = props => {
       });
       setIconUrl(details.result.Category.icon_url);
     };
-    setLoading(false);
 
     if (props.id) {
       fetchDetails();

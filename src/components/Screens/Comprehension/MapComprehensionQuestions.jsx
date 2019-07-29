@@ -148,7 +148,7 @@ const MapComprehensionQuestions = props => {
         comprehensionDetail.comprehension.id
       )
     );
-  }, [parameters, categories, user, comprehensionDetail, dispatch]);
+  }, [parameters, categories, user, comprehensionDetail, tags, dispatch]);
   if (mappedQuestions && !selectedQuestions) {
     setSelectedQuestions(mappedQuestions);
     setLoadingSelectedQuestions(false);

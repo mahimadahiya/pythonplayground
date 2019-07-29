@@ -1,6 +1,3 @@
-import { Quill } from "react-quill";
-let font = Quill.import("formats/font");
-console.log(font);
 export const quillModules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],

@@ -11,17 +11,15 @@ const Courses = props => {
     const fetchData = async () => {
       const data = await fetchCourses(user.Authorization);
       setCourses(data);
-      props.form.setFieldsValue({
-        course: props.value
-      });
     };
     fetchData();
-  }, [user, props.value, props.form.setFieldsValue]);
+  }, [user]);
   return (
     <div>
       <Form.Item label="Course">
         {props.form.getFieldDecorator("course", {
-          rules: [{ required: true, message: "Course is required" }]
+          rules: [{ required: true, message: "Course is required" }],
+          initialValue: props.value
         })(
           <Select placeholder="Select a course" onChange={props.onChange}>
             {courses.length > 0 &&

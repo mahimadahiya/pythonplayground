@@ -15,14 +15,14 @@ const OrganizationDetails = props => {
       setDetails(data.result);
     };
     fetchDetails();
-  }, [user, fetchOrganizationDetails]);
+  }, [user, props.match.params.id]);
   return (
     <div>
       <Card title="Organization details" loading={!details}>
         {!details ? null : (
           <>
             <Descriptions bordered size="small">
-              <Descriptions.Item label="Organization ID" >
+              <Descriptions.Item label="Organization ID">
                 {details.organization.id}
               </Descriptions.Item>
               <Descriptions.Item label="Name">

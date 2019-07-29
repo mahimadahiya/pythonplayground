@@ -11,18 +11,16 @@ const Industries = props => {
     const fetchData = async () => {
       const data = await fetchIndustries(user.Authorization);
       setIndustries(data);
-      props.form.setFieldsValue({
-        industry: props.value
-      });
     };
     fetchData();
-  }, [user, props.value, props.form.setFieldsValue]);
+  }, [user]);
   const { getFieldDecorator } = props.form;
   return (
     <div>
       <Form.Item label="Industry">
         {getFieldDecorator("industry", {
-          rules: [{ required: true, message: "Industry is required" }]
+          rules: [{ required: true, message: "Industry is required" }],
+          initialValue: props.value
         })(
           <Select placeholder="Select an industry" onChange={props.onChange}>
             {industries.length > 0 &&
