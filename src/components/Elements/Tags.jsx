@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { Form, Select } from "antd";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchTags } from "../../actions";
-
-const getTags = async (fetchTags, user, parameters) => {
-  await fetchTags(user.Authorization, parameters);
-};
 
 const renderOptions = tags => {
   return tags.map(tag => {
@@ -18,9 +14,15 @@ const renderOptions = tags => {
 };
 
 const Tags = props => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.userAuth);
+  const tags = useSelector(state => state.category.tags);
   useEffect(() => {
-    getTags(props.fetchTags, props.user, props.parameters);
-  }, [props.parameters]);
+    const fetchData = async () => {
+      dispatch(fetchTags(user.Authorization, props.parameters));
+    };
+    fetchData();
+  }, [user, props.parameters, dispatch]);
   return (
     <div>
       <Form.Item label="Tags">
@@ -29,21 +31,11 @@ const Tags = props => {
           onChange={props.onChange}
           value={props.value}
         >
-          {renderOptions(props.tags)}
+          {renderOptions(tags)}
         </Select>
       </Form.Item>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    tags: state.category.tags,
-    user: state.userAuth
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchTags }
-)(Tags);
+export default Tags;
