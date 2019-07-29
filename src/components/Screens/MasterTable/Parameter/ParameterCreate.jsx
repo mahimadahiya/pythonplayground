@@ -15,6 +15,7 @@ import {
   createParameter,
   editParameter,
   fetchParameterDetails
+  // fetchModuleList
 } from "../../../../actions";
 
 function clean(obj) {
@@ -27,26 +28,28 @@ function clean(obj) {
 
 const CategoryCreate = props => {
   const user = useSelector(state => state.userAuth);
+  const [modules, setModules] = useState([]);
   const [iconUrl, setIconUrl] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [sameImage, setSameImage] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      console.log("herer");
-      setLoading(true);
-      const details = await fetchParameterDetails(user.Authorization, props.id);
-      console.log(props.form.getFieldValue("name"));
-
-      props.form.setFieldsValue({
-        name: details.result.parameter.name,
-        description: details.result.parameter.description
-      });
-      setIconUrl(details.result.parameter.icon_url);
-      setImageUrl(details.result.parameter.image_url);
+      // const modules = await fetchModuleList(user.Authorization);
+      // setModules(modules);
+      if (props.id) {
+        const details = await fetchParameterDetails(
+          user.Authorization,
+          props.id
+        );
+        props.form.setFieldsValue({
+          name: details.result.parameter.name,
+          description: details.result.parameter.description
+        });
+        setIconUrl(details.result.parameter.icon_url);
+        setImageUrl(details.result.parameter.image_url);
+      }
     };
-    setLoading(false);
 
     if (props.id) {
       fetchDetails();
@@ -60,6 +63,7 @@ const CategoryCreate = props => {
         const values = {
           name: formValues.name,
           description: formValues.description,
+          module_id: formValues.module_id,
           icon_url: iconUrl,
           image_url: imageUrl,
           flag: 1
@@ -137,6 +141,11 @@ const CategoryCreate = props => {
             {getFieldDecorator("description")(
               <Input placeholder="Enter description of parameter" />
             )}
+          </Form.Item>
+          <Form.Item label="Module ID">
+            {getFieldDecorator("module_id", {
+              rules: [{ required: true, message: "Module ID is required" }]
+            })(<Input placeholder="Enter module id" />)}
           </Form.Item>
           <Form.Item label="Icon">
             <Upload {...uploadProps} onChange={onUploadIcon}>

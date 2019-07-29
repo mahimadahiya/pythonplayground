@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, message, Card } from "antd";
 import { useSelector } from "react-redux";
 import MButton from "../../../Elements/MButton";
@@ -12,22 +12,21 @@ function clean(obj) {
   }
 }
 
+const [name, setName] = useState(null);
+
 const TagCreate = props => {
   const user = useSelector(state => state.userAuth);
 
   useEffect(() => {
     const fetchDetails = async () => {
       const details = await fetchTagDetails(user.Authorization, props.id);
-
-      props.form.setFieldsValue({
-        name: details.result.tag.name
-      });
+      setName(details.result.tag.name);
     };
 
     if (props.id) {
       fetchDetails();
     }
-  }, [fetchTagDetails, props.id]);
+  }, [user, props.id]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -65,7 +64,8 @@ const TagCreate = props => {
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", {
-              rules: [{ required: true, message: "Name is required" }]
+              rules: [{ required: true, message: "Name is required" }],
+              initialValue: name
             })(<Input placeholder="Enter name of Tag" />)}
           </Form.Item>
           <MButton>{props.id ? "Edit" : "Create"}</MButton>

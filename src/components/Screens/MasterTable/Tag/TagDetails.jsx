@@ -18,7 +18,7 @@ const TagDetails = props => {
       setName(details.result.tag.name);
     };
     fetchDetails();
-  }, []);
+  }, [user, props.match.params.id]);
 
   return (
     <div>

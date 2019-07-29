@@ -22,7 +22,7 @@ const CategoryDetails = props => {
       setIcon(details.result.Category.icon_url);
     };
     fetchDetails();
-  }, []);
+  }, [user, props.match.params.id]);
 
   return (
     <div>

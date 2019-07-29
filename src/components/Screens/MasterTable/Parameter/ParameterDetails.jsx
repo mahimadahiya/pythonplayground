@@ -24,7 +24,7 @@ const ParameterDetails = props => {
       setImage(details.result.parameter.image_url);
     };
     fetchDetails();
-  }, []);
+  }, [user, props.match.params.id]);
 
   return (
     <div>
