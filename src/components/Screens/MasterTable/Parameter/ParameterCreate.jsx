@@ -65,7 +65,6 @@ const CategoryCreate = props => {
           name: formValues.name,
           description: formValues.description,
           module_id: formValues.module_id,
-          category_id: category,
           icon_url: iconUrl,
           image_url: imageUrl,
           flag: 1
@@ -73,7 +72,8 @@ const CategoryCreate = props => {
         clean(values);
         if (!props.id) {
           const response = await createParameter(user.Authorization, {
-            fields: JSON.stringify(values)
+            fields: JSON.stringify(values),
+            category_id: category
           });
           if (response.status === 201) {
             message.success("Parameter created successfully");

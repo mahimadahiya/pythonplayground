@@ -99,6 +99,8 @@ import {
   fetchTagList
 } from "./masterActions";
 
+import { fetchModules } from "./moduleActions";
+
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -174,7 +176,8 @@ export {
   fetchTagDetails,
   editTag,
   fetchTagList,
-  setStep
+  setStep,
+  fetchModules
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -270,8 +273,3 @@ export const createUserTrackMapping = (
 };
 
 // ENTITY MANAGEMENT
-
-export const fetchModules = authToken => async dispatch => {
-  const response = await pyLearningApi(authToken).get("module/list/react");
-  dispatch({ type: ACTION_TYPE.FETCH_MODULES, payload: response.data });
-};
