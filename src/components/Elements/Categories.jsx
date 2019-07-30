@@ -33,23 +33,29 @@ const Categories = props => {
   React.useEffect(() => {
     dispatch(fetchCategories(user.Authorization));
   }, [user, dispatch]);
+
+  const { getFieldDecorator } = props.form;
   return (
     <div>
       <Form.Item label="Categories">
-        <Select
-          placeholder="Select a category"
-          onChange={props.onChange}
-          value={props.value}
-          showSearch
-          filterOption={(val, option) =>
-            filterCategories(val, option, categories)
-          }
-        >
-          {renderCategories(categories)}
-        </Select>
+        {getFieldDecorator("category_id", {
+          rules: [{ required: true }],
+          initialValue: props.value
+        })(
+          <Select
+            placeholder="Select a category"
+            onChange={props.onChange}
+            showSearch
+            filterOption={(val, option) =>
+              filterCategories(val, option, categories)
+            }
+          >
+            {renderCategories(categories)}
+          </Select>
+        )}
       </Form.Item>
     </div>
   );
 };
 
-export default Categories;
+export default Form.create()(Categories);

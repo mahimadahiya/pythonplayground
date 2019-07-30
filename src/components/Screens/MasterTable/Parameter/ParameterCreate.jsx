@@ -81,7 +81,8 @@ const CategoryCreate = props => {
         } else {
           const response = await editParameter(user.Authorization, {
             fields: JSON.stringify(values),
-            id: props.id
+            id: props.id,
+            category_id: category
           });
           if (response.status === 200) {
             message.success("Parameter updated successfully");

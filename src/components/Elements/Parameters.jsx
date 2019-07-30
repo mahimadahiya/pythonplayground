@@ -33,23 +33,29 @@ const Parameters = props => {
   useEffect(() => {
     dispatch(fetchParameters(user.Authorization, props.categories));
   }, [user, props.categories, dispatch]);
+
+  const { getFieldDecorator } = props.form;
   return (
     <div>
       <Form.Item label="Parameters">
-        <Select
-          placeholder="Select a parameter"
-          value={props.value}
-          onChange={props.onChange}
-          showSearch
-          filterOption={(val, option) =>
-            filterParameters(val, option, parameters)
-          }
-        >
-          {renderOptions(parameters)}
-        </Select>
+        {getFieldDecorator("parameter_id", {
+          rules: [{ required: true }],
+          initialValue: props.value
+        })(
+          <Select
+            placeholder="Select a parameter"
+            onChange={props.onChange}
+            showSearch
+            filterOption={(val, option) =>
+              filterParameters(val, option, parameters)
+            }
+          >
+            {renderOptions(parameters)}
+          </Select>
+        )}
       </Form.Item>
     </div>
   );
 };
 
-export default Parameters;
+export default Form.create()(Parameters);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, message, Card } from "antd";
 import { useSelector } from "react-redux";
 import MButton from "../../../Elements/MButton";
+import Parameters from "../../../Elements/Parameters";
 import { fetchTagDetails, createTag, editTag } from "../../../../actions";
 
 function clean(obj) {
@@ -15,6 +16,7 @@ function clean(obj) {
 const TagCreate = props => {
   const user = useSelector(state => state.userAuth);
   const [name, setName] = useState(null);
+  const [parameterId, setParameterId] = useState(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -38,7 +40,8 @@ const TagCreate = props => {
         clean(values);
         if (!props.id) {
           const response = await createTag(user.Authorization, {
-            fields: JSON.stringify(values)
+            fields: JSON.stringify(values),
+            parameter_id: parameterId
           });
           if (response.status === 201) {
             message.success("Tag created successfully");
@@ -46,7 +49,8 @@ const TagCreate = props => {
         } else {
           const response = await editTag(user.Authorization, {
             fields: JSON.stringify(values),
-            id: props.id
+            id: props.id,
+            parameter_id: parameterId
           });
           if (response.status === 200) {
             message.success("Tag updated successfully");
@@ -54,6 +58,10 @@ const TagCreate = props => {
         }
       }
     });
+  };
+
+  const onChangeParameter = value => {
+    setParameterId(value);
   };
 
   const { getFieldDecorator } = props.form;
@@ -67,6 +75,11 @@ const TagCreate = props => {
               initialValue: name
             })(<Input placeholder="Enter name of Tag" />)}
           </Form.Item>
+          <Parameters
+            onChange={onChangeParameter}
+            categories={[null]}
+            value={parameterId}
+          />
           <MButton>{props.id ? "Edit" : "Create"}</MButton>
         </Form>
       </Card>
