@@ -195,7 +195,7 @@ class SideBar extends React.Component {
         },
         {
           key: "/map/service-module",
-          label: "Map",
+          label: "Service-Module Mapping",
           onClick: () => history.push("/map/service-module")
         }
       ]

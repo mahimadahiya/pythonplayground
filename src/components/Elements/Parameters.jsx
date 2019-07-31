@@ -45,6 +45,7 @@ const Parameters = props => {
           <Select
             placeholder="Select a parameter"
             onChange={props.onChange}
+            mode={props.mode}
             showSearch
             filterOption={(val, option) =>
               filterParameters(val, option, parameters)

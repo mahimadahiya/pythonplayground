@@ -99,6 +99,8 @@ import {
   fetchTagList
 } from "./masterActions";
 
+import { mapModuleParameter } from "./mappingActions";
+
 import { fetchModules } from "./moduleActions";
 
 export {
@@ -177,7 +179,8 @@ export {
   editTag,
   fetchTagList,
   setStep,
-  fetchModules
+  fetchModules,
+  mapModuleParameter
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
