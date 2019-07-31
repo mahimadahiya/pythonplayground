@@ -22,6 +22,11 @@ const TagCreate = props => {
     const fetchDetails = async () => {
       const details = await fetchTagDetails(user.Authorization, props.id);
       setName(details.result.tag.name);
+      setParameterId(
+        details.result.parameters[0]
+          ? details.result.parameters[0].parameter_id
+          : null
+      );
     };
 
     if (props.id) {

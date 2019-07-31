@@ -177,6 +177,28 @@ class SideBar extends React.Component {
           onClick: () => history.push("/flashcard/map")
         }
       ]
+    },
+    {
+      key: "mapping",
+      icon: "credit-card",
+      label: "Mapping",
+      menuList: [
+        {
+          key: "/map/module-parameter",
+          label: "Module-Parameter Mapping",
+          onClick: () => history.push("/map/module-parameter")
+        },
+        {
+          key: "/map/organization-service",
+          label: "Organization-Service Mapping",
+          onClick: () => history.push("/map/organization-service")
+        },
+        {
+          key: "/map/service-module",
+          label: "Map",
+          onClick: () => history.push("/map/service-module")
+        }
+      ]
     }
   ];
   render() {
