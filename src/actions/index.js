@@ -78,7 +78,8 @@ import {
   fetchOrganizationDetails,
   fetchCourses,
   fetchIndustries,
-  createOrganization
+  createOrganization,
+  fetchAllOrganizations
 } from "./adminOrganizationActions";
 import adminPanelApi from "../apis/adminPanel";
 
@@ -180,7 +181,8 @@ export {
   fetchTagList,
   setStep,
   fetchModules,
-  mapModuleParameter
+  mapModuleParameter,
+  fetchAllOrganizations
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

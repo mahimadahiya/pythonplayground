@@ -1,5 +1,6 @@
 import adminPanelApi from "../apis/adminPanel";
 import qs from "querystring";
+import pyLearningApi from "../apis/pylearning";
 
 export const fetchOrganizationList = async (authToken, values) => {
   let response = null;
@@ -16,6 +17,13 @@ export const fetchOrganizationList = async (authToken, values) => {
     );
   }
   return { list: response.data.results, count: response.data.count };
+};
+
+export const fetchAllOrganizations = async authToken => {
+  const response = await pyLearningApi(authToken).get(
+    "/organization/list/react"
+  );
+  return response.data.result.organization_list;
 };
 
 export const fetchOrganizationDetails = async (authToken, id) => {
