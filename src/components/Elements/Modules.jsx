@@ -40,6 +40,7 @@ const Modules = forwardRef((props, ref) => {
     <Select
       placeholder="Select module(s)"
       onChange={props.onChange}
+      mode={props.mode}
       showSearch
       filterOption={(val, option) => filterModules(val, option)}
     >
