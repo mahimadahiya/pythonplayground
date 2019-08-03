@@ -100,9 +100,11 @@ import {
   fetchTagList
 } from "./masterActions";
 
-import { mapModuleParameter } from "./mappingActions";
+import { mapModuleParameter, mapOrganizationService } from "./mappingActions";
 
 import { fetchModules } from "./moduleActions";
+
+import { fetchAllServices } from "./serviceActions";
 
 export {
   getOrganizationModules,
@@ -182,7 +184,9 @@ export {
   setStep,
   fetchModules,
   mapModuleParameter,
-  fetchAllOrganizations
+  fetchAllOrganizations,
+  fetchAllServices,
+  mapOrganizationService
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

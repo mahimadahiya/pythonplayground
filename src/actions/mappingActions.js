@@ -8,3 +8,11 @@ export const mapModuleParameter = async (authToken, values) => {
   );
   return response;
 };
+
+export const mapOrganizationService = async (authToken, values) => {
+  const response = await pyLearningApi(authToken).post(
+    "/organization/service/mapping/",
+    qs.stringify(values)
+  );
+  return response;
+};

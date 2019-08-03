@@ -1,22 +1,22 @@
 import React, { useEffect, forwardRef, useState } from "react";
 import { Select } from "antd";
 import { useSelector } from "react-redux";
-import { fetchAllOrganizations } from "../../actions";
+import { fetchAllServices } from "../../actions";
 
-const Organizations = forwardRef((props, ref) => {
+const Services = forwardRef((props, ref) => {
   const user = useSelector(state => state.userAuth);
-  const [organizations, setOrganizations] = useState([]);
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const orgs = await fetchAllOrganizations(user.Authorization);
-      setOrganizations(orgs);
+      const orgs = await fetchAllServices(user.Authorization);
+      setServices(orgs);
     };
     fetchData();
   }, [user]);
 
-  const filterOrganizations = (val, option) => {
-    const filteredList = organizations.filter(({ name }) => {
+  const filterServices = (val, option) => {
+    const filteredList = services.filter(({ name }) => {
       if (name.toLowerCase().includes(val) || option.key.includes(val)) {
         return true;
       }
@@ -28,10 +28,10 @@ const Organizations = forwardRef((props, ref) => {
     return false;
   };
 
-  const renderOrganizations = () => {
-    return organizations.map(org => (
-      <Select.Option key={org.id} value={org.id}>
-        {org.name}
+  const renderServices = () => {
+    return services.map(service => (
+      <Select.Option key={service.id} value={service.id}>
+        {service.name}
       </Select.Option>
     ));
   };
@@ -41,11 +41,11 @@ const Organizations = forwardRef((props, ref) => {
       placeholder="Select organization(s)"
       onChange={props.onChange}
       showSearch
-      filterOption={(val, option) => filterOrganizations(val, option)}
+      filterOption={(val, option) => filterServices(val, option)}
     >
-      {renderOrganizations()}
+      {renderServices()}
     </Select>
   );
 });
 
-export default Organizations;
+export default Services;

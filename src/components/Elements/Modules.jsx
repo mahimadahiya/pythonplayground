@@ -15,8 +15,8 @@ const Modules = forwardRef((props, ref) => {
     fetchData();
   }, [user]);
 
-  const filterModules = (val, option, parameters) => {
-    const filteredList = parameters.filter(({ name }) => {
+  const filterModules = (val, option) => {
+    const filteredList = modules.filter(({ name }) => {
       if (name.toLowerCase().includes(val) || option.key.includes(val)) {
         return true;
       }
@@ -41,7 +41,7 @@ const Modules = forwardRef((props, ref) => {
       placeholder="Select module(s)"
       onChange={props.onChange}
       showSearch
-      filterOption={(val, option) => filterModules(val, option, modules)}
+      filterOption={(val, option) => filterModules(val, option)}
     >
       {renderModules()}
     </Select>
