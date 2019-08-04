@@ -153,6 +153,11 @@ class SideBar extends React.Component {
           key: "/tags",
           label: "Tags",
           onClick: () => history.push("/tags")
+        },
+        {
+          key: "/modules",
+          label: "Modules",
+          onClick: () => history.push("/modules")
         }
       ]
     },

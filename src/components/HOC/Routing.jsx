@@ -53,6 +53,7 @@ import CategoryDetails from "../Screens/MasterTable/Category/CategoryDetails";
 import ModuleParameterMapping from "../Screens/Mapping/ModuleParameterMapping";
 import OrganizationServiceMapping from "../Screens/Mapping/OrganizationServiceMapping";
 import ServiceModuleMapping from "../Screens/Mapping/ServiceModuleMapping";
+import ModuleList from "../Screens/Module/List";
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -330,6 +331,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/parameters"
               component={ParameterList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/modules"
+              component={ModuleList}
               user={user}
               exact
             />
