@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Form, Input, Row, Col, Card, message } from "antd";
 import TraitTypes from "../../Elements/TraitTypes";
 import MButton from "../../Elements/MButton";
-import { createTrait } from "../../../actions/psychometricActions";
+import { createTrait } from "../../../actions";
 
 const TraitCreate = props => {
   const user = useSelector(state => state.userAuth);
@@ -25,6 +25,7 @@ const TraitCreate = props => {
         try {
           await createTrait(user.Authorization, values);
           message.success("Created successfully");
+          props.setFilter(true);
         } catch (err) {
           message.error("Internal server error");
         }

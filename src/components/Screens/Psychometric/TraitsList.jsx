@@ -126,7 +126,7 @@ const TraitsList = () => {
         closable={true}
         width="1000px"
       >
-        <TraitCreate />
+        <TraitCreate setFilter={setFilter} />
       </Modal>
     </div>
   );

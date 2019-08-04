@@ -12,3 +12,10 @@ export const createTrait = async (authToken, values) => {
     qs.stringify(values)
   );
 };
+
+export const fetchQuestionBankList = async authToken => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/question/bank/list"
+  );
+  return response.data.result.q_bank_details;
+};
