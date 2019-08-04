@@ -136,7 +136,7 @@ class SideBar extends React.Component {
     },
     {
       key: "master",
-      icon: "credit-card",
+      icon: "table",
       label: "Master Table",
       menuList: [
         {
@@ -184,8 +184,30 @@ class SideBar extends React.Component {
       ]
     },
     {
+      key: "psychometric",
+      icon: "appstore",
+      label: "Psychometric",
+      menuList: [
+        {
+          key: "/traits",
+          label: "Traits",
+          onClick: () => history.push("/traits")
+        },
+        {
+          key: "/map/traits",
+          label: "Map Traits",
+          onClick: () => history.push("/map/traits")
+        },
+        {
+          key: "/map/assessments",
+          label: "Map Assessments",
+          onClick: () => history.push("/map/assessments")
+        }
+      ]
+    },
+    {
       key: "mapping",
-      icon: "credit-card",
+      icon: "heat-map",
       label: "Mapping",
       menuList: [
         {

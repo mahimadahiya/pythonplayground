@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Table, Card, Row, Modal } from "antd";
-import { fetchModules } from "../../../actions";
-import CategoryCreate from "../MasterTable/Category/CategoryCreate";
+import { Table, Card, Row, Modal, Button } from "antd";
+import { fetchTraitsList } from "../../../actions";
+import moment from "moment";
+import { dateFormat } from "../Form/FieldFormats";
+import TraitCreate from "./TraitCreate";
 
-const ModuleList = () => {
+const TraitsList = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [id, setId] = useState(null);
+  // const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
 
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
-      const list = await fetchModules(user.Authorization);
+      const list = await fetchTraitsList(user.Authorization);
       setList(list);
       setLoading(false);
     };
@@ -40,18 +42,21 @@ const ModuleList = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      width: "30%",
+      width: "60%",
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
       }
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      width: "60%",
-      render: text => {
-        return <div style={{ minHeight: "60px" }}>{text}</div>;
+      title: "Updated At",
+      dataIndex: "updated_at",
+      key: "updated_at",
+      render: date => {
+        return (
+          <div style={{ minHeight: "60px" }}>
+            {moment(date).format(dateFormat)}
+          </div>
+        );
       }
     }
     // {
@@ -85,17 +90,14 @@ const ModuleList = () => {
 
   const onCloseModal = () => {
     setShowModal(false);
-    setId(null);
+    // setId(null);
     setFilter(true);
   };
 
   return (
     <div>
-      <Card
-        style={{ marginTop: 20 }}
-        title={<div className="card-title">Module List</div>}
-      >
-        {/* <Row style={{ marginBottom: 20 }}>
+      <Card title={<div className="card-title">Traits List</div>}>
+        <Row style={{ marginBottom: 20 }}>
           <Button
             shape="round"
             type="primary"
@@ -103,9 +105,9 @@ const ModuleList = () => {
               setShowModal(true);
             }}
           >
-            Create Module
+            Create Trait
           </Button>
-        </Row> */}
+        </Row>
         <Row>
           <Table
             loading={loading}
@@ -116,7 +118,7 @@ const ModuleList = () => {
         </Row>
       </Card>
       <Modal
-        title="Create Module"
+        title="Create Trait"
         visible={showModal}
         footer={null}
         destroyOnClose={true}
@@ -124,9 +126,9 @@ const ModuleList = () => {
         closable={true}
         width="1000px"
       >
-        <CategoryCreate id={id} />
+        <TraitCreate />
       </Modal>
     </div>
   );
 };
-export default ModuleList;
+export default TraitsList;
