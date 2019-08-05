@@ -11,19 +11,23 @@ const MapTraitsType2 = props => {
   const [choices, setChoices] = useState({});
 
   const user = useSelector(state => state.userAuth);
+  const traits = useSelector(state => state.trait.traits);
 
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
       const list = await fetchTraitsQuestionsList(user.Authorization, props.id);
+      console.log(traits);
       setList(list);
-      setLoading(false);
     };
+    if (traits.length > 0) {
+      setLoading(false);
+    }
     if (filter) {
       fetchList();
       setFilter(false);
     }
-  }, [user, filter]);
+  }, [user, filter, traits.length]);
 
   const onTraitSelect = async (traitId, choice, questionId) => {
     const newChoices = choices;
@@ -80,6 +84,7 @@ const MapTraitsType2 = props => {
             <div style={{ marginBottom: 5 }}>
               Choice 1:
               <Traits
+                loading={loading}
                 style={{ width: "70%", marginLeft: 10 }}
                 onChange={value =>
                   onTraitSelect(value, "a", record.question_id)
@@ -89,6 +94,7 @@ const MapTraitsType2 = props => {
             <div style={{ marginBottom: 5 }}>
               Choice 2:
               <Traits
+                loading={loading}
                 style={{ width: "70%", marginLeft: 10 }}
                 onChange={value =>
                   onTraitSelect(value, "b", record.question_id)
@@ -98,6 +104,7 @@ const MapTraitsType2 = props => {
             <div style={{ marginBottom: 5 }}>
               Choice 3:
               <Traits
+                loading={loading}
                 style={{ width: "70%", marginLeft: 10 }}
                 onChange={value =>
                   onTraitSelect(value, "c", record.question_id)
@@ -107,6 +114,7 @@ const MapTraitsType2 = props => {
             <div style={{ marginBottom: 5 }}>
               Choice 4:
               <Traits
+                loading={loading}
                 style={{ width: "70%", marginLeft: 10 }}
                 onChange={value =>
                   onTraitSelect(value, "d", record.question_id)
