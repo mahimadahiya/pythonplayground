@@ -11,23 +11,18 @@ const MapTraitsType2 = props => {
   const [choices, setChoices] = useState({});
 
   const user = useSelector(state => state.userAuth);
-  const traits = useSelector(state => state.trait.traits);
 
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
       const list = await fetchTraitsQuestionsList(user.Authorization, props.id);
-      console.log(traits);
       setList(list);
     };
-    if (traits.length > 0) {
-      setLoading(false);
-    }
     if (filter) {
       fetchList();
       setFilter(false);
     }
-  }, [user, filter, traits.length]);
+  }, [user, filter, props.id]);
 
   const onTraitSelect = async (traitId, choice, questionId) => {
     const newChoices = choices;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Select, Form } from "antd";
+import { Card, Form } from "antd";
 import TraitTypes from "../../Elements/TraitTypes";
 import QuestionBankList from "./QuestionBankList";
 

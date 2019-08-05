@@ -22,7 +22,7 @@ const MapTraitsType1 = props => {
       fetchList();
       setFilter(false);
     }
-  }, [user, filter]);
+  }, [user, filter, props.id]);
 
   const onTraitSelect = async (traitId, questionId) => {
     await mapTrait(user.Authorization, {
