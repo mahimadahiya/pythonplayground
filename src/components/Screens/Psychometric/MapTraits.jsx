@@ -20,7 +20,7 @@ const MapTraits = () => {
             onChange={onTypeChange}
           />
         </Form.Item>
-        {type === 1 ? <QuestionBankList /> : null}
+        <QuestionBankList type={type} />
       </Card>
     </div>
   );

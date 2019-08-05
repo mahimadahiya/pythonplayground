@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Modal, Button, Form, message } from "antd";
-import { fetchTraitsQuestionsList, mapTraitType1 } from "../../../actions";
+import { Table, Card, Row, message } from "antd";
+import { fetchTraitsQuestionsList, mapTrait } from "../../../actions";
 import Traits from "../../Elements/Traits";
 
 const MapTraitsType1 = props => {
@@ -25,7 +25,7 @@ const MapTraitsType1 = props => {
   }, [user, filter]);
 
   const onTraitSelect = async (traitId, questionId) => {
-    await mapTraitType1(user.Authorization, {
+    await mapTrait(user.Authorization, {
       type: 1,
       trait_id: traitId,
       question_id: questionId
@@ -49,7 +49,7 @@ const MapTraitsType1 = props => {
       }
     },
     {
-      title: "Actions",
+      title: "Map Trait",
       key: "action",
       width: 360,
       render: record => (

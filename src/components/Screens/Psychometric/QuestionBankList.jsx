@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import { Table, Card, Row, Modal, Button } from "antd";
 import { fetchQuestionBankList } from "../../../actions";
 import MapTraitsType1 from "./MapTraitsType1";
+import MapTraitsType2 from "./MapTraitsType2";
 
-const QuestionBankList = () => {
+const QuestionBankList = props => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
@@ -86,9 +87,13 @@ const QuestionBankList = () => {
         destroyOnClose={true}
         onCancel={onCloseModal}
         closable={true}
-        width="1000px"
+        width="90%"
       >
-        <MapTraitsType1 id={id} />
+        {props.type === 1 ? (
+          <MapTraitsType1 id={id} />
+        ) : (
+          <MapTraitsType2 id={id} />
+        )}
       </Modal>
     </div>
   );

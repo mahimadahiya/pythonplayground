@@ -113,7 +113,7 @@ import {
   createTrait,
   fetchQuestionBankList,
   fetchTraitsQuestionsList,
-  mapTraitType1
+  mapTrait
 } from "./psychometricActions";
 
 import { fetchAllServices } from "./serviceActions";
@@ -204,7 +204,7 @@ export {
   createTrait,
   fetchQuestionBankList,
   fetchTraitsQuestionsList,
-  mapTraitType1
+  mapTrait
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
