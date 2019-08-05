@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Form, Card, Row, Col, Input, message } from "antd";
+import { Form, Card, Row, Col, Input, message, Checkbox } from "antd";
 import Gender from "../../Elements/Gender";
 import MButton from "../../Elements/MButton";
 import ContentComplexityLevel from "../../Elements/ContentComplexityLevel";
@@ -19,6 +19,7 @@ const ArticleEdit = props => {
   const [details, setDetails] = useState(null);
   const [contentComplexityLevel, setContentComplexityLevel] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [handpicked, setHandpicked] = useState(0)
   const user = useSelector(state => state.userAuth);
   useEffect(() => {
     const fetchDetails = async () => {
@@ -27,6 +28,7 @@ const ArticleEdit = props => {
         setDetails(data.Articles);
         setGender(data.Articles.gender);
         setComplexity(data.Articles.complexity);
+        setHandpicked(data.Articles.handpicked)
         setLoading(false);
       }
     };
@@ -55,8 +57,11 @@ const ArticleEdit = props => {
           gender,
           contentComplexityLevels: JSON.stringify(contentComplexityLevel),
           regions: JSON.stringify(region),
-          states: JSON.stringify(state)
+          states: JSON.stringify(state),
+          handpicked: handpicked
+
         };
+        console.log(values)
         await updateArticle(props.id, user.Authorization, values);
         message.success("Article updated successfully");
         dispatch(setStep(2));
@@ -128,6 +133,12 @@ const ArticleEdit = props => {
               />
             </Col>
           </Row>
+          <Form.Item>
+            Handpicked  
+            <span>
+              <Checkbox title="Handpicked" onChange={() => {setHandpicked(1)}} defaultChecked={handpicked}/>
+            </span>
+          </Form.Item>
           <MButton>Submit</MButton>
         </Form>
       </Card>
