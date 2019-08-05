@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Table, Card, Row, Modal, Button } from "antd";
 import { fetchQuestionBankList } from "../../../actions";
-import TraitCreate from "./TraitCreate";
-import MapTraits from "./MapTraits";
+import MapTraitsType1 from "./MapTraitsType1";
 
 const QuestionBankList = () => {
   const [loading, setLoading] = useState(true);
@@ -89,7 +88,7 @@ const QuestionBankList = () => {
         closable={true}
         width="1000px"
       >
-        <MapTraits id={id} />
+        <MapTraitsType1 id={id} />
       </Modal>
     </div>
   );

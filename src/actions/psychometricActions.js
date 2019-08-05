@@ -37,3 +37,10 @@ export const fetchTraitsQuestionsList = async (authToken, id) => {
 
   return response.data.result.question_details;
 };
+
+export const mapTraitType1 = async (authToken, values) => {
+  await adminPanelApi(authToken).post(
+    "/v1/admin/map/trait/option/",
+    qs.stringify(values)
+  );
+};

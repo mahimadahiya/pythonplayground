@@ -54,10 +54,10 @@ import ModuleParameterMapping from "../Screens/Mapping/ModuleParameterMapping";
 import OrganizationServiceMapping from "../Screens/Mapping/OrganizationServiceMapping";
 import ServiceModuleMapping from "../Screens/Mapping/ServiceModuleMapping";
 import ModuleList from "../Screens/Module/List";
-import MapTraits from "../Screens/Psychometric/MapTraits";
 import MapAssessments from "../Screens/Psychometric/MapAssessments";
 import TraitsList from "../Screens/Psychometric/TraitsList";
-import QuestionBankList from "../Screens/Psychometric/QuestionBankList";
+import MapTraits from "../Screens/Psychometric/MapTraits";
+
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
@@ -365,7 +365,7 @@ class Routing extends React.Component {
             />
             <PrivateRoute
               path="/map/traits"
-              component={QuestionBankList}
+              component={MapTraits}
               user={user}
               exact
             />
