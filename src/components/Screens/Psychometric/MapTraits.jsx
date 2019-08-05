@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Modal, Button } from "antd";
-import { fetchQuestionBankList } from "../../../actions";
-import TraitCreate from "./TraitCreate";
+import { Table, Card, Row, Modal, Button, Form } from "antd";
+import { fetchTraitsQuestionsList } from "../../../actions";
+import Traits from "../../Elements/Traits";
 
-const TraitsList = () => {
+const MapTraits = props => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
 
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
-      const list = await fetchQuestionBankList(user.Authorization);
+      const list = await fetchTraitsQuestionsList(user.Authorization, props.id);
       setList(list);
       setLoading(false);
     };
@@ -26,16 +24,18 @@ const TraitsList = () => {
     }
   }, [user, filter]);
 
+  // const onTraitSelect = (questionId)
+
   const column = [
     {
       title: "ID",
-      dataIndex: "question_bank_id",
-      key: "question_bank_id"
+      dataIndex: "question_id",
+      key: "question_id"
     },
     {
-      title: "Description",
-      dataIndex: "question_bank__description",
-      key: "question_bank__description",
+      title: "Text",
+      dataIndex: "question__text",
+      key: "question__text",
       width: "60%",
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
@@ -47,50 +47,28 @@ const TraitsList = () => {
       width: 360,
       render: record => (
         <span>
-          <Button
-            type="link"
-            onClick={() => {
-              setId(record.question_bank_id);
-              setShowModal(true);
-            }}
-          >
-            Map Traits
-          </Button>
+          <Traits
+            style={{ width: "80%" }}
+            onChange={value => onTraitSelect(value, record.id)}
+          />
         </span>
       )
     }
   ];
 
-  const onCloseModal = () => {
-    setShowModal(false);
-    setId(null);
-    setFilter(true);
-  };
-
   return (
     <div>
-      <Card title={<div className="card-title">Question Bank List</div>}>
+      <Card title={<div className="card-title">Questions List</div>}>
         <Row>
           <Table
             loading={loading}
             dataSource={list}
             columns={column}
-            rowKey={row => row.question_bank_id}
+            rowKey={row => row.question_id}
           />
         </Row>
       </Card>
-      <Modal
-        title="Map Traits"
-        visible={showModal}
-        footer={null}
-        destroyOnClose={true}
-        onCancel={onCloseModal}
-        closable={true}
-        width="1000px"
-      >
-        <TraitCreate />
-      </Modal>
     </div>
   );
 };
-export default TraitsList;
+export default MapTraits;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Table, Card, Row, Modal, Button } from "antd";
 import { fetchTraitsList } from "../../../actions";
@@ -9,25 +9,23 @@ import TraitCreate from "./TraitCreate";
 
 const TraitsList = () => {
   const [loading, setLoading] = useState(true);
-  const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
   const [showModal, setShowModal] = useState(false);
   // const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
+  const traits = useSelector(state => state.trait.traits);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchList = async () => {
-      setLoading(true);
-      const list = await fetchTraitsList(user.Authorization);
-      setList(list);
-      setLoading(false);
-    };
     if (filter) {
-      fetchList();
+      setLoading(true);
+      dispatch(fetchTraitsList(user.Authorization));
       setFilter(false);
     }
-  }, [user, filter]);
+  }, [user, filter, dispatch]);
+
+  if (loading && traits.length > 0) setLoading(false);
 
   const column = [
     {
@@ -111,7 +109,7 @@ const TraitsList = () => {
         <Row>
           <Table
             loading={loading}
-            dataSource={list}
+            dataSource={traits}
             columns={column}
             rowKey={row => row.id}
           />
