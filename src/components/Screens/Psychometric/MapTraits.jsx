@@ -24,7 +24,7 @@ const MapTraits = props => {
     }
   }, [user, filter]);
 
-  // const onTraitSelect = (questionId)
+  const onTraitSelect = (traitId, questionId) => {};
 
   const column = [
     {

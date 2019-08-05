@@ -32,7 +32,7 @@ const Parameters = props => {
   const parameters = useSelector(state => state.category.parameters);
   useEffect(() => {
     dispatch(fetchParameters(user.Authorization, props.categories));
-  }, [user, props.categories, dispatch]);
+  }, [user, props.categories.length, dispatch]);
 
   const { getFieldDecorator } = props.form;
   return (

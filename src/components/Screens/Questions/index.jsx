@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import Complexity from "../../Elements/Complexity";
 import { Link } from "react-router-dom";
 import {
   Divider,
@@ -25,6 +26,7 @@ class QuestionList extends React.Component {
     parameterId: null,
     categoryId: null,
     quizType: null,
+    complexity: null,
     status: null,
     offset: 0
   };
@@ -83,6 +85,12 @@ class QuestionList extends React.Component {
     });
   };
 
+  onComplexityChange = val => {
+    this.setState({
+      complexity: val
+    });
+  };
+
   clean(obj) {
     for (var propName in obj) {
       if (obj[propName] === null || obj[propName] === undefined) {
@@ -95,6 +103,7 @@ class QuestionList extends React.Component {
     const data = {
       questionsparameters__parameter_id: this.state.parameterId,
       questionscategories__category_id: this.state.categoryId,
+      complexity: this.state.complexity,
       quiz_type: this.state.quizType,
       status: this.state.status
     };
@@ -104,7 +113,7 @@ class QuestionList extends React.Component {
 
     await this.props.fetchQuestionList(this.props.user.Authorization, {
       searchText: this.state.searchText,
-      fields: fields,
+      fields,
       offset: 0
     });
     this.setState({ loading: false });
@@ -329,6 +338,13 @@ class QuestionList extends React.Component {
           </Row>
           <Row>
             <Form>
+              <Col span={8} style={{ padding: "0 24px" }}>
+                <Complexity
+                  onChange={this.onComplexityChange}
+                  mode="single"
+                  value={this.state.complexity}
+                />
+              </Col>
               <Col span={8} style={{ padding: "0 24px" }}>
                 <Categories
                   onChange={this.onCategoryChange}
