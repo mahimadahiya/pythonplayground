@@ -17,6 +17,7 @@ import Categories from "../../Elements/Categories";
 import Parameters from "../../Elements/Parameters";
 import { fetchArticleList, updateArticle, setStep } from "../../../actions";
 import ArticleCreate from "./ArticleCreate";
+import Complexity from "../../Elements/Complexity";
 
 //TODO: Filters not working yet
 
@@ -28,6 +29,7 @@ const ArticleList = props => {
   const [status, setStatus] = useState(null);
   const [parameterId, setParameterId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
+  const [complexity, setComplexity] = useState(null);
   const [offset, setOffset] = useState(0);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
@@ -44,6 +46,7 @@ const ArticleList = props => {
       const fields = {
         articlesparameters__parameter_id: parameterId,
         articlescategories__category_id: categoryId,
+        complexity,
         status,
         type
       };
@@ -190,6 +193,10 @@ const ArticleList = props => {
     setType(val);
   };
 
+  const onComplexityChange = val => {
+    setComplexity(val);
+  };
+
   const fields = [
     {
       key: "1",
@@ -271,6 +278,13 @@ const ArticleList = props => {
         </Row>
         <Row>
           <Form>
+            <Col span={8} style={{ padding: "0 24px" }}>
+              <Complexity
+                onChange={onComplexityChange}
+                mode="single"
+                value={complexity}
+              />
+            </Col>
             <Col span={8} style={{ padding: "0 24px" }}>
               <Categories
                 onChange={onCategoryChange}
