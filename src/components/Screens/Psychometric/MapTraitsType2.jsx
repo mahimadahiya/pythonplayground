@@ -17,6 +17,7 @@ const MapTraitsType2 = props => {
       setLoading(true);
       const list = await fetchTraitsQuestionsList(user.Authorization, props.id);
       setList(list);
+      setLoading(false);
     };
     if (filter) {
       fetchList();
