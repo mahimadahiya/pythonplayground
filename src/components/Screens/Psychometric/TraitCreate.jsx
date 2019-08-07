@@ -70,7 +70,7 @@ const TraitCreate = props => {
                     <Col span={2}>40%</Col>
                     <Col span={22}>
                       <Input
-                        placeholder="Enter desciption"
+                        placeholder="Enter description"
                         onChange={e => onChangeDesc(e, 40)}
                       />
                     </Col>
@@ -81,7 +81,7 @@ const TraitCreate = props => {
                     <Col span={2}>70%</Col>
                     <Col span={22}>
                       <Input
-                        placeholder="Enter desciption"
+                        placeholder="Enter description"
                         onChange={e => onChangeDesc(e, 70)}
                       />
                     </Col>
@@ -89,10 +89,10 @@ const TraitCreate = props => {
                 </div>
                 <div>
                   <Row gutter={24}>
-                    <Col span={2}>70%</Col>
+                    <Col span={2}>100%</Col>
                     <Col span={22}>
                       <Input
-                        placeholder="Enter desciption"
+                        placeholder="Enter description"
                         onChange={e => onChangeDesc(e, 100)}
                       />
                     </Col>

@@ -66,6 +66,8 @@ const ArticleUpload = props => {
         };
         switch (type) {
           case "image":
+          case "audio":
+          case "video":
             values = { ...values, url };
             break;
           default:
