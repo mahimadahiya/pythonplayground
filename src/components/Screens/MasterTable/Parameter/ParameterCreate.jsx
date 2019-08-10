@@ -17,6 +17,7 @@ import {
   fetchParameterDetails
 } from "../../../../actions";
 import Categories from "../../../Elements/Categories";
+import Modules from "../../../Elements/Modules";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -64,7 +65,7 @@ const CategoryCreate = props => {
         const values = {
           name: formValues.name,
           description: formValues.description,
-          module_id: formValues.module_id,
+          // module_id: formValues.module_id,
           icon_url: iconUrl,
           image_url: imageUrl,
           flag: 1
@@ -73,7 +74,8 @@ const CategoryCreate = props => {
         if (!props.id) {
           const response = await createParameter(user.Authorization, {
             fields: JSON.stringify(values),
-            category_id: category
+            category_id: category,
+            module_id: formValues.module_id
           });
           if (response.status === 201) {
             message.success("Parameter created successfully");
@@ -82,7 +84,8 @@ const CategoryCreate = props => {
           const response = await editParameter(user.Authorization, {
             fields: JSON.stringify(values),
             id: props.id,
-            category_id: category
+            category_id: category,
+            module_id: formValues.module_id
           });
           if (response.status === 200) {
             message.success("Parameter updated successfully");
@@ -155,6 +158,11 @@ const CategoryCreate = props => {
             onChange={onChangeCategory}
             value={category}
           />
+          <Form.Item label="Modules">
+            {getFieldDecorator("module_id", { rules: [{ required: true }] })(
+              <Modules />
+            )}
+          </Form.Item>
           <Form.Item label="Icon">
             <Upload {...uploadProps} onChange={onUploadIcon}>
               <Button>
