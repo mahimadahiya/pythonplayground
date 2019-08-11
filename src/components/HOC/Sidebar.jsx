@@ -122,18 +122,7 @@ class SideBar extends React.Component {
         }
       ]
     },
-    {
-      key: "organizations",
-      icon: "bank",
-      label: "Organizations",
-      menuList: [
-        {
-          key: "/organization",
-          label: "List",
-          onClick: () => history.push("/organization")
-        }
-      ]
-    },
+
     {
       key: "master",
       icon: "table",
@@ -158,6 +147,12 @@ class SideBar extends React.Component {
           key: "/modules",
           label: "Modules",
           onClick: () => history.push("/modules")
+        },
+        {
+          key: "organizations",
+          icon: "bank",
+          label: "Organizations",
+          onClick: () => history.push("/organization")
         }
       ]
     },

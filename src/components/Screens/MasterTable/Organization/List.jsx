@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import Filters from "../../Elements/Helper/Filters";
+import Filters from "../../../Elements/Helper/Filters";
 import { Table, Card, Pagination, Row, Modal, Button } from "antd";
-import { fetchOrganizationList } from "../../../actions";
-import OrganizationCreate from "../Organization/OrganizationCreate";
+import { fetchOrganizationList } from "../../../../actions";
+import OrganizationCreate from "./OrganizationCreate";
 
 const OrganizationList = () => {
   const [loading, setLoading] = useState(true);

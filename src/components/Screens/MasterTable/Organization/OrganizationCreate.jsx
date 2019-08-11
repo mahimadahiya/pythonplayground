@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, message, Card } from "antd";
 import { useSelector } from "react-redux";
-import Region from "../../Elements/Region";
-import Courses from "../../Elements/Courses";
-import Industries from "../../Elements/Industries";
-import MButton from "../../Elements/MButton";
-import { createOrganization, fetchOrganizationDetails } from "../../../actions";
-import Services from "../../Elements/Services";
-import Categories from "../../Elements/Categories";
+import Region from "../../../Elements/Region";
+import Courses from "../../../Elements/Courses";
+import Industries from "../../../Elements/Industries";
+import MButton from "../../../Elements/MButton";
+import {
+  createOrganization,
+  fetchOrganizationDetails
+} from "../../../../actions";
+import Services from "../../../Elements/Services";
+import Categories from "../../../Elements/Categories";
 
 function clean(obj) {
   for (var propName in obj) {

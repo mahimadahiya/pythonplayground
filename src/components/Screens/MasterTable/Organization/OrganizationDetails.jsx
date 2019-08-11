@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Descriptions, Card, List, Row, Col } from "antd";
-import { fetchOrganizationDetails } from "../../../actions";
+import { fetchOrganizationDetails } from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const OrganizationDetails = props => {
