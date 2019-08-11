@@ -94,7 +94,6 @@ class MapCategories extends React.Component {
         content: (
           <Categories
             onChange={this.onChangeCategory}
-            mode="multiple"
             value={this.state.categories}
           />
         )
@@ -104,7 +103,6 @@ class MapCategories extends React.Component {
         content: (
           <Parameters
             onChange={this.onChangeParameter}
-            mode="multiple"
             value={this.state.parameters}
             categories={this.state.categories}
           />
@@ -115,7 +113,6 @@ class MapCategories extends React.Component {
         content: (
           <Tags
             onChange={this.onChangeTags}
-            mode="multiple"
             value={this.state.tags}
             parameters={this.state.parameters}
           />

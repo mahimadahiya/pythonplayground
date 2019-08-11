@@ -107,12 +107,7 @@ const MapCategoriesArticle = props => {
       {
         title: "Tags",
         content: (
-          <Tags
-            onChange={onChangeTags}
-            mode="multiple"
-            value={tags}
-            parameters={parameters}
-          />
+          <Tags onChange={onChangeTags} value={tags} parameters={parameters} />
         )
       }
     ];
