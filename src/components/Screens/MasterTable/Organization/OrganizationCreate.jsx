@@ -50,6 +50,7 @@ const OrganizationCreate = props => {
       if (!err) {
         const values = {
           name: formValues.name,
+          service_id: formValues.service_id,
           course_id: course,
           industry_type_id: industry,
           region_id: region,
