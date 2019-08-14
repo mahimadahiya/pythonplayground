@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, Select } from "antd";
+import React from 'react';
+import { Form, Select } from 'antd';
 
 const Complexity = props => {
   return (
@@ -15,6 +15,7 @@ const Complexity = props => {
           <Select.Option value="2">Easy</Select.Option>
           <Select.Option value="3">Medium</Select.Option>
           <Select.Option value="4">Tough</Select.Option>
+          <Select.Option value="5">Very Tough</Select.Option>
         </Select>
       </Form.Item>
     </div>
