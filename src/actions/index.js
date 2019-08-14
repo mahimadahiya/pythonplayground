@@ -97,6 +97,7 @@ import {
   deleteTag,
   fetchTagDetails,
   editTag,
+  createModule,
   fetchTagList
 } from "./masterActions";
 
@@ -204,7 +205,8 @@ export {
   createTrait,
   fetchQuestionBankList,
   fetchTraitsQuestionsList,
-  mapTrait
+  mapTrait,
+  createModule
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

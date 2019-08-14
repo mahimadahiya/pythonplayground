@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Table, Card, Row, Modal } from "antd";
+import { Table, Card, Row, Modal, Button } from "antd";
 import { fetchModules } from "../../../actions";
-import CategoryCreate from "../MasterTable/Category/CategoryCreate";
+import CreateModule from "./CreateModule";
 
 const ModuleList = () => {
   const [loading, setLoading] = useState(true);
@@ -95,7 +95,7 @@ const ModuleList = () => {
         style={{ marginTop: 20 }}
         title={<div className="card-title">Module List</div>}
       >
-        {/* <Row style={{ marginBottom: 20 }}>
+        <Row style={{ marginBottom: 20 }}>
           <Button
             shape="round"
             type="primary"
@@ -105,7 +105,7 @@ const ModuleList = () => {
           >
             Create Module
           </Button>
-        </Row> */}
+        </Row>
         <Row>
           <Table
             loading={loading}
@@ -124,7 +124,7 @@ const ModuleList = () => {
         closable={true}
         width="1000px"
       >
-        <CategoryCreate id={id} />
+        <CreateModule />
       </Modal>
     </div>
   );

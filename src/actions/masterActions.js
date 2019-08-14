@@ -1,5 +1,6 @@
 import adminPanelApi from "../apis/adminPanel";
 import qs from "querystring";
+import pyLearningApi from "../apis/pylearning";
 
 export const fetchCategoryList = async (authToken, values) => {
   let response = null;
@@ -145,6 +146,14 @@ export const deleteTag = async (authToken, id) => {
   const response = await adminPanelApi(authToken).put(
     `/v1/admin/tag/${id}`,
     qs.stringify({ flag: 0 })
+  );
+  return response;
+};
+
+export const createModule = async (authToken, values) => {
+  const response = await pyLearningApi(authToken).post(
+    "/module/create/react/",
+    qs.stringify(values)
   );
   return response;
 };
