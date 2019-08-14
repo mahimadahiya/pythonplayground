@@ -10,7 +10,6 @@ import {
   fetchOrganizationDetails
 } from "../../../../actions";
 import Services from "../../../Elements/Services";
-import Categories from "../../../Elements/Categories";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -26,7 +25,6 @@ const OrganizationCreate = props => {
   const [course, setCourse] = useState(null);
   const [industry, setIndustry] = useState(null);
   const [name, setName] = useState(null);
-  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -50,15 +48,16 @@ const OrganizationCreate = props => {
       if (!err) {
         const values = {
           name: formValues.name,
-          service_id: formValues.service_id,
           course_id: course,
           industry_type_id: industry,
           region_id: region,
-          category_id: category,
           module_id: formValues.module_id
         };
         clean(values);
-        const response = await createOrganization(user.Authorization, values);
+        const response = await createOrganization(user.Authorization, {
+          fields: JSON.stringify(values),
+          service_id: formValues.service_id
+        });
         if (response.status === 201) {
           message.success("Organization created successfully");
         }
@@ -76,9 +75,6 @@ const OrganizationCreate = props => {
 
   const onChangeIndustry = val => {
     setIndustry(val);
-  };
-  const onChangeCategory = val => {
-    setCategory(val);
   };
 
   const { getFieldDecorator } = props.form;
@@ -102,7 +98,6 @@ const OrganizationCreate = props => {
               <Services />
             )}
           </Form.Item>
-          <Categories onChange={onChangeCategory} value={category} />
 
           <MButton>{props.id ? "Edit" : "Create"}</MButton>
         </Form>

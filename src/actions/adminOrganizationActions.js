@@ -39,7 +39,8 @@ export const createOrganization = async (authToken, values) => {
   const response = await adminPanelApi(authToken).post(
     "/v1/admin/organization/",
     qs.stringify({
-      fields: JSON.stringify(values)
+      fields: values.fields,
+      service_id: values.service_id
     })
   );
   return response;
