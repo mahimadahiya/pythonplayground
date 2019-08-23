@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { Table, Card, Row, Modal, Button } from "antd";
 import { fetchOptionsList } from "../../../actions";
 import moment from "moment";
 import { dateFormat } from "../Form/FieldFormats";
-import TraitCreate from "./TraitCreate";
+import OptionCreate from "./OptionCreate";
 
 const OptionsList = () => {
   const [loading, setLoading] = useState(true);
@@ -133,7 +132,7 @@ const OptionsList = () => {
         closable={true}
         width="1000px"
       >
-        <TraitCreate setFilter={setFilter} />
+        <OptionCreate setFilter={setFilter} />
       </Modal>
     </div>
   );

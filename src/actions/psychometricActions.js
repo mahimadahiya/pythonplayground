@@ -26,6 +26,13 @@ export const createTrait = async (authToken, values) => {
   );
 };
 
+export const createOption = async (authToken, values) => {
+  await adminPanelApi(authToken).post(
+    "/v1/admin/create/option/",
+    qs.stringify(values)
+  );
+};
+
 export const fetchQuestionBankList = async authToken => {
   const response = await adminPanelApi(authToken).get(
     "/v1/admin/question/bank/list"
