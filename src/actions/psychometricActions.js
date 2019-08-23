@@ -11,6 +11,14 @@ export const fetchTraitsList = authToken => async dispatch => {
   });
 };
 
+export const fetchOptionsList = authToken => async dispatch => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/list/option");
+  dispatch({
+    type: ACTION_TYPE.FETCH_OPTIONS_LIST,
+    payload: response.data
+  });
+};
+
 export const createTrait = async (authToken, values) => {
   await adminPanelApi(authToken).post(
     "/v1/admin/create/trait/",

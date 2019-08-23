@@ -2,30 +2,30 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Table, Card, Row, Modal, Button } from "antd";
-import { fetchTraitsList } from "../../../actions";
+import { fetchOptionsList } from "../../../actions";
 import moment from "moment";
 import { dateFormat } from "../Form/FieldFormats";
 import TraitCreate from "./TraitCreate";
 
-const TraitsList = () => {
+const OptionsList = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState(true);
   const [showModal, setShowModal] = useState(false);
   // const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
-  const traits = useSelector(state => state.trait.traits);
+  const options = useSelector(state => state.trait.options);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (filter) {
       setLoading(true);
-      dispatch(fetchTraitsList(user.Authorization));
+      dispatch(fetchOptionsList(user.Authorization));
       setFilter(false);
     }
   }, [user, filter, dispatch]);
 
-  if (loading && traits.length > 0) setLoading(false);
+  if (loading && options.length > 0) setLoading(false);
 
   const column = [
     {
@@ -37,13 +37,22 @@ const TraitsList = () => {
       // }
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Text",
+      dataIndex: "text",
+      key: "text",
       width: "60%",
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
       }
+    },
+    {
+      title: "Option Type",
+      dataIndex: "option_type",
+      key: "option_type"
+      // width: "60%",
+      // render: text => {
+      //   return <div style={{ minHeight: "60px" }}>{text}</div>;
+      // }
     },
     {
       title: "Updated At",
@@ -94,7 +103,7 @@ const TraitsList = () => {
 
   return (
     <div>
-      <Card title={<div className="card-title">Traits List</div>}>
+      <Card title={<div className="card-title">Options List</div>}>
         <Row style={{ marginBottom: 20 }}>
           <Button
             shape="round"
@@ -103,13 +112,13 @@ const TraitsList = () => {
               setShowModal(true);
             }}
           >
-            Create Trait
+            Create Option
           </Button>
         </Row>
         <Row>
           <Table
             loading={loading}
-            dataSource={traits}
+            dataSource={options}
             columns={column}
             rowKey={row => row.id}
           />
@@ -129,4 +138,4 @@ const TraitsList = () => {
     </div>
   );
 };
-export default TraitsList;
+export default OptionsList;
