@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Table, Card, Row, message, Col, Button } from "antd";
-import { fetchTraitsQuestionsList, mapTrait } from "../../../actions";
+import { mapTrait, fetchOptionsList } from "../../../actions";
 import Traits from "../../Elements/Traits";
 
 const MapTraitsType2 = props => {
@@ -11,30 +11,30 @@ const MapTraitsType2 = props => {
   const [choices, setChoices] = useState({});
 
   const user = useSelector(state => state.userAuth);
-
+  const options = useSelector(state => state.trait.options);
+  const dispatch = useDispatch();
   useEffect(() => {
-    const fetchList = async () => {
-      setLoading(true);
-      const list = await fetchTraitsQuestionsList(user.Authorization, props.id);
-      setList(list);
-      setLoading(false);
+    const fetchList = () => {
+      dispatch(fetchOptionsList(user.Authorization));
     };
     if (filter) {
       fetchList();
       setFilter(false);
     }
-  }, [user, filter, props.id]);
+  }, [user, filter, dispatch]);
 
-  const onTraitSelect = async (traitId, choice, questionId) => {
+  if (options.length > 0 && list.length === 0) {
+    setLoading(false);
+    setList(options);
+  }
+
+  const onTraitSelect = async (traitId, choice, id) => {
     const newChoices = choices;
-    if (
-      newChoices[questionId] === undefined ||
-      newChoices[questionId] === null
-    ) {
-      newChoices[questionId] = [];
+    if (newChoices[id] === undefined || newChoices[id] === null) {
+      newChoices[id] = [];
     }
-    newChoices[questionId] = [
-      ...newChoices[questionId],
+    newChoices[id] = [
+      ...newChoices[id],
       {
         option_id: choice,
         trait_id: traitId
@@ -45,7 +45,7 @@ const MapTraitsType2 = props => {
 
   const onSubmit = async id => {
     const values = {
-      question_id: id,
+      id,
       trait_options: JSON.stringify(choices[id])
     };
     await mapTrait(user.Authorization, {
@@ -58,13 +58,13 @@ const MapTraitsType2 = props => {
   const column = [
     {
       title: "ID",
-      dataIndex: "question_id",
-      key: "question_id"
+      dataIndex: "id",
+      key: "id"
     },
     {
       title: "Text",
-      dataIndex: "question__text",
-      key: "question__text",
+      dataIndex: "text",
+      key: "text",
       width: "50%",
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
@@ -82,9 +82,7 @@ const MapTraitsType2 = props => {
               <Traits
                 loading={loading}
                 style={{ width: "70%", marginLeft: 10 }}
-                onChange={value =>
-                  onTraitSelect(value, "a", record.question_id)
-                }
+                onChange={value => onTraitSelect(value, "a", record.id)}
               />
             </div>
             <div style={{ marginBottom: 5 }}>
@@ -92,9 +90,7 @@ const MapTraitsType2 = props => {
               <Traits
                 loading={loading}
                 style={{ width: "70%", marginLeft: 10 }}
-                onChange={value =>
-                  onTraitSelect(value, "b", record.question_id)
-                }
+                onChange={value => onTraitSelect(value, "b", record.id)}
               />
             </div>
             <div style={{ marginBottom: 5 }}>
@@ -102,9 +98,7 @@ const MapTraitsType2 = props => {
               <Traits
                 loading={loading}
                 style={{ width: "70%", marginLeft: 10 }}
-                onChange={value =>
-                  onTraitSelect(value, "c", record.question_id)
-                }
+                onChange={value => onTraitSelect(value, "c", record.id)}
               />
             </div>
             <div style={{ marginBottom: 5 }}>
@@ -112,14 +106,12 @@ const MapTraitsType2 = props => {
               <Traits
                 loading={loading}
                 style={{ width: "70%", marginLeft: 10 }}
-                onChange={value =>
-                  onTraitSelect(value, "d", record.question_id)
-                }
+                onChange={value => onTraitSelect(value, "d", record.id)}
               />
             </div>
           </Col>
           <Col span={4}>
-            <Button onClick={() => onSubmit(record.question_id)}>Submit</Button>
+            <Button onClick={() => onSubmit(record.id)}>Submit</Button>
           </Col>
         </Row>
       )
@@ -128,7 +120,7 @@ const MapTraitsType2 = props => {
 
   return (
     <div>
-      <Card title={<div className="card-title">Questions List</div>}>
+      <Card title={<div className="card-title">Options List</div>}>
         <Row>
           <Table
             loading={loading}

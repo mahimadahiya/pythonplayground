@@ -7,9 +7,7 @@ export const fetchCategoryList = async (authToken, values) => {
 
   if (values.searchText.length > 0) {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/paginated/categories?offset=${values.offset}&search=${
-        values.searchText
-      }`
+      `/v1/admin/paginated/categories?offset=${values.offset}&search=${values.searchText}`
     );
   } else {
     response = await adminPanelApi(authToken).get(
@@ -24,9 +22,7 @@ export const fetchParameterList = async (authToken, values) => {
 
   if (values.searchText.length > 0) {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/paginated/parameters?offset=${values.offset}&search=${
-        values.searchText
-      }`
+      `/v1/admin/paginated/parameters?offset=${values.offset}&search=${values.searchText}`
     );
   } else {
     response = await adminPanelApi(authToken).get(
@@ -36,14 +32,19 @@ export const fetchParameterList = async (authToken, values) => {
   return { list: response.data.results, count: response.data.count };
 };
 
+export const fetchArticleDetail = async (id, authToken) => {
+  const response = await adminPanelApi(authToken).get(
+    `/v1/admin/article/${id}`
+  );
+  return response.data.result;
+};
+
 export const fetchTagList = async (authToken, values) => {
   let response = null;
 
   if (values.searchText.length > 0) {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/paginated/tags?offset=${values.offset}&search=${
-        values.searchText
-      }`
+      `/v1/admin/paginated/tags?offset=${values.offset}&search=${values.searchText}`
     );
   } else {
     response = await adminPanelApi(authToken).get(

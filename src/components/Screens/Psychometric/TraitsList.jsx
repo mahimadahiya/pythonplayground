@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { Table, Card, Row, Modal, Button } from "antd";
 import { fetchTraitsList } from "../../../actions";
 import moment from "moment";
