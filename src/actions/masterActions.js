@@ -157,3 +157,11 @@ export const createModule = async (authToken, values) => {
   );
   return response;
 };
+
+export const createService = async (authToken, values) => {
+  const response = await pyLearningApi(authToken).post(
+    "/service/create/react/",
+    qs.stringify(values)
+  );
+  return response;
+};

@@ -98,7 +98,8 @@ import {
   fetchTagDetails,
   editTag,
   createModule,
-  fetchTagList
+  fetchTagList,
+  createService
 } from "./masterActions";
 
 import {
@@ -210,7 +211,8 @@ export {
   mapTrait,
   createModule,
   fetchOptionsList,
-  createOption
+  createOption,
+  createService
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

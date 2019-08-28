@@ -153,6 +153,11 @@ class SideBar extends React.Component {
           icon: "bank",
           label: "Organizations",
           onClick: () => history.push("/organization")
+        },
+        {
+          key: "/services",
+          label: "Services",
+          onClick: () => history.push('/services')
         }
       ]
     },
