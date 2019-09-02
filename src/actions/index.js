@@ -121,7 +121,7 @@ import {
   mapOption
 } from "./psychometricActions";
 
-import { fetchAllServices } from "./serviceActions";
+import { fetchAllServices, createServiceMap } from "./serviceActions";
 
 export {
   getOrganizationModules,
@@ -214,7 +214,8 @@ export {
   fetchOptionsList,
   createOption,
   createService,
-  mapOption
+  mapOption,
+  createServiceMap
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

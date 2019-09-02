@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect, Switch } from "react-router-dom";
-import ServiceList from '../Screens/MasterTable/Service/List'
+import ServiceList from "../Screens/MasterTable/Service/List";
 import Login from "../Screens/Login/Login";
 import TrackList from "../Screens/ModuleTracks";
 import CreateTrack from "../Screens/ModuleTracks/create";
@@ -58,6 +58,7 @@ import MapAssessments from "../Screens/Psychometric/MapAssessments";
 import TraitsList from "../Screens/Psychometric/TraitsList";
 import MapTraits from "../Screens/Psychometric/MapTraits";
 import OptionsList from "../Screens/Psychometric/OptionsList";
+import ServiceDetails from "../Screens/MasterTable/Service/ServiceDetails";
 
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
@@ -348,6 +349,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/services"
               component={ServiceList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/services/:id"
+              component={ServiceDetails}
               user={user}
               exact
             />

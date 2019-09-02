@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { Table, Card, Row, Modal, Button } from "antd";
-import { fetchAllServices } from "../../../../actions";
+import { fetchAllServices, createServiceMap } from "../../../../actions";
 import CreateService from "./CreateService";
 
 const ModuleList = () => {
@@ -9,14 +10,14 @@ const ModuleList = () => {
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
       const list = await fetchAllServices(user.Authorization);
+      dispatch(createServiceMap(list));
       setList(list);
       setLoading(false);
     };
@@ -24,13 +25,14 @@ const ModuleList = () => {
       fetchList();
       setFilter(false);
     }
-  }, [user, filter]);
+  }, [user, filter, dispatch]);
 
   const column = [
     {
       title: "ID",
       dataIndex: "id",
-      key: "id"
+      key: "id",
+      render: id => <Link to={`/services/${id}`}>{id}</Link>
     },
     {
       title: "Name",
@@ -50,38 +52,10 @@ const ModuleList = () => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
       }
     }
-    // {
-    //   title: "Actions",
-    //   key: "action",
-    //   width: 360,
-    //   render: record => (
-    //     <span>
-    //       <Button
-    //         type="link"
-    //         onClick={() => {
-    //           setId(record.id);
-    //           setShowModal(true);
-    //         }}
-    //       >
-    //         Edit
-    //       </Button>
-    //       <Divider type="vertical" />
-    //       {/* <Popconfirm title="Delete" onConfirm={() => onDelete(record.id)}>
-    //         <Button type="link">Delete</Button>
-    //       </Popconfirm> */}
-    //     </span>
-    //   )
-    // }
   ];
-
-  // const onDelete = async id => {
-  //   await deleteCategory(user.Authorization, id);
-  //   setFilter(true);
-  // };
 
   const onCloseModal = () => {
     setShowModal(false);
-    setId(null);
     setFilter(true);
   };
 
