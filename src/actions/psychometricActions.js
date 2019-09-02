@@ -59,3 +59,10 @@ export const mapTrait = async (authToken, values) => {
     qs.stringify(values)
   );
 };
+
+export const mapOption = async (authToken, values) => {
+  await adminPanelApi(authToken).post(
+    "/v1/admin/map/option/",
+    qs.stringify(values)
+  );
+};

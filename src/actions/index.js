@@ -117,7 +117,8 @@ import {
   fetchTraitsQuestionsList,
   mapTrait,
   fetchOptionsList,
-  createOption
+  createOption,
+  mapOption
 } from "./psychometricActions";
 
 import { fetchAllServices } from "./serviceActions";
@@ -212,7 +213,8 @@ export {
   createModule,
   fetchOptionsList,
   createOption,
-  createService
+  createService,
+  mapOption
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
