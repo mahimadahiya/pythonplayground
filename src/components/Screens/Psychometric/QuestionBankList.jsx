@@ -70,31 +70,33 @@ const QuestionBankList = props => {
 
   return (
     <div>
-      <Card title={<div className="card-title">Question Bank List</div>}>
-        <Row>
-          <Table
-            loading={loading}
-            dataSource={list}
-            columns={column}
-            rowKey={row => row.question_bank_id}
-          />
-        </Row>
-      </Card>
-      <Modal
-        title="Map Traits"
-        visible={showModal}
-        footer={null}
-        destroyOnClose={true}
-        onCancel={onCloseModal}
-        closable={true}
-        width="90%"
-      >
-        {props.type === 1 ? (
-          <MapTraitsType1 id={id} />
-        ) : (
-          <MapTraitsType2 id={id} />
-        )}
-      </Modal>
+      {props.type === 1 ? (
+        <div>
+          <Card title={<div className="card-title">Question Bank List</div>}>
+            <Row>
+              <Table
+                loading={loading}
+                dataSource={list}
+                columns={column}
+                rowKey={row => row.question_bank_id}
+              />
+            </Row>
+          </Card>
+          <Modal
+            title="Map Traits"
+            visible={showModal}
+            footer={null}
+            destroyOnClose={true}
+            onCancel={onCloseModal}
+            closable={true}
+            width="90%"
+          >
+            <MapTraitsType1 id={id} />
+          </Modal>
+        </div>
+      ) : (
+        <MapTraitsType2 />
+      )}
     </div>
   );
 };

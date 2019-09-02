@@ -4,7 +4,7 @@ import { Table, Card, Row, message } from "antd";
 import { fetchOptionsList, mapOption } from "../../../actions";
 import Traits from "../../Elements/Traits";
 
-const MapTraitsType2 = props => {
+const MapTraitsType2 = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
@@ -16,13 +16,13 @@ const MapTraitsType2 = props => {
   useEffect(() => {
     const fetchList = () => {
       setLoading(true);
-      dispatch(fetchOptionsList(user.Authorization, props.id));
+      dispatch(fetchOptionsList(user.Authorization));
     };
     if (filter) {
       fetchList();
       setFilter(false);
     }
-  }, [user, filter, props.id, dispatch]);
+  }, [user, filter, dispatch]);
 
   if (options.length > 0 && list.length === 0) {
     setList(options);
@@ -75,7 +75,7 @@ const MapTraitsType2 = props => {
             loading={loading}
             dataSource={list}
             columns={column}
-            rowKey={row => row.question_id}
+            rowKey={row => row.id}
           />
         </Row>
       </Card>
