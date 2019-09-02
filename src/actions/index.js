@@ -108,7 +108,7 @@ import {
   mapServiceModule
 } from "./mappingActions";
 
-import { fetchModules } from "./moduleActions";
+import { fetchModules, createModuleMap } from "./moduleActions";
 
 import {
   fetchTraitsList,
@@ -215,7 +215,8 @@ export {
   createOption,
   createService,
   mapOption,
-  createServiceMap
+  createServiceMap,
+  createModuleMap
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

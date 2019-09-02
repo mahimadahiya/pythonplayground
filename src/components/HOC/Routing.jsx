@@ -59,6 +59,7 @@ import TraitsList from "../Screens/Psychometric/TraitsList";
 import MapTraits from "../Screens/Psychometric/MapTraits";
 import OptionsList from "../Screens/Psychometric/OptionsList";
 import ServiceDetails from "../Screens/MasterTable/Service/ServiceDetails";
+import ModuleDetails from "../Screens/Module/ModuleDetails";
 
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
@@ -343,6 +344,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/modules"
               component={ModuleList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/modules/:id"
+              component={ModuleDetails}
               user={user}
               exact
             />
