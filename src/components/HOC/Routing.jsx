@@ -60,6 +60,7 @@ import MapTraits from "../Screens/Psychometric/MapTraits";
 import OptionsList from "../Screens/Psychometric/OptionsList";
 import ServiceDetails from "../Screens/MasterTable/Service/ServiceDetails";
 import ModuleDetails from "../Screens/Module/ModuleDetails";
+import JargonsList from "../Screens/Dictionary/Jargons/List";
 
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
@@ -423,6 +424,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/map/service-module"
               component={ServiceModuleMapping}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/jargons"
+              component={JargonsList}
               user={user}
               exact
             />
