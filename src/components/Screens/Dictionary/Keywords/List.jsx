@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Table, Card, Row, Modal, Button } from "antd";
-import { fetchJargonList } from "../../../../actions";
-import CreateJargon from "./Create";
+import { fetchKeywordsList } from "../../../../actions";
+import CreateJargon from "./List";
 
-const JargonsList = () => {
+const KeywordsList = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
@@ -17,7 +17,7 @@ const JargonsList = () => {
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
-      const list = await fetchJargonList(user.Authorization);
+      const list = await fetchKeywordsList(user.Authorization);
       setList(list);
       setLoading(false);
     };
@@ -63,7 +63,7 @@ const JargonsList = () => {
     <div>
       <Card
         style={{ marginTop: 20 }}
-        title={<div className="card-title">Jargons List</div>}
+        title={<div className="card-title">Keywords List</div>}
       >
         <Row style={{ marginBottom: 20 }}>
           <Button
@@ -73,7 +73,7 @@ const JargonsList = () => {
               setShowModal(true);
             }}
           >
-            Create Jargon
+            Create Keyword
           </Button>
         </Row>
         <Row>
@@ -99,4 +99,4 @@ const JargonsList = () => {
     </div>
   );
 };
-export default JargonsList;
+export default KeywordsList;

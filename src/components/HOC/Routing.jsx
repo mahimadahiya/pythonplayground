@@ -61,6 +61,7 @@ import OptionsList from "../Screens/Psychometric/OptionsList";
 import ServiceDetails from "../Screens/MasterTable/Service/ServiceDetails";
 import ModuleDetails from "../Screens/Module/ModuleDetails";
 import JargonsList from "../Screens/Dictionary/Jargons/List";
+import KeywordsList from "../Screens/Dictionary/Keywords/List";
 
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
@@ -430,6 +431,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/jargons"
               component={JargonsList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/keywords"
+              component={KeywordsList}
               user={user}
               exact
             />

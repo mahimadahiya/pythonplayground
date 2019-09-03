@@ -157,7 +157,7 @@ class SideBar extends React.Component {
         {
           key: "/services",
           label: "Services",
-          onClick: () => history.push('/services')
+          onClick: () => history.push("/services")
         }
       ]
     },
@@ -171,32 +171,11 @@ class SideBar extends React.Component {
           label: "Jargons",
           onClick: () => history.push("/jargons")
         },
-        // {
-        //   key: "/parameters",
-        //   label: "Parameter",
-        //   onClick: () => history.push("/parameters")
-        // },
-        // {
-        //   key: "/tags",
-        //   label: "Tags",
-        //   onClick: () => history.push("/tags")
-        // },
-        // {
-        //   key: "/modules",
-        //   label: "Modules",
-        //   onClick: () => history.push("/modules")
-        // },
-        // {
-        //   key: "organizations",
-        //   icon: "bank",
-        //   label: "Organizations",
-        //   onClick: () => history.push("/organization")
-        // },
-        // {
-        //   key: "/services",
-        //   label: "Services",
-        //   onClick: () => history.push('/services')
-        // }
+        {
+          key: "/keywords",
+          label: "Keywords",
+          onClick: () => history.push("/keywords")
+        }
       ]
     },
     {
