@@ -123,7 +123,7 @@ import {
 
 import { fetchAllServices, createServiceMap } from "./serviceActions";
 
-import { fetchJargonList } from "./dictActions";
+import { fetchJargonList, createJargon } from "./dictActions";
 
 export {
   getOrganizationModules,
@@ -219,7 +219,8 @@ export {
   mapOption,
   createServiceMap,
   createModuleMap,
-  fetchJargonList
+  fetchJargonList,
+  createJargon
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

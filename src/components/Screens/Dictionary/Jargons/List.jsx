@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Table, Card, Row, Modal, Button } from "antd";
 import { fetchJargonList } from "../../../../actions";
-import CreateService from "./List";
+import CreateJargon from "./Create";
 
 const JargonsList = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
 
@@ -85,7 +86,7 @@ const JargonsList = () => {
         </Row>
       </Card>
       <Modal
-        title="Create Module"
+        title="Create Jargon"
         visible={showModal}
         footer={null}
         destroyOnClose={true}
@@ -93,7 +94,7 @@ const JargonsList = () => {
         closable={true}
         width="1000px"
       >
-        <CreateService />
+        <CreateJargon id={id} onCloseModal={onCloseModal} />
       </Modal>
     </div>
   );
