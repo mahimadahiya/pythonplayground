@@ -139,6 +139,7 @@ class UserTrackMapping extends React.Component {
     });
     this.setState({
       loadingUsers: false,
+      loadingFlashCards: false,
       offset
     });
   };

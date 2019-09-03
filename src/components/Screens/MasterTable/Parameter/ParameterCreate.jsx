@@ -65,7 +65,6 @@ const CategoryCreate = props => {
         const values = {
           name: formValues.name,
           description: formValues.description,
-          // module_id: formValues.module_id,
           icon_url: iconUrl,
           image_url: imageUrl,
           flag: 1
@@ -82,7 +81,7 @@ const CategoryCreate = props => {
           }
         } else {
           const response = await editParameter(user.Authorization, {
-            fields: JSON.stringify(values),
+            ...values,
             id: props.id,
             category_id: category,
             module_id: formValues.module_id
