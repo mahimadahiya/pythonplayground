@@ -199,14 +199,12 @@ class UserTrackMapping extends React.Component {
               />
             </Form.Item>
             {this.state.entity_type === 1 ? (
-              <Form.Item label="Parameter ID">
+              <Form.Item label="Module ID">
                 {getFieldDecorator("entity_id", {
-                  rules: [
-                    { required: true, message: "Parameter ID is required" }
-                  ]
+                  rules: [{ required: true, message: "Module ID is required" }]
                 })(
                   <Select
-                    placeholder="Select a parameter ID"
+                    placeholder="Select a Module ID"
                     showSearch
                     filterOption={this.filterModules}
                     onChange={this.onEntityChange}
