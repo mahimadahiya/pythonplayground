@@ -27,7 +27,7 @@ const ModuleList = () => {
       fetchList();
       setFilter(false);
     }
-  }, [user, filter]);
+  }, [user, filter, dispatch]);
 
   const column = [
     {

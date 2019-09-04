@@ -18,3 +18,10 @@ export const createJargon = async (authToken, values) => {
   );
   return response;
 };
+
+export const deleteJargon = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).delete(
+    "/v1/admin/jargon/delete/" + id
+  );
+  return response;
+};

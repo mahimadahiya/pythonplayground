@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Modal, Button } from "antd";
-import { fetchJargonList } from "../../../../actions";
+import { Table, Card, Row, Modal, Button, message } from "antd";
+import { fetchJargonList, deleteJargon } from "../../../../actions";
 import CreateJargon from "./Create";
 
 const JargonsList = () => {
@@ -26,6 +26,15 @@ const JargonsList = () => {
       setFilter(false);
     }
   }, [user, filter]);
+
+  const onDelete = async id => {
+    try {
+      await deleteJargon(user.Authorization, id);
+      message.success("Deleted successfully");
+    } catch (err) {
+      message.error("Some error occured");
+    }
+  };
 
   const column = [
     {
@@ -51,6 +60,18 @@ const JargonsList = () => {
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
       }
+    },
+    {
+      title: "Actions",
+      render: record => (
+        <div>
+          <Button
+            icon="delete"
+            type="link"
+            onClick={() => onDelete(record.id)}
+          />
+        </div>
+      )
     }
   ];
 

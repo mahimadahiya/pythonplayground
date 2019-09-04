@@ -126,7 +126,8 @@ import { fetchAllServices, createServiceMap } from "./serviceActions";
 import {
   fetchJargonList,
   createJargon,
-  fetchKeywordsList
+  fetchKeywordsList,
+  deleteJargon
 } from "./dictActions";
 
 export {
@@ -225,7 +226,8 @@ export {
   createModuleMap,
   fetchJargonList,
   createJargon,
-  fetchKeywordsList
+  fetchKeywordsList,
+  deleteJargon
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

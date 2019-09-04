@@ -170,12 +170,12 @@ class SideBar extends React.Component {
           key: "/jargons",
           label: "Jargons",
           onClick: () => history.push("/jargons")
-        },
-        {
-          key: "/keywords",
-          label: "Keywords",
-          onClick: () => history.push("/keywords")
         }
+        // {
+        //   key: "/keywords",
+        //   label: "Keywords",
+        //   onClick: () => history.push("/keywords")
+        // }
       ]
     },
     {
