@@ -47,23 +47,23 @@ class SideBar extends React.Component {
   );
 
   list = [
-    {
-      key: "sub1",
-      icon: "fork",
-      label: "Tracks",
-      menuList: [
-        {
-          key: "/tracks",
-          onClick: () => history.push("/tracks"),
-          label: "List"
-        },
-        {
-          key: "/tracks/map/user",
-          onClick: () => history.push("/tracks/map/user"),
-          label: "Map User"
-        }
-      ]
-    },
+    // {
+    //   key: "sub1",
+    //   icon: "fork",
+    //   label: "Tracks",
+    //   menuList: [
+    //     {
+    //       key: "/tracks",
+    //       onClick: () => history.push("/tracks"),
+    //       label: "List"
+    //     },
+    //     {
+    //       key: "/tracks/map/user",
+    //       onClick: () => history.push("/tracks/map/user"),
+    //       label: "Map User"
+    //     }
+    //   ]
+    // },
     {
       key: "sub2",
       icon: "question-circle",

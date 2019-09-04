@@ -8,7 +8,7 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.props.user.isSignedIn ? <Redirect to="/tracks" /> : <Login />}
+        {this.props.user.isSignedIn ? <Redirect to="/questions" /> : <Login />}
       </React.Fragment>
     );
   }
