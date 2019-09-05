@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Modal, Button, message } from "antd";
+import { Table, Card, Row, Modal, Button, message, Col } from "antd";
 import { fetchJargonList, deleteJargon } from "../../../../actions";
 import CreateJargon from "./Create";
 
@@ -31,9 +31,15 @@ const JargonsList = () => {
     try {
       await deleteJargon(user.Authorization, id);
       message.success("Deleted successfully");
+      setFilter(true);
     } catch (err) {
       message.error("Some error occured");
     }
+  };
+
+  const onEditClick = id => {
+    setId(id);
+    setShowModal(true);
   };
 
   const column = [
@@ -47,7 +53,7 @@ const JargonsList = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      width: "30%",
+      width: "20%",
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
       }
@@ -65,12 +71,28 @@ const JargonsList = () => {
       title: "Actions",
       render: record => (
         <div>
-          <Button
-            icon="delete"
-            type="link"
-            onClick={() => onDelete(record.id)}
-          />
+          <span>
+            <Button type="link" onClick={() => onEditClick(record.id)}>
+              Edit
+            </Button>
+          </span>
+          <span>
+            {" "}
+            <Button
+              icon="delete"
+              type="link"
+              onClick={() => onDelete(record.id)}
+            ></Button>
+          </span>
         </div>
+        // <Row>
+        //   <Col span={1}>
+        //
+        //   </Col>
+        //   <Col span={1}>
+        //
+        //   </Col>
+        // </Row>
       )
     }
   ];
@@ -107,7 +129,7 @@ const JargonsList = () => {
         </Row>
       </Card>
       <Modal
-        title="Create Jargon"
+        title={!id ? "Create Jargon" : "Edit Jargon"}
         visible={showModal}
         footer={null}
         destroyOnClose={true}

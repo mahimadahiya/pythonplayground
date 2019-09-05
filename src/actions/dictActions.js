@@ -32,3 +32,11 @@ export const fetchJargonDetails = async (authToken, id) => {
   });
   return response.data;
 };
+
+export const editJargon = async (authToken, id, values) => {
+  const response = await adminPanelApi(authToken).put(
+    "/v1/admin/jargon/edit/" + id,
+    qs.stringify(values)
+  );
+  return response;
+};
