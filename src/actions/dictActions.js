@@ -25,3 +25,10 @@ export const deleteJargon = async (authToken, id) => {
   );
   return response;
 };
+
+export const fetchJargonDetails = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/jargon/list", {
+    params: { jargon_id: id }
+  });
+  return response.data;
+};

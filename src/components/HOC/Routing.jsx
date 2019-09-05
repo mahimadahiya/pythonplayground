@@ -62,6 +62,7 @@ import ServiceDetails from "../Screens/MasterTable/Service/ServiceDetails";
 import ModuleDetails from "../Screens/Module/ModuleDetails";
 import JargonsList from "../Screens/Dictionary/Jargons/List";
 import KeywordsList from "../Screens/Dictionary/Keywords/List";
+import JargonDetails from "../Screens/Dictionary/Jargons/Details";
 
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
@@ -431,6 +432,12 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/jargons"
               component={JargonsList}
+              user={user}
+              exact
+            />
+            <PrivateRoute
+              path="/jargons/:id"
+              component={JargonDetails}
               user={user}
               exact
             />

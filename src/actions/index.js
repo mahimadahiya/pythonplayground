@@ -127,7 +127,8 @@ import {
   fetchJargonList,
   createJargon,
   fetchKeywordsList,
-  deleteJargon
+  deleteJargon,
+  fetchJargonDetails
 } from "./dictActions";
 
 export {
@@ -227,7 +228,8 @@ export {
   fetchJargonList,
   createJargon,
   fetchKeywordsList,
-  deleteJargon
+  deleteJargon,
+  fetchJargonDetails
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
