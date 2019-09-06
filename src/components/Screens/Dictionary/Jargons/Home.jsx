@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs, Card } from "antd";
 import JargonsList from "./List";
+import JargonClusterList from "./Clusters/List";
 
 const JargonHome = () => {
   return (
@@ -10,7 +11,7 @@ const JargonHome = () => {
           <JargonsList />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Cluster" key="cluster">
-          <JargonsList />
+          <JargonClusterList />
         </Tabs.TabPane>
       </Tabs>
     </Card>

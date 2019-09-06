@@ -131,7 +131,9 @@ import {
   fetchJargonDetails,
   editJargon,
   mapJargon,
-  fetchFMCourses
+  fetchFMCourses,
+  fetchJargonClusterList,
+  createJargonCluster
 } from "./dictActions";
 
 export {
@@ -235,7 +237,9 @@ export {
   fetchJargonDetails,
   editJargon,
   mapJargon,
-  fetchFMCourses
+  fetchFMCourses,
+  fetchJargonClusterList,
+  createJargonCluster
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

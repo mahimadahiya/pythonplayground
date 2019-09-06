@@ -55,3 +55,19 @@ export const fetchFMCourses = async authToken => {
   );
   return response.data;
 };
+
+export const fetchJargonClusterList = async authToken => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/jargon/cluster/list"
+  );
+  return response.data;
+};
+
+export const createJargonCluster = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/jargon/cluster/create/",
+    qs.stringify(values)
+  );
+  return response;
+};
+
