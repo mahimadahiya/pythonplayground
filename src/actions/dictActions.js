@@ -40,3 +40,18 @@ export const editJargon = async (authToken, id, values) => {
   );
   return response;
 };
+
+export const mapJargon = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/jargon/map/",
+    qs.stringify(values)
+  );
+  return response;
+};
+
+export const fetchFMCourses = async authToken => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/fm/course/list"
+  );
+  return response.data;
+};

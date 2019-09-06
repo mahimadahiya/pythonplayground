@@ -129,7 +129,9 @@ import {
   fetchKeywordsList,
   deleteJargon,
   fetchJargonDetails,
-  editJargon
+  editJargon,
+  mapJargon,
+  fetchFMCourses
 } from "./dictActions";
 
 export {
@@ -231,7 +233,9 @@ export {
   fetchKeywordsList,
   deleteJargon,
   fetchJargonDetails,
-  editJargon
+  editJargon,
+  mapJargon,
+  fetchFMCourses
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

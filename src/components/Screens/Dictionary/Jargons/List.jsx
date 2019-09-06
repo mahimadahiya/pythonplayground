@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Modal, Button, message, Col } from "antd";
+import { Table, Card, Row, Modal, Button, message } from "antd";
 import { fetchJargonList, deleteJargon } from "../../../../actions";
 import CreateJargon from "./Create";
+import MapJargon from "./Map";
 
 const JargonsList = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showMapModal, setShowMapModal] = useState(false);
   const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
@@ -42,6 +44,11 @@ const JargonsList = () => {
     setShowModal(true);
   };
 
+  const onMapJargon = id => {
+    setId(id);
+    setShowMapModal(true);
+  };
+
   const column = [
     {
       title: "ID",
@@ -62,7 +69,7 @@ const JargonsList = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width: "60%",
+      width: "50%",
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
       }
@@ -77,22 +84,16 @@ const JargonsList = () => {
             </Button>
           </span>
           <span>
-            {" "}
-            <Button
-              icon="delete"
-              type="link"
-              onClick={() => onDelete(record.id)}
-            ></Button>
+            <Button type="link" onClick={() => onDelete(record.id)}>
+              Delete
+            </Button>
+          </span>
+          <span>
+            <Button type="link" onClick={() => onMapJargon(record.id)}>
+              Map
+            </Button>
           </span>
         </div>
-        // <Row>
-        //   <Col span={1}>
-        //
-        //   </Col>
-        //   <Col span={1}>
-        //
-        //   </Col>
-        // </Row>
       )
     }
   ];
@@ -100,6 +101,10 @@ const JargonsList = () => {
   const onCloseModal = () => {
     setShowModal(false);
     setFilter(true);
+  };
+
+  const onCloseMapModal = () => {
+    setShowMapModal(false);
   };
 
   return (
@@ -138,6 +143,17 @@ const JargonsList = () => {
         width="1000px"
       >
         <CreateJargon id={id} onCloseModal={onCloseModal} />
+      </Modal>
+      <Modal
+        title="Map Jargon"
+        visible={showMapModal}
+        footer={null}
+        destroyOnClose={true}
+        onCancel={onCloseMapModal}
+        closable={true}
+        width="1000px"
+      >
+        <MapJargon id={id} onCloseMapModal={onCloseMapModal} />
       </Modal>
     </div>
   );

@@ -21,7 +21,11 @@ const Courses = props => {
           rules: [{ required: true, message: "Course is required" }],
           initialValue: props.value
         })(
-          <Select placeholder="Select a course" onChange={props.onChange}>
+          <Select
+            placeholder="Select a course"
+            mode={props.mode}
+            onChange={props.onChange}
+          >
             {courses.length > 0 &&
               courses.map(course => (
                 <Select.Option key={course.id} value={course.id}>
