@@ -1,5 +1,6 @@
 import adminPanelApi from "../apis/adminPanel";
 import qs from "querystring";
+import adminUpload from "../apis/adminUpload";
 
 export const fetchJargonList = async authToken => {
   const response = await adminPanelApi(authToken).get("/v1/admin/jargon/list");
@@ -71,3 +72,15 @@ export const createJargonCluster = async (authToken, values) => {
   return response;
 };
 
+export const createKeyword = async (authToken, file, values) => {
+  let formData = new FormData();
+  formData.append("media_file", file);
+  formData.append("name", values.name);
+  formData.append("description", values.description);
+  formData.append("media_type", values.media_type);
+  const response = await adminUpload(authToken).post(
+    "/v1/admin/keyword/create/",
+    formData
+  );
+  return response;
+};

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Table, Card, Row, Modal, Button } from "antd";
 import { fetchKeywordsList } from "../../../../actions";
-import CreateJargon from "./List";
+import CreateKeyword from "./Create";
 
 const KeywordsList = () => {
   const [loading, setLoading] = useState(true);
@@ -94,7 +94,7 @@ const KeywordsList = () => {
         closable={true}
         width="1000px"
       >
-        <CreateJargon id={id} onCloseModal={onCloseModal} />
+        <CreateKeyword id={id} onCloseModal={onCloseModal} />
       </Modal>
     </div>
   );

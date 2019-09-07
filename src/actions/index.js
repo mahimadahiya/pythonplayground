@@ -133,7 +133,8 @@ import {
   mapJargon,
   fetchFMCourses,
   fetchJargonClusterList,
-  createJargonCluster
+  createJargonCluster,
+  createKeyword
 } from "./dictActions";
 
 export {
@@ -239,7 +240,8 @@ export {
   mapJargon,
   fetchFMCourses,
   fetchJargonClusterList,
-  createJargonCluster
+  createJargonCluster,
+  createKeyword
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
