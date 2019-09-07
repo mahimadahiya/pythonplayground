@@ -50,6 +50,14 @@ export const mapJargon = async (authToken, values) => {
   return response;
 };
 
+export const mapKeyword = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/keyword/map/",
+    qs.stringify(values)
+  );
+  return response;
+};
+
 export const fetchFMCourses = async authToken => {
   const response = await adminPanelApi(authToken).get(
     "/v1/admin/fm/course/list"

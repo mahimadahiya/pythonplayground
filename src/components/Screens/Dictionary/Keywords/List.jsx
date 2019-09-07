@@ -4,12 +4,15 @@ import { useSelector } from "react-redux";
 import { Table, Card, Row, Modal, Button } from "antd";
 import { fetchKeywordsList } from "../../../../actions";
 import CreateKeyword from "./Create";
+import MapKeyword from "./Map";
 
 const KeywordsList = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showMapModal, setShowMapModal] = useState(false);
+
   const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
@@ -26,6 +29,11 @@ const KeywordsList = () => {
       setFilter(false);
     }
   }, [user, filter]);
+
+  const onMapKeyword = id => {
+    setId(id);
+    setShowMapModal(true);
+  };
 
   const column = [
     {
@@ -51,12 +59,38 @@ const KeywordsList = () => {
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
       }
+    },
+    {
+      title: "Actions",
+      render: record => (
+        <div>
+          {/* <span>
+            <Button type="link" onClick={() => onEditClick(record.id)}>
+              Edit
+            </Button>
+          </span>
+          <span>
+            <Button type="link" onClick={() => onDelete(record.id)}>
+              Delete
+            </Button>
+          </span> */}
+          <span>
+            <Button type="link" onClick={() => onMapKeyword(record.id)}>
+              Map
+            </Button>
+          </span>
+        </div>
+      )
     }
   ];
 
   const onCloseModal = () => {
     setShowModal(false);
     setFilter(true);
+  };
+
+  const onCloseMapModal = () => {
+    setShowMapModal(false);
   };
 
   return (
@@ -95,6 +129,17 @@ const KeywordsList = () => {
         width="1000px"
       >
         <CreateKeyword id={id} onCloseModal={onCloseModal} />
+      </Modal>
+      <Modal
+        title="Map Keyword"
+        visible={showMapModal}
+        footer={null}
+        destroyOnClose={true}
+        onCancel={onCloseMapModal}
+        closable={true}
+        width="1000px"
+      >
+        <MapKeyword id={id} onCloseMapModal={onCloseMapModal} />
       </Modal>
     </div>
   );

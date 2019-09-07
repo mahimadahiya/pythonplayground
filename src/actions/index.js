@@ -134,7 +134,8 @@ import {
   fetchFMCourses,
   fetchJargonClusterList,
   createJargonCluster,
-  createKeyword
+  createKeyword,
+  mapKeyword
 } from "./dictActions";
 
 export {
@@ -241,7 +242,8 @@ export {
   fetchFMCourses,
   fetchJargonClusterList,
   createJargonCluster,
-  createKeyword
+  createKeyword,
+  mapKeyword
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
