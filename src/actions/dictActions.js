@@ -58,6 +58,13 @@ export const mapKeyword = async (authToken, values) => {
   return response;
 };
 
+export const deleteKeyword = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).delete(
+    "/v1/admin/keyword/delete/" + id
+  );
+  return response;
+};
+
 export const fetchFMCourses = async authToken => {
   const response = await adminPanelApi(authToken).get(
     "/v1/admin/fm/course/list"

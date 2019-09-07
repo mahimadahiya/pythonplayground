@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Modal, Button } from "antd";
-import { fetchKeywordsList } from "../../../../actions";
+import { Table, Card, Row, Modal, Button, message } from "antd";
+import { fetchKeywordsList, deleteKeyword } from "../../../../actions";
 import CreateKeyword from "./Create";
 import MapKeyword from "./Map";
 
@@ -33,6 +33,16 @@ const KeywordsList = () => {
   const onMapKeyword = id => {
     setId(id);
     setShowMapModal(true);
+  };
+
+  const onDelete = async id => {
+    try {
+      await deleteKeyword(user.Authorization, id);
+      message.success("Deleted successfully");
+      setFilter(true);
+    } catch (err) {
+      message.error("Some error occured");
+    }
   };
 
   const column = [
@@ -68,12 +78,12 @@ const KeywordsList = () => {
             <Button type="link" onClick={() => onEditClick(record.id)}>
               Edit
             </Button>
-          </span>
+          </span> */}
           <span>
             <Button type="link" onClick={() => onDelete(record.id)}>
               Delete
             </Button>
-          </span> */}
+          </span>
           <span>
             <Button type="link" onClick={() => onMapKeyword(record.id)}>
               Map

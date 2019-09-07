@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  Card,
-  Form,
-  Input,
-  message,
-  Icon,
-  Switch,
-  Select,
-  Row,
-  Col
-} from "antd";
+import { Card, Form, Input, message, Icon, Select, Row, Col } from "antd";
 import MButton from "../../../Elements/MButton";
 import { createKeyword } from "../../../../actions";
 
