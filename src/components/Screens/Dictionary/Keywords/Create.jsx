@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Card, Form, Input, message, Icon } from "antd";
+import {
+  Card,
+  Form,
+  Input,
+  message,
+  Icon,
+  Switch,
+  Select,
+  Row,
+  Col
+} from "antd";
 import MButton from "../../../Elements/MButton";
 import { createKeyword } from "../../../../actions";
 
@@ -16,11 +26,7 @@ const CreateKeyword = props => {
           message.error("No file selected");
         } else {
           try {
-            await createKeyword(user.Authorization, file, {
-              ...formProps,
-              media_type: "image"
-            });
-
+            await createKeyword(user.Authorization, file, formProps);
             message.success("Created successfully");
             props.onCloseModal();
           } catch (err) {
@@ -50,29 +56,46 @@ const CreateKeyword = props => {
               <Input />
             )}
           </Form.Item>
-          <div style={{ marginBottom: 15 }}>
-            <label>
-              <Input
-                type="file"
-                style={{ display: "none" }}
-                onChange={filechangeHandler}
-              />
-              <span
-                style={{
-                  background: "#1890ff",
-                  color: "#fff",
-                  fontWeight: 400,
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  padding: "4px 8px",
-                  borderRadius: "4px"
-                }}
-              >
-                <Icon type="upload" style={{ paddingRight: "5px" }} />
-                Upload Media
-              </span>
-            </label>
-          </div>
+          <Row gutter={48}>
+            <Col span={5}>
+              <Form.Item label="Media type">
+                {getFieldDecorator("media_type", {
+                  rules: [{ required: true }]
+                })(
+                  <Select defaultValue="image">
+                    <Select.Option key="image">Image</Select.Option>
+                    <Select.Option key="audio">Audio</Select.Option>
+                  </Select>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={14}>
+              <div style={{ marginTop: 50, marginBottom: 15 }}>
+                <label>
+                  <Input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={filechangeHandler}
+                  />
+                  <span
+                    style={{
+                      background: "#1890ff",
+                      color: "#fff",
+                      fontWeight: 400,
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      padding: "4px 8px",
+                      borderRadius: "4px"
+                    }}
+                  >
+                    <Icon type="upload" style={{ paddingRight: "5px" }} />
+                    Upload Media
+                  </span>
+                </label>
+              </div>
+            </Col>
+          </Row>
+
           <MButton>{props.id ? "Edit" : "Create"}</MButton>
         </Form>
       </Card>
