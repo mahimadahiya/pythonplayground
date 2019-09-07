@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Modal, Button, message } from "antd";
+import { Table, Card, Row, Modal, Button } from "antd";
 import CreateJargonCluster from "./Create";
 import { fetchJargonClusterList } from "../../../../../actions";
 
@@ -84,7 +84,7 @@ const JargonClusterList = () => {
         style={{ marginTop: 20 }}
         title={<div className="card-title">Jargon Cluster List</div>}
       >
-        {/* <Row style={{ marginBottom: 20 }}>
+        <Row style={{ marginBottom: 20 }}>
           <Button
             shape="round"
             type="primary"
@@ -94,7 +94,7 @@ const JargonClusterList = () => {
           >
             Create Jargon Cluster
           </Button>
-        </Row> */}
+        </Row>
         <Row>
           <Table
             loading={loading}

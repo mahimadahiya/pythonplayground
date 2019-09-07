@@ -60,7 +60,6 @@ import MapTraits from "../Screens/Psychometric/MapTraits";
 import OptionsList from "../Screens/Psychometric/OptionsList";
 import ServiceDetails from "../Screens/MasterTable/Service/ServiceDetails";
 import ModuleDetails from "../Screens/Module/ModuleDetails";
-import JargonsList from "../Screens/Dictionary/Jargons/List";
 import KeywordsList from "../Screens/Dictionary/Keywords/List";
 import JargonDetails from "../Screens/Dictionary/Jargons/Details";
 import JargonHome from "../Screens/Dictionary/Jargons/Home";

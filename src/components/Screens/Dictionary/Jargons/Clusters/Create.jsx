@@ -1,43 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Card, Form, Input, message } from "antd";
+import { Card, Form, message, Select } from "antd";
 import MButton from "../../../../Elements/MButton";
 import {
-  createJargon,
-  fetchJargonDetails,
-  editJargon
+  fetchJargonList,
+  fetchKeywordsList,
+  createJargonCluster
 } from "../../../../../actions";
 
 const CreateJargonCluster = props => {
   const user = useSelector(state => state.userAuth);
-  const [jargon, setJargon] = useState({ name: "", description: "" });
+  const [jargonList, setJargonList] = useState([]);
+  const [keywordsList, setKeywordsList] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const fetchDetails = async () => {
+    const fetchList = async () => {
       setLoading(true);
-      const data = await fetchJargonDetails(user.Authorization, props.id);
-      const jargon = data.result.jargon_details;
-      setJargon(jargon);
+      let data = await fetchJargonList(user.Authorization);
+      setJargonList(data);
+      data = await fetchKeywordsList(user.Authorization);
+      setKeywordsList(data);
       setLoading(false);
     };
-
-    if (props.id) {
-      fetchDetails();
-    }
-  }, [user.Authorization, props.id]);
+    fetchList();
+  }, [user.Authorization]);
 
   const onSubmit = e => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
       if (!err) {
         try {
-          if (!props.id) {
-            await createJargon(user.Authorization, formProps);
-            message.success("Created successfully");
-          } else {
-            await editJargon(user.Authorization, props.id, formProps);
-            message.success("Updated successfully");
-          }
+          await createJargonCluster(user.Authorization, {
+            ...formProps,
+            keyword_id_list: JSON.stringify(formProps.keyword_id_list)
+          });
+          message.success("Created successfully");
           props.onCloseModal();
         } catch (err) {
           message.error("Internal server error");
@@ -51,19 +48,31 @@ const CreateJargonCluster = props => {
     <div>
       <Card loading={loading}>
         <Form onSubmit={onSubmit}>
-          <Form.Item label="Name">
-            {getFieldDecorator("name", {
-              rules: [{ required: true }],
-              initialValue: jargon.name
-            })(<Input />)}
+          <Form.Item label="Jargon">
+            {getFieldDecorator("jargon_id", { rules: [{ required: true }] })(
+              <Select>
+                {jargonList.map(jargon => (
+                  <Select.Option key={jargon.id} value={jargon.id}>
+                    {jargon.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
           </Form.Item>
-          <Form.Item label="Description">
-            {getFieldDecorator("description", {
-              rules: [{ required: true }],
-              initialValue: jargon.description
-            })(<Input />)}
+          <Form.Item label="Keywords">
+            {getFieldDecorator("keyword_id_list", {
+              rules: [{ required: true }]
+            })(
+              <Select mode="multiple">
+                {keywordsList.map(keyword => (
+                  <Select.Option key={keyword.id} value={keyword.id}>
+                    {keyword.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
           </Form.Item>
-          <MButton>{props.id ? "Edit" : "Create"}</MButton>
+          <MButton>Create</MButton>
         </Form>
       </Card>
     </div>
