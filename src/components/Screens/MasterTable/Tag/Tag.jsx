@@ -165,7 +165,7 @@ const TagList = () => {
         closable={true}
         width="1000px"
       >
-        <TagCreate id={id} />
+        <TagCreate id={id} onCloseModal={onCloseModal} />
       </Modal>
     </div>
   );

@@ -61,6 +61,7 @@ const TagCreate = props => {
             message.success("Tag updated successfully");
           }
         }
+        props.onCloseModal();
       }
     });
   };
