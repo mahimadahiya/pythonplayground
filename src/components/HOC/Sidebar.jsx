@@ -216,11 +216,6 @@ class SideBar extends React.Component {
           onClick: () => history.push("/map/traits")
         },
         {
-          key: "/map/assessments",
-          label: "Map Assessments",
-          onClick: () => history.push("/map/assessments")
-        },
-        {
           key: "/options",
           label: "Options",
           onClick: () => history.push("/options")

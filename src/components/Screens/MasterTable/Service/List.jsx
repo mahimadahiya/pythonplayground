@@ -63,7 +63,7 @@ const ModuleList = () => {
     <div>
       <Card
         style={{ marginTop: 20 }}
-        title={<div className="card-title">Module List</div>}
+        title={<div className="card-title">Service List</div>}
       >
         <Row style={{ marginBottom: 20 }}>
           <Button
@@ -86,7 +86,7 @@ const ModuleList = () => {
         </Row>
       </Card>
       <Modal
-        title="Create Module"
+        title="Create Service"
         visible={showModal}
         footer={null}
         destroyOnClose={true}

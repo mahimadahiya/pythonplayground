@@ -60,6 +60,7 @@ const OrganizationCreate = props => {
         });
         if (response.status === 201) {
           message.success("Organization created successfully");
+          props.onCloseModal();
         }
       }
     });

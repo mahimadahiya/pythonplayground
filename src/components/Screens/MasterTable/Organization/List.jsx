@@ -56,6 +56,21 @@ const OrganizationList = () => {
       }
     },
     {
+      title: "Course ID",
+      dataIndex: "course",
+      key: "course"
+    },
+    {
+      title: "Region ID",
+      dataIndex: "region",
+      key: "region"
+    },
+    {
+      title: "Industry type",
+      dataIndex: "industry_type",
+      key: "industry_type"
+    },
+    {
       title: "Actions",
       key: "action",
       width: 360,
@@ -146,7 +161,7 @@ const OrganizationList = () => {
         closable={true}
         width="1000px"
       >
-        <OrganizationCreate id={id} />
+        <OrganizationCreate id={id} onCloseModal={onCloseModal} />
       </Modal>
     </div>
   );
