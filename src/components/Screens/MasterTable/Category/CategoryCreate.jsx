@@ -56,6 +56,7 @@ const CategoryCreate = props => {
             message.success("Category updated successfully");
           }
         }
+        props.onCloseModal();
       }
     });
   };

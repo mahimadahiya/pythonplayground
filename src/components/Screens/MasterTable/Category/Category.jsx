@@ -165,7 +165,7 @@ const CategoryList = () => {
         closable={true}
         width="1000px"
       >
-        <CategoryCreate id={id} />
+        <CategoryCreate id={id} onCloseModal={onCloseModal} />
       </Modal>
     </div>
   );

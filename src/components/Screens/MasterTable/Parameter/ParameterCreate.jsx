@@ -90,6 +90,7 @@ const CategoryCreate = props => {
             message.success("Parameter updated successfully");
           }
         }
+        props.onCloseModal();
       }
     });
   };

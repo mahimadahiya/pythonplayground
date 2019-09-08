@@ -165,7 +165,7 @@ const ParameterList = () => {
         closable={true}
         width="1000px"
       >
-        <ParameterCreate id={id} />
+        <ParameterCreate id={id} onCloseModal={onCloseModal} />
       </Modal>
     </div>
   );
