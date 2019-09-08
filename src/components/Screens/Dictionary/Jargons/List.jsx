@@ -101,10 +101,12 @@ const JargonsList = () => {
   const onCloseModal = () => {
     setShowModal(false);
     setFilter(true);
+    setId(null);
   };
 
   const onCloseMapModal = () => {
     setShowMapModal(false);
+    setId(null);
   };
 
   return (
