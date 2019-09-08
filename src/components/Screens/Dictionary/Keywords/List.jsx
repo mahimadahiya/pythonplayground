@@ -132,7 +132,7 @@ const KeywordsList = () => {
         </Row>
       </Card>
       <Modal
-        title="Create Jargon"
+        title={id ? "Edit" : "Create"}
         visible={showModal}
         footer={null}
         destroyOnClose={true}
