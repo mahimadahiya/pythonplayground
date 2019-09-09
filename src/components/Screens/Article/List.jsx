@@ -80,7 +80,8 @@ const ArticleList = props => {
     categoryId,
     status,
     type,
-    complexity
+    complexity,
+    createdAt
   ]);
 
   const column = [
