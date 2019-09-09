@@ -26,6 +26,7 @@ const TraitCreate = props => {
           await createTrait(user.Authorization, values);
           message.success("Created successfully");
           props.setFilter(true);
+          props.onCloseModal();
         } catch (err) {
           message.error("Internal server error");
         }

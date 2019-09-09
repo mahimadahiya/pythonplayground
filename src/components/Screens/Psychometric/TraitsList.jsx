@@ -10,7 +10,6 @@ const TraitsList = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  // const [id, setId] = useState(null);
 
   const user = useSelector(state => state.userAuth);
   const traits = useSelector(state => state.trait.traits);
@@ -31,9 +30,6 @@ const TraitsList = () => {
       title: "ID",
       dataIndex: "id",
       key: "id"
-      // render: id => {
-      //   return <Link to={`/category/${id}`}>{id}</Link>;
-      // }
     },
     {
       title: "Name",
@@ -87,7 +83,6 @@ const TraitsList = () => {
 
   const onCloseModal = () => {
     setShowModal(false);
-    // setId(null);
     setFilter(true);
   };
 
@@ -123,7 +118,7 @@ const TraitsList = () => {
         closable={true}
         width="1000px"
       >
-        <TraitCreate setFilter={setFilter} />
+        <TraitCreate setFilter={setFilter} onCloseModal={onCloseModal} />
       </Modal>
     </div>
   );

@@ -132,7 +132,7 @@ const OptionsList = () => {
         closable={true}
         width="1000px"
       >
-        <OptionCreate setFilter={setFilter} />
+        <OptionCreate setFilter={setFilter} onCloseModal={onCloseModal} />
       </Modal>
     </div>
   );

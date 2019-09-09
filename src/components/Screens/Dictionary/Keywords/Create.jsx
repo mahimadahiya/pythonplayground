@@ -12,16 +12,12 @@ const CreateKeyword = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
       if (!err) {
-        if (!file) {
-          message.error("No file selected");
-        } else {
-          try {
-            await createKeyword(user.Authorization, file, formProps);
-            message.success("Created successfully");
-            props.onCloseModal();
-          } catch (err) {
-            message.error("Internal server error");
-          }
+        try {
+          await createKeyword(user.Authorization, file, formProps);
+          message.success("Created successfully");
+          props.onCloseModal();
+        } catch (err) {
+          message.error("Internal server error");
         }
       }
     });
