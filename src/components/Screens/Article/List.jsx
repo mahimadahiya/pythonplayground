@@ -10,7 +10,8 @@ import {
   Button,
   Form,
   Col,
-  Popconfirm
+  Popconfirm,
+  DatePicker
 } from "antd";
 import Filters from "../../Elements/Helper/Filters";
 import Categories from "../../Elements/Categories";
@@ -18,6 +19,7 @@ import Parameters from "../../Elements/Parameters";
 import { fetchArticleList, updateArticle, setStep } from "../../../actions";
 import ArticleCreate from "./ArticleCreate";
 import Complexity from "../../Elements/Complexity";
+import moment from "moment";
 
 //TODO: Filters not working yet
 
@@ -36,6 +38,7 @@ const ArticleList = props => {
   const [showModal, setShowModal] = useState(false);
   const [id, setId] = useState(null);
   const [type, setType] = useState(null);
+  const [createdAt, setCreatedAt] = useState(null);
   const [filter, setFilter] = useState(true);
 
   const user = useSelector(state => state.userAuth);
@@ -48,7 +51,8 @@ const ArticleList = props => {
         articlescategories__category_id: categoryId,
         complexity,
         status,
-        type
+        type,
+        updated_at: createdAt ? moment(createdAt).format("YYYY-MM-DD") : null
       };
       clean(fields);
       const result = await fetchArticleList(user.Authorization, {
@@ -101,6 +105,14 @@ const ArticleList = props => {
       title: "Type",
       dataIndex: "type",
       key: "type"
+    },
+    {
+      title: "Created At",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: date => {
+        return moment(date).format("YYYY-MM-DD");
+      }
     },
     {
       title: "Actions",
@@ -208,6 +220,10 @@ const ArticleList = props => {
     setComplexity(val);
   };
 
+  const onSelectDate = val => {
+    setCreatedAt(val);
+  };
+
   const fields = [
     {
       key: "1",
@@ -289,6 +305,13 @@ const ArticleList = props => {
         </Row>
         <Row>
           <Form>
+            <Col span={8} style={{ padding: "0 24px" }}>
+              <Form.Item label="Created At">
+                {getFieldDecorator("created_at", { initalValue: createdAt })(
+                  <DatePicker onChange={onSelectDate} />
+                )}
+              </Form.Item>
+            </Col>
             <Col span={8} style={{ padding: "0 24px" }}>
               <Form.Item label="Complexity">
                 {getFieldDecorator("complexity", { initalValue: complexity })(
