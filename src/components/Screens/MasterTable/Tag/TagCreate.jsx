@@ -81,11 +81,13 @@ const TagCreate = props => {
               initialValue: name
             })(<Input placeholder="Enter name of Tag" />)}
           </Form.Item>
-          <Parameters
-            onChange={onChangeParameter}
-            categories={[null]}
-            value={parameterId}
-          />
+          <Form.Item label="Parameter">
+            {getFieldDecorator("parameter", {
+              rules: [{ required: true, message: "Parameter is required" }],
+              initialValue: parameterId
+            })(<Parameters onChange={onChangeParameter} categories={[null]} />)}
+          </Form.Item>
+
           <MButton>{props.id ? "Edit" : "Create"}</MButton>
         </Form>
       </Card>

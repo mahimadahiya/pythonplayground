@@ -330,6 +330,7 @@ class QuestionList extends React.Component {
   render() {
     const columnName = this.tableColumnName();
     const tableData = this.props.questions;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div>
         <Card title={<div className="card-title">Filters</div>}>
@@ -339,26 +340,41 @@ class QuestionList extends React.Component {
           <Row>
             <Form>
               <Col span={8} style={{ padding: "0 24px" }}>
-                <Complexity
-                  onChange={this.onComplexityChange}
-                  mode="single"
-                  value={this.state.complexity}
-                />
+                <Form.Item label="Complexity">
+                  {getFieldDecorator("complexity", {
+                    initialValue: this.state.complexity
+                  })(
+                    <Complexity
+                      onChange={this.onComplexityChange}
+                      mode="single"
+                    />
+                  )}
+                </Form.Item>
               </Col>
               <Col span={8} style={{ padding: "0 24px" }}>
-                <Categories
-                  onChange={this.onCategoryChange}
-                  mode="single"
-                  value={this.state.categoryId}
-                />
+                <Form.Item label="Categories">
+                  {getFieldDecorator("category", {
+                    initialValue: this.state.categoryId
+                  })(
+                    <Categories
+                      onChange={this.onCategoryChange}
+                      mode="single"
+                    />
+                  )}
+                </Form.Item>
               </Col>
               <Col span={8} style={{ padding: "0 24px" }}>
-                <Parameters
-                  onChange={this.onParameterChange}
-                  mode="single"
-                  categories={[this.state.categoryId]}
-                  value={this.state.parameterId}
-                />
+                <Form.Item label="Parameters">
+                  {getFieldDecorator("parameter", {
+                    initialValue: this.state.parameterId
+                  })(
+                    <Parameters
+                      onChange={this.onParameterChange}
+                      mode="single"
+                      categories={[this.state.categoryId]}
+                    />
+                  )}
+                </Form.Item>
               </Col>
             </Form>
           </Row>
@@ -420,4 +436,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { fetchQuestionList, updateQuestion }
-)(QuestionList);
+)(Form.create()(QuestionList));

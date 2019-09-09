@@ -53,7 +53,10 @@ class QuestionEdit extends React.Component {
     this.props.form.validateFields((err, formProps) => {
       if (!err) {
         const values = {
-          ...formProps,
+          text: formProps.text,
+          keywords: formProps.keywords,
+          comments: formProps.comments,
+          article: formProps.article,
           regions: JSON.stringify(this.state.regions),
           states: JSON.stringify(this.state.states),
           complexity: this.state.complexity,
@@ -164,20 +167,29 @@ class QuestionEdit extends React.Component {
         </Form.Item>
         <Row gutter={48}>
           <Col span={7}>
-            <Region mode="multiple" onChange={this.onChangeRegion} />
+            <Form.Item label="Region">
+              {getFieldDecorator("region")(
+                <Region mode="multiple" onChange={this.onChangeRegion} />
+              )}
+            </Form.Item>
           </Col>
           <Col span={7}>
-            <State
-              mode="multiple"
-              regions={this.state.regions}
-              onChange={this.onChangeState}
-            />
+            <Form.Item label="State">
+              {getFieldDecorator("state")(
+                <State
+                  mode="multiple"
+                  regions={this.state.regions}
+                  onChange={this.onChangeState}
+                />
+              )}
+            </Form.Item>
           </Col>
           <Col span={7}>
-            <Complexity
-              onChange={this.onChangeComplexity}
-              value={this.state.complexity}
-            />
+            <Form.Item label="Complexity">
+              {getFieldDecorator("complexity", {
+                initialValue: this.state.complexity
+              })(<Complexity onChange={this.onChangeComplexity} />)}
+            </Form.Item>
           </Col>
           <Col span={7}>
             <Form.Item label="Comprehension ID">

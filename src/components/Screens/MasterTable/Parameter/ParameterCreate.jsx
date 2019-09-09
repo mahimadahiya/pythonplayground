@@ -153,11 +153,12 @@ const CategoryCreate = props => {
               initialValue: details ? details.description : null
             })(<Input placeholder="Enter description of parameter" />)}
           </Form.Item>
-          <Categories
-            mode="single"
-            onChange={onChangeCategory}
-            value={category}
-          />
+          <Form.Item label="Categories">
+            {getFieldDecorator("category", {
+              initialValue: category
+            })(<Categories mode="single" onChange={onChangeCategory} />)}
+          </Form.Item>
+
           <Form.Item label="Modules">
             {getFieldDecorator("module_id", { rules: [{ required: true }] })(
               <Modules />

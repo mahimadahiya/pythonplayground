@@ -38,11 +38,16 @@ const ModuleParameterMapping = props => {
             <Modules />
           )}
         </Form.Item>
-        <Parameters
-          mode="multiple"
-          onChange={onParameterChange}
-          categories={[null]}
-        />
+        <Form.Item label="Parameters">
+          {getFieldDecorator("parameter", { rules: [{ required: true }] })(
+            <Parameters
+              mode="multiple"
+              onChange={onParameterChange}
+              categories={[null]}
+            />
+          )}
+        </Form.Item>
+
         <MButton>Submit</MButton>
       </Form>
     </Card>
