@@ -396,17 +396,15 @@ class QuestionList extends React.Component {
           style={{ marginTop: 20 }}
           title={<div className="card-title">Questions List</div>}
         >
+          <MButton>
+            <Link to="/questions/add">Add Question</Link>
+          </MButton>
           <Table
             dataSource={tableData}
             loading={this.state.loading}
             columns={columnName}
             rowKey={row => row.id}
             pagination={false}
-            footer={() => (
-              <MButton>
-                <Link to="/questions/add">Add Question</Link>
-              </MButton>
-            )}
           />
           <div style={{ marginTop: "20px" }}>
             Showing {this.state.offset + 1}-{this.state.offset + 10} results

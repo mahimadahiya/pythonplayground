@@ -31,8 +31,9 @@ const Parameters = forwardRef((props, ref) => {
   const user = useSelector(state => state.userAuth);
   const parameters = useSelector(state => state.category.parameters);
   useEffect(() => {
+    console.log(props.categories);
     dispatch(fetchParameters(user.Authorization, props.categories));
-  }, [user, props.categories, dispatch]);
+  }, [user, dispatch]);
 
   return (
     <Select

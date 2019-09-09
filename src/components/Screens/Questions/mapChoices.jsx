@@ -71,18 +71,22 @@ class MapQuestionChoices extends React.Component {
   }
 
   addClick = () => {
-    this.setState(prevState => ({
-      choices: [
-        ...prevState.choices,
-        {
-          choice: "",
-          id: "",
-          type: "text",
-          media_type: "",
-          media_url: ""
-        }
-      ]
-    }));
+    if (this.state.choices.length < 5) {
+      this.setState(prevState => ({
+        choices: [
+          ...prevState.choices,
+          {
+            choice: "",
+            id: "",
+            type: "text",
+            media_type: "",
+            media_url: ""
+          }
+        ]
+      }));
+    } else {
+      message.error("Can't add more than 5 options");
+    }
   };
 
   uploadProps = {
@@ -209,8 +213,12 @@ class MapQuestionChoices extends React.Component {
       </Col>
     ));
   };
+
   handleSubmit = async event => {
     event.preventDefault();
+    if (this.state.correctChoice === "") {
+      return message.error("No correct answer selected");
+    }
     const choices = this.state.choices.filter(choice => {
       if (choice.media_url.length > 0 || choice.choice.length > 0) {
         return true;

@@ -1,6 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Form, Descriptions, Input, Row, Col, Select } from "antd";
+import {
+  Card,
+  Form,
+  Descriptions,
+  Input,
+  Row,
+  Col,
+  Select,
+  message
+} from "antd";
 
 import {
   fetchQuestionDetail,
@@ -12,6 +21,7 @@ import Region from "../../Elements/Region";
 import State from "../../Elements/State";
 import Complexity from "../../Elements/Complexity";
 import ContentComplexityLevel from "../../Elements/ContentComplexityLevel";
+import history from "../../../history";
 
 class QuestionEdit extends React.Component {
   state = {
@@ -50,7 +60,7 @@ class QuestionEdit extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, formProps) => {
+    this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
         const values = {
           text: formProps.text,
@@ -63,11 +73,13 @@ class QuestionEdit extends React.Component {
           contentcomplexitylevels: JSON.stringify(this.state.levels),
           comprehension_id: this.state.comprehension_id
         };
-        this.props.updateQuestion(
+        await this.props.updateQuestion(
           this.props.match.params.id,
           this.props.user.Authorization,
           values
         );
+        message.success("Updated successfully");
+        history.push("/question/map/choices/" + this.props.match.params.id);
       }
     });
   };
