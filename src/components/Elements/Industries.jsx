@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, forwardRef } from "react";
 import { useSelector } from "react-redux";
 import { fetchIndustries } from "../../actions";
-import { Select, Form } from "antd";
+import { Select } from "antd";
 
-const Industries = props => {
+const Industries = forwardRef((props, ref) => {
   const user = useSelector(state => state.userAuth);
   const [industries, setIndustries] = useState([]);
 
@@ -14,26 +14,16 @@ const Industries = props => {
     };
     fetchData();
   }, [user]);
-  const { getFieldDecorator } = props.form;
   return (
-    <div>
-      <Form.Item label="Industry">
-        {getFieldDecorator("industry", {
-          rules: [{ required: true, message: "Industry is required" }],
-          initialValue: props.value
-        })(
-          <Select placeholder="Select an industry" onChange={props.onChange}>
-            {industries.length > 0 &&
-              industries.map(industry => (
-                <Select.Option key={industry.id} value={industry.id}>
-                  {industry.name}
-                </Select.Option>
-              ))}
-          </Select>
-        )}
-      </Form.Item>
-    </div>
+    <Select placeholder="Select an industry" onChange={props.onChange}>
+      {industries.length > 0 &&
+        industries.map(industry => (
+          <Select.Option key={industry.id} value={industry.id}>
+            {industry.name}
+          </Select.Option>
+        ))}
+    </Select>
   );
-};
+});
 
-export default Form.create()(Industries);
+export default Industries;

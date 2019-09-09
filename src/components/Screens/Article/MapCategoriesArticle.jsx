@@ -75,39 +75,68 @@ const MapCategoriesArticle = props => {
     setCurrent(current - 1);
   };
 
-  const onSubmit = async () => {
-    const values = {
-      categories: JSON.stringify(categories),
-      parameters: JSON.stringify(parameters),
-      tags: JSON.stringify(tags)
-    };
-    const response = await updateArticle(props.id, user.Authorization, values);
-    if (response.status === 200) {
-      message.success("Article updated successfully");
-      setDone(true);
-    }
+  const onSubmit = () => {
+    props.form.validateFields(async (err, formProps) => {
+      if (!err) {
+        const values = {
+          categories: JSON.stringify(categories),
+          parameters: JSON.stringify(parameters),
+          tags: JSON.stringify(tags)
+        };
+        const response = await updateArticle(
+          props.id,
+          user.Authorization,
+          values
+        );
+        if (response.status === 200) {
+          message.success("Article updated successfully");
+          setDone(true);
+        }
+      } else {
+        message.error("Please fill the required fields");
+      }
+    });
   };
+  const { getFieldDecorator } = props.form;
 
   const renderForm = current => {
     const steps = [
       {
         title: "Categories",
-        content: <Categories onChange={onChangeCategory} value={categories} />
+        content: (
+          <Form.Item label="Categories">
+            {getFieldDecorator("category", {
+              rules: [{ required: true }],
+              initialValue: categories
+            })(<Categories onChange={onChangeCategory} />)}
+          </Form.Item>
+        )
       },
       {
         title: "Parameters",
         content: (
-          <Parameters
-            onChange={onChangeParameter}
-            value={parameters}
-            categories={categories}
-          />
+          <Form.Item label="Parameters">
+            {getFieldDecorator("parameter", {
+              rules: [{ required: true }],
+              initialValue: parameters
+            })(
+              <Parameters
+                onChange={onChangeParameter}
+                categories={categories}
+              />
+            )}
+          </Form.Item>
         )
       },
       {
         title: "Tags",
         content: (
-          <Tags onChange={onChangeTags} value={tags} parameters={parameters} />
+          <Form.Item label="Tags">
+            {getFieldDecorator("tags", {
+              rules: [{ required: true }],
+              initialValue: tags
+            })(<Tags onChange={onChangeTags} parameters={parameters} />)}
+          </Form.Item>
         )
       }
     ];
@@ -119,7 +148,7 @@ const MapCategoriesArticle = props => {
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
-        <Form>
+        <Form onSubmit={onSubmit}>
           <div>{steps[current].content}</div>
         </Form>
         <div className="steps-action">
@@ -155,4 +184,4 @@ const MapCategoriesArticle = props => {
   );
 };
 
-export default MapCategoriesArticle;
+export default Form.create()(MapCategoriesArticle);

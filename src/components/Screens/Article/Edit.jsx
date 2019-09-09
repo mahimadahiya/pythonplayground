@@ -19,7 +19,7 @@ const ArticleEdit = props => {
   const [details, setDetails] = useState(null);
   const [contentComplexityLevel, setContentComplexityLevel] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [handpicked, setHandpicked] = useState(0)
+  const [handpicked, setHandpicked] = useState(0);
   const user = useSelector(state => state.userAuth);
   useEffect(() => {
     const fetchDetails = async () => {
@@ -28,7 +28,7 @@ const ArticleEdit = props => {
         setDetails(data.Articles);
         setGender(data.Articles.gender);
         setComplexity(data.Articles.complexity);
-        setHandpicked(data.Articles.handpicked)
+        setHandpicked(data.Articles.handpicked);
         setLoading(false);
       }
     };
@@ -59,9 +59,7 @@ const ArticleEdit = props => {
           regions: JSON.stringify(region),
           states: JSON.stringify(state),
           handpicked: handpicked
-
         };
-        console.log(values)
         await updateArticle(props.id, user.Authorization, values);
         message.success("Article updated successfully");
         dispatch(setStep(2));
@@ -105,38 +103,60 @@ const ArticleEdit = props => {
           </Form.Item>
           <Row gutter={48}>
             <Col span={8}>
-              <Gender onChange={onChangeGender} value={gender} />
+              <Form.Item label="Gender">
+                {getFieldDecorator("gender", { initialValue: gender })(
+                  <Gender onChange={onChangeGender} />
+                )}
+              </Form.Item>
             </Col>
             <Col span={8}>
-              <Complexity onChange={onChangeComplexity} value={complexity} />
+              <Form.Item label="Complexity">
+                {getFieldDecorator("complexity", { initialValue: complexity })(
+                  <Complexity onChange={onChangeComplexity} />
+                )}
+              </Form.Item>
             </Col>
             <Col span={8}>
-              <ContentComplexityLevel
-                onChange={onChangeContentComplexityLevel}
-                mode="multiple"
-                value={contentComplexityLevel}
-              />
+              <Form.Item label="Content Complexity levels">
+                {getFieldDecorator("levels", {
+                  initialValue: contentComplexityLevel
+                })(
+                  <ContentComplexityLevel
+                    onChange={onChangeContentComplexityLevel}
+                    mode="multiple"
+                  />
+                )}
+              </Form.Item>
             </Col>
             <Col span={8}>
-              <Region
-                onChange={onChangeRegion}
-                mode="multiple"
-                value={region}
-              />
+              <Form.Item label="Region">
+                {getFieldDecorator("region", { initialValue: region })(
+                  <Region onChange={onChangeRegion} mode="multiple" />
+                )}
+              </Form.Item>
             </Col>
             <Col span={8}>
-              <State
-                onChange={onChangeState}
-                value={state}
-                mode="multiple"
-                regions={region}
-              />
+              <Form.Item label="State">
+                {getFieldDecorator("state", { initialValue: state })(
+                  <State
+                    onChange={onChangeState}
+                    mode="multiple"
+                    regions={region}
+                  />
+                )}
+              </Form.Item>
             </Col>
           </Row>
           <Form.Item>
-            Handpicked  
+            Handpicked
             <span>
-              <Checkbox title="Handpicked" onChange={() => {setHandpicked(1)}} defaultChecked={handpicked}/>
+              <Checkbox
+                title="Handpicked"
+                onChange={() => {
+                  setHandpicked(1);
+                }}
+                defaultChecked={handpicked}
+              />
             </span>
           </Form.Item>
           <MButton>Submit</MButton>

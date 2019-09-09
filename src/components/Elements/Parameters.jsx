@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Form, Select } from "antd";
+import React, { useEffect, forwardRef } from "react";
+import { Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchParameters } from "../../actions";
 
@@ -26,37 +26,25 @@ const filterParameters = (val, option, parameters) => {
   return false;
 };
 
-const Parameters = props => {
+const Parameters = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth);
   const parameters = useSelector(state => state.category.parameters);
   useEffect(() => {
     dispatch(fetchParameters(user.Authorization, props.categories));
-  }, [user, props.categories.length, dispatch]);
+  }, [user, props.categories, dispatch]);
 
-  const { getFieldDecorator } = props.form;
   return (
-    <div>
-      <Form.Item label="Parameters">
-        {getFieldDecorator("parameter_id", {
-          rules: [{ required: true }],
-          initialValue: props.value
-        })(
-          <Select
-            placeholder="Select a parameter"
-            onChange={props.onChange}
-            mode={props.mode}
-            showSearch
-            filterOption={(val, option) =>
-              filterParameters(val, option, parameters)
-            }
-          >
-            {renderOptions(parameters)}
-          </Select>
-        )}
-      </Form.Item>
-    </div>
+    <Select
+      placeholder="Select a parameter"
+      onChange={props.onChange}
+      mode={props.mode}
+      showSearch
+      filterOption={(val, option) => filterParameters(val, option, parameters)}
+    >
+      {renderOptions(parameters)}
+    </Select>
   );
-};
+});
 
-export default Form.create()(Parameters);
+export default Parameters;

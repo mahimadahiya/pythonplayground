@@ -1,5 +1,5 @@
 import React from "react";
-import { Steps, Button, Card, Form } from "antd";
+import { Steps, Button, Card, Form, message } from "antd";
 import {
   updateComprehension,
   fetchComprehensionDetail
@@ -80,50 +80,71 @@ class MapCategories extends React.Component {
     this.setState({ current });
   }
 
-  onSubmit = async () => {
-    const values = {
-      categories: JSON.stringify(this.state.categories),
-      parameters: JSON.stringify(this.state.parameters),
-      tags: JSON.stringify(this.state.tags)
-    };
-    await this.props.updateComprehension(
-      this.props.match.params.id,
-      this.props.user.Authorization,
-      values
-    );
-    history.push("/comprehension");
+  onSubmit = () => {
+    this.props.form.validateFields(async (err, formProps) => {
+      if (!err) {
+        const values = {
+          categories: JSON.stringify(this.state.categories),
+          parameters: JSON.stringify(this.state.parameters),
+          tags: JSON.stringify(this.state.tags)
+        };
+        await this.props.updateComprehension(
+          this.props.match.params.id,
+          this.props.user.Authorization,
+          values
+        );
+        message.success("Mapped successfully");
+        history.push("/comprehension");
+      } else {
+        message.error("Please fill required fields");
+      }
+    });
   };
 
   renderForm = current => {
+    const { getFieldDecorator } = this.props.form;
     const steps = [
       {
         title: "Categories",
         content: (
-          <Categories
-            onChange={this.onChangeCategory}
-            value={this.state.categories}
-          />
+          <Form.Item label="Categories">
+            {getFieldDecorator("categories", {
+              rules: [{ required: true }],
+              initialValue: this.state.categories
+            })(<Categories onChange={this.onChangeCategory} />)}
+          </Form.Item>
         )
       },
       {
         title: "Parameters",
         content: (
-          <Parameters
-            onChange={this.onChangeParameter}
-            value={this.state.parameters}
-            categories={this.state.categories}
-          />
+          <Form.Item label="Parameters">
+            {getFieldDecorator("parameter", {
+              rules: [{ required: true }],
+              initialValue: this.state.parameters
+            })(
+              <Parameters
+                onChange={this.onChangeParameter}
+                categories={this.state.categories}
+              />
+            )}
+          </Form.Item>
         )
       },
       {
         title: "Tags",
         content: (
-          <Tags
-            onChange={this.onChangeTags}
-            mode="multiple"
-            value={this.state.tags}
-            parameters={this.state.parameters}
-          />
+          <Form.Item label="Tags">
+            {getFieldDecorator("tag", {
+              rules: [{ required: true }],
+              initialValue: this.state.tags
+            })(
+              <Tags
+                onChange={this.onChangeTags}
+                parameters={this.state.parameters}
+              />
+            )}
+          </Form.Item>
         )
       }
     ];
@@ -135,7 +156,7 @@ class MapCategories extends React.Component {
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
-        <Form>
+        <Form onSubmit={this.onSubmit}>
           <div>{steps[current].content}</div>
         </Form>
         <div className="steps-action">
@@ -184,4 +205,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { updateComprehension, fetchComprehensionDetail }
-)(MapCategories);
+)(Form.create()(MapCategories));

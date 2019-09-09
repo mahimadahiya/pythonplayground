@@ -205,7 +205,8 @@ class ComprehensionList extends React.Component {
 
   onCategoryChange = value => {
     this.setState({
-      categoryId: value
+      categoryId: value,
+      parameterId: null
     });
   };
 
@@ -307,6 +308,7 @@ class ComprehensionList extends React.Component {
 
   render() {
     const columnName = this.tableColumnName();
+    const { getFieldDecorator } = this.props.form;
     return (
       <div>
         <Card title={<div className="card-title">Filters</div>}>
@@ -327,19 +329,29 @@ class ComprehensionList extends React.Component {
             <Row>
               <Form>
                 <Col span={8} style={{ padding: "0 24px" }}>
-                  <Categories
-                    onChange={this.onCategoryChange}
-                    mode="single"
-                    value={this.state.categoryId}
-                  />
+                  <Form.Item label="Categories">
+                    {getFieldDecorator("category", {
+                      initialValue: this.state.categoryId
+                    })(
+                      <Categories
+                        onChange={this.onCategoryChange}
+                        mode="single"
+                      />
+                    )}
+                  </Form.Item>
                 </Col>
                 <Col span={8} style={{ padding: "0 24px" }}>
-                  <Parameters
-                    onChange={this.onParameterChange}
-                    mode="single"
-                    categories={[this.state.categoryId]}
-                    value={this.state.parameterId}
-                  />
+                  <Form.Item label="Parameters">
+                    {getFieldDecorator("parameters", {
+                      initialValue: this.state.parameterId
+                    })(
+                      <Parameters
+                        onChange={this.onParameterChange}
+                        mode="single"
+                        categories={[this.state.categoryId]}
+                      />
+                    )}
+                  </Form.Item>
                 </Col>
               </Form>
             </Row>
@@ -403,4 +415,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { fetchComprehensionsList, updateComprehension }
-)(ComprehensionList);
+)(Form.create()(ComprehensionList));

@@ -16,9 +16,6 @@ const TraitTypes = forwardRef((props, ref) => {
         <Select.Option key="2" value={2}>
           Type 2
         </Select.Option>
-        {/* <Select.Option key="3" value={3}>
-          Type 3
-        </Select.Option> */}
       </Select>
     </div>
   );

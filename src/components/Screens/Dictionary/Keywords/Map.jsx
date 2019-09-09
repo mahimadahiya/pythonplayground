@@ -79,7 +79,7 @@ const MapKeyword = props => {
     }
     return false;
   };
-
+  const { getFieldDecorator } = props.form;
   return (
     <div>
       <Form onSubmit={onSubmit}>
@@ -90,20 +90,26 @@ const MapKeyword = props => {
           </Select>
         </Form.Item>
         {type === "parameter" ? (
-          <Parameters
-            onChange={onChangeParameter}
-            categories={[]}
-            mode="multiple"
-          />
+          <Form.Item label="Parameters">
+            {getFieldDecorator("parameter", { rules: [{ required: true }] })(
+              <Parameters
+                onChange={onChangeParameter}
+                categories={[]}
+                mode="multiple"
+              />
+            )}
+          </Form.Item>
         ) : (
           <Form.Item label="Courses">
-            <Select
-              mode="multiple"
-              onChange={onChangeCourse}
-              filterOption={filterCourses}
-            >
-              {renderCourses()}
-            </Select>
+            {getFieldDecorator("courses", { rules: [{ required: true }] })(
+              <Select
+                mode="multiple"
+                onChange={onChangeCourse}
+                filterOption={filterCourses}
+              >
+                {renderCourses()}
+              </Select>
+            )}
           </Form.Item>
         )}
         <MButton>Map</MButton>

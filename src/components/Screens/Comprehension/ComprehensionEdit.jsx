@@ -78,16 +78,20 @@ class ComprehensionEdit extends Component {
             </Form.Item>
             <Row gutter={48}>
               <Col span={8}>
-                <Complexity
-                  onChange={this.onChangeComplexity}
-                  value={this.state.complexity}
-                />
+                <Form.Item label="Complexity">
+                  {getFieldDecorator("complexity", {
+                    rules: [{ required: true }],
+                    initialValue: this.state.complexity
+                  })(<Complexity onChange={this.onChangeComplexity} />)}
+                </Form.Item>
               </Col>
               <Col span={8}>
-                <Gender
-                  onChange={this.onChangeGender}
-                  value={this.state.gender}
-                />
+                <Form.Item label="Gender">
+                  {getFieldDecorator("gender", {
+                    rules: [{ required: true }],
+                    initialValue: this.state.gender
+                  })(<Gender onChange={this.onChangeGender} />)}
+                </Form.Item>
               </Col>
             </Row>
             <MButton>Submit</MButton>

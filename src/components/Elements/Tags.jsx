@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Form, Select } from "antd";
+import React, { useEffect, forwardRef } from "react";
+import { Select } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTags } from "../../actions";
 
@@ -13,7 +13,7 @@ const renderOptions = tags => {
   });
 };
 
-const Tags = props => {
+const Tags = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth);
   const tags = useSelector(state => state.category.tags);
@@ -21,18 +21,14 @@ const Tags = props => {
     dispatch(fetchTags(user.Authorization, props.parameters));
   }, [user, props.parameters, dispatch]);
   return (
-    <div>
-      <Form.Item label="Tags">
-        <Select
-          placeholder="Select a tag"
-          onChange={props.onChange}
-          value={props.value}
-        >
-          {renderOptions(tags)}
-        </Select>
-      </Form.Item>
-    </div>
+    <Select
+      placeholder="Select a tag"
+      onChange={props.onChange}
+      value={props.value}
+    >
+      {renderOptions(tags)}
+    </Select>
   );
-};
+});
 
 export default Tags;

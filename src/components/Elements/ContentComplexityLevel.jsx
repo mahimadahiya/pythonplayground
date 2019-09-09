@@ -1,7 +1,7 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchContentComplexityLevel } from "../../actions";
-import { Select, Form } from "antd";
+import { Select } from "antd";
 
 const renderLevels = levels => {
   return levels.map(level => {
@@ -13,7 +13,7 @@ const renderLevels = levels => {
   });
 };
 
-const ContentComplexityLevel = props => {
+const ContentComplexityLevel = forwardRef((props, ref) => {
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.userAuth);
@@ -24,17 +24,15 @@ const ContentComplexityLevel = props => {
   }, [dispatch, user]);
   return (
     <div>
-      <Form.Item label="Content Complexity Levels">
-        <Select
-          placeholder="Select a level"
-          onChange={props.onChange}
-          mode={props.mode}
-        >
-          {renderLevels(levels)}
-        </Select>
-      </Form.Item>
+      <Select
+        placeholder="Select a level"
+        onChange={props.onChange}
+        mode={props.mode}
+      >
+        {renderLevels(levels)}
+      </Select>
     </div>
   );
-};
+});
 
 export default ContentComplexityLevel;

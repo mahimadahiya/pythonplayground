@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Form, Select } from "antd";
+import React, { useEffect, forwardRef } from "react";
+import { Select } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchStates } from "../../actions";
 
@@ -13,7 +13,7 @@ const renderOptions = states => {
   });
 };
 
-const State = props => {
+const State = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth);
   const states = useSelector(state => state.region.states);
@@ -22,17 +22,15 @@ const State = props => {
   }, [user, dispatch, props.regions]);
   return (
     <div>
-      <Form.Item label="State">
-        <Select
-          placeholder="Select a state"
-          mode={props.mode}
-          onChange={props.onChange}
-        >
-          {renderOptions(states)}
-        </Select>
-      </Form.Item>
+      <Select
+        placeholder="Select a state"
+        mode={props.mode}
+        onChange={props.onChange}
+      >
+        {renderOptions(states)}
+      </Select>
     </div>
   );
-};
+});
 
 export default State;

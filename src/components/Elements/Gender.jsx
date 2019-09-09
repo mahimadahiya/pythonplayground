@@ -1,21 +1,17 @@
-import React from "react";
-import { Form, Select } from "antd";
+import React, { forwardRef } from "react";
+import { Select } from "antd";
 
-const Gender = props => {
-	return (
-		<>
-			<Form.Item label="Gender">
-				<Select
-					placeholder="Select a gender"
-					onChange={props.onChange}
-					value={props.value}
-				>
-					<Select.Option value="m">Male</Select.Option>
-					<Select.Option value="f">Female</Select.Option>
-				</Select>
-			</Form.Item>
-		</>
-	);
-};
+const Gender = forwardRef((props, ref) => {
+  return (
+    <Select
+      placeholder="Select a gender"
+      onChange={props.onChange}
+      value={props.value}
+    >
+      <Select.Option value="m">Male</Select.Option>
+      <Select.Option value="f">Female</Select.Option>
+    </Select>
+  );
+});
 
 export default Gender;

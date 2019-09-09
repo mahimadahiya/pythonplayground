@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Form, Select } from "antd";
+import React, { useEffect, forwardRef } from "react";
+import { Select } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRegions } from "../../actions";
 
@@ -13,7 +13,7 @@ const renderOptions = regions => {
   });
 };
 
-const Region = props => {
+const Region = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth);
   const regions = useSelector(state => state.region.regions);
@@ -23,23 +23,14 @@ const Region = props => {
   }, [dispatch, user]);
 
   return (
-    <div>
-      <Form.Item label="Region">
-        {props.form.getFieldDecorator("region", {
-          rules: [{ required: true, message: "Region is required" }],
-          initialValue: props.value
-        })(
-          <Select
-            placeholder="Select a region"
-            mode={props.mode}
-            onChange={props.onChange}
-          >
-            {renderOptions(regions)}
-          </Select>
-        )}
-      </Form.Item>
-    </div>
+    <Select
+      placeholder="Select a region"
+      mode={props.mode}
+      onChange={props.onChange}
+    >
+      {renderOptions(regions)}
+    </Select>
   );
-};
+});
 
-export default Form.create()(Region);
+export default Region;

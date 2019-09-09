@@ -177,6 +177,7 @@ const ArticleList = props => {
 
   const onCategoryChange = value => {
     setCategoryId(value);
+    setParameterId(null);
   };
 
   const onParameterChange = value => {
@@ -279,7 +280,7 @@ const ArticleList = props => {
     setShowModal(false);
     setFilter(true);
   };
-
+  const { getFieldDecorator } = props.form;
   return (
     <div>
       <Card title={<div className="card-title">Filters</div>}>
@@ -289,26 +290,29 @@ const ArticleList = props => {
         <Row>
           <Form>
             <Col span={8} style={{ padding: "0 24px" }}>
-              <Complexity
-                onChange={onComplexityChange}
-                mode="single"
-                value={complexity}
-              />
+              <Form.Item label="Complexity">
+                {getFieldDecorator("complexity", { initalValue: complexity })(
+                  <Complexity onChange={onComplexityChange} mode="single" />
+                )}
+              </Form.Item>
             </Col>
             <Col span={8} style={{ padding: "0 24px" }}>
-              <Categories
-                onChange={onCategoryChange}
-                mode="single"
-                value={categoryId}
-              />
+              <Form.Item label="Categories">
+                {getFieldDecorator("categories", { initalValue: categoryId })(
+                  <Categories onChange={onCategoryChange} mode="single" />
+                )}
+              </Form.Item>
             </Col>
             <Col span={8} style={{ padding: "0 24px" }}>
-              <Parameters
-                onChange={onParameterChange}
-                mode="single"
-                categories={[categoryId]}
-                value={parameterId}
-              />
+              <Form.Item label="Parameters">
+                {getFieldDecorator("parameter", { initalValue: parameterId })(
+                  <Parameters
+                    onChange={onParameterChange}
+                    mode="single"
+                    categories={[categoryId]}
+                  />
+                )}
+              </Form.Item>
             </Col>
           </Form>
         </Row>
@@ -378,4 +382,4 @@ const ArticleList = props => {
     </div>
   );
 };
-export default ArticleList;
+export default Form.create()(ArticleList);
