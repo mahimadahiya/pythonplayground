@@ -1,7 +1,8 @@
-import React, { useEffect, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchParameters } from "../../actions";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 const renderOptions = parameters => {
   return parameters.map(parameter => {
@@ -30,10 +31,10 @@ const Parameters = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth);
   const parameters = useSelector(state => state.category.parameters);
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     console.log(props.categories);
     dispatch(fetchParameters(user.Authorization, props.categories));
-  }, [user, dispatch]);
+  }, [user, dispatch, props.categories]);
 
   return (
     <Select
