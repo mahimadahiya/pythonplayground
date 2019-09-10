@@ -130,6 +130,7 @@ class Add extends Component {
           content_data: JSON.stringify(this.state.content_data)
         };
         await this.props.addFlashCard(this.props.user.Authorization, values);
+        message.success("Created successfully");
       }
     });
   };

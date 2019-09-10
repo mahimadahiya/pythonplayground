@@ -1,17 +1,17 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Card, Form, Input } from "antd";
 import MButton from "../../Elements/MButton";
 import adminPanelApi from "../../../apis/adminPanel";
-import history from "../../../history";
 import qs from "querystring";
 import { fetchSimulation } from "../../../actions";
 
 class EditResponse extends Component {
-
   state = {
-    loading: true
-  }
+    loading: true,
+    redirect: false
+  };
 
   async componentDidMount() {
     this.id = this.props.match.params.id;
@@ -21,7 +21,7 @@ class EditResponse extends Component {
       name: record.expert_response_name,
       keywords: record.expert_response_keywords
     });
-    this.setState({ loading: false })
+    this.setState({ loading: false });
   }
 
   onSubmit = e => {
@@ -38,7 +38,7 @@ class EditResponse extends Component {
           "/v1/admin/edit/expert_response",
           qs.stringify(values)
         );
-        history.push("/simulation");
+        this.setState({ redirect: true });
       }
     });
   };
@@ -47,32 +47,39 @@ class EditResponse extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <React.Fragment>
-        <Card loading={this.state.loading} title={<div className="card-title">Edit Response</div>}>
-          <Form onSubmit={this.onSubmit}>
-            <Form.Item label="Name">
-              {getFieldDecorator("name", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Name is required"
-                  }
-                ]
-              })(<Input placeholder="Enter Name" size="large" />)}
-            </Form.Item>
-            <Form.Item label="Keywords">
-              {getFieldDecorator("keywords", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Keywords are required"
-                  }
-                ]
-              })(<Input placeholder="Enter keywords" size="large" />)}
-            </Form.Item>
+        {this.state.redirect ? (
+          <Redirect to="/simulation" />
+        ) : (
+          <Card
+            loading={this.state.loading}
+            title={<div className="card-title">Edit Response</div>}
+          >
+            <Form onSubmit={this.onSubmit}>
+              <Form.Item label="Name">
+                {getFieldDecorator("name", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Name is required"
+                    }
+                  ]
+                })(<Input placeholder="Enter Name" size="large" />)}
+              </Form.Item>
+              <Form.Item label="Keywords">
+                {getFieldDecorator("keywords", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Keywords are required"
+                    }
+                  ]
+                })(<Input placeholder="Enter keywords" size="large" />)}
+              </Form.Item>
 
-            <MButton>Edit</MButton>
-          </Form>
-        </Card>
+              <MButton>Edit</MButton>
+            </Form>
+          </Card>
+        )}
       </React.Fragment>
     );
   }

@@ -10,7 +10,7 @@ const getQuestionDetails = async (id, user, fetchQuestionDetail) => {
 const renderCategories = categories => {
   return categories.map(category => {
     return (
-      <List.Item>
+      <List.Item key={category.category_id}>
         <strong>{category.category_id}</strong>
         <Divider type="vertical" /> {category.category__name}
       </List.Item>
@@ -21,7 +21,7 @@ const renderCategories = categories => {
 const renderParameters = parameters => {
   return parameters.map(parameter => {
     return (
-      <List.Item>
+      <List.Item key={parameter.parameter_id}>
         <strong>{parameter.parameter_id}</strong>
         <Divider type="vertical" /> {parameter.parameter__name}
       </List.Item>
@@ -32,7 +32,7 @@ const renderParameters = parameters => {
 const renderTags = tags => {
   return tags.map(tag => {
     return (
-      <List.Item>
+      <List.Item key={tag.tag_id}>
         <strong>{tag.tag_id}</strong>
         <Divider type="vertical" /> {tag.tag__name}
       </List.Item>

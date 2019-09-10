@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import MButton from "../../Elements/MButton";
 import { addComprehension } from "../../../actions";
 import { quillFormats, quillModules } from "../../Elements/Toolbar";
+import history from "../../../history";
 
 class ComprehensionUpload extends Component {
   state = {
@@ -80,6 +81,7 @@ class ComprehensionUpload extends Component {
           values,
           this.state.html
         );
+        history.push('/comprehension')
       } else {
         console.log(err);
       }
