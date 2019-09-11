@@ -7,16 +7,43 @@ import { createKeyword } from "../../../../actions";
 const CreateKeyword = props => {
   const user = useSelector(state => state.userAuth);
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
       if (!err) {
         try {
-          await createKeyword(user.Authorization, file, formProps);
+          let values = {};
+          if (formProps.hasOwnProperty("media_type") === true) {
+            if (
+              formProps.media_type === undefined ||
+              formProps.media_type === null
+            ) {
+              values = {
+                name: formProps.name,
+                description: formProps.description
+              };
+            } else {
+              if (file === null || file === undefined) {
+                message.warning("Please upload media file");
+                return;
+              }
+              values = {
+                name: formProps.name,
+                description: formProps.description,
+                media_type: formProps.media_type,
+                file: formProps.file
+              };
+            }
+          }
+          setLoading(true);
+          await createKeyword(user.Authorization, file, values);
+          setLoading(false);
           message.success("Created successfully");
           props.onCloseModal();
         } catch (err) {
+          setLoading(false);
           message.error("Internal server error");
         }
       }
@@ -30,7 +57,7 @@ const CreateKeyword = props => {
   const { getFieldDecorator } = props.form;
   return (
     <div>
-      <Card>
+      <Card loading={loading}>
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", { rules: [{ required: true }] })(
@@ -45,14 +72,15 @@ const CreateKeyword = props => {
           <Row gutter={48}>
             <Col span={5}>
               <Form.Item label="Media type">
-                {/* {getFieldDecorator("media_type", {
-                  rules: [{ required: true }]
-                })( */}
-                  <Select defaultValue="image">
+                {getFieldDecorator("media_type")(
+                  <Select placeholder="Select media type">
                     <Select.Option key="image">Image</Select.Option>
                     <Select.Option key="audio">Audio</Select.Option>
+                    <Select.Option key="video">Video</Select.Option>
+                    <Select.Option key="html">Html</Select.Option>
+                    <Select.Option key="pdf">Pdf</Select.Option>
                   </Select>
-                {/* )} */}
+                )}
               </Form.Item>
             </Col>
             <Col span={14}>

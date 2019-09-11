@@ -58,15 +58,19 @@ const CreateJargon = props => {
                 };
               }
             }
-
+            setLoading(true);
             await createJargon(user.Authorization, file, values);
+            setLoading(false);
             message.success("Created successfully");
           } else {
+            setLoading(true);
             await editJargon(user.Authorization, props.id, formProps);
+            setLoading(false);
             message.success("Updated successfully");
           }
           props.onCloseModal();
         } catch (err) {
+          setLoading(false);
           message.error("Internal server error");
         }
       }

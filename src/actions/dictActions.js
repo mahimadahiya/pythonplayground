@@ -117,10 +117,16 @@ export const mapJargonCluster = async (authToken, values) => {
 
 export const createKeyword = async (authToken, file, values) => {
   let formData = new FormData();
-  formData.append("media_file", file);
-  formData.append("name", values.name);
-  formData.append("description", values.description);
-  formData.append("media_type", values.media_type);
+  if (values.media_type === undefined || values.media_type === null) {
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+  } else {
+    formData.append("media_file", file);
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    formData.append("media_type", values.media_type);
+  }
+
   const response = await adminUpload(authToken).post(
     "/v1/admin/keyword/create/",
     formData
