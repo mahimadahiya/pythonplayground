@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Modal, Button, message } from "antd";
+import { Table, Card, Row, Modal, Button, message, Popconfirm } from "antd";
 import { fetchJargonList, deleteJargon } from "../../../../actions";
 import CreateJargon from "./Create";
 import MapJargon from "./Map";
@@ -30,11 +30,14 @@ const JargonsList = () => {
   }, [user, filter]);
 
   const onDelete = async id => {
+    setLoading(true);
     try {
       await deleteJargon(user.Authorization, id);
       message.success("Deleted successfully");
+      setLoading(false);
       setFilter(true);
     } catch (err) {
+      setLoading(false);
       message.error("Some error occured");
     }
   };
@@ -84,9 +87,15 @@ const JargonsList = () => {
             </Button>
           </span>
           <span>
-            <Button type="link" onClick={() => onDelete(record.id)}>
-              Delete
-            </Button>
+            <Popconfirm
+              onConfirm={() => onDelete(record.id)}
+              okText="Delete"
+              title={"Are you sure you want to delete?"}
+            >
+              <Button type="link" style={{ color: "red" }}>
+                Delete
+              </Button>
+            </Popconfirm>
           </span>
           {/* <span>
             <Button type="link" onClick={() => onMapJargon(record.id)}>

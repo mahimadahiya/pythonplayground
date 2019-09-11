@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Modal, Button, message } from "antd";
+import { Table, Card, Row, Modal, Button, message, Popconfirm } from "antd";
 import { fetchKeywordsList, deleteKeyword } from "../../../../actions";
 import CreateKeyword from "./Create";
 import MapKeyword from "./Map";
@@ -36,11 +36,14 @@ const KeywordsList = () => {
   };
 
   const onDelete = async id => {
+    setLoading(true);
     try {
       await deleteKeyword(user.Authorization, id);
       message.success("Deleted successfully");
+      setLoading(false);
       setFilter(true);
     } catch (err) {
+      setLoading(false);
       message.error("Some error occured");
     }
   };
@@ -49,8 +52,8 @@ const KeywordsList = () => {
     {
       title: "ID",
       dataIndex: "id",
-      key: "id",
-      render: id => <Link to={`/jargons/${id}`}>{id}</Link>
+      key: "id"
+      // render: id => <Link to={`/jargons/${id}`}>{id}</Link>
     },
     {
       title: "Name",
@@ -80,9 +83,15 @@ const KeywordsList = () => {
             </Button>
           </span> */}
           <span>
-            <Button type="link" onClick={() => onDelete(record.id)}>
-              Delete
-            </Button>
+            <Popconfirm
+              onConfirm={() => onDelete(record.id)}
+              okText="Delete"
+              title={"Are you sure you want to delete?"}
+            >
+              <Button type="link" style={{ color: "red" }}>
+                Delete
+              </Button>
+            </Popconfirm>
           </span>
           <span>
             <Button type="link" onClick={() => onMapKeyword(record.id)}>

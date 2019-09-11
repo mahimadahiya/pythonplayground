@@ -13,8 +13,8 @@ const JargonDetails = props => {
         user.Authorization,
         props.match.params.id
       );
-      setJargon(data.result.jargon_details);
       setLoading(false);
+      setJargon(data.result.jargon_details);
     };
     fetchDetails();
   }, [user.Authorization, props.match.params.id]);
@@ -22,7 +22,7 @@ const JargonDetails = props => {
   return (
     <div>
       <Card loading={loading}>
-        {!loading ? (
+        {jargon !== null ? (
           <Descriptions bordered size="small" column={2}>
             <Descriptions.Item label="ID" span={1}>
               {jargon.id}
