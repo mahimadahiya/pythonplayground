@@ -45,14 +45,14 @@ const CreateKeyword = props => {
           <Row gutter={48}>
             <Col span={5}>
               <Form.Item label="Media type">
-                {getFieldDecorator("media_type", {
+                {/* {getFieldDecorator("media_type", {
                   rules: [{ required: true }]
-                })(
+                })( */}
                   <Select defaultValue="image">
                     <Select.Option key="image">Image</Select.Option>
                     <Select.Option key="audio">Audio</Select.Option>
                   </Select>
-                )}
+                {/* )} */}
               </Form.Item>
             </Col>
             <Col span={14}>
