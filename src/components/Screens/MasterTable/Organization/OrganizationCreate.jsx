@@ -91,19 +91,19 @@ const OrganizationCreate = props => {
           </Form.Item>
           <Form.Item label="Region">
             {getFieldDecorator("region", {
-              rules: [{ required: true, message: "Name is required" }],
+              rules: [{ required: true, message: "Region is required" }],
               initialValue: region
             })(<Region mode="single" onChange={onChangeRegion} />)}
           </Form.Item>
           <Form.Item label="Course">
             {getFieldDecorator("course", {
-              rules: [{ required: true, message: "Name is required" }],
+              rules: [{ required: true, message: "Course is required" }],
               initialValue: course
             })(<Courses onChange={onChangeCourse} />)}
           </Form.Item>
           <Form.Item label="Industry">
             {getFieldDecorator("industry", {
-              rules: [{ required: true, message: "Name is required" }],
+              rules: [{ required: true, message: "Industry is required" }],
               initialValue: industry
             })(<Industries onChange={onChangeIndustry} />)}
           </Form.Item>
