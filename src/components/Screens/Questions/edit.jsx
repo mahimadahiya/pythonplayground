@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   Select,
+  Button,
   message
 } from "antd";
 
@@ -16,7 +17,6 @@ import {
   updateQuestion,
   fetchAllComprehensions
 } from "../../../actions";
-import MButton from "../../Elements/MButton";
 import Region from "../../Elements/Region";
 import State from "../../Elements/State";
 import Complexity from "../../Elements/Complexity";
@@ -226,7 +226,9 @@ class QuestionEdit extends React.Component {
           </Col>
         </Row>
         <Form.Item>
-          <MButton>Update Question</MButton>
+          <Button onClick={this.onSubmit} type="primary">
+            Update Question
+          </Button>
         </Form.Item>
       </div>
     );
@@ -243,7 +245,7 @@ class QuestionEdit extends React.Component {
             {this.renderQuestionDescription()}
           </Card>
           <Card title="Update">
-            <Form onSubmit={this.onSubmit}>{this.renderFormItems()}</Form>
+            <Form>{this.renderFormItems()}</Form>
           </Card>
         </Card>
       </div>
