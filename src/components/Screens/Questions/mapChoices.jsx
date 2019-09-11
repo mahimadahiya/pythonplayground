@@ -225,6 +225,12 @@ class MapQuestionChoices extends React.Component {
       }
       return false;
     });
+
+    if (choices.length < 2) {
+      message.warning("Please add atleast two choices");
+      return;
+    }
+
     const query = {
       choices: JSON.stringify(choices),
       correct_choice: this.state.correctChoice
