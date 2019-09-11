@@ -136,7 +136,9 @@ import {
   createJargonCluster,
   createKeyword,
   mapKeyword,
-  deleteKeyword
+  deleteKeyword,
+  mapJargonClusterJargons,
+  mapJargonCluster
 } from "./dictActions";
 
 export {
@@ -245,7 +247,9 @@ export {
   createJargonCluster,
   createKeyword,
   mapKeyword,
-  deleteKeyword
+  deleteKeyword,
+  mapJargonClusterJargons,
+  mapJargonCluster
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

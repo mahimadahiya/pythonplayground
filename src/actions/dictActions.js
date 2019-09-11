@@ -87,6 +87,22 @@ export const createJargonCluster = async (authToken, values) => {
   return response;
 };
 
+export const mapJargonClusterJargons = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/jargon_cluster/map/jargon/",
+    qs.stringify(values)
+  );
+  return response;
+};
+
+export const mapJargonCluster = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/jargon/cluster/map/",
+    qs.stringify(values)
+  );
+  return response;
+};
+
 export const createKeyword = async (authToken, file, values) => {
   let formData = new FormData();
   formData.append("media_file", file);

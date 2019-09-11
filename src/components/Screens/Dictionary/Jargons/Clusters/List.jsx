@@ -3,12 +3,21 @@ import { useSelector } from "react-redux";
 import { Table, Card, Row, Modal, Button } from "antd";
 import CreateJargonCluster from "./Create";
 import { fetchJargonClusterList } from "../../../../../actions";
+import MapClusterJargon from "./Map";
 
 const JargonClusterList = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [loadAgain, setloadAgain] = useState(false);
+
+  const [id, setId] = useState(null);
+  const [showMapModal, setShowMapModal] = useState(false);
+
+  const [createJargonClusterTitle, setCreateJargonClusterTitle] = useState(
+    "Create Jargon Cluster"
+  );
 
   const user = useSelector(state => state.userAuth);
 
@@ -16,14 +25,14 @@ const JargonClusterList = () => {
     const fetchList = async () => {
       setLoading(true);
       const data = await fetchJargonClusterList(user.Authorization);
-      setList(data.result.cluster_details);
+      setList(data.result.jargon_cluster_details);
       setLoading(false);
     };
     if (filter) {
       fetchList();
       setFilter(false);
     }
-  }, [user, filter]);
+  }, [user, filter, loadAgain]);
 
   // const onDelete = async id => {
   //   try {
@@ -58,24 +67,37 @@ const JargonClusterList = () => {
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
       }
+    },
+    {
+      title: "Actions",
+      render: record => (
+        <div>
+          <span>
+            <Button type="link" onClick={() => onMapJargon(record.id)}>
+              Map
+            </Button>
+            {/* <Button type="link" onClick={() => onDelete(record.id)}>
+              Delete
+            </Button> */}
+          </span>
+        </div>
+      )
     }
-    // {
-    //   title: "Actions",
-    //   render: record => (
-    //     <div>
-    //       <span>
-    //         <Button type="link" onClick={() => onDelete(record.id)}>
-    //           Delete
-    //         </Button>
-    //       </span>
-    //     </div>
-    //   )
-    // }
   ];
+
+  const onMapJargon = id => {
+    setId(id);
+    setShowMapModal(true);
+  };
 
   const onCloseModal = () => {
     setShowModal(false);
     setFilter(true);
+  };
+
+  const onCloseMapModal = () => {
+    setShowMapModal(false);
+    setId(null);
   };
 
   return (
@@ -104,8 +126,10 @@ const JargonClusterList = () => {
           />
         </Row>
       </Card>
+      {/* Create jargon cluster Modal */}
       <Modal
-        title="Create Jargon Cluster"
+        // title="Create Jargon Cluster"
+        title={createJargonClusterTitle}
         visible={showModal}
         footer={null}
         destroyOnClose={true}
@@ -113,7 +137,29 @@ const JargonClusterList = () => {
         closable={true}
         width="1000px"
       >
-        <CreateJargonCluster onCloseModal={onCloseModal} />
+        <CreateJargonCluster
+          onCloseModal={onCloseModal}
+          setloadAgain={setloadAgain}
+          loadAgain={loadAgain}
+          setCreateJargonClusterTitle={setCreateJargonClusterTitle}
+        />
+      </Modal>
+      {/* Map Modal */}
+      <Modal
+        title="Map Cluster Jargon"
+        visible={showMapModal}
+        footer={null}
+        destroyOnClose={true}
+        onCancel={onCloseMapModal}
+        closable={true}
+        width="1000px"
+      >
+        <MapClusterJargon
+          id={id}
+          onCloseMapModal={onCloseMapModal}
+          setloadAgain={setloadAgain}
+          loadAgain={loadAgain}
+        />
       </Modal>
     </div>
   );

@@ -44,10 +44,10 @@ const JargonsList = () => {
     setShowModal(true);
   };
 
-  const onMapJargon = id => {
-    setId(id);
-    setShowMapModal(true);
-  };
+  // const onMapJargon = id => {
+  //   setId(id);
+  //   setShowMapModal(true);
+  // };
 
   const column = [
     {
@@ -88,11 +88,11 @@ const JargonsList = () => {
               Delete
             </Button>
           </span>
-          <span>
+          {/* <span>
             <Button type="link" onClick={() => onMapJargon(record.id)}>
               Map
             </Button>
-          </span>
+          </span> */}
         </div>
       )
     }
