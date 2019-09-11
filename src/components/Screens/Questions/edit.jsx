@@ -160,7 +160,9 @@ class QuestionEdit extends React.Component {
     return (
       <div>
         <Form.Item label="Text">
-          {getFieldDecorator("text")(<Input placeholder="Enter text" />)}
+          {getFieldDecorator("text", { rules: [{ required: true }] })(
+            <Input placeholder="Enter text" />
+          )}
         </Form.Item>
         <Form.Item label="Keywords">
           {getFieldDecorator("keywords")(
@@ -180,7 +182,7 @@ class QuestionEdit extends React.Component {
         <Row gutter={48}>
           <Col span={7}>
             <Form.Item label="Region">
-              {getFieldDecorator("region")(
+              {getFieldDecorator("region", { rules: [{ required: true }] })(
                 <Region mode="multiple" onChange={this.onChangeRegion} />
               )}
             </Form.Item>
