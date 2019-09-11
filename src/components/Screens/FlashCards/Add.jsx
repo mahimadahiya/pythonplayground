@@ -124,6 +124,14 @@ class Add extends Component {
     e.preventDefault();
     this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
+        if (
+          this.state.icon_url === null ||
+          this.state.icon_url === undefined ||
+          this.state.icon_url === ""
+        ) {
+          message.warning("Please add Icon");
+          return;
+        }
         const values = {
           ...formProps,
           icon_url: this.state.icon_url,
