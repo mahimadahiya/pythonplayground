@@ -98,7 +98,7 @@ class ComprehensionList extends React.Component {
         width: 360,
         render: record => (
           <span>
-            <Link to={`/comprehension/edit/${record.id}`}>Edit</Link>
+            <Link to={`/comprehension/map/${record.id}`}>Map</Link>
             <Divider type="vertical" />
             <Popconfirm
               title="Delete"
