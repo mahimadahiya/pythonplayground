@@ -12,6 +12,8 @@ class NormalLoginForm extends React.Component {
     error: null
   };
 
+  allowedGroupID = [1,10]
+
   setCookies = () => {
     if (this.props.userAuth.isSignedIn) {
       const { cookies } = this.props;
@@ -20,13 +22,16 @@ class NormalLoginForm extends React.Component {
         isSignedIn,
         userId,
         userEmail,
-        userName
+        userName,
+        groupId
       } = this.props.userAuth;
+      console.log(groupId)
       cookies.set("Authorization", Authorization, { path: "/" });
       cookies.set("isSignedIn", isSignedIn, { path: "/" });
       cookies.set("userId", userId, { path: "/" });
       cookies.set("userEmail", userEmail, { path: "/" });
       cookies.set("userName", userName, { path: "/" });
+      cookies.set("groupId", groupId, { path: "/" });
       history.push("/");
     }
   };
@@ -42,7 +47,7 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields(async (err, formValues) => {
       if (!err) {
         await this.props.loginUser(formValues);
-        if (this.props.userAuth.groupId === 1) {
+        if (this.allowedGroupID.includes(this.props.userAuth.groupId)) {
           this.setCookies();
         } else {
           if (!this.state.error) {

@@ -1,11 +1,12 @@
-import * as ACTION_TYPE from "../actions/actionTypes";
+import * as ACTION_TYPE from '../actions/actionTypes';
 
 const INITIAL_STATE = {
   isSignedIn: null,
   userId: null,
-  Authorization: "null",
-  userName: "",
-  userEmail: ""
+  Authorization: 'null',
+  userName: '',
+  userEmail: '',
+  groupId: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,16 +28,17 @@ export default (state = INITIAL_STATE, action) => {
         userId: action.payload.userId,
         userName: action.payload.userName,
         userEmail: action.payload.userEmail,
-        Authorization: action.payload.Authorization
+        Authorization: action.payload.Authorization,
+        groupId: action.payload.groupId
       };
     case ACTION_TYPE.LOGOUT_USER:
       return {
         ...state,
         isSignedIn: false,
         userId: null,
-        userName: "",
-        userEmail: "",
-        Authorization: "",
+        userName: '',
+        userEmail: '',
+        Authorization: '',
         groupId: null
       };
     default:
