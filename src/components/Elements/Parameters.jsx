@@ -32,7 +32,6 @@ const Parameters = forwardRef((props, ref) => {
   const user = useSelector(state => state.userAuth);
   const parameters = useSelector(state => state.category.parameters);
   useDeepCompareEffect(() => {
-    console.log(props.categories);
     dispatch(fetchParameters(user.Authorization, props.categories));
   }, [user, dispatch, props.categories]);
 
