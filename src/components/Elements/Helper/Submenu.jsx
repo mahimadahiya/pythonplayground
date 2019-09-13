@@ -25,7 +25,9 @@ const renderSubmenus = (list, collapsed) => {
           </span>
         }
       >
-        {renderMenus(item.menuList)}
+        {item.subMenu
+          ? renderSubmenus(item.subMenu, collapsed)
+          : renderMenus(item.menuList)}
       </SubMenu>
     );
   });

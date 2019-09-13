@@ -4,7 +4,7 @@ import MButton from "../../../Elements/MButton";
 import { createService } from "../../../../actions";
 import { useSelector } from "react-redux";
 
-const CreateModule = props => {
+const CreateService = props => {
   const user = useSelector(state => state.userAuth);
   const [icon, setIcon] = useState(null);
   const onSubmit = e => {
@@ -88,4 +88,4 @@ const CreateModule = props => {
   );
 };
 
-export default Form.create()(CreateModule);
+export default Form.create()(CreateService);

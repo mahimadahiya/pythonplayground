@@ -193,8 +193,7 @@ const list = [
 
 const subMenuList = userAccessGroup => {
   let tempList = [];
-  list.map(obj => {
-    console.log(obj);
+  list.forEach(obj => {
     if (obj.accessGroup.includes(parseInt(userAccessGroup))) {
       tempList.push(obj);
     }
