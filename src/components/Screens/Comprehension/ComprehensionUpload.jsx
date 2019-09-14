@@ -63,6 +63,9 @@ class ComprehensionUpload extends Component {
     e.preventDefault();
     this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
+        if (!this.state.url) {
+          return message.error("Media not uploaded");
+        }
         let values = {
           ...formProps,
           type: this.state.type,
