@@ -77,7 +77,7 @@ const ArticleUpload = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
       if (!err) {
-        if (accept !== fileExt) {
+        if (accept !== fileExt.toLowerCase()) {
           return message.error("Invalid file");
         }
         let values = {

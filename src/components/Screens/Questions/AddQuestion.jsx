@@ -26,7 +26,7 @@ class AddQuestion extends Component {
     e.preventDefault();
     this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
-        if (this.state.fileExt !== this.state.accept) {
+        if (this.state.fileExt.toLowerCase() !== this.state.accept) {
           return message.error("Invalid file");
         }
         let values = {
