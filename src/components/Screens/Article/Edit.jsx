@@ -17,7 +17,7 @@ const ArticleEdit = props => {
   const [region, setRegion] = useState([]);
   const [state, setState] = useState([]);
   const [details, setDetails] = useState(null);
-  const [contentComplexityLevel, setContentComplexityLevel] = useState(null);
+  const [contentComplexityLevel, setContentComplexityLevel] = useState([]);
   const [loading, setLoading] = useState(true);
   const [handpicked, setHandpicked] = useState(0);
   const user = useSelector(state => state.userAuth);
@@ -30,9 +30,14 @@ const ArticleEdit = props => {
         setComplexity(data.Articles.complexity);
         setHandpicked(data.Articles.handpicked);
         setContentComplexityLevel(data.complexity);
-        props.form.setFieldsValue({
-          levels: [{key: 1}]
-        });
+        const regionList = data.region_details.region.map(
+          region => region.region_id
+        );
+        const stateList = data.region_details.state.map(
+          state => state.state_id
+        );
+        setRegion(regionList);
+        setState(stateList);
         setLoading(false);
       }
     };
@@ -48,6 +53,7 @@ const ArticleEdit = props => {
   };
 
   const onChangeContentComplexityLevel = val => {
+    console.log(val);
     setContentComplexityLevel(val);
   };
 
@@ -55,6 +61,9 @@ const ArticleEdit = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
       if (!err) {
+        if (!region.length || !state.length || !contentComplexityLevel.length) {
+          return message.error("Please fill all fields");
+        }
         const values = {
           ...formProps,
           complexity,
@@ -62,7 +71,7 @@ const ArticleEdit = props => {
           contentcomplexitylevels: JSON.stringify(contentComplexityLevel),
           regions: JSON.stringify(region),
           states: JSON.stringify(state),
-          handpicked: handpicked
+          handpicked
         };
         await updateArticle(props.id, user.Authorization, values);
         message.success("Article updated successfully");
@@ -72,7 +81,7 @@ const ArticleEdit = props => {
       }
     });
   };
-  console.log(contentComplexityLevel);
+
   const onChangeRegion = val => {
     setRegion(val);
   };
@@ -129,39 +138,47 @@ const ArticleEdit = props => {
             </Col>
             <Col span={8}>
               <Form.Item label="Content Complexity levels">
-                {getFieldDecorator("levels", {
-                  rules: [{ required: true }]
-                  // initialValue: {["1"]}
-                })(
-                  <ContentComplexityLevel
-                    onChange={onChangeContentComplexityLevel}
-                    mode="multiple"
-                  />
-                )}
+                {/* {getFieldDecorator("levels", {
+                  rules: [{ required: true }],
+                  initialValue: contentComplexityLevel
+                })( */}
+                <ContentComplexityLevel
+                  value={contentComplexityLevel}
+                  onChange={onChangeContentComplexityLevel}
+                  mode="multiple"
+                />
+                {/* )} */}
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="Region">
-                {getFieldDecorator("region", {
+                {/* {getFieldDecorator("region", {
                   rules: [{ required: true }],
 
                   initialValue: region
-                })(<Region onChange={onChangeRegion} mode="multiple" />)}
+                })( */}
+                <Region
+                  onChange={onChangeRegion}
+                  mode="multiple"
+                  value={region}
+                />
+                {/* )} */}
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="State">
-                {getFieldDecorator("state", {
+                {/* {getFieldDecorator("state", {
                   rules: [{ required: true }],
 
                   initialValue: state
-                })(
-                  <State
-                    onChange={onChangeState}
-                    mode="multiple"
-                    regions={region}
-                  />
-                )}
+                })( */}
+                <State
+                  onChange={onChangeState}
+                  mode="multiple"
+                  value={state}
+                  regions={region}
+                />
+                {/* )} */}
               </Form.Item>
             </Col>
           </Row>

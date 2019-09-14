@@ -27,6 +27,7 @@ const Region = forwardRef((props, ref) => {
       placeholder="Select a region"
       mode={props.mode}
       allowClear
+      value={props.value}
       onChange={props.onChange}
     >
       {renderOptions(regions)}
