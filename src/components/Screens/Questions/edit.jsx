@@ -224,6 +224,7 @@ class QuestionEdit extends React.Component {
               <ContentComplexityLevel
                 onChange={this.onChangeLevel}
                 mode="multiple"
+                value={this.state.levels}
               />
             </Form.Item>
           </Col>
