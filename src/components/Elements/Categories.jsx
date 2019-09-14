@@ -41,6 +41,7 @@ const Categories = forwardRef((props, ref) => {
         onChange={props.onChange}
         showSearch
         allowClear
+        value={props.value}
         filterOption={(val, option) =>
           filterCategories(val, option, categories)
         }

@@ -14,7 +14,7 @@ class MapCategories extends React.Component {
     current: 0,
     categories: [],
     parameters: [],
-    tags: null,
+    tags: [],
     loaded: false
   };
 
@@ -103,7 +103,10 @@ class MapCategories extends React.Component {
           <Form.Item label="Categories">
             {getFieldDecorator("category", {
               rules: [{ required: true }],
-              initialValue: this.state.categories
+              initialValue:
+                this.state.categories.length > 0
+                  ? this.state.categories[0]
+                  : null
             })(<Categories onChange={this.onChangeCategory} />)}
           </Form.Item>
         )
@@ -114,7 +117,10 @@ class MapCategories extends React.Component {
           <Form.Item label="Parameters">
             {getFieldDecorator("parameter", {
               rules: [{ required: true }],
-              initialValue: this.state.parameters
+              initialValue:
+                this.state.parameters.length > 0
+                  ? this.state.parameters[0]
+                  : null
             })(
               <Parameters
                 onChange={this.onChangeParameter}
@@ -130,7 +136,8 @@ class MapCategories extends React.Component {
           <Form.Item label="Tags">
             {getFieldDecorator("tag", {
               rules: [{ required: true }],
-              initialValue: this.state.tags
+              initialValue:
+                this.state.tags.length > 0 ? this.state.tags[0] : null
             })(
               <Tags
                 onChange={this.onChangeTags}

@@ -107,7 +107,7 @@ const MapCategoriesArticle = props => {
           <Form.Item label="Categories">
             {getFieldDecorator("category", {
               rules: [{ required: true }],
-              initialValue: categories
+              initialValue: categories.length > 0 ? categories[0] : null
             })(<Categories onChange={onChangeCategory} />)}
           </Form.Item>
         )
@@ -118,7 +118,7 @@ const MapCategoriesArticle = props => {
           <Form.Item label="Parameters">
             {getFieldDecorator("parameter", {
               rules: [{ required: true }],
-              initialValue: parameters
+              initialValue: parameters.length > 0 ? parameters[0] : null
             })(
               <Parameters
                 onChange={onChangeParameter}
@@ -134,7 +134,7 @@ const MapCategoriesArticle = props => {
           <Form.Item label="Tags">
             {getFieldDecorator("tags", {
               rules: [{ required: true }],
-              initialValue: tags
+              initialValue: tags.length > 0 ? tags[0] : null
             })(<Tags onChange={onChangeTags} parameters={parameters} />)}
           </Form.Item>
         )
