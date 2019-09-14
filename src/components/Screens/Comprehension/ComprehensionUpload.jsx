@@ -26,7 +26,8 @@ class ComprehensionUpload extends Component {
     type: "image",
     html: null,
     comprehension_type: 1,
-    url: ""
+    url: "",
+    accept: ".jpg"
   };
 
   handleChange = val => {
@@ -34,7 +35,27 @@ class ComprehensionUpload extends Component {
   };
 
   onSelectType = val => {
-    this.setState({ type: val });
+    this.setState({ type: val }, () => {
+      switch (this.state.type) {
+        case "image":
+          this.setState({ accept: ".jpg" });
+          break;
+        case "audio":
+          this.setState({ accept: ".mp3" });
+          break;
+        case "video":
+          this.setState({ accept: ".mp4" });
+          break;
+        case "pdf":
+          this.setState({ accept: ".pdf" });
+          break;
+        case "html":
+          this.setState({ accept: ".html" });
+          break;
+        default:
+          this.setState({ accept: ".*" });
+      }
+    });
   };
 
   uploadProps = {
@@ -46,8 +67,7 @@ class ComprehensionUpload extends Component {
       Authorization:
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMtYXBpLmlhdWdtZW50b3IuY29tL3YxL2F1dGgvc2lnbmluIiwianRpIjoiNmM2OWU2Nzk0NzFmM2RjNmE2OTA1MTc1ZTNlYmU4NTQiLCJleHAiOjE1OTE2OTQzOTEsImlhdCI6MTU2MDEzODU5MSwibmJmIjoxNTYwMTM4NTkxfQ.L1vLFQIhdtW0U1wMlOAkNrjDUOL7zE0Glc2ogRbXhBY",
       key: "TcS99L07QkDezB5n4Qdw"
-    },
-    accept: ".jpg"
+    }
   };
 
   onUploadImage = info => {
@@ -146,7 +166,11 @@ class ComprehensionUpload extends Component {
             this.state.type === "video" ||
             this.state.type === "pdf" ? (
               <div style={{ marginBottom: 30 }}>
-                <Upload {...this.uploadProps} onChange={this.onUploadImage}>
+                <Upload
+                  {...this.uploadProps}
+                  onChange={this.onUploadImage}
+                  accept={this.state.accept}
+                >
                   <Button size="large">
                     <Icon type="upload" /> Click to Upload
                   </Button>
