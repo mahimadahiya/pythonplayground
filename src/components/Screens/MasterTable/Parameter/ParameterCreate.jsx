@@ -17,7 +17,6 @@ import {
   fetchParameterDetails
 } from "../../../../actions";
 import Categories from "../../../Elements/Categories";
-import Modules from "../../../Elements/Modules";
 
 function clean(obj) {
   for (var propName in obj) {

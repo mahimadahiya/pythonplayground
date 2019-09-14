@@ -24,6 +24,8 @@ const ArticleUpload = props => {
   const [type, setType] = useState("image");
   const [html, setHTML] = useState();
   const [url, setURL] = useState("");
+  const [accept, setAccept] = useState("jpg");
+  const [fileExt, setFileExt] = useState("");
 
   const user = useSelector(state => state.userAuth);
 
@@ -33,6 +35,19 @@ const ArticleUpload = props => {
 
   const onSelectType = val => {
     setType(val);
+    switch (val) {
+      case "image":
+        setAccept("jpg");
+        break;
+      case "audio":
+        setAccept("mp3");
+        break;
+      case "video":
+        setAccept("mp4");
+        break;
+      default:
+        setAccept("*");
+    }
   };
 
   const uploadProps = {
@@ -45,11 +60,12 @@ const ArticleUpload = props => {
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMtYXBpLmlhdWdtZW50b3IuY29tL3YxL2F1dGgvc2lnbmluIiwianRpIjoiNmM2OWU2Nzk0NzFmM2RjNmE2OTA1MTc1ZTNlYmU4NTQiLCJleHAiOjE1OTE2OTQzOTEsImlhdCI6MTU2MDEzODU5MSwibmJmIjoxNTYwMTM4NTkxfQ.L1vLFQIhdtW0U1wMlOAkNrjDUOL7zE0Glc2ogRbXhBY",
       key: "TcS99L07QkDezB5n4Qdw"
     },
-    accept: ".jpg, .mp3, .mp4"
+    accept: `.${accept}`
   };
 
   const onUploadImage = info => {
     if (info.file.status === "done") {
+      setFileExt(info.file.name.split(".")[1]);
       message.success(`${info.file.name} file uploaded successfully`);
       setURL(info.file.response.url);
     } else if (info.file.status === "error") {
@@ -61,6 +77,9 @@ const ArticleUpload = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
       if (!err) {
+        if (accept !== fileExt) {
+          return message.error("Invalid file");
+        }
         let values = {
           ...formProps,
           type
