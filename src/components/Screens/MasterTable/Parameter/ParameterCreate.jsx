@@ -73,8 +73,7 @@ const CategoryCreate = props => {
         if (!props.id) {
           const response = await createParameter(user.Authorization, {
             fields: JSON.stringify(values),
-            category_id: category,
-            module_id: formValues.module_id
+            category_id: category
           });
           if (response.status === 201) {
             message.success("Parameter created successfully");
@@ -83,8 +82,7 @@ const CategoryCreate = props => {
           const response = await editParameter(user.Authorization, {
             ...values,
             id: props.id,
-            category_id: category,
-            module_id: formValues.module_id
+            category_id: category
           });
           if (response.status === 200) {
             message.success("Parameter updated successfully");
@@ -157,12 +155,6 @@ const CategoryCreate = props => {
             {getFieldDecorator("category", {
               initialValue: category
             })(<Categories mode="single" onChange={onChangeCategory} />)}
-          </Form.Item>
-
-          <Form.Item label="Modules">
-            {getFieldDecorator("module_id", { rules: [{ required: true }] })(
-              <Modules />
-            )}
           </Form.Item>
           <Form.Item label="Icon">
             <Upload {...uploadProps} onChange={onUploadIcon}>

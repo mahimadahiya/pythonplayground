@@ -109,8 +109,8 @@ const ParameterList = () => {
     {
       key: "1",
       type: "input",
-      label: "Search by ID",
-      placeholder: "Search by ID",
+      label: "Search by Name or ID",
+      placeholder: "Search by Name or ID",
       onChange: onSearch
     }
   ];

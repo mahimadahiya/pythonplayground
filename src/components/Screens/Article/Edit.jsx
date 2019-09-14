@@ -61,7 +61,7 @@ const ArticleEdit = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
       if (!err) {
-        if (!region.length || !state.length || !contentComplexityLevel.length) {
+        if (!region.length || !state.length) {
           return message.error("Please fill all fields");
         }
         const values = {
@@ -106,14 +106,11 @@ const ArticleEdit = props => {
           </Form.Item>
           <Form.Item label="Objective">
             {getFieldDecorator("objective", {
-              rules: [{ required: true }],
               initialValue: details ? details.objective : null
             })(<Input placeholder="Objective" />)}
           </Form.Item>
           <Form.Item label="Takeaway">
             {getFieldDecorator("takeaway", {
-              rules: [{ required: true }],
-
               initialValue: details ? details.takeaway : null
             })(<Input placeholder="Takeaway" />)}
           </Form.Item>
@@ -121,8 +118,6 @@ const ArticleEdit = props => {
             <Col span={8}>
               <Form.Item label="Gender">
                 {getFieldDecorator("gender", {
-                  rules: [{ required: true }],
-
                   initialValue: gender
                 })(<Gender onChange={onChangeGender} />)}
               </Form.Item>
@@ -138,47 +133,30 @@ const ArticleEdit = props => {
             </Col>
             <Col span={8}>
               <Form.Item label="Content Complexity levels">
-                {/* {getFieldDecorator("levels", {
-                  rules: [{ required: true }],
-                  initialValue: contentComplexityLevel
-                })( */}
                 <ContentComplexityLevel
                   value={contentComplexityLevel}
                   onChange={onChangeContentComplexityLevel}
                   mode="multiple"
                 />
-                {/* )} */}
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="Region">
-                {/* {getFieldDecorator("region", {
-                  rules: [{ required: true }],
-
-                  initialValue: region
-                })( */}
                 <Region
                   onChange={onChangeRegion}
                   mode="multiple"
                   value={region}
                 />
-                {/* )} */}
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="State">
-                {/* {getFieldDecorator("state", {
-                  rules: [{ required: true }],
-
-                  initialValue: state
-                })( */}
                 <State
                   onChange={onChangeState}
                   mode="multiple"
                   value={state}
                   regions={region}
                 />
-                {/* )} */}
               </Form.Item>
             </Col>
           </Row>

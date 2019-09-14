@@ -12,7 +12,8 @@ import {
   Switch,
   Input,
   Divider,
-  Popconfirm
+  Popconfirm,
+  DatePicker
 } from "antd";
 import { fetchComprehensionsList, updateComprehension } from "../../../actions";
 import history from "../../../history";
@@ -31,7 +32,8 @@ class ComprehensionList extends React.Component {
     parameterId: [],
     categoryId: [],
     comprehension_type: 1,
-    articleId: null
+    articleId: null,
+    createdAt: null
   };
 
   componentWillMount = async () => {
@@ -48,6 +50,10 @@ class ComprehensionList extends React.Component {
 
   onEdit = record => {
     history.push("/comprehensions/edit/" + record.id);
+  };
+
+  onSelectDate = val => {
+    this.setState({ createdAt: val });
   };
 
   tableColumnName = () => {
@@ -102,7 +108,7 @@ class ComprehensionList extends React.Component {
       {
         title: "Actions",
         key: "action",
-        width: '15%',
+        width: "15%",
         render: record => (
           <span>
             <Link to={`/comprehension/map/${record.id}`}>Map</Link>
@@ -174,7 +180,17 @@ class ComprehensionList extends React.Component {
     this.setState({ loading: true });
     const fields = {
       comprehension_type: this.state.comprehension_type,
-      comprehensionfmarticle__fmarticle_id: this.state.articleId
+      comprehensionfmarticle__fmarticle_id: this.state.articleId,
+      updated_at__lte: this.state.createdAt
+        ? moment(this.state.createdAt)
+            .add(1, "days")
+            .format("YYYY-MM-DD")
+        : null,
+      updated_at__gte: this.state.createdAt
+        ? moment(this.state.createdAt)
+            .subtract(1, "days")
+            .format("YYYY-MM-DD")
+        : null
     };
     await this.props.fetchComprehensionsList(this.props.user.Authorization, {
       offset,
@@ -194,7 +210,17 @@ class ComprehensionList extends React.Component {
         setTimeout(async () => {
           const fields = {
             comprehension_type: this.state.comprehension_type,
-            comprehensionfmarticle__fmarticle_id: this.state.articleId
+            comprehensionfmarticle__fmarticle_id: this.state.articleId,
+            updated_at__lte: this.state.createdAt
+              ? moment(this.state.createdAt)
+                  .add(1, "days")
+                  .format("YYYY-MM-DD")
+              : null,
+            updated_at__gte: this.state.createdAt
+              ? moment(this.state.createdAt)
+                  .subtract(1, "days")
+                  .format("YYYY-MM-DD")
+              : null
           };
           await this.props.fetchComprehensionsList(
             this.props.user.Authorization,
@@ -238,7 +264,17 @@ class ComprehensionList extends React.Component {
         fields: {
           status: this.state.status,
           comprehension_type: this.state.comprehension_type,
-          comprehensionfmarticle__fmarticle_id: this.state.articleId
+          comprehensionfmarticle__fmarticle_id: this.state.articleId,
+          updated_at__lte: this.state.createdAt
+            ? moment(this.state.createdAt)
+                .add(1, "days")
+                .format("YYYY-MM-DD")
+            : null,
+          updated_at__gte: this.state.createdAt
+            ? moment(this.state.createdAt)
+                .subtract(1, "days")
+                .format("YYYY-MM-DD")
+            : null
         },
         offset: 0
       });
@@ -249,7 +285,17 @@ class ComprehensionList extends React.Component {
           status: this.state.status,
           comprehension_type: this.state.comprehension_type,
           comprehensionparameter__parameter_id: this.state.parameterId,
-          comprehensioncategory__category_id: this.state.categoryId
+          comprehensioncategory__category_id: this.state.categoryId,
+          updated_at__lte: this.state.createdAt
+            ? moment(this.state.createdAt)
+                .add(1, "days")
+                .format("YYYY-MM-DD")
+            : null,
+          updated_at__gte: this.state.createdAt
+            ? moment(this.state.createdAt)
+                .subtract(1, "days")
+                .format("YYYY-MM-DD")
+            : null
         },
         offset: 0
       });
@@ -321,6 +367,13 @@ class ComprehensionList extends React.Component {
         <Card title={<div className="card-title">Filters</div>}>
           <Row>
             <Filters fields={this.fields} />
+            <Col span={8} style={{ padding: "0 24px" }}>
+              <Form.Item label="Created At">
+                {getFieldDecorator("created_at", { initalValue: this.state.createdAt })(
+                  <DatePicker onChange={this.onSelectDate} />
+                )}
+              </Form.Item>
+            </Col>
             <Col span={8} style={{ padding: "0 24px" }}>
               <Form.Item label="Comprehension Type">
                 <Switch
