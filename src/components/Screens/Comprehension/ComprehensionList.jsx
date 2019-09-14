@@ -29,8 +29,8 @@ class ComprehensionList extends React.Component {
     loading: true,
     searchText: "",
     status: null,
-    parameterId: [],
-    categoryId: [],
+    parameterId: null,
+    categoryId: null,
     comprehension_type: 1,
     articleId: null,
     createdAt: null
@@ -369,9 +369,9 @@ class ComprehensionList extends React.Component {
             <Filters fields={this.fields} />
             <Col span={8} style={{ padding: "0 24px" }}>
               <Form.Item label="Created At">
-                {getFieldDecorator("created_at", { initalValue: this.state.createdAt })(
-                  <DatePicker onChange={this.onSelectDate} />
-                )}
+                {getFieldDecorator("created_at", {
+                  initalValue: this.state.createdAt
+                })(<DatePicker onChange={this.onSelectDate} />)}
               </Form.Item>
             </Col>
             <Col span={8} style={{ padding: "0 24px" }}>
