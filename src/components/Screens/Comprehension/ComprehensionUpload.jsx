@@ -24,10 +24,11 @@ class ComprehensionUpload extends Component {
   state = {
     name: "",
     type: "image",
+    fileExt: null,
     html: null,
     comprehension_type: 1,
     url: "",
-    accept: ".jpg"
+    accept: "jpg"
   };
 
   handleChange = val => {
@@ -38,22 +39,22 @@ class ComprehensionUpload extends Component {
     this.setState({ type: val }, () => {
       switch (this.state.type) {
         case "image":
-          this.setState({ accept: ".jpg" });
+          this.setState({ accept: "jpg" });
           break;
         case "audio":
-          this.setState({ accept: ".mp3" });
+          this.setState({ accept: "mp3" });
           break;
         case "video":
-          this.setState({ accept: ".mp4" });
+          this.setState({ accept: "mp4" });
           break;
         case "pdf":
-          this.setState({ accept: ".pdf" });
+          this.setState({ accept: "pdf" });
           break;
         case "html":
-          this.setState({ accept: ".html" });
+          this.setState({ accept: "html" });
           break;
         default:
-          this.setState({ accept: ".*" });
+          this.setState({ accept: "*" });
       }
     });
   };
@@ -73,7 +74,10 @@ class ComprehensionUpload extends Component {
   onUploadImage = info => {
     if (info.file.status === "done") {
       message.success(`${info.file.name} file uploaded successfully`);
-      this.setState({ url: info.file.response.url });
+      this.setState({
+        url: info.file.response.url,
+        fileExt: info.file.name.split(".")[1]
+      });
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} file upload failed.`);
     }
@@ -85,6 +89,8 @@ class ComprehensionUpload extends Component {
       if (!err) {
         if (!this.state.url) {
           return message.error("Media not uploaded");
+        } else if (this.state.fileExt !== this.state.accept) {
+          return message.error("Invalid file type");
         }
         let values = {
           ...formProps,
@@ -169,7 +175,7 @@ class ComprehensionUpload extends Component {
                 <Upload
                   {...this.uploadProps}
                   onChange={this.onUploadImage}
-                  accept={this.state.accept}
+                  accept={`.${this.state.accept}`}
                 >
                   <Button size="large">
                     <Icon type="upload" /> Click to Upload

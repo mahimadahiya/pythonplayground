@@ -22,15 +22,17 @@ class ComprehensionEdit extends Component {
       this.props.match.params.id,
       this.props.user.Authorization
     );
-    const comprehension = this.props.comprehensionDetail.comprehension;
-    this.setState({
-      complexity: comprehension.complexity,
-      gender: comprehension.gender,
-      loading: false
-    });
-    this.props.form.setFieldsValue({
-      name: comprehension.name
-    });
+    if (this.props.comprehensionDetail) {
+      const comprehension = this.props.comprehensionDetail.comprehension;
+      this.setState({
+        complexity: comprehension.complexity,
+        gender: comprehension.gender,
+        loading: false
+      });
+      this.props.form.setFieldsValue({
+        name: comprehension.name
+      });
+    }
   }
 
   onChangeComplexity = val => {
