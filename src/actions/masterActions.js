@@ -153,7 +153,7 @@ export const deleteTag = async (authToken, id) => {
 
 export const createModule = async (authToken, values) => {
   const response = await pyLearningApi(authToken).post(
-    "/module/create/react/",
+    "/v1/admin/module/",
     qs.stringify(values)
   );
   return response;

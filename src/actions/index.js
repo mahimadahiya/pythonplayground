@@ -68,6 +68,7 @@ import {
 
 import {
   fetchArticleList,
+  fetchAllArticles,
   fetchArticleDetail,
   updateArticle,
   addArticle,
@@ -249,7 +250,8 @@ export {
   mapKeyword,
   deleteKeyword,
   mapJargonClusterJargons,
-  mapJargonCluster
+  mapJargonCluster,
+  fetchAllArticles
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

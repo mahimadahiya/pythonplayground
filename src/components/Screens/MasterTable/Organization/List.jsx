@@ -61,14 +61,16 @@ const OrganizationList = () => {
       key: "course"
     },
     {
-      title: "Region ID",
-      dataIndex: "region",
-      key: "region"
+      title: "Region",
+      key: "region",
+      dataIndex: "region_details",
+      render: region =>
+        region ? <div>{`${region[0].name} (${region[0].id})`}</div> : null
     },
     {
       title: "Industry type",
       dataIndex: "industry_type",
-      key: "industry_type"
+      key: "organization_type"
     },
     {
       title: "Actions",

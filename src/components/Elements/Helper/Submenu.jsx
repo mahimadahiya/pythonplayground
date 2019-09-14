@@ -34,7 +34,6 @@ const renderSubmenus = (list, collapsed) => {
 };
 
 const Submenu = props => {
-  const { SubMenu } = Menu;
   return (
     <React.Fragment>
       <Menu

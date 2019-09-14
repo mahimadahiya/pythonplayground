@@ -22,6 +22,7 @@ import State from "../../Elements/State";
 import Complexity from "../../Elements/Complexity";
 import ContentComplexityLevel from "../../Elements/ContentComplexityLevel";
 import history from "../../../history";
+import Articles from "../../Elements/Articles";
 
 class QuestionEdit extends React.Component {
   state = {
@@ -175,9 +176,7 @@ class QuestionEdit extends React.Component {
           )}
         </Form.Item>
         <Form.Item label="Article">
-          {getFieldDecorator("article")(
-            <Input placeholder="Enter article" type="number" />
-          )}
+          {getFieldDecorator("article")(<Articles />)}
         </Form.Item>
         <Row gutter={48}>
           <Col span={7}>
@@ -221,10 +220,12 @@ class QuestionEdit extends React.Component {
             </Form.Item>
           </Col>
           <Col span={7}>
-            <ContentComplexityLevel
-              onChange={this.onChangeLevel}
-              mode="multiple"
-            />
+            <Form.Item label="Content Complexity Level">
+              <ContentComplexityLevel
+                onChange={this.onChangeLevel}
+                mode="multiple"
+              />
+            </Form.Item>
           </Col>
         </Row>
         <Form.Item>

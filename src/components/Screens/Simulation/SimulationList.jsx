@@ -1,20 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Card, Pagination, Alert, Button } from "antd";
+import { Table, Card, Pagination, Alert, Button, Row } from "antd";
 import { fetchSimulationList } from "../../../actions";
 import history from "../../../history";
 import qs from "querystring";
 import adminPanelApi from "../../../apis/adminPanel";
 import { source } from "../../../apis/cancel";
+import Filters from "../../Elements/Helper/Filters";
 
 class SimulationList extends React.Component {
   state = {
     loading: true,
-    offset: 0
+    offset: 0,
+    searchText: ""
   };
 
   componentDidMount = async () => {
-    await this.props.fetchSimulationList(this.props.user.Authorization, 0);
+    await this.props.fetchSimulationList(this.props.user.Authorization, {
+      offset: 0,
+      searchText: this.state.searchText
+    });
     this.setState({ loading: false });
   };
 
@@ -135,18 +140,54 @@ class SimulationList extends React.Component {
     source.cancel();
   }
 
+  onSearch = e => {
+    this.setState(
+      {
+        searchText: e.target.value,
+        loading: true
+      },
+      () => {
+        setTimeout(async () => {
+          await this.props.fetchSimulationList(this.props.user.Authorization, {
+            searchText: this.state.searchText,
+            offset: 0
+          });
+          this.setState({ loading: false });
+        }, 1000);
+      }
+    );
+  };
+
   handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
     this.setState({ loading: true });
-    await this.props.fetchSimulationList(this.props.user.Authorization, offset);
+    await this.props.fetchSimulationList(this.props.user.Authorization, {
+      searchText: this.state.searchText,
+      offset
+    });
     this.setState({ loading: false, offset });
   };
+
+  fields = [
+    {
+      key: "1",
+      type: "input",
+      label: "Search Simulation",
+      placeholder: "Search Simulation",
+      onChange: this.onSearch
+    }
+  ];
 
   render() {
     const columnName = this.tableColumnName();
     const tableData = this.props.simulations;
     return (
       <div>
+        <Card title="Filters">
+          <Row>
+            <Filters fields={this.fields} />
+          </Row>
+        </Card>
         <Card title={<div className="card-title">Simulation List</div>}>
           <Table
             dataSource={tableData}

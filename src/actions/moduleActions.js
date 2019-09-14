@@ -3,7 +3,7 @@ import * as ACTION_TYPE from "./actionTypes";
 import _ from "lodash";
 
 export const fetchModules = async authToken => {
-  const response = await pyLearningApi(authToken).get("module/list/react");
+  const response = await pyLearningApi(authToken).get("/v1/admin/modules");
   return response.data.result.category_list;
 };
 

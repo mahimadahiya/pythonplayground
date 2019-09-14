@@ -29,6 +29,10 @@ const ArticleEdit = props => {
         setGender(data.Articles.gender);
         setComplexity(data.Articles.complexity);
         setHandpicked(data.Articles.handpicked);
+        setContentComplexityLevel(data.complexity);
+        props.form.setFieldsValue({
+          levels: [{key: 1}]
+        });
         setLoading(false);
       }
     };
@@ -55,7 +59,7 @@ const ArticleEdit = props => {
           ...formProps,
           complexity,
           gender,
-          contentComplexityLevels: JSON.stringify(contentComplexityLevel),
+          contentcomplexitylevels: JSON.stringify(contentComplexityLevel),
           regions: JSON.stringify(region),
           states: JSON.stringify(state),
           handpicked: handpicked
@@ -68,7 +72,7 @@ const ArticleEdit = props => {
       }
     });
   };
-
+  console.log(contentComplexityLevel);
   const onChangeRegion = val => {
     setRegion(val);
   };
@@ -93,33 +97,41 @@ const ArticleEdit = props => {
           </Form.Item>
           <Form.Item label="Objective">
             {getFieldDecorator("objective", {
+              rules: [{ required: true }],
               initialValue: details ? details.objective : null
             })(<Input placeholder="Objective" />)}
           </Form.Item>
           <Form.Item label="Takeaway">
             {getFieldDecorator("takeaway", {
+              rules: [{ required: true }],
+
               initialValue: details ? details.takeaway : null
             })(<Input placeholder="Takeaway" />)}
           </Form.Item>
           <Row gutter={48}>
             <Col span={8}>
               <Form.Item label="Gender">
-                {getFieldDecorator("gender", { initialValue: gender })(
-                  <Gender onChange={onChangeGender} />
-                )}
+                {getFieldDecorator("gender", {
+                  rules: [{ required: true }],
+
+                  initialValue: gender
+                })(<Gender onChange={onChangeGender} />)}
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="Complexity">
-                {getFieldDecorator("complexity", { initialValue: complexity })(
-                  <Complexity onChange={onChangeComplexity} />
-                )}
+                {getFieldDecorator("complexity", {
+                  rules: [{ required: true }],
+
+                  initialValue: complexity
+                })(<Complexity onChange={onChangeComplexity} />)}
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="Content Complexity levels">
                 {getFieldDecorator("levels", {
-                  initialValue: contentComplexityLevel
+                  rules: [{ required: true }]
+                  // initialValue: {["1"]}
                 })(
                   <ContentComplexityLevel
                     onChange={onChangeContentComplexityLevel}
@@ -130,14 +142,20 @@ const ArticleEdit = props => {
             </Col>
             <Col span={8}>
               <Form.Item label="Region">
-                {getFieldDecorator("region", { initialValue: region })(
-                  <Region onChange={onChangeRegion} mode="multiple" />
-                )}
+                {getFieldDecorator("region", {
+                  rules: [{ required: true }],
+
+                  initialValue: region
+                })(<Region onChange={onChangeRegion} mode="multiple" />)}
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="State">
-                {getFieldDecorator("state", { initialValue: state })(
+                {getFieldDecorator("state", {
+                  rules: [{ required: true }],
+
+                  initialValue: state
+                })(
                   <State
                     onChange={onChangeState}
                     mode="multiple"
@@ -149,7 +167,7 @@ const ArticleEdit = props => {
           </Row>
           <Form.Item>
             Handpicked
-            <span>
+            <span style={{ marginLeft: 5 }}>
               <Checkbox
                 title="Handpicked"
                 onChange={() => {

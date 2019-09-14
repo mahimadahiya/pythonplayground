@@ -18,9 +18,7 @@ export const fetchArticleList = async (authToken, values) => {
 
   if (values.searchText.length > 0) {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/articles?offset=${values.offset}&search=${
-        values.searchText
-      }&filters=${filters}`
+      `/v1/admin/articles?offset=${values.offset}&search=${values.searchText}&filters=${filters}`
     );
   } else {
     response = await adminPanelApi(authToken).get(
@@ -28,6 +26,13 @@ export const fetchArticleList = async (authToken, values) => {
     );
   }
   return { list: response.data.results, count: response.data.count };
+};
+
+export const fetchAllArticles = async authToken => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/articles?limit=100000"
+  );
+  return response.data.results;
 };
 
 export const addArticle = async (authToken, formValues, html) => {

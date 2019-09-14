@@ -11,7 +11,7 @@ export const fetchModuleSimulations = (
 ) => async dispatch => {
   const response = await pyLearningApi(authToken).get(
     `/simulation/list_questions?module_id=${module_id}`,
-    { cancelToken: source.token }
+    // { cancelToken: source.token }
   );
   dispatch({
     type: ACTION_TYPE.FETCH_MODULE_SIMULATION,
@@ -24,9 +24,7 @@ export const fetchDefaultModuleSimulations = (
   formValues
 ) => async dispatch => {
   const response = await pyLearningApi(authToken).get(
-    `/simulation/view_mapped?organization_id=${
-      formValues.organization_id
-    }&module_id=${formValues.module_id}`
+    `/simulation/view_mapped?organization_id=${formValues.organization_id}&module_id=${formValues.module_id}`
   );
   dispatch({
     type: ACTION_TYPE.FETCH_DEFAULT_SIMULATIONS,
@@ -48,14 +46,17 @@ export const createSimulationOrgMapping = (
   });
 };
 
-export const fetchSimulationList = (authToken, offset) => async dispatch => {
+export const fetchSimulationList = (authToken, fields) => async dispatch => {
   let response = null;
   let flag = 0;
-  if (offset) {
+  if (fields.searchText.length > 0) {
     response = await adminPanelApi(authToken)
-      .get(`/v1/admin/simulations?limit=10&offset=${offset}`, {
-        cancelToken: source.token
-      })
+      .get(
+        `/v1/admin/simulations?limit=10&offset=${fields.offset}&search=${fields.searchText}`,
+        {
+          cancelToken: source.token
+        }
+      )
       .catch(err => (flag = 1));
   } else {
     response = await adminPanelApi(authToken)

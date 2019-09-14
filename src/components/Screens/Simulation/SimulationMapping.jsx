@@ -60,6 +60,7 @@ class SituationMapping extends Component {
   };
 
   onModuleSelect = value => {
+    console.log("call");
     this.setState(
       { module_id: value, simulations: [], loaded: false },
       async () => {
@@ -87,7 +88,8 @@ class SituationMapping extends Component {
         });
 
         this.setState({
-          defaultSimulations: filteredList
+          defaultSimulations: filteredList,
+          loaded: true
         });
       }
     );
@@ -210,9 +212,7 @@ class SituationMapping extends Component {
                       <Select.Option
                         value={module.module_id}
                         key={module.module_id}
-                      >{`${module.module__name} (${
-                        module.module_id
-                      })`}</Select.Option>
+                      >{`${module.module__name} (${module.module_id})`}</Select.Option>
                     );
                   })}
                 </Select>

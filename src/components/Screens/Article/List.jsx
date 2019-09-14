@@ -35,6 +35,7 @@ const ArticleList = props => {
   const [offset, setOffset] = useState(0);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
+  const [filterId, setFilterId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [id, setId] = useState(null);
   const [type, setType] = useState(null);
@@ -52,6 +53,7 @@ const ArticleList = props => {
         complexity,
         status,
         type,
+        id: filterId,
         updated_at: createdAt ? moment(createdAt).format("YYYY-MM-DD") : null
       };
       clean(fields);
@@ -81,7 +83,8 @@ const ArticleList = props => {
     status,
     type,
     complexity,
-    createdAt
+    createdAt,
+    filterId
   ]);
 
   const column = [
@@ -213,6 +216,10 @@ const ArticleList = props => {
     setStatus(val);
   };
 
+  const onSearchID = e => {
+    setFilterId(e.target.value);
+  };
+
   const onTypeChange = val => {
     setType(val);
   };
@@ -232,6 +239,13 @@ const ArticleList = props => {
       label: "Search by Name or ID",
       placeholder: "Search by Name or ID",
       onChange: onSearch
+    },
+    {
+      key: "id",
+      type: "input",
+      label: "Search by ID",
+      placeholder: "Search by ID",
+      onChange: onSearchID
     },
     {
       key: "2",
