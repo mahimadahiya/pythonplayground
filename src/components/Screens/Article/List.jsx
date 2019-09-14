@@ -54,7 +54,16 @@ const ArticleList = props => {
         status,
         type,
         id: filterId,
-        updated_at: createdAt ? moment(createdAt).format("YYYY-MM-DD") : null
+        updated_at__lte: createdAt
+          ? moment(createdAt)
+              .add(1, "days")
+              .format("YYYY-MM-DD")
+          : null,
+        updated_at__gte: createdAt
+          ? moment(createdAt)
+              .subtract(1, "days")
+              .format("YYYY-MM-DD")
+          : null
       };
       clean(fields);
       const result = await fetchArticleList(user.Authorization, {
