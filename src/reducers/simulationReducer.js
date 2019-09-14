@@ -35,7 +35,7 @@ export default (state = INITIAL_STATE, action) => {
     case ACTION_TYPE.CLEAR_SIMULATIONS:
       return {
         ...state,
-        ...INITIAL_STATE
+        moduleSimulations: {}
       };
     default:
       return state;

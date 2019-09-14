@@ -88,8 +88,7 @@ class SituationMapping extends Component {
         });
 
         this.setState({
-          defaultSimulations: filteredList,
-          loaded: true
+          defaultSimulations: filteredList
         });
       }
     );

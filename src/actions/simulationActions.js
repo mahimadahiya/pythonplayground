@@ -10,8 +10,7 @@ export const fetchModuleSimulations = (
   module_id
 ) => async dispatch => {
   const response = await pyLearningApi(authToken).get(
-    `/simulation/list_questions?module_id=${module_id}`,
-    // { cancelToken: source.token }
+    `/simulation/list_questions?module_id=${module_id}`
   );
   dispatch({
     type: ACTION_TYPE.FETCH_MODULE_SIMULATION,
@@ -52,10 +51,7 @@ export const fetchSimulationList = (authToken, fields) => async dispatch => {
   if (fields.searchText.length > 0) {
     response = await adminPanelApi(authToken)
       .get(
-        `/v1/admin/simulations?limit=10&offset=${fields.offset}&search=${fields.searchText}`,
-        {
-          cancelToken: source.token
-        }
+        `/v1/admin/simulations?limit=10&offset=${fields.offset}&search=${fields.searchText}`
       )
       .catch(err => (flag = 1));
   } else {
