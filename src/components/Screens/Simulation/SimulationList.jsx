@@ -208,7 +208,11 @@ class SimulationList extends React.Component {
             <Filters fields={this.fields} />
             <Col span={8}>
               <Form.Item label="Status">
-                <Select onChange={this.onChangeStatus} allowClear>
+                <Select
+                  onChange={this.onChangeStatus}
+                  style={{ width: 360 }}
+                  allowClear
+                >
                   <Select.Option key={4}>Live</Select.Option>
                   <Select.Option key={1}>Draft</Select.Option>
                 </Select>

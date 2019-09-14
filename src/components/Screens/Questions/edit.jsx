@@ -80,6 +80,10 @@ class QuestionEdit extends React.Component {
           values
         );
         message.success("Updated successfully");
+        console.log(this.props.location.state.isSimulation);
+        if (this.props.location.state.isSimulation) {
+          return history.push("/question/map/" + this.props.match.params.id);
+        }
         history.push("/question/map/choices/" + this.props.match.params.id);
       }
     });

@@ -49,7 +49,7 @@ const CategoryCreate = props => {
           }
         } else {
           const response = await editCategory(user.Authorization, {
-            fields: JSON.stringify(values),
+            ...values,
             id: props.id
           });
           if (response.status === 200) {

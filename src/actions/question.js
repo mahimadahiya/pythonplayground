@@ -18,9 +18,7 @@ export const fetchQuestionList = (authToken, values) => async dispatch => {
   filters = JSON.stringify(filters);
   if (values.searchText) {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/questions?offset=${values.offset}&search=${
-        values.searchText
-      }&filters=${filters}`
+      `/v1/admin/questions?offset=${values.offset}&search=${values.searchText}&filters=${filters}`
     );
   } else {
     response = await adminPanelApi(authToken).get(
@@ -55,11 +53,15 @@ export const updateQuestion = (id, authToken, formValues) => async dispatch => {
   if (formValues.status || formValues.flag !== null) {
     history.push("/questions");
   } else {
-    history.push("/question/map/choices/" + id);
+    // history.push("/question/map/choices/" + id);
   }
 };
 
-export const createQuestion = (authToken, formValues) => async dispatch => {
+export const createQuestion = (
+  authToken,
+  formValues,
+  isSimulation
+) => async dispatch => {
   formValues["status"] = 1;
   const data = qs.stringify({ fields: JSON.stringify(formValues) });
   const response = await adminPanelApi(authToken).post(
@@ -67,5 +69,5 @@ export const createQuestion = (authToken, formValues) => async dispatch => {
     data
   );
   const id = response.data.result.id;
-  history.push("/question/edit/" + id);
+  history.push({ pathname: "/question/edit/" + id, state: { isSimulation } });
 };
