@@ -19,6 +19,7 @@ import history from "../../../history";
 import Filters from "../../Elements/Helper/Filters";
 import Categories from "../../Elements/Categories";
 import Parameters from "../../Elements/Parameters";
+import moment from "moment";
 
 //TODO: Filters not working yet
 
@@ -63,7 +64,7 @@ class ComprehensionList extends React.Component {
         title: "Name",
         dataIndex: "name",
         key: "name",
-        width: "60%",
+        width: "40%",
         render: text => {
           return <div style={{ minHeight: "60px" }}>{text}</div>;
         }
@@ -72,6 +73,12 @@ class ComprehensionList extends React.Component {
         title: "Type",
         dataIndex: "type",
         key: "type"
+      },
+      {
+        title: "Created At",
+        dataIndex: "created_at",
+        key: "created_at",
+        render: date => moment(date).format("YYYY-MM-DD")
       },
       {
         title: "Complexity",
@@ -95,7 +102,7 @@ class ComprehensionList extends React.Component {
       {
         title: "Actions",
         key: "action",
-        width: 360,
+        width: '15%',
         render: record => (
           <span>
             <Link to={`/comprehension/map/${record.id}`}>Map</Link>
