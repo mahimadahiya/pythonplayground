@@ -19,6 +19,7 @@ const renderSelect = field => {
           labelInValue={field.labelInValue}
           onChange={field.onChange}
           placeholder={field.placeholder}
+          allowClear={true}
           // style={{ minWidth: 300 }}
         >
           {field.options.map(option => {

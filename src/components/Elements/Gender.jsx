@@ -6,6 +6,7 @@ const Gender = forwardRef((props, ref) => {
     <Select
       placeholder="Select a gender"
       onChange={props.onChange}
+      allowClear
       value={props.value}
     >
       <Select.Option value="m">Male</Select.Option>

@@ -25,6 +25,7 @@ const Tags = forwardRef((props, ref) => {
       placeholder="Select a tag"
       onChange={props.onChange}
       value={props.value}
+      allowClear
     >
       {renderOptions(tags)}
     </Select>

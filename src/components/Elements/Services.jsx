@@ -41,6 +41,7 @@ const Services = forwardRef((props, ref) => {
       placeholder="Select organization(s)"
       onChange={props.onChange}
       showSearch
+      allowClear
       filterOption={(val, option) => filterServices(val, option)}
     >
       {renderServices()}

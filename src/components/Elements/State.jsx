@@ -25,6 +25,7 @@ const State = forwardRef((props, ref) => {
       <Select
         placeholder="Select a state"
         mode={props.mode}
+        allowClear
         onChange={props.onChange}
       >
         {renderOptions(states)}

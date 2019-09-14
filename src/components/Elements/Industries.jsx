@@ -18,7 +18,7 @@ const Industries = forwardRef((props, ref) => {
     <Select placeholder="Select an industry" onChange={props.onChange}>
       {industries.length > 0 &&
         industries.map(industry => (
-          <Select.Option key={industry.id} value={industry.id}>
+          <Select.Option allowClear key={industry.id} value={industry.id}>
             {industry.name}
           </Select.Option>
         ))}

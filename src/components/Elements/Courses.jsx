@@ -18,6 +18,7 @@ const Courses = forwardRef((props, ref) => {
     <Select
       placeholder="Select a course"
       mode={props.mode}
+      allowClear
       onChange={props.onChange}
     >
       {courses.length > 0 &&

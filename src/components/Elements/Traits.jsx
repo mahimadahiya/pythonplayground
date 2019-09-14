@@ -41,6 +41,7 @@ const Traits = forwardRef((props, ref) => {
       placeholder="Select Trait(s)"
       onChange={props.onChange}
       showSearch
+      allowClear
       filterOption={(val, option) => filterTraits(val, option)}
     >
       {renderTraits()}

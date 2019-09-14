@@ -28,6 +28,7 @@ const ContentComplexityLevel = forwardRef((props, ref) => {
         placeholder="Select a level"
         onChange={props.onChange}
         mode={props.mode}
+        allowClear
       >
         {renderLevels(levels)}
       </Select>

@@ -41,6 +41,7 @@ const Parameters = forwardRef((props, ref) => {
       onChange={props.onChange}
       mode={props.mode}
       showSearch
+      allowClear
       filterOption={(val, option) => filterParameters(val, option, parameters)}
     >
       {renderOptions(parameters)}

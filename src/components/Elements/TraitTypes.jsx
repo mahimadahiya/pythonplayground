@@ -8,6 +8,7 @@ const TraitTypes = forwardRef((props, ref) => {
         placeholder="Select a type"
         value={props.value}
         style={props.style}
+        allowClear
         onChange={props.onChange}
       >
         <Select.Option key="1" value={1}>
