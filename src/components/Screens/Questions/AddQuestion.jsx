@@ -17,13 +17,18 @@ import { createQuestion } from "../../../actions";
 class AddQuestion extends Component {
   state = {
     file_url: null,
-    type: "text"
+    type: "text",
+    accept: "*",
+    fileExt: "*"
   };
 
   onSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(async (err, formProps) => {
       if (!err) {
+        if (this.state.fileExt !== this.state.accept) {
+          return message.error("Invalid file");
+        }
         let values = {
           quiz_type: formProps.quiz_type
         };
@@ -42,6 +47,7 @@ class AddQuestion extends Component {
 
   onUploadMedia = info => {
     if (info.file.status === "done") {
+      this.setState({ fileExt: info.file.name.split(".")[1] });
       message.success(`${info.file.name} file uploaded successfully`);
       this.setState({ file_url: info.file.response.url });
     } else if (info.file.status === "error") {
@@ -50,15 +56,34 @@ class AddQuestion extends Component {
   };
 
   onSelectMedia = val => {
-    this.setState({
-      type: val
-    });
+    this.setState(
+      {
+        type: val
+      },
+      () => {
+        console.log(val);
+        let accept = "*";
+        switch (val) {
+          case "image":
+            accept = "jpg";
+            break;
+          case "audio":
+            accept = "mp3";
+            break;
+          case "video":
+            accept = "mp4";
+            break;
+          default:
+            accept = "*";
+        }
+        this.setState({ accept });
+      }
+    );
   };
 
   uploadProps = {
     name: "file",
     data: { folder_name: "extras/" },
-
     action: "https://pylearning-api.iaugmentor.com/file_upload/",
     headers: {
       Authorization:
@@ -131,7 +156,11 @@ class AddQuestion extends Component {
               {this.state.type !== "text" ? (
                 <Col span={7}>
                   <Form.Item label="Media">
-                    <Upload {...this.uploadProps} onChange={this.onUploadMedia}>
+                    <Upload
+                      {...this.uploadProps}
+                      onChange={this.onUploadMedia}
+                      accept={`.${this.state.accept}`}
+                    >
                       <Button>
                         <Icon type="upload" /> Click to Upload
                       </Button>

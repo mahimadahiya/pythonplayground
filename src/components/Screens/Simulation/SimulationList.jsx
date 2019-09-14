@@ -1,6 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Card, Pagination, Alert, Button, Row } from "antd";
+import {
+  Table,
+  Card,
+  Pagination,
+  Alert,
+  Button,
+  Row,
+  Col,
+  Form,
+  Select
+} from "antd";
 import { fetchSimulationList } from "../../../actions";
 import history from "../../../history";
 import qs from "querystring";
@@ -178,6 +188,16 @@ class SimulationList extends React.Component {
     }
   ];
 
+  onChangeStatus = async val => {
+    this.setState({ loading: true });
+    await this.props.fetchSimulationList(this.props.user.Authorization, {
+      searchText: this.state.searchText,
+      offset: this.state.offset,
+      status: val
+    });
+    this.setState({ loading: false });
+  };
+
   render() {
     const columnName = this.tableColumnName();
     const tableData = this.props.simulations;
@@ -186,6 +206,14 @@ class SimulationList extends React.Component {
         <Card title="Filters">
           <Row>
             <Filters fields={this.fields} />
+            <Col span={8}>
+              <Form.Item label="Status">
+                <Select onChange={this.onChangeStatus} allowClear>
+                  <Select.Option key={4}>Live</Select.Option>
+                  <Select.Option key={1}>Draft</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
           </Row>
         </Card>
         <Card title={<div className="card-title">Simulation List</div>}>

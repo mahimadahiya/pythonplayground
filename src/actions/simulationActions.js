@@ -48,6 +48,8 @@ export const createSimulationOrgMapping = (
 export const fetchSimulationList = (authToken, fields) => async dispatch => {
   let response = null;
   let flag = 0;
+  let filter = { status: fields.status };
+  filter = JSON.stringify(filter);
   if (fields.searchText.length > 0) {
     response = await adminPanelApi(authToken)
       .get(
