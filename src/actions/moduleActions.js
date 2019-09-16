@@ -1,10 +1,13 @@
 import pyLearningApi from "../apis/pylearning";
 import * as ACTION_TYPE from "./actionTypes";
 import _ from "lodash";
+import adminPanelApi from "../apis/adminPanel";
 
 export const fetchModules = async authToken => {
-  const response = await pyLearningApi(authToken).get("/v1/admin/modules");
-  return response.data.result.category_list;
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/paginated/modules"
+  );
+  return response.data.results;
 };
 
 export const createModuleMap = list => {

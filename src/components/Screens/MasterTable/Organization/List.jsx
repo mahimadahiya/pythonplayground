@@ -69,7 +69,7 @@ const OrganizationList = () => {
     },
     {
       title: "Industry type",
-      dataIndex: "industry_type",
+      dataIndex: "organization_type",
       key: "organization_type"
     },
     {
