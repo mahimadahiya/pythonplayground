@@ -10,7 +10,6 @@ const Complexity = forwardRef((props, ref) => {
       allowClear
       value={props.value}
     >
-      <Select.Option value="1">Very Easy</Select.Option>
       <Select.Option value="2">Easy</Select.Option>
       <Select.Option value="3">Medium</Select.Option>
       <Select.Option value="4">Tough</Select.Option>

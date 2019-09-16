@@ -53,7 +53,7 @@ const TagCreate = props => {
           }
         } else {
           const response = await editTag(user.Authorization, {
-            fields: JSON.stringify(values),
+            ...values,
             id: props.id,
             parameter_id: parameterId
           });
