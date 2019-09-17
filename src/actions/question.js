@@ -57,11 +57,7 @@ export const updateQuestion = (id, authToken, formValues) => async dispatch => {
   }
 };
 
-export const createQuestion = (
-  authToken,
-  formValues,
-  isSimulation
-) => async dispatch => {
+export const createQuestion = (authToken, formValues) => async dispatch => {
   formValues["status"] = 1;
   const data = qs.stringify({ fields: JSON.stringify(formValues) });
   const response = await adminPanelApi(authToken).post(
@@ -69,5 +65,5 @@ export const createQuestion = (
     data
   );
   const id = response.data.result.id;
-  history.push({ pathname: "/question/edit/" + id, state: { isSimulation } });
+  history.push({ pathname: "/question/edit/" + id });
 };

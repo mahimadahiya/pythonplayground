@@ -38,11 +38,7 @@ class AddQuestion extends Component {
             media_url: this.state.file_url
           };
         }
-        this.props.createQuestion(
-          this.props.user.Authorization,
-          values,
-          this.state.isSimulation
-        );
+        this.props.createQuestion(this.props.user.Authorization, values);
       } else {
         console.log(err);
       }
@@ -96,12 +92,6 @@ class AddQuestion extends Component {
     }
   };
 
-  onSelectQuiz = val => {
-    if (val === "interview") {
-      this.setState({ isSimulation: true });
-    }
-  };
-
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -131,9 +121,6 @@ class AddQuestion extends Component {
                       </Select.Option>
                       <Select.Option value="kp" key="kp">
                         Key Phrases
-                      </Select.Option>
-                      <Select.Option value="interview" key="interview">
-                        Interview
                       </Select.Option>
                     </Select>
                   )}

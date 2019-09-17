@@ -142,6 +142,8 @@ import {
   mapJargonCluster
 } from "./dictActions";
 
+import { fetchSPOCList, createSPOC } from "./spocActions";
+
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -251,7 +253,9 @@ export {
   deleteKeyword,
   mapJargonClusterJargons,
   mapJargonCluster,
-  fetchAllArticles
+  fetchAllArticles,
+  fetchSPOCList,
+  createSPOC
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

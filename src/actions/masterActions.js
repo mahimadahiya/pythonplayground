@@ -54,6 +54,13 @@ export const fetchTagList = async (authToken, values) => {
   return { list: response.data.results, count: response.data.count };
 };
 
+export const fetchModuleDetails = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).get(`/v1/admin/module/${id}`);
+  if (response.status === 200) {
+    return response.data;
+  }
+};
+
 export const fetchCategoryDetails = async (authToken, id) => {
   const response = await adminPanelApi(authToken).get(
     `/v1/admin/category/${id}`
@@ -152,7 +159,7 @@ export const deleteTag = async (authToken, id) => {
 };
 
 export const createModule = async (authToken, values) => {
-  const response = await pyLearningApi(authToken).post(
+  const response = await adminPanelApi(authToken).post(
     "/v1/admin/module/",
     qs.stringify(values)
   );

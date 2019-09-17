@@ -3,7 +3,7 @@ import { Form, message, Input, Button, Icon, Upload } from "antd";
 import MButton from "../../Elements/MButton";
 import { createModule } from "../../../actions";
 import { useSelector } from "react-redux";
-import ContentComplexityLevel from '../../Elements/ContentComplexityLevel'
+import ContentComplexityLevel from "../../Elements/ContentComplexityLevel";
 
 const CreateModule = props => {
   const user = useSelector(state => state.userAuth);
@@ -15,6 +15,7 @@ const CreateModule = props => {
         await createModule(user.Authorization, {
           ...formValues,
           image_url: image,
+          filter: "{}",
           flag: 1
         });
         message.success("Service created successfully");
@@ -71,9 +72,9 @@ const CreateModule = props => {
           </Upload>
         </Form.Item>
         <Form.Item label="Content Complexity level">
-          {getFieldDecorator('content_complexity_id', { rules: [ { required: true}]})(
-            <ContentComplexityLevel />
-          )}
+          {getFieldDecorator("content_complexity_id", {
+            rules: [{ required: true }]
+          })(<ContentComplexityLevel />)}
         </Form.Item>
         <MButton>Create Module</MButton>
       </Form>

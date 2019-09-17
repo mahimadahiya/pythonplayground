@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, message, Card } from "antd";
+import { Form, Input, message, Card, Button, Modal } from "antd";
 import { useSelector } from "react-redux";
-import Region from "../../../Elements/Region";
-import Courses from "../../../Elements/Courses";
 import Industries from "../../../Elements/Industries";
 import MButton from "../../../Elements/MButton";
 import {
   createOrganization,
   fetchOrganizationDetails
 } from "../../../../actions";
-import Services from "../../../Elements/Services";
+import SPOCList from "./SPOC/List";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -25,6 +23,7 @@ const OrganizationCreate = props => {
   const [course, setCourse] = useState(null);
   const [industry, setIndustry] = useState(null);
   const [name, setName] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -41,6 +40,10 @@ const OrganizationCreate = props => {
       fetchDetails();
     }
   }, [props.id, user]);
+
+  const onCloseModal = () => {
+    setShowModal(false);
+  };
 
   const onSubmit = e => {
     e.preventDefault();
@@ -66,14 +69,6 @@ const OrganizationCreate = props => {
     });
   };
 
-  const onChangeRegion = val => {
-    setRegion(val);
-  };
-
-  const onChangeCourse = val => {
-    setCourse(val);
-  };
-
   const onChangeIndustry = val => {
     setIndustry(val);
   };
@@ -89,18 +84,7 @@ const OrganizationCreate = props => {
               initialValue: name
             })(<Input placeholder="Enter name of organization" />)}
           </Form.Item>
-          <Form.Item label="Region">
-            {getFieldDecorator("region", {
-              rules: [{ required: true, message: "Region is required" }],
-              initialValue: region
-            })(<Region mode="single" onChange={onChangeRegion} />)}
-          </Form.Item>
-          <Form.Item label="Course">
-            {getFieldDecorator("course", {
-              rules: [{ required: true, message: "Course is required" }],
-              initialValue: course
-            })(<Courses onChange={onChangeCourse} />)}
-          </Form.Item>
+          
           <Form.Item label="Industry">
             {getFieldDecorator("industry", {
               rules: [{ required: true, message: "Industry is required" }],
@@ -108,15 +92,24 @@ const OrganizationCreate = props => {
             })(<Industries onChange={onChangeIndustry} />)}
           </Form.Item>
 
-          <Form.Item label="Services">
-            {getFieldDecorator("service_id", { rules: [{ required: true }] })(
-              <Services />
-            )}
-          </Form.Item>
+         
+
+          <Button onClick={() => setShowModal(true)}>Add SPOC</Button>
 
           <MButton>{props.id ? "Edit" : "Create"}</MButton>
         </Form>
       </Card>
+      <Modal
+        title="Create Parameter"
+        visible={showModal}
+        footer={null}
+        destroyOnClose={true}
+        onCancel={onCloseModal}
+        closable={true}
+        width="1000px"
+      >
+        <SPOCList onCloseModal={onCloseModal} />
+      </Modal>
     </div>
   );
 };
