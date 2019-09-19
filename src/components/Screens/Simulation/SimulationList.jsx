@@ -214,6 +214,8 @@ class SimulationList extends React.Component {
                   allowClear
                 >
                   <Select.Option key={4}>Live</Select.Option>
+                  <Select.Option key={3}>Revision</Select.Option>
+                  <Select.Option key={2}>Review</Select.Option>
                   <Select.Option key={1}>Draft</Select.Option>
                 </Select>
               </Form.Item>

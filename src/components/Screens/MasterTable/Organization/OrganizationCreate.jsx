@@ -29,8 +29,6 @@ function clean(obj) {
 
 const OrganizationCreate = props => {
   const user = useSelector(state => state.userAuth);
-  const [region, setRegion] = useState(null);
-  const [course, setCourse] = useState(null);
   const [industry, setIndustry] = useState(null);
   const [subType, setSubType] = useState(null);
   const [subTypeList, setSubTypeList] = useState([]);
@@ -44,8 +42,6 @@ const OrganizationCreate = props => {
         props.id
       );
       setName(details.result.organization.name);
-      setRegion(details.result.organization.region_id);
-      setCourse(details.result.organization.course_id);
       setIndustry(details.result.organization.industry_type_id);
     };
     if (props.id) {

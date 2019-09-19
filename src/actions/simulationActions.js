@@ -53,12 +53,12 @@ export const fetchSimulationList = (authToken, fields) => async dispatch => {
   if (fields.searchText.length > 0) {
     response = await adminPanelApi(authToken)
       .get(
-        `/v1/admin/simulations?limit=10&offset=${fields.offset}&search=${fields.searchText}`
+        `/v1/admin/simulations?limit=10&offset=${fields.offset}&search=${fields.searchText}&filter=${filter}`
       )
       .catch(err => (flag = 1));
   } else {
     response = await adminPanelApi(authToken)
-      .get(`/v1/admin/simulations`, {
+      .get(`/v1/admin/simulations?filter=${filter}`, {
         cancelToken: source.token
       })
       .catch(err => (flag = 1));

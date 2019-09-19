@@ -1,4 +1,3 @@
-import pyLearningApi from "../apis/pylearning";
 import * as ACTION_TYPE from "./actionTypes";
 import _ from "lodash";
 import adminPanelApi from "../apis/adminPanel";
