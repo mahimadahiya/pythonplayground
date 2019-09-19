@@ -15,10 +15,14 @@ const Industries = forwardRef((props, ref) => {
     fetchData();
   }, [user]);
   return (
-    <Select placeholder="Select an industry" onChange={props.onChange}>
+    <Select placeholder="Select an industry" onChange={props.onChange} allowClear>
       {industries.length > 0 &&
         industries.map(industry => (
-          <Select.Option allowClear key={industry.id} value={industry.id}>
+          <Select.Option
+            key={industry.id}
+            value={industry.id}
+            subtypes={industry.subtypes}
+          >
             {industry.name}
           </Select.Option>
         ))}

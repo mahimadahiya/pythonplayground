@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, message, Card, Button, Modal } from "antd";
+import {
+  Form,
+  Input,
+  message,
+  Card,
+  Button,
+  Modal,
+  Select,
+  Row,
+  Col
+} from "antd";
 import { useSelector } from "react-redux";
 import Industries from "../../../Elements/Industries";
 import MButton from "../../../Elements/MButton";
@@ -22,6 +32,8 @@ const OrganizationCreate = props => {
   const [region, setRegion] = useState(null);
   const [course, setCourse] = useState(null);
   const [industry, setIndustry] = useState(null);
+  const [subType, setSubType] = useState(null);
+  const [subTypeList, setSubTypeList] = useState([]);
   const [name, setName] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -51,16 +63,11 @@ const OrganizationCreate = props => {
       if (!err) {
         const values = {
           name: formValues.name,
-          course_id: course,
-          industry_type_id: industry,
-          region_id: region,
-          module_id: formValues.module_id
+          org_industy_type: industry,
+          org_subtype: formValues.subtype
         };
         clean(values);
-        const response = await createOrganization(user.Authorization, {
-          fields: JSON.stringify(values),
-          service_id: formValues.service_id
-        });
+        const response = await createOrganization(user.Authorization, values);
         if (response.status === 201) {
           message.success("Organization created successfully");
           props.onCloseModal();
@@ -69,8 +76,10 @@ const OrganizationCreate = props => {
     });
   };
 
-  const onChangeIndustry = val => {
+  const onChangeIndustry = (val, industry) => {
     setIndustry(val);
+    props.form.setFieldsValue({ subtype: null });
+    setSubTypeList(industry.props.subtypes);
   };
 
   const { getFieldDecorator } = props.form;
@@ -84,15 +93,33 @@ const OrganizationCreate = props => {
               initialValue: name
             })(<Input placeholder="Enter name of organization" />)}
           </Form.Item>
-          
-          <Form.Item label="Industry">
-            {getFieldDecorator("industry", {
-              rules: [{ required: true, message: "Industry is required" }],
-              initialValue: industry
-            })(<Industries onChange={onChangeIndustry} />)}
-          </Form.Item>
 
-         
+          <Row gutter={48}>
+            <Col span={12}>
+              <Form.Item label="Industry Type">
+                {getFieldDecorator("industry", {
+                  rules: [{ required: true, message: "Industry is required" }],
+                  initialValue: industry
+                })(<Industries onChange={onChangeIndustry} />)}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Industry Subtype">
+                {getFieldDecorator("subtype", {
+                  rules: [{ required: true, message: "Industry is required" }],
+                  initialValue: subType
+                })(
+                  <Select>
+                    {subTypeList.map(subtype => (
+                      <Select.Option key={subtype} value={subtype}>
+                        {subtype}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
 
           <Button onClick={() => setShowModal(true)}>Add SPOC</Button>
 

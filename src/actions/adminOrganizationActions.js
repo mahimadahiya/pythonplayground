@@ -7,9 +7,7 @@ export const fetchOrganizationList = async (authToken, values) => {
 
   if (values.searchText.length > 0) {
     response = await adminPanelApi(authToken).get(
-      `/v1/admin/organizations?offset=${values.offset}&search=${
-        values.searchText
-      }`
+      `/v1/admin/organizations?offset=${values.offset}&search=${values.searchText}`
     );
   } else {
     response = await adminPanelApi(authToken).get(
@@ -38,10 +36,7 @@ export const fetchOrganizationDetails = async (authToken, id) => {
 export const createOrganization = async (authToken, values) => {
   const response = await adminPanelApi(authToken).post(
     "/v1/admin/organization/",
-    qs.stringify({
-      fields: values.fields,
-      service_id: values.service_id
-    })
+    qs.stringify(values)
   );
   return response;
 };
@@ -54,7 +49,9 @@ export const fetchCourses = async authToken => {
 };
 
 export const fetchIndustries = async authToken => {
-  const response = await adminPanelApi(authToken).get("/v1/admin/industries");
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/organization/industry_list"
+  );
   if (response.status === 200) {
     return response.data.result;
   }
