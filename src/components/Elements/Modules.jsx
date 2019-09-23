@@ -1,7 +1,7 @@
 import React, { useEffect, forwardRef, useState } from "react";
 import { Select } from "antd";
 import { useSelector } from "react-redux";
-import { fetchModules } from "../../actions";
+import { fetchAllModules } from '../../actions';
 
 const Modules = forwardRef((props, ref) => {
   const user = useSelector(state => state.userAuth);
@@ -9,7 +9,7 @@ const Modules = forwardRef((props, ref) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const modules = await fetchModules(user.Authorization);
+      const modules = await fetchAllModules(user.Authorization);
       setModules(modules);
     };
     fetchData();

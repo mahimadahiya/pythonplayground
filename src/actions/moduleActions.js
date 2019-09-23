@@ -8,6 +8,12 @@ export const fetchModules = async authToken => {
   );
   return response.data.results;
 };
+export const fetchAllModules = async authToken => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/paginated/modules?limit=100000000"
+  );
+  return response.data.results;
+};
 
 export const createModuleMap = list => {
   const detailsHash = _.reduce(
