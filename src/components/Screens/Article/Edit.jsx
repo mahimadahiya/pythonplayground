@@ -57,6 +57,15 @@ const ArticleEdit = props => {
     setContentComplexityLevel(val);
   };
 
+  const onHandPickCheckbox = e => {
+    // console.log(e.target.checked);
+    if (e.target.checked === false) {
+      setHandpicked(0);
+    } else if (e.target.checked === true) {
+      setHandpicked(1);
+    }
+  };
+
   const onSubmit = e => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
@@ -165,9 +174,7 @@ const ArticleEdit = props => {
             <span style={{ marginLeft: 5 }}>
               <Checkbox
                 title="Handpicked"
-                onChange={() => {
-                  setHandpicked(1);
-                }}
+                onChange={onHandPickCheckbox}
                 defaultChecked={handpicked}
               />
             </span>
