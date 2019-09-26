@@ -238,7 +238,7 @@ const list = [
           {
             key: "/games/mtf/add",
             label: "Upload",
-            onClick: () => history.push("/games/mtf/upload")
+            onClick: () => history.push("/games/mtf/add")
           }
         ]
       },
@@ -254,7 +254,7 @@ const list = [
           {
             key: "/games/quad/add",
             label: "Upload",
-            onClick: () => history.push("/games/quad/upload")
+            onClick: () => history.push("/games/quad/add")
           }
         ]
       }
