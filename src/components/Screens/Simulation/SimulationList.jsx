@@ -188,9 +188,10 @@ class SimulationList extends React.Component {
   handlePageChange = async pageNumber => {
     const offset = pageNumber * 10 - 10;
     this.setState({ loading: true });
+    console.log(offset);
     await this.props.fetchSimulationList(this.props.user.Authorization, {
       searchText: this.state.searchText,
-      offset
+      offset: offset
     });
     this.setState({ loading: false, offset });
   };

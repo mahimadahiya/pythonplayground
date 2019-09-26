@@ -50,19 +50,20 @@ export const fetchSimulationList = (authToken, fields) => async dispatch => {
   let flag = 0;
   let filter = { status: fields.status };
   filter = JSON.stringify(filter);
-  if (fields.searchText.length > 0) {
-    response = await adminPanelApi(authToken)
-      .get(
-        `/v1/admin/simulations?limit=10&offset=${fields.offset}&search=${fields.searchText}&filter=${filter}`
-      )
-      .catch(err => (flag = 1));
-  } else {
-    response = await adminPanelApi(authToken)
-      .get(`/v1/admin/simulations?filter=${filter}`, {
-        cancelToken: source.token
-      })
-      .catch(err => (flag = 1));
-  }
+  // if (fields.searchText.length > 0) {
+  response = await adminPanelApi(authToken)
+    .get(
+      `/v1/admin/simulations?limit=10&offset=${fields.offset}&search=${fields.searchText}&filter=${filter}`
+    )
+    .catch(err => (flag = 1));
+  // } else {
+  //   console.log(source.token);
+  //   response = await adminPanelApi(authToken)
+  //     .get(`/v1/admin/simulations?filter=${filter}`, {
+  //       cancelToken: source.token
+  //     })
+  //     .catch(err => (flag = 1));
+  // }
   if (flag === 0) {
     dispatch({
       type: ACTION_TYPE.FETCH_SIMULATION_LIST,
