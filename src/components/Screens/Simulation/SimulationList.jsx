@@ -132,14 +132,31 @@ class SimulationList extends React.Component {
       {
         title: "Media Type",
         dataIndex: "media_type",
-        key: "media_type"
+        key: "media_type",
+        render: (text, row, index) => {
+          return (
+            <span>
+              {text === null ? <span>NA </span> : <span>{text}</span>}
+            </span>
+          );
+        }
       },
       {
         title: "Media URL",
         dataIndex: "media_url",
         key: "media_url",
         render: (text, row, index) => {
-          return <a href={text}>Link</a>;
+          return (
+            <span>
+              {text === null ? (
+                <span>NA </span>
+              ) : (
+                <span>
+                  <a href={text}>Link</a>
+                </span>
+              )}
+            </span>
+          );
         }
       }
     ];
