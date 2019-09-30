@@ -34,7 +34,8 @@ const OrganizationCreate = props => {
   const [subTypeList, setSubTypeList] = useState([]);
   const [name, setName] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [id, setId] = useState(null)
+  const [id, setId] = useState(null);
+  const [showInput, setShowInput] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -61,7 +62,7 @@ const OrganizationCreate = props => {
         const values = {
           name: formValues.name,
           org_industy_type: industry,
-          org_subtype: formValues.subtype
+          org_subtype: subType
         };
         clean(values);
         const response = await createOrganization(user.Authorization, values);
@@ -76,6 +77,11 @@ const OrganizationCreate = props => {
 
   const onChangeIndustry = (val, industry) => {
     setIndustry(val);
+    if (val === 11) {
+      setShowInput(true);
+    } else {
+      setShowInput(false);
+    }
     props.form.setFieldsValue({ subtype: null });
     setSubTypeList(industry.props.subtypes);
   };
@@ -102,20 +108,30 @@ const OrganizationCreate = props => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Industry Subtype">
-                {getFieldDecorator("subtype", {
-                  rules: [{ required: true, message: "Industry is required" }],
-                  initialValue: subType
-                })(
-                  <Select>
-                    {subTypeList.map(subtype => (
-                      <Select.Option key={subtype} value={subtype}>
-                        {subtype}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                )}
-              </Form.Item>
+              {showInput ? (
+                <Form.Item label="Industry Type">
+                  {getFieldDecorator("subtype", {
+                    rules: [
+                      { required: true, message: "Industry is required" }
+                    ],
+                    initialValue: industry
+                  })(<Input onChange={e => setSubType(e.target.value)} />)}
+                </Form.Item>
+              ) : (
+                <Form.Item label="Industry Subtype">
+                  {getFieldDecorator("subtype", {
+                    initialValue: subType
+                  })(
+                    <Select onChange={val => setSubType(val)}>
+                      {subTypeList.map(subtype => (
+                        <Select.Option key={subtype} value={subtype}>
+                          {subtype}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  )}
+                </Form.Item>
+              )}
             </Col>
           </Row>
 
@@ -131,7 +147,11 @@ const OrganizationCreate = props => {
         closable={true}
         width="1000px"
       >
-        <SPOCCreate id={id} onCloseModal={onCloseModal} onCloseModalParent={props.onCloseModal} />
+        <SPOCCreate
+          id={id}
+          onCloseModal={onCloseModal}
+          onCloseModalParent={props.onCloseModal}
+        />
       </Modal>
     </div>
   );
