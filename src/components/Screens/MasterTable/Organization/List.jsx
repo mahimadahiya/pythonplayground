@@ -65,7 +65,7 @@ const OrganizationList = () => {
       key: "region",
       dataIndex: "region_details",
       render: region =>
-        region ? <div>{`${region[0].name} (${region[0].id})`}</div> : null
+        region && region.length > 0 ? <div>{`${region[0].name} (${region[0].id})`}</div> : null
     },
     {
       title: "Industry type",

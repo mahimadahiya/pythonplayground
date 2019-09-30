@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Form, Input } from "antd";
+import { Card, Form, Input, message } from "antd";
 import MButton from "../../../../Elements/MButton";
 import { createSPOC } from "../../../../../actions";
 import { useSelector } from "react-redux";
@@ -11,7 +11,15 @@ const SPOCCreate = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formProps) => {
       if (!err) {
-        const response = await createSPOC(user.Authorization, formProps);
+        if (formProps.password === formProps.confirm_password) {
+          const data = { ...formProps, organization_id: props.id}
+          await createSPOC(user.Authorization, data);
+          message.success("SPOC created successfully")
+          props.onCloseModal()
+          props.onCloseModalParent()
+        } else {
+          message.error("Passwords do not match");
+        }
       }
     });
   };

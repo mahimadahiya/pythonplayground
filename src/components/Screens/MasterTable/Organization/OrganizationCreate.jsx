@@ -17,7 +17,7 @@ import {
   createOrganization,
   fetchOrganizationDetails
 } from "../../../../actions";
-import SPOCList from "./SPOC/List";
+import SPOCCreate from "./SPOC/Create";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -34,6 +34,7 @@ const OrganizationCreate = props => {
   const [subTypeList, setSubTypeList] = useState([]);
   const [name, setName] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [id, setId] = useState(null)
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -65,8 +66,9 @@ const OrganizationCreate = props => {
         clean(values);
         const response = await createOrganization(user.Authorization, values);
         if (response.status === 201) {
+          setId(response.data.result.id);
           message.success("Organization created successfully");
-          props.onCloseModal();
+          setShowModal(true);
         }
       }
     });
@@ -117,13 +119,11 @@ const OrganizationCreate = props => {
             </Col>
           </Row>
 
-          <Button onClick={() => setShowModal(true)}>Add SPOC</Button>
-
           <MButton>{props.id ? "Edit" : "Create"}</MButton>
         </Form>
       </Card>
       <Modal
-        title="Create Parameter"
+        title="Create SPOC"
         visible={showModal}
         footer={null}
         destroyOnClose={true}
@@ -131,7 +131,7 @@ const OrganizationCreate = props => {
         closable={true}
         width="1000px"
       >
-        <SPOCList onCloseModal={onCloseModal} />
+        <SPOCCreate id={id} onCloseModal={onCloseModal} onCloseModalParent={props.onCloseModal} />
       </Modal>
     </div>
   );
