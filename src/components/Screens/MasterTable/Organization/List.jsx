@@ -52,26 +52,39 @@ const OrganizationList = () => {
       key: "name",
       width: "60%",
       render: text => {
-        return <div style={{ minHeight: "60px" }}>{text}</div>;
+        return <div style={{ minHeight: "60px" }}>{text === null? '-' :text}</div>;
       }
     },
     {
       title: "Course ID",
       dataIndex: "course",
-      key: "course"
+      key: "course",
+      render: (text) => {
+       
+        return <div>{text === null? <span style={{color:"black",fontWeight:"bold"}}>-</span> : text}</div>;
+      }
     },
     {
       title: "Region",
       key: "region",
       dataIndex: "region_details",
       render: region =>
+<<<<<<< HEAD
         region && region.length > 0 ? <div>{`${region[0].name} (${region[0].id})`}</div> : null
+=======
+        region ? <div>{`${region[0].name} (${region[0].id})`}</div> : <span style={{color:"black",fontWeight:"bold"}}>-</span>
+>>>>>>> a60e8ee... empty fields in the list are filled with -
     },
     {
       title: "Industry type",
       dataIndex: "organization_type",
-      key: "organization_type"
-    },
+      key: "organization_type",
+      render: (text) => {
+
+        return <div>{text === null? <span style={{color:"black",fontWeight:"bold"}}>-</span> : text}</div>;
+      }
+    }
+    /*
     {
       title: "Actions",
       key: "action",
@@ -89,7 +102,7 @@ const OrganizationList = () => {
           </Button>
         </span>
       )
-    }
+    }*/
   ];
 
   const handlePageChange = async pageNumber => {
