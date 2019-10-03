@@ -51,8 +51,8 @@ const OrganizationList = () => {
       dataIndex: "name",
       key: "name",
       width: "60%",
-      render: text => {
-        return <div style={{ minHeight: "60px" }}>{text === null? '-' :text}</div>;
+      render: (text) => {
+        return <div>{(text === null || text === "")? <span style={{color:"black",fontWeight:"bold"}}>-</span> : text}</div>;
       }
     },
     {
@@ -100,6 +100,7 @@ const OrganizationList = () => {
           >
             Edit
           </Button>
+
         </span>
       )
     }*/

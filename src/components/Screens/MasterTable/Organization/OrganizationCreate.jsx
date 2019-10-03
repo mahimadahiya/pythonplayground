@@ -59,8 +59,11 @@ const OrganizationCreate = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formValues) => {
       if (!err) {
+        const orgname = {
+          name: formValues.name
+        }
         const values = {
-          name: formValues.name,
+          fields: JSON.stringify(orgname),
           org_industy_type: industry,
           org_subtype: subType
         };
