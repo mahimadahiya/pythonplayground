@@ -51,17 +51,32 @@ const OrganizationList = () => {
       dataIndex: "name",
       key: "name",
       width: "60%",
-      render: (text) => {
-        return <div>{(text === null || text === "")? <span style={{color:"black",fontWeight:"bold"}}>-</span> : text}</div>;
+      render: text => {
+        return (
+          <div>
+            {text === null || text === "" ? (
+              <span style={{ color: "black", fontWeight: "bold" }}>-</span>
+            ) : (
+              text
+            )}
+          </div>
+        );
       }
     },
     {
       title: "Course ID",
       dataIndex: "course",
       key: "course",
-      render: (text) => {
-       
-        return <div>{text === null? <span style={{color:"black",fontWeight:"bold"}}>-</span> : text}</div>;
+      render: text => {
+        return (
+          <div>
+            {text === null ? (
+              <span style={{ color: "black", fontWeight: "bold" }}>-</span>
+            ) : (
+              text
+            )}
+          </div>
+        );
       }
     },
     {
@@ -69,19 +84,26 @@ const OrganizationList = () => {
       key: "region",
       dataIndex: "region_details",
       render: region =>
-<<<<<<< HEAD
-        region && region.length > 0 ? <div>{`${region[0].name} (${region[0].id})`}</div> : null
-=======
-        region ? <div>{`${region[0].name} (${region[0].id})`}</div> : <span style={{color:"black",fontWeight:"bold"}}>-</span>
->>>>>>> a60e8ee... empty fields in the list are filled with -
+        region ? (
+          <div>{`${region[0].name} (${region[0].id})`}</div>
+        ) : (
+          <span style={{ color: "black", fontWeight: "bold" }}>-</span>
+        )
     },
     {
       title: "Industry type",
       dataIndex: "organization_type",
       key: "organization_type",
-      render: (text) => {
-
-        return <div>{text === null? <span style={{color:"black",fontWeight:"bold"}}>-</span> : text}</div>;
+      render: text => {
+        return (
+          <div>
+            {text === null ? (
+              <span style={{ color: "black", fontWeight: "bold" }}>-</span>
+            ) : (
+              text
+            )}
+          </div>
+        );
       }
     }
     /*
