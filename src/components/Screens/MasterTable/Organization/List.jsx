@@ -86,7 +86,7 @@ const OrganizationList = () => {
       render: region => {
         return (
           <div>
-            {region === null ? null : (
+            {(region === null || region ==="" || region === " " || region === [])  ? <span style={{ color: "black", fontWeight: "bold" }}>-</span> : (
               <div>
                 {region.length !== 0 ? (
                   <div>{`${region[0].name} (${region[0].id})`}</div>
