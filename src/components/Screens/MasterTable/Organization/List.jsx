@@ -131,7 +131,6 @@ const OrganizationList = () => {
           >
             Edit
           </Button>
-
         </span>
       )
     }*/

@@ -10,6 +10,8 @@ const ArticleDetail = props => {
   const [parameter, setParameter] = useState([]);
   const [category, setCategory] = useState([]);
   const [tag, setTag] = useState([]);
+  const [handpicked,SetHandPicked] = useState(null);
+  const [userStatus,SetUserStatus] = useState(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -17,11 +19,17 @@ const ArticleDetail = props => {
         props.match.params.id,
         user.Authorization
       );
+      console.log(data);
       setName(data.Articles.name);
       setType(data.Articles.type);
       setCategory(data.categories);
       setParameter(data.parameters);
       setTag(data.tags);
+      SetHandPicked(data.Articles.handpicked);
+      SetUserStatus(data.Articles.status);
+      console.log(data.Articles.handpicked);
+      console.log(data.Articles.status);
+      
     };
     fetchDetails();
   }, [props.match.params.id, user]);
@@ -67,6 +75,10 @@ const ArticleDetail = props => {
             ) : (
               "None"
             )}
+          </Descriptions.Item>
+          <Descriptions.Item label="Handpicked"><span style={handpicked > 0 ?{color:'green'}:{color:'red'}}> {handpicked > 0 ?'Yes':'No'} </span></Descriptions.Item>
+          <Descriptions.Item label="Status">
+            {(userStatus === 1)? <span style={{color:'red'}}>Draft</span> :  <span style={{color:'green'}}>Live </span> }
           </Descriptions.Item>
         </Descriptions>
       </>
