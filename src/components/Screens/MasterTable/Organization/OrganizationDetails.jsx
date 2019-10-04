@@ -28,6 +28,7 @@ const OrganizationDetails = props => {
               <Descriptions.Item label="Name">
                 {details.organization.name}
               </Descriptions.Item>
+              <Descriptions.Item label="SPOC User Id">{(details.organization.spoc_user_id === null || details.organization.spoc_user_id === "" || details.organization.spoc_user_id === " " ) ? <span style={{fontWeight:'bold'}}>-</span> :<span>{details.organization.spoc_user_id}</span>}</Descriptions.Item>
             </Descriptions>
             <Row style={{ marginTop: 20 }} gutter={48}>
               <Col span={8}>

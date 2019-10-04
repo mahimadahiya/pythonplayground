@@ -12,6 +12,7 @@ const ArticleDetail = props => {
   const [tag, setTag] = useState([]);
   const [handpicked,SetHandPicked] = useState(null);
   const [userStatus,SetUserStatus] = useState(null);
+  const [mediaUrl,setMediaUrl] = useState("");
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -19,7 +20,7 @@ const ArticleDetail = props => {
         props.match.params.id,
         user.Authorization
       );
-      console.log(data);
+     
       setName(data.Articles.name);
       setType(data.Articles.type);
       setCategory(data.categories);
@@ -27,8 +28,9 @@ const ArticleDetail = props => {
       setTag(data.tags);
       SetHandPicked(data.Articles.handpicked);
       SetUserStatus(data.Articles.status);
-      console.log(data.Articles.handpicked);
-      console.log(data.Articles.status);
+      setMediaUrl(data.Articles.url);
+      console.log(data.Articles.url);
+      
       
     };
     fetchDetails();
@@ -85,10 +87,22 @@ const ArticleDetail = props => {
     );
   };
 
-  const showMediaContainer = () => {
-    return (
-      <div></div>
-    );
+  const showMediaContainer = ({type,mediaUrl}) => {
+       
+            
+            switch(type){
+              case 'image':
+                return <Card hoverable  title={type} style={{ maxWidth: 525,maxHeight:300,margin:"auto" }} ><img style={{maxWidth:"100%"}} alt="No Media Avialable" src={mediaUrl} /> </Card>;
+              case 'video':
+                return <Card hoverable title={type} style={{ maxWidth: 525,maxHeight:300,margin:"auto" }} ><video style={{maxWidth:"100%",maxHeight:"100%"}} controls> <source src={mediaUrl} type="video/mp4" /> <source src={mediaUrl} type="video/ogg" /></video> </Card>  ;
+              case 'audio':
+                return <Card hoverable title={type} style={{ maxWidth: 525,maxHeight:300,margin:"auto" }} ><audio controls><source src={mediaUrl} type="audio/mpeg" /></audio> </Card>;
+              case 'html':
+                return <Card hoverable title={type} style={{ maxWidth: 525,maxHeight:300,margin:"auto" }}> <a href={mediaUrl}>Html</a> </Card>;
+            }
+          
+    
+    
   };
 
   return (
@@ -96,6 +110,9 @@ const ArticleDetail = props => {
       <Card title={<div className="card-title">Article Details</div>}>
         {renderFields()}
       </Card>
+      <div style={{marginTop:"6%",marginBottom:"6%"}}> 
+        {showMediaContainer({type,mediaUrl})}
+      </div>
     </div>
   );
 };
