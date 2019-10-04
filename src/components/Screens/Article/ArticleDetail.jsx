@@ -76,12 +76,18 @@ const ArticleDetail = props => {
               "None"
             )}
           </Descriptions.Item>
-          <Descriptions.Item label="Handpicked"><span style={handpicked > 0 ?{color:'green'}:{color:'red'}}> {handpicked > 0 ?'Yes':'No'} </span></Descriptions.Item>
+          <Descriptions.Item label="Handpicked"><span style={handpicked === 0 ?{color:'red'}:{color:'green'}}> {handpicked === 0 ?'no':'Yes'} </span></Descriptions.Item>
           <Descriptions.Item label="Status">
             {(userStatus === 1)? <span style={{color:'red'}}>Draft</span> :  <span style={{color:'green'}}>Live </span> }
           </Descriptions.Item>
         </Descriptions>
       </>
+    );
+  };
+
+  const showMediaContainer = () => {
+    return (
+      <div></div>
     );
   };
 
