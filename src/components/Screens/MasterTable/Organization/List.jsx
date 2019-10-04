@@ -83,12 +83,21 @@ const OrganizationList = () => {
       title: "Region",
       key: "region",
       dataIndex: "region_details",
-      render: region =>
-        region ? (
-          <div>{`${region[0].name} (${region[0].id})`}</div>
-        ) : (
-          <span style={{ color: "black", fontWeight: "bold" }}>-</span>
-        )
+      render: region => {
+        return (
+          <div>
+            {region === null ? null : (
+              <div>
+                {region.length !== 0 ? (
+                  <div>{`${region[0].name} (${region[0].id})`}</div>
+                ) : (
+                  <span style={{ color: "black", fontWeight: "bold" }}>-</span>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      }
     },
     {
       title: "Industry type",
