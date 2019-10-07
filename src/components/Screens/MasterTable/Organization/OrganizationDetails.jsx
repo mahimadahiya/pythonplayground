@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Descriptions, Card, List, Row, Col } from "antd";
+import { Descriptions, Card, List, Row, Col ,Button ,Modal } from "antd";
 import { fetchOrganizationDetails } from "../../../../actions";
 import { useSelector } from "react-redux";
+import SPOCCreate from "./SPOC/Create";
 
 const OrganizationDetails = props => {
   const user = useSelector(state => state.userAuth);
   const [details, setDetails] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [id, setId] = useState(null);
   useEffect(() => {
     const fetchDetails = async () => {
       const data = await fetchOrganizationDetails(
@@ -15,7 +18,17 @@ const OrganizationDetails = props => {
       setDetails(data.result);
     };
     fetchDetails();
-  }, [user, props.match.params.id]);
+  }, [user, props.match.params.id,props.id]);
+
+  const onCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const addSpoc = () => {
+    
+    setShowModal(true);
+  };
+
   return (
     <div>
       <Card title="Organization details" loading={!details}>
@@ -28,7 +41,7 @@ const OrganizationDetails = props => {
               <Descriptions.Item label="Name">
                 {details.organization.name}
               </Descriptions.Item>
-              <Descriptions.Item label="SPOC User Id">{(details.organization.spoc_user_id === null || details.organization.spoc_user_id === "" || details.organization.spoc_user_id === " " ) ? <span style={{fontWeight:'bold'}}>-</span> :<span>{details.organization.spoc_user_id}</span>}</Descriptions.Item>
+              <Descriptions.Item label="SPOC User Id">{(details.organization.spoc_user_id === null || details.organization.spoc_user_id === "" || details.organization.spoc_user_id === " " ) ? <Button type="primary" shape="round"  size="large" onClick={addSpoc}> Add SPOC</Button> :<span>{details.organization.spoc_user_id}</span>}</Descriptions.Item>
             </Descriptions>
             <Row style={{ marginTop: 20 }} gutter={48}>
               <Col span={8}>
@@ -56,6 +69,21 @@ const OrganizationDetails = props => {
           </>
         )}
       </Card>
+      <Modal
+        title="Create SPOC"
+        visible={showModal}
+        footer={null}
+        destroyOnClose={true}
+        onCancel={onCloseModal}
+        closable={true}
+        width="1000px"
+      >
+        <SPOCCreate
+          id={id}
+          onCloseModal={onCloseModal}
+          onCloseModalParent={props.onCloseModal}
+        />
+      </Modal>
     </div>
   );
 };
