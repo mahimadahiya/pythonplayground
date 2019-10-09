@@ -106,7 +106,8 @@ import {
 import {
   mapModuleParameter,
   mapOrganizationService,
-  mapServiceModule
+  mapServiceModule,
+  getAlreadyMappedParameters
 } from './mappingActions';
 
 import {
@@ -260,7 +261,8 @@ export {
   fetchAllArticles,
   fetchSPOCList,
   createSPOC,
-  fetchAllModules
+  fetchAllModules,
+  getAlreadyMappedParameters
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

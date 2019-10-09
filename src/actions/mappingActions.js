@@ -24,3 +24,15 @@ export const mapServiceModule = async (authToken, values) => {
   );
   return response;
 };
+
+export const getAlreadyMappedParameters =  async (authToken, module_id) => {
+  const response = await pyLearningApi(authToken).get(
+    "/module/parameter/detail",
+    {
+      params: {
+        module_id: module_id
+      }
+    }
+  );
+  return response;
+};

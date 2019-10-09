@@ -4,11 +4,12 @@ import { Card, Form, message } from "antd";
 import Modules from "../../Elements/Modules";
 import MButton from "../../Elements/MButton";
 import Parameters from "../../Elements/Parameters";
-import { mapModuleParameter } from "../../../actions";
+import { mapModuleParameter, getAlreadyMappedParameters } from "../../../actions";
 
 const ModuleParameterMapping = props => {
   const user = useSelector(state => state.userAuth);
   const [parameters, setParameters] = useState([]);
+  const [module, setModule] = useState(null);
   const onSubmit = e => {
     e.preventDefault();
     props.form.validateFields(async (err, formValues) => {
@@ -24,6 +25,11 @@ const ModuleParameterMapping = props => {
       }
     });
   };
+ 
+  const moduleChange = async module_id => {
+    const response = await getAlreadyMappedParameters(user.Authorization, module_id)
+    setParameters(response.data.result)
+  }
 
   const onParameterChange = value => {
     setParameters(value);
@@ -34,13 +40,13 @@ const ModuleParameterMapping = props => {
     <Card title="Module-Parameter Mapping">
       <Form onSubmit={onSubmit}>
         <Form.Item label="Modules">
-          {getFieldDecorator("module_id", { rules: [{ required: true }] })(
-            <Modules />
+          {getFieldDecorator("module_id", { rules: [{ required: true }] } )(
+            <Modules onChange={moduleChange}   />
           )}
         </Form.Item>
         <Form.Item label="Parameters">
-          value=(Parameters)
-          {getFieldDecorator("parameter", { rules: [{ required: true }] })(
+          
+          {getFieldDecorator("parameter", { rules: [{ required: true }], })(
             <Parameters
               mode="multiple"
               onChange={onParameterChange}

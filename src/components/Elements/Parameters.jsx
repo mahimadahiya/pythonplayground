@@ -36,6 +36,7 @@ const Parameters = forwardRef((props, ref) => {
   }, [user, dispatch, props.categories]);
 
   return (
+    
     <Select
       placeholder="Select a parameter"
       onChange={props.onChange}
