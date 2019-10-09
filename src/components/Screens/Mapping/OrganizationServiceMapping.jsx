@@ -28,6 +28,11 @@ const OrganizationServiceMapping = props => {
       }
     });
   };
+  
+ const onOrganizationChange = () =>{
+   console.log('abc');
+ }
+ 
 
   const { getFieldDecorator } = props.form;
   return (
@@ -36,7 +41,7 @@ const OrganizationServiceMapping = props => {
         <Form.Item label="Organizations">
           {getFieldDecorator("organization_id", {
             rules: [{ required: true }]
-          })(<Organizations />)}
+          })(<Organizations onChange={onOrganizationChange} />)}
         </Form.Item>
         <Form.Item label="Services">
           {getFieldDecorator("service_id_list", {
