@@ -41,7 +41,9 @@ const OrganizationServiceMapping = props => {
         <Form.Item label="Services">
           {getFieldDecorator("service_id_list", {
             rules: [{ required: true }]
-          })(<Services />)}
+          })(<Services 
+              mode="multiple"          
+          />)}
         </Form.Item>
         <MButton>Submit</MButton>
       </Form>
