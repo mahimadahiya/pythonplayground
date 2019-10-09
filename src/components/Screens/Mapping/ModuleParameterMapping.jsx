@@ -39,6 +39,7 @@ const ModuleParameterMapping = props => {
           )}
         </Form.Item>
         <Form.Item label="Parameters">
+          value=(Parameters)
           {getFieldDecorator("parameter", { rules: [{ required: true }] })(
             <Parameters
               mode="multiple"
