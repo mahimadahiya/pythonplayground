@@ -7,9 +7,11 @@ import Parameters from "../../Elements/Parameters";
 import { mapModuleParameter, getAlreadyMappedParameters } from "../../../actions";
 
 const ModuleParameterMapping = props => {
+  
   const user = useSelector(state => state.userAuth);
   const [parameters, setParameters] = useState([]);
-  const [module, setModule] = useState(null);
+  const [selectedParameters, setSelectedParameters] = useState([]);
+  
   const onSubmit = e => {
     e.preventDefault();
     props.form.validateFields(async (err, formValues) => {
@@ -28,7 +30,11 @@ const ModuleParameterMapping = props => {
  
   const moduleChange = async module_id => {
     const response = await getAlreadyMappedParameters(user.Authorization, module_id)
-    setParameters(response.data.result)
+    let tempList = [];
+    for(let i = 0; i <response.data.result.length ; i++){
+      tempList.push(response.data.result[i].parameter_id)
+    }    
+    setSelectedParameters(tempList)
   }
 
   const onParameterChange = value => {
@@ -46,7 +52,7 @@ const ModuleParameterMapping = props => {
         </Form.Item>
         <Form.Item label="Parameters">
           
-          {getFieldDecorator("parameter", { rules: [{ required: true }], })(
+          {getFieldDecorator("parameter", { rules: [{ required: true }], initialValue: selectedParameters})(
             <Parameters
               mode="multiple"
               onChange={onParameterChange}
