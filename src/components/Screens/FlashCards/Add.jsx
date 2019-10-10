@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 class Add extends Component {
   state = {
     icon_url: null,
+    upload_button:true,
     content_data: [
       {
         id: 1,
@@ -107,6 +108,16 @@ class Add extends Component {
     this.setState({
       content_data
     });
+    if(e.target.value === null || e.target.value === "" || e.target.value === " " ){
+      this.setState({
+        upload_button:true
+      });
+    }else {
+      this.setState({
+        upload_button:false
+      });
+    }
+    console.log(this.state.upload_button)
   };
 
   onInputContentDescription = (e, i) => {
@@ -172,7 +183,7 @@ class Add extends Component {
                     {...this.uploadProps}
                     onChange={info => this.onUploadChangeContentIcons(i, info)}
                   >
-                    <Button>
+                    <Button  disabled={this.state.upload_button}>
                       <Icon type="upload" /> Click to Upload
                     </Button>
                   </Upload>
@@ -200,6 +211,8 @@ class Add extends Component {
     });
   };
 
+ 
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -209,12 +222,12 @@ class Add extends Component {
             <Form.Item label="Title">
               {getFieldDecorator("title", {
                 rules: [{ required: true, message: "Please enter title" }]
-              })(<Input placeholder="Enter title" size="large" />)}
+              })(<Input placeholder="Enter title" size="large"  />)}
             </Form.Item>
-
+            
             <Form.Item label="Upload Icon">
-              <Upload {...this.uploadProps} onChange={this.onUploadChangeIcon}>
-                <Button>
+              <Upload {...this.uploadProps} onChange={this.onUploadChangeIcon} >
+                <Button  disabled={this.state.upload_button}>
                   <Icon type="upload" /> Click to Upload
                 </Button>
               </Upload>

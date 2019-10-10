@@ -28,7 +28,7 @@ const ServiceModuleMapping = props => {
   
  const onServiceChange = async service_id => {
   const response = await getAlreadyMappedModuleServices(user.Authorization, service_id)
-  console.log(response.data.result);
+  //console.log(response.data.result);
   let tempList = [];
   if( response.data.result.length>0){
     for(let i = 0; i <response.data.result.length ; i++){
