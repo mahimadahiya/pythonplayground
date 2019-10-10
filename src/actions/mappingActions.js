@@ -48,3 +48,15 @@ export const getAlreadyMappedServices =  async (authToken, organization_id) => {
   );
   return response;
 };
+
+export const getAlreadyMappedModuleServices =  async (authToken, service_id) => {
+  const response = await pyLearningApi(authToken).get(
+    "/module/service/detail",
+    {
+      params: {
+        service_id: service_id
+      }
+    }
+  );
+  return response;
+};

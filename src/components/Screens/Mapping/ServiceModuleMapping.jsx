@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Card, Form, message } from "antd";
 import MButton from "../../Elements/MButton";
-import { mapServiceModule } from "../../../actions";
+import { mapServiceModule,getAlreadyMappedModuleServices } from "../../../actions";
 import Services from "../../Elements/Services";
 import Modules from "../../Elements/Modules";
 
 const ServiceModuleMapping = props => {
+  const [moduleServices,setModuleServices] = useState([]);
   const user = useSelector(state => state.userAuth);
   const onSubmit = e => {
     e.preventDefault();
@@ -23,6 +24,25 @@ const ServiceModuleMapping = props => {
       }
     });
   };
+  
+  
+ const onServiceChange = async service_id => {
+  const response = await getAlreadyMappedModuleServices(user.Authorization, service_id)
+  console.log(response.data.result);
+  let tempList = [];
+  if( response.data.result.length>0){
+    for(let i = 0; i <response.data.result.length ; i++){
+      tempList.push(response.data.result[i].module__name)
+    }    
+    setModuleServices(tempList)
+  }
+ 
+}
+ 
+
+  const onServiceModuleChange = value => {
+    setModuleServices(value);
+  };
 
   const { getFieldDecorator } = props.form;
   return (
@@ -31,12 +51,15 @@ const ServiceModuleMapping = props => {
         <Form.Item label="Services">
           {getFieldDecorator("service_id", {
             rules: [{ required: true }]
-          })(<Services />)}
+          })(<Services onChange={onServiceChange} />)}
         </Form.Item>
         <Form.Item label="Modules">
           {getFieldDecorator("module_id_list", {
-            rules: [{ required: true }]
-          })(<Modules mode="multiple" />)}
+            rules: [{ required: true }], initialValue: moduleServices
+          })(<Modules
+             mode="multiple"
+             onChange={onServiceModuleChange} 
+          />)}
         </Form.Item>
         <MButton>Submit</MButton>
       </Form>
