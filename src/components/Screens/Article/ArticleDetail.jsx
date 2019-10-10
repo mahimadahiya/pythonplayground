@@ -97,7 +97,9 @@ const ArticleDetail = props => {
               case 'audio':
                 return <Card hoverable title={type} style={{ maxWidth: 525,maxHeight:300,margin:"auto" }} ><audio controls><source src={mediaUrl} type="audio/mpeg" /></audio> </Card>;
               case 'html':
-                return <Card hoverable title={type} style={{ maxWidth: 525,maxHeight:300,margin:"auto" }}> <iframe style={{width:"100%"}} src={mediaUrl}></iframe> </Card>;
+                return <Card hoverable title={type} style={{ maxWidth: 525,maxHeight:300,margin:"auto" }}> <iframe style={{width:"100%"}} src={mediaUrl} title="html"></iframe> </Card>;
+              default :
+                return null;
             }
 };
 

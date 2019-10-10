@@ -40,6 +40,7 @@ const Services = forwardRef((props, ref) => {
     <Select
       placeholder="Select organization(s)"
       onChange={props.onChange}
+      value={props.value}
       mode={props.mode}
       showSearch
       allowClear

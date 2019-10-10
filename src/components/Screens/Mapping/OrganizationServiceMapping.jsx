@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Card, Form, message } from "antd";
 import MButton from "../../Elements/MButton";
-import { mapOrganizationService } from "../../../actions";
+import { mapOrganizationService,getAlreadyMappedServices } from "../../../actions";
 import Organizations from "../../Elements/Organizations";
 import Services from "../../Elements/Services";
 
 const OrganizationServiceMapping = props => {
+  const [selectedServices,setSelectedServices] = useState([]);
   const user = useSelector(state => state.userAuth);
   const onSubmit = e => {
     e.preventDefault();
@@ -29,9 +30,22 @@ const OrganizationServiceMapping = props => {
     });
   };
   
- const onOrganizationChange = () =>{
-   console.log('abc');
- }
+  const onServiceChange = value => {
+    setSelectedServices(value);
+  };
+
+ const onOrganizationChange = async organization_id => {
+  const response = await getAlreadyMappedServices(user.Authorization, organization_id)
+  // console.log(response.data.result[0].service_id);
+  let tempList = [];
+  if( response.data.result.length>0){
+    for(let i = 0; i <response.data.result.length ; i++){
+      tempList.push(response.data.result[i].service_id)
+    }    
+    setSelectedServices(tempList)
+  }
+ 
+}
  
 
   const { getFieldDecorator } = props.form;
@@ -45,9 +59,10 @@ const OrganizationServiceMapping = props => {
         </Form.Item>
         <Form.Item label="Services">
           {getFieldDecorator("service_id_list", {
-            rules: [{ required: true }]
+            rules: [{ required: true }], initialValue: selectedServices
           })(<Services 
-              mode="multiple"          
+              mode="multiple"   
+              onChange={onServiceChange}       
           />)}
         </Form.Item>
         <MButton>Submit</MButton>
