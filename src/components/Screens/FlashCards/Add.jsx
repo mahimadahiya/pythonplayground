@@ -120,6 +120,18 @@ class Add extends Component {
     console.log(this.state.upload_button)
   };
 
+  onUpperInputContentTitle = (e) =>{
+    if(e.target.value === null || e.target.value === "" || e.target.value === " " ){
+      this.setState({
+        upload_button:true
+      });
+    }else {
+      this.setState({
+        upload_button:false
+      });
+    }
+  }
+
   onInputContentDescription = (e, i) => {
     let content_data = [...this.state.content_data];
     content_data[i] = {
@@ -222,7 +234,7 @@ class Add extends Component {
             <Form.Item label="Title">
               {getFieldDecorator("title", {
                 rules: [{ required: true, message: "Please enter title" }]
-              })(<Input placeholder="Enter title" size="large"  />)}
+              })(<Input placeholder="Enter title" size="large" onChange={e => this.onUpperInputContentTitle(e)} />)}
             </Form.Item>
             
             <Form.Item label="Upload Icon">
