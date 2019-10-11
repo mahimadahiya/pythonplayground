@@ -17,7 +17,6 @@ import { connect } from "react-redux";
 class Add extends Component {
   state = {
     icon_url: null,
-    upload_button:true,
     content_data: [
       {
         id: 1,
@@ -108,28 +107,12 @@ class Add extends Component {
     this.setState({
       content_data
     });
-    if(e.target.value === null || e.target.value === "" || e.target.value === " " ){
-      this.setState({
-        upload_button:true
-      });
-    }else {
-      this.setState({
-        upload_button:false
-      });
-    }
-    console.log(this.state.upload_button)
+    
+    
   };
 
   onUpperInputContentTitle = (e) =>{
-    if(e.target.value === null || e.target.value === "" || e.target.value === " " ){
-      this.setState({
-        upload_button:true
-      });
-    }else {
-      this.setState({
-        upload_button:false
-      });
-    }
+    
   }
 
   onInputContentDescription = (e, i) => {
@@ -155,6 +138,19 @@ class Add extends Component {
           message.warning("Please add Icon");
           return;
         }
+      for(let i=0; i<this.state.content_data.length ; i++){
+        if(
+          this.state.content_data[i].title === null || 
+          this.state.content_data[i].title === undefined ||
+          this.state.content_data[i].title === "" ||
+          this.state.content_data[i].icon_url === null ||
+          this.state.content_data[i].icon_url === undefined ||
+          this.state.content_data[i].icon_url === ""
+          ){
+            message.warning("Please fill all fields");
+            return;
+          }
+      }
         const values = {
           ...formProps,
           icon_url: this.state.icon_url,
@@ -195,7 +191,7 @@ class Add extends Component {
                     {...this.uploadProps}
                     onChange={info => this.onUploadChangeContentIcons(i, info)}
                   >
-                    <Button  disabled={this.state.upload_button}>
+                    <Button>
                       <Icon type="upload" /> Click to Upload
                     </Button>
                   </Upload>
@@ -239,7 +235,7 @@ class Add extends Component {
             
             <Form.Item label="Upload Icon">
               <Upload {...this.uploadProps} onChange={this.onUploadChangeIcon} >
-                <Button  disabled={this.state.upload_button}>
+                <Button>
                   <Icon type="upload" /> Click to Upload
                 </Button>
               </Upload>
