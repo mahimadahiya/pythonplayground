@@ -138,6 +138,11 @@ class Add extends Component {
           message.warning("Please add Icon");
           return;
         }
+        if(this.state.content_data.length<1)
+        {
+          message.warning("please add atleast one content data");
+          return;
+        }
       for(let i=0; i<this.state.content_data.length ; i++){
         if(
           this.state.content_data[i].title === null || 
@@ -147,7 +152,7 @@ class Add extends Component {
           this.state.content_data[i].icon_url === undefined ||
           this.state.content_data[i].icon_url === ""
           ){
-            message.warning("Please fill all fields");
+            message.warning("Please fill All fields or delete the fields");
             return;
           }
       }
