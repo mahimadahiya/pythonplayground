@@ -59,6 +59,8 @@ import KeywordsList from '../Screens/Dictionary/Keywords/List';
 import JargonDetails from '../Screens/Dictionary/Jargons/Details';
 import JargonHome from '../Screens/Dictionary/Jargons/Home';
 import NotAuthorized from '../Screens/Dashboard/NotFound';
+import RolePlay from '../Screens/RolePlay';
+
 
 const Sidebar = React.lazy(() => import('./Sidebar'));
 
@@ -90,6 +92,13 @@ class Routing extends React.Component {
       <div>
         <React.Fragment>
           <Switch>
+            <PrivateRoute
+            path="/role-play"
+            component={RolePlay}
+            user={user}
+            exact
+            accessGroup={[1]}
+            />
             <PrivateRoute
               path="/"
               component={HomeScreen}

@@ -260,7 +260,20 @@ const list = [
       }
     ],
     accessGroup: [1]
-  }
+  },
+  // {
+  //   key: "role-play",
+  //   icon: "heat-map",
+  //   label: "Role Play",
+  //   menuList: [
+  //     {
+  //       key: "/role-play",
+  //       label: "List",
+  //       onClick: () => history.push("/role-play")
+  //     },
+  //   ],
+  //   accessGroup: [1]
+  // }
 ];
 
 const subMenuList = userAccessGroup => {

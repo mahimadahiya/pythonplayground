@@ -47,6 +47,10 @@ const routes = [
   {
     path: "/questions",
     breadcrumb: "Questions"
+  },
+  {
+    path: "/role-play",
+    breadcrumb: "Role-Play"
   }
 ];
 

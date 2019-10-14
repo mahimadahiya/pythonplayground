@@ -13,8 +13,8 @@ const OrganizationServiceMapping = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formValues) => {
       if (!err) {
-        const servicesList = [];
-        servicesList.push(formValues.service_id_list);
+        let servicesList = [];
+        servicesList = (formValues.service_id_list);
         const values = {
           organization_id: formValues.organization_id,
           service_id_list: JSON.stringify(servicesList)
