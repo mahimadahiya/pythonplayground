@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {rolePlayList} from "../../../actions";
-import { useSelector, useDispatch } from "react-redux";
+import {rolePlayList,addRolePlay} from "../../../actions";
+import { useSelector } from "react-redux";
 import {
     Table,
     Card,
@@ -27,11 +27,13 @@ const RolePlay = () => {
         }
         fetchList()
         
-    },[]);
+    },[user]);
 
     const onCloseRolePLayModal = () =>{
         setShowCreateRolePlayModal(false);
     }
+
+
 
 
     const column = [

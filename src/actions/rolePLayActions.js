@@ -8,3 +8,11 @@ export const rolePlayList = async authToken => {
     );
         return response.data.result;
   };
+
+  export const addRolePlay = async (authToken, formValues) => {
+    let response = null;
+    response = await adminPanelApi(authToken).post(
+        "/v1/admin/rp/article/create/",
+        qs.stringify(formValues)
+      );
+  };

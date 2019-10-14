@@ -151,7 +151,7 @@ import {
 
 import { fetchSPOCList, createSPOC } from './spocActions';
 
-import {rolePlayList} from './rolePLayActions'
+import {rolePlayList,addRolePlay} from './rolePLayActions'
 
 export {
   getOrganizationModules,
@@ -269,7 +269,8 @@ export {
   getAlreadyMappedParameters,
   getAlreadyMappedServices,
   getAlreadyMappedModuleServices,
-  rolePlayList
+  rolePlayList,
+  addRolePlay
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
