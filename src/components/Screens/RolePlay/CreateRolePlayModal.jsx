@@ -17,17 +17,27 @@ import "./index.css"
 
 const CreateRolePlayModal = props => {
     const [Name,setName] = useState();
+    const [avatarName1,setAvatarName1] = useState();
+    const [avatarName2,setAvatarName2] = useState();
     const user = useSelector(state => state.userAuth);
     const onNameChange=(event) =>{
-        console.log(event.target.value)
+        setName(event.target.value);
     }
 
     const onAddRolePlay = async() =>{
+        if (Name === null || 
+            Name ==="" ||
+            Name === " " ||
+            Name === undefined
+            ){
+            return message.warning("name is required");
+        }
         let formValues = {
-            name: "axc"
+            name: Name,
+
         }
         const response = await addRolePlay(user.Authorization, formValues);
-        console.log("called");
+        
 
     }
 
