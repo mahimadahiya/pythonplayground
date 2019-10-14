@@ -1,0 +1,10 @@
+.ant-modal-header 
+{
+    text-align: center;
+    background: lightblue !important;
+}
+
+body > div:nth-child(7) > div > div.ant-modal-wrap > div
+{
+    width: 650px !important;
+}

@@ -9,22 +9,29 @@ import {
     Button,
   } from "antd";
 import moment from "moment";
+import CreateRolePlayModal from "./CreateRolePlayModal"
 
 const RolePlay = () => {
     const [loading, setLoading] = useState(true);
     const [List,setList] = useState([]);
+    const [showCreateRolePlayModal,setShowCreateRolePlayModal] = useState(false);
     const user = useSelector(state => state.userAuth);
 
     useEffect(() => {
         const fetchList = async() => {
             setLoading(true);
             const response = await rolePlayList(user.Authorization);
-            console.log(response);
-            setList(response);
+            console.log(response.rp_article_details);
+            setList(response.rp_article_details);
+            setLoading(false);
         }
         fetchList()
         
     },[]);
+
+    const onCloseRolePLayModal = () =>{
+        setShowCreateRolePlayModal(false);
+    }
 
 
     const column = [
@@ -60,16 +67,18 @@ const RolePlay = () => {
 
   return (
     <div>
-             <Card
-        style={{ marginTop: 20 }}
-        title={<div className="card-title">Role-Play List</div>}
-      >
+        <Card
+          style={{ marginTop: 20 }}
+          title={<div className="card-title">Role-Play List</div>}
+        >
         <Row style={{ marginBottom: 20 }}>
           <Button
+            style={{float:"right"
+        }}
             shape="round"
             type="primary"
             onClick={() => {
-              
+                setShowCreateRolePlayModal(true);
             }}
           >
             Create Role-Play
@@ -86,6 +95,11 @@ const RolePlay = () => {
         </Row>
       
       </Card>
+
+      <CreateRolePlayModal
+         visible={showCreateRolePlayModal}
+         onCancel={onCloseRolePLayModal}
+      />
 
     </div>
   );
