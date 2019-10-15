@@ -92,7 +92,7 @@ const RolePlay = () => {
             dataSource={List}
             columns={column}
             rowKey={row => row.id}
-            pagination={false}
+            pagination={true}
           />
         </Row>
       
