@@ -19,6 +19,8 @@ const CreateRolePlayModal = props => {
     const [Name,setName] = useState();
     const [avatarName1,setAvatarName1] = useState();
     const [avatarName2,setAvatarName2] = useState();
+    const [Description,setDescription] = useState();
+    const [PostDescription,SetPostDescription] = useState();
     
     const [backgroundImage,setBackgroundImage] = useState();
     const [backgroundSource,setBackgroundSource] = useState();
@@ -45,6 +47,14 @@ const CreateRolePlayModal = props => {
     const onAvatar2NameChange=(event) =>{
       setAvatarName2(event.target.value);
     };
+
+    const onDescriptionChange=(event) =>{
+      setDescription(event.target.value);
+    }
+
+    const onPostDescriptionChange=(event) =>{
+      SetPostDescription(event.target.value);
+    }
 
 
    const onAvatar1ImageChange=(event) =>{
@@ -151,7 +161,9 @@ const CreateRolePlayModal = props => {
             rightAvatarName : avatarName2,
             leftAvatarImage : avatarImage1,
             rightAvatarImage : avatarImage2,
-            backImage : backgroundImage
+            backImage : backgroundImage,
+            description : Description,
+            postDescription : PostDescription
         }
         const response = await addRolePlay(user.Authorization, formValues);
         props.onModalClose();
@@ -226,7 +238,16 @@ const CreateRolePlayModal = props => {
               </Col>
               </Row>
               </div>
+
+              <div style={{border: "1px solid #c2c2c2", borderRadius: "5px", marginBottom: "30px",textAlign:"center"}}>
+                <Row style={{margin: "30px 20px"}}>
+                <Col sm={6} md={6} lg={8}><Input placeholder="Discription"  onChange={onDescriptionChange} /></Col>
+                <Col style={{marginLeft:"30px"}} sm={6} md={6} lg={8}><Input placeholder="Post-Description" onChange={onPostDescriptionChange}  /></Col>
+                </Row>
+              </div>
               <div style={{textAlign:"center",marginTop:"8%"}}><Button onClick={() => onAddRolePlay()} style={{background:"deepskyblue",color:"white",fontWeight:"bold",padding:"2px 25px"}}>Create</Button></div>
+              
+              
             </Modal>
         </div>
     )
