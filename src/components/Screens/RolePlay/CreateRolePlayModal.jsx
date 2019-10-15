@@ -80,7 +80,7 @@ const CreateRolePlayModal = props => {
         if(fileType === "image/jpg" || fileType === "image/jpeg" || fileType === "image/png") {
           setAvatarImage1(event.target.files[0]);
         }else{
-          message.warning("Please upload image files");
+          message.warning("Please Upload Image Files");
           return;
         }  
     };
@@ -99,7 +99,7 @@ const CreateRolePlayModal = props => {
       if(fileType === "image/jpg" || fileType === "image/jpeg" || fileType === "image/png") {
         setAvatarImage2(event.target.files[0]);
       }else{
-        message.warning("Please upload image files");
+        message.warning("Please Upload Image Files");
         return;
       }
     };
@@ -117,7 +117,7 @@ const CreateRolePlayModal = props => {
       if(fileType === "image/jpg" || fileType === "image/jpeg" || fileType === "image/png") {
         setBackgroundImage(event.target.files[0]);
       }else{
-        message.warning("Please upload image files");
+        message.warning("Please Upload Image Files");
         return;
       }
     };
@@ -127,27 +127,27 @@ const CreateRolePlayModal = props => {
     const onAddRolePlay = async() =>{
      
         if (Name === null || Name ==="" ||Name === " " || Name === undefined  ){
-             message.warning("please fill name ");
+             message.warning("Please Fill Name ");
              return;
         }
         if( avatarName1 === null || avatarName1 === "" || avatarName1 === " " || avatarName1 === undefined){
-          message.warning("please fill avatar 1 name ");
+          message.warning("Please Fill Avatar 1 Name ");
           return;
         }
         if(  avatarImage1 === null || avatarImage1 === "" || avatarImage1 === " " || avatarImage1 === undefined){
-          message.warning("please upload avatar 1 image ");
+          message.warning("Please Upload Avatar 1 Image ");
           return;
         }
         if(avatarName2 === null || avatarName2 === "" || avatarName2 === " " || avatarName2 === undefined){
-          message.warning("please fill avatar 2 name ");
+          message.warning("Please Fill Avatar 2 Name ");
           return;
         }
         if(   avatarImage2 === null || avatarImage2 === "" || avatarImage2 === " " || avatarImage2 === undefined){
-          message.warning("please upload avatar 2 image ");
+          message.warning("Please Upload Avatar 2 Image ");
           return;
         }
         if(   backgroundImage === null || backgroundImage === "" || backgroundImage === " " || backgroundImage === undefined){
-          message.warning("please upload background image ");
+          message.warning("Please Upload Background Image ");
           return;
         }
         let formValues = {
@@ -162,7 +162,7 @@ const CreateRolePlayModal = props => {
         }
         const response = await addRolePlay(user.Authorization, formValues);
         props.onModalClose();
-
+        props.setLoadAgain(true);
     };
 
     return (
