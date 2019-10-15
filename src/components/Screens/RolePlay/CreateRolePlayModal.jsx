@@ -55,15 +55,15 @@ const CreateRolePlayModal = props => {
       SetPostDescription(event.target.value);
     }
 
-    const onChangeBackgroundImage =() =>{
+    const onRemoveBackgroundImage =() =>{
       setIsBackgroundUploaded(false);
     }
 
-    const onChangeAvatarTwoImageImage =()=>{
+    const onRemoveAvatarTwoImage =()=>{
       setIsAvatarTwoUploaded(false);
     }
 
-    const onChangeAvatarOneImageImage =()=>{
+    const onRemoveAvatarOneImage =()=>{
       SetIsAvatarOneUploaded(false);
     }
 
@@ -198,7 +198,7 @@ const CreateRolePlayModal = props => {
                      <img src={avatarOneSource} style={{width: "120px", marginLeft: "30px"}} />
                      </Col>
                      <Col sm={6} md={6} lg={6} style={{marginLeft:"30px"}}>
-                       <Button type="danger" onClick={onChangeAvatarOneImageImage}>Change</Button>
+                       <Button type="danger" onClick={onRemoveAvatarOneImage}>Change</Button>
                      </Col>
                    </Row>
                   
@@ -226,7 +226,7 @@ const CreateRolePlayModal = props => {
                    <img src={avatarTwoSource} style={{width: "120px", marginLeft: "30px"}} />
                    </Col>
                    <Col sm={6} md={6} lg={6} style={{marginLeft:"30px"}}>
-                     <Button type="danger" onClick={onChangeAvatarTwoImageImage}>Change</Button>
+                     <Button type="danger" onClick={onRemoveAvatarTwoImage}>Change</Button>
                    </Col>
                  </Row>
                    
@@ -250,7 +250,7 @@ const CreateRolePlayModal = props => {
                    <img src={backgroundSource} style={{width: "120px", marginLeft: "30px"}} />
                  </Col>
                  <Col style={{marginLeft:"30px"}} sm={6} md={6} lg={6}>
-                   <Button type="danger" onClick={onChangeBackgroundImage}>Change</Button>
+                   <Button type="danger" onClick={onRemoveBackgroundImage}>Change</Button>
                  </Col>
                </Row>
                 }

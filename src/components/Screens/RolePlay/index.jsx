@@ -1,86 +1,72 @@
 import React, { useState, useEffect } from "react";
-import {rolePlayList,addRolePlay} from "../../../actions";
+import { rolePlayList, addRolePlay } from "../../../actions";
 import { useSelector } from "react-redux";
-import {
-    Table,
-    Card,
-    Pagination,
-    Row,
-    Button,
-  } from "antd";
+import { Table, Card, Pagination, Row, Button } from "antd";
 import moment from "moment";
-import CreateRolePlayModal from "./CreateRolePlayModal"
+import CreateRolePlayModal from "./CreateRolePlayModal";
 
 const RolePlay = () => {
-    const [loading, setLoading] = useState(true);
-    const [List,setList] = useState([]);
-    const [showCreateRolePlayModal,setShowCreateRolePlayModal] = useState(false);
-    const user = useSelector(state => state.userAuth);
+  const [loading, setLoading] = useState(true);
+  const [List, setList] = useState([]);
+  const [showCreateRolePlayModal, setShowCreateRolePlayModal] = useState(false);
+  const user = useSelector(state => state.userAuth);
+  const [loadAgain, setLoadAgain] = useState(false);
 
-    useEffect(() => {
-        const fetchList = async() => {
-            setLoading(true);
-            const response = await rolePlayList(user.Authorization);
-            console.log(response.rp_article_details);
-            setList(response.rp_article_details);
-            setLoading(false);
-        }
-        fetchList()
-        
-    },[user]);
+  useEffect(() => {
+    const fetchList = async () => {
+      setLoading(true);
+      const response = await rolePlayList(user.Authorization);
+      setList(response.rp_article_details);
+      setLoading(false);
+    };
+    fetchList();
+  }, [user, loadAgain]);
 
-    const onCloseRolePLayModal = () =>{
-        setShowCreateRolePlayModal(false);
+  const onCloseRolePLayModal = () => {
+    setShowCreateRolePlayModal(false);
+  };
+
+  const column = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      render: id => {
+        return <a href={``}>{id}</a>;
+      }
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      width: "60%",
+      render: text => {
+        return <div style={{ minHeight: "60px" }}>{text}</div>;
+      }
+    },
+    {
+      title: "Created At",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: date => {
+        return moment(date).format("YYYY-MM-DD");
+      }
     }
-
-
-
-
-    const column = [
-        {
-          title: "ID",
-          dataIndex: "id",
-          key: "id",
-          render: id => {
-            return <a href={``}>{id}</a>;
-          }
-        },
-        {
-          title: "Name",
-          dataIndex: "name",
-          key: "name",
-          width: "60%",
-          render: text => {
-            return <div style={{ minHeight: "60px" }}>{text}</div>;
-          }
-        },
-        {
-          title: "Created At",
-          dataIndex: "created_at",
-          key: "created_at",
-          render: date => {
-            return moment(date).format("YYYY-MM-DD");
-          }
-        },
-        
-      ];
-
-
+  ];
 
   return (
     <div>
-        <Card
-          style={{ marginTop: 20 }}
-          title={<div className="card-title">Role-Play List</div>}
-        >
+      <Card
+        style={{ marginTop: 20 }}
+        title={<div className="card-title">Role-Play List</div>}
+      >
         <Row style={{ marginBottom: 20 }}>
           <Button
-            style={{float:"right"
-        }}
+            style={{ float: "right" }}
             shape="round"
             type="primary"
             onClick={() => {
-                setShowCreateRolePlayModal(true);
+              setShowCreateRolePlayModal(true);
             }}
           >
             Create Role-Play
@@ -95,15 +81,15 @@ const RolePlay = () => {
             pagination={true}
           />
         </Row>
-      
       </Card>
 
       <CreateRolePlayModal
-         visible={showCreateRolePlayModal}
-         onCancel={onCloseRolePLayModal}
-         onModalClose={onCloseRolePLayModal}
+        visible={showCreateRolePlayModal}
+        onCancel={onCloseRolePLayModal}
+        onModalClose={onCloseRolePLayModal}
+        setLoadAgain={setLoadAgain}
+        loadAgain={loadAgain}
       />
-
     </div>
   );
 };
