@@ -16,8 +16,18 @@ import "./index.css"
 
 const CreateRolePlayModal = props => {
     const [Name,setName] = useState();
+
     const [avatarName1,setAvatarName1] = useState();
+    const [avatarImage1,setAvatarImage1] = useState(null);
+    const [avatarOneSource,setAvatarOneSource] = useState();
+    const [isAvatarOneUploaded, SetIsAvatarOneUploaded] = useState(false);
+
     const [avatarName2,setAvatarName2] = useState();
+    const [avatarImage2,setAvatarImage2] = useState(null);
+    const [avatarTwoSource,setAvatarTwoSource] = useState();
+    const [isAvatarTwoUploaded,setIsAvatarTwoUploaded] = useState(false);
+
+
     const [Description,setDescription] = useState();
     const [PostDescription,SetPostDescription] = useState();
     
@@ -25,14 +35,6 @@ const CreateRolePlayModal = props => {
     const [backgroundSource,setBackgroundSource] = useState();
     const [isBackgroundUploaded,setIsBackgroundUploaded] = useState(false);
     
-    
-    const [avatarImage1,setAvatarImage1] = useState(null);
-    const [avatarOneSource,setAvatarOneSource] = useState();
-    const [isAvatarOneUploaded, SetIsAvatarOneUploaded] = useState(false)
-
-    const [avatarImage2,setAvatarImage2] = useState(null);
-    const [avatarTwoSource,setAvatarTwoSource] = useState();
-    const [isAvatarTwoUploaded,setIsAvatarTwoUploaded] = useState(false);
 
     const user = useSelector(state => state.userAuth);
     const onNameChange=(event) =>{
@@ -57,14 +59,17 @@ const CreateRolePlayModal = props => {
 
     const onRemoveBackgroundImage =() =>{
       setIsBackgroundUploaded(false);
+      setBackgroundImage(null);
     }
 
     const onRemoveAvatarTwoImage =()=>{
       setIsAvatarTwoUploaded(false);
+      setAvatarImage2(null);
     }
 
     const onRemoveAvatarOneImage =()=>{
       SetIsAvatarOneUploaded(false);
+      setAvatarImage1(null);
     }
 
 
