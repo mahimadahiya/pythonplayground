@@ -11,8 +11,17 @@ export const rolePlayList = async authToken => {
 
   export const addRolePlay = async (authToken, formValues) => {
     let response = null;
+
+    let formData = new FormData();
+    formData.append("name",formValues.name)
+    formData.append("left_avatar", formValues.leftAvatarImage)
+    formData.append("left_avatar_name", formValues.leftAvatarName )
+    formData.append("right_avatar_name", formValues.rightAvatarName )
+    formData.append("right_avatar", formValues.rightAvatarImage )
+    formData.append("background_file", formValues.backImage )
     response = await adminPanelApi(authToken).post(
         "/v1/admin/rp/article/create/",
-        qs.stringify(formValues)
+        formData
       );
+      return response;
   };
