@@ -101,6 +101,7 @@ const RolePlay = () => {
       <CreateRolePlayModal
          visible={showCreateRolePlayModal}
          onCancel={onCloseRolePLayModal}
+         onModalClose={onCloseRolePLayModal}
       />
 
     </div>

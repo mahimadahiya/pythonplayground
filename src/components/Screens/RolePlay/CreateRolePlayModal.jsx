@@ -21,6 +21,8 @@ const CreateRolePlayModal = props => {
     const [avatarName2,setAvatarName2] = useState();
     
     const [backgroundImage,setBackgroundImage] = useState();
+    const [backgroundSource,setBackgroundSource] = useState();
+    const [isBackgroundUploaded,setIsBackgroundUploaded] = useState(false);
     
     
     const [avatarImage1,setAvatarImage1] = useState(null);
@@ -94,7 +96,13 @@ const CreateRolePlayModal = props => {
       console.log(event.target.files[0]);
 
       let fileType = event.target.files[0].type
-      
+      var reader = new FileReader();
+        var url = reader.readAsDataURL(event.target.files[0])
+        
+        reader.onloadend =  (e) => {
+          setIsBackgroundUploaded(true)
+          setBackgroundSource(reader.result);
+        }
         
       console.log(fileType)
       if(fileType === "image/jpg" || fileType === "image/jpeg" || fileType === "image/png") {
@@ -146,7 +154,7 @@ const CreateRolePlayModal = props => {
             backImage : backgroundImage
         }
         const response = await addRolePlay(user.Authorization, formValues);
-        
+        props.onModalClose();
 
     };
 
@@ -172,7 +180,7 @@ const CreateRolePlayModal = props => {
                 {
                   isAvatarOneUploaded === false ? 
                   <label style={{marginLeft: "30px"}}>
-                    <span style={{background:"deepskyblue",padding:"5px 12px",color:"white",borderRadius:"4px"}}>
+                    <span style={{border:"1px solid black",padding:"5px 12px",borderRadius:"4px"}}>
                      <input type="file" style={{display:"none"}} accept=" image/jpeg, image/png" onChange={onAvatar1ImageChange}/>
                      <Icon type="upload" />
                        <b> Add Avatar 1 Image</b>
@@ -191,7 +199,7 @@ const CreateRolePlayModal = props => {
                  {
                    isAvatarTwoUploaded === false ?
                <label style={{marginLeft: "30px"}}>
-                    <span style={{background:"deepskyblue",padding:"5px 12px",color:"white",borderRadius:"4px"}}>
+                    <span style={{border:"1px solid black",padding:"5px 12px",borderRadius:"4px"}}>
                      <input type="file" style={{display:"none"}} accept=" image/jpeg, image/png" onChange={onAvatar2ImageChange}/>
                      <Icon type="upload" />
                        <b> Add Avatar 2 Image</b>
@@ -202,17 +210,22 @@ const CreateRolePlayModal = props => {
                </Col>
               </Row>
              </div>
-              <Row>
+             <div style={{border: "1px solid #c2c2c2", borderRadius: "5px", marginBottom: "30px",textAlign:"center"}}>
+              <Row style={{margin: "30px 20px"}}>
               <Col sm={12} md={12} lg={12} >
+                { isBackgroundUploaded === false ?
               <label>
-                    <span style={{background:"deepskyblue",padding:"1px 5px 12px 5px",color:"white",borderRadius:"4px"}}>
+                    <span style={{border:"1px solid black",padding:"5px 12px",borderRadius:"4px"}}>
                      <input type="file" style={{display:"none"}} accept=" image/jpeg, image/png" onChange={onBackgroundImageChange}/>
                      <Icon type="upload" />
                        <b> Add Background Image</b>
                     </span>
-               </label>
+               </label> :
+               <img src={backgroundSource} style={{width: "120px", marginLeft: "30px"}} />
+                }
               </Col>
               </Row>
+              </div>
               <div style={{textAlign:"center",marginTop:"8%"}}><Button onClick={() => onAddRolePlay()} style={{background:"deepskyblue",color:"white",fontWeight:"bold",padding:"2px 25px"}}>Create</Button></div>
             </Modal>
         </div>
