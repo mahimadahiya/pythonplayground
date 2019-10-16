@@ -215,6 +215,7 @@ const CreateRolePlayModal = props => {
         title="Add A New RolePlay"
         visible={props.visible}
         onCancel={props.onCancel}
+        destroyOnClose={true}
         footer={false}
       >
         <Card loading={loader}>

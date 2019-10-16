@@ -60,6 +60,7 @@ import JargonDetails from '../Screens/Dictionary/Jargons/Details';
 import JargonHome from '../Screens/Dictionary/Jargons/Home';
 import NotAuthorized from '../Screens/Dashboard/NotFound';
 import RolePlay from '../Screens/RolePlay';
+import RolePlayDetails from '../Screens/RolePlay/RolePlayDetails';
 
 
 const Sidebar = React.lazy(() => import('./Sidebar'));
@@ -95,6 +96,13 @@ class Routing extends React.Component {
             <PrivateRoute
             path="/role-play"
             component={RolePlay}
+            user={user}
+            exact
+            accessGroup={[1]}
+            />
+             <PrivateRoute
+            path="/role-play/details/:id"
+            component={RolePlayDetails}
             user={user}
             exact
             accessGroup={[1]}

@@ -32,7 +32,7 @@ const RolePlay = () => {
       dataIndex: "id",
       key: "id",
       render: id => {
-        return <a href={``}>{id}</a>;
+        return <a href={`/role-play/details/${id}`}>{id}</a>;
       }
     },
     {

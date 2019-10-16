@@ -1,4 +1,5 @@
 import adminPanelApi from "../apis/adminPanel";
+import { async } from "q";
 
 
 export const rolePlayList = async authToken => {
@@ -25,4 +26,15 @@ export const rolePlayList = async authToken => {
         formData
       );
       return response;
+  };
+
+  export const rolePlayConversationDetails = async (authToken,id) => {
+    const response = await  adminPanelApi(authToken).get(
+      '/v1/admin/rp/article/conversation/list',{
+        params:{
+          rp_article_id:id
+        }
+      }    );
+    console.log(response);
+    return response.data;
   };
