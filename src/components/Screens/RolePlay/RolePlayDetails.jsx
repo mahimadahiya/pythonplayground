@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Row,Col,List } from "antd";
+import { Row,Col,List,Button } from "antd";
 import { rolePlayConversationDetails } from "../../../actions";
+import AddConversationModal from "./AddConversationModal";
 
 const RolePlayDetails = props => {
     const user = useSelector(state => state.userAuth);
@@ -14,6 +15,7 @@ const RolePlayDetails = props => {
 
     const [backgroundImage,setBackgroundImage] = useState();
     const [conversationDetails,setConversationDetails] = useState();
+    const [openAddConversationModal,setOpenAddConversationModal] = useState(false);
     
     useEffect(() => {
         const fetchDetails = async () => {
@@ -34,6 +36,14 @@ const RolePlayDetails = props => {
         };
         fetchDetails();
       }, [user, props.match.params.id]);
+
+      const onAddConversationClick = () =>{
+        setOpenAddConversationModal(true);
+      }
+
+      const onConversationModalClose = () =>{
+        setOpenAddConversationModal(false);
+      }
 
     return (
         <div>
@@ -68,6 +78,7 @@ const RolePlayDetails = props => {
               </div>
 
               <div style={{textAlign:"center",background:"lightblue"}}><h3 style={{lineHeight:"44px"}}>Sequence</h3></div>
+
               <div style={{padding:"35px"}}>
               <List
                   itemLayout="horizontal"
@@ -82,7 +93,19 @@ const RolePlayDetails = props => {
                 </List.Item>
                  )}
                />
+
+               <div style={{textAlign:"center"}}>
+               <Button type="primary" onClick={onAddConversationClick}>Add Conversation</Button>
+               </div>
+
               </div>
+
+
+             <AddConversationModal 
+                visible={openAddConversationModal}
+                onCancel={onConversationModalClose}
+              
+            /> 
 
         </div>
         
