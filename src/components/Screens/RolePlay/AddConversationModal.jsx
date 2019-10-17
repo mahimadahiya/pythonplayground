@@ -31,7 +31,6 @@ const { Option } = Select;
     }
 
     const onTimerChange = (event) =>{
-        //console.log(event.target.value);
         SetTimer(event.target.value);
     }
 
@@ -79,7 +78,6 @@ const { Option } = Select;
         try{
             await addConversation(user.Authorization, formValues);
             message.success("Conversation Added");
-            console.log("running");
             props.onSubmitValues();
             setLoader(false);
             props.setLoadAgain(!props.loadAgain);

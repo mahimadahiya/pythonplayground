@@ -56,12 +56,12 @@ const RolePlayDetails = props => {
                   <Row style={{marginTop:"50px"}}>
                       <Col sm={22} md={16} lg={16} style={{marginLeft:"40px"}}>
                           <div style={{display:"flex",marginBottom:"30px"}}>
-                              <div style={{width:"40%"}}> <h3 style={{border:"1px solid #999999",padding:"12px",marginBottom:"30px"}} >{avatarOneName}</h3></div>
+                              <div style={{width:"40%"}}> <h3 style={{border:"1px solid #999999",padding:"12px",marginBottom:"30px",borderRadius:"5px"}} >{avatarOneName}</h3></div>
                               <div style={{width:"50%",textAlign:"center"}}> <img src={avatarOneImage} style={{width:"90px"}} alt="leftAvatar" /> </div>
                           </div>
 
                           <div style={{display:"flex"}}>
-                              <div style={{width:"40%"}}> <h3 style={{border:"1px solid #999999",padding:"12px",marginBottom:"30px"}} >{avatarTwoName}</h3></div>
+                              <div style={{width:"40%"}}> <h3 style={{border:"1px solid #999999",padding:"12px",marginBottom:"30px",borderRadius:"5px"}} >{avatarTwoName}</h3></div>
                               <div style={{width:"50%",textAlign:"center"}}> <img src={avatarTwoImage} style={{width:"90px"}} alt="rightAvatar" /> </div>
                           </div>
                          

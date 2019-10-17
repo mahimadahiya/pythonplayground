@@ -284,6 +284,7 @@ const CreateRolePlayModal = props => {
                       <img
                         src={avatarOneSource}
                         style={{ width: "120px", marginLeft: "30px" }}
+                        alt="Avatar1"
                       />
                     </Col>
                     <Col sm={6} md={6} lg={6} style={{ marginLeft: "30px" }}>
@@ -345,6 +346,7 @@ const CreateRolePlayModal = props => {
                       <img
                         src={avatarTwoSource}
                         style={{ width: "120px", marginLeft: "30px" }}
+                        alt="Avatar2"
                       />
                     </Col>
                     <Col sm={6} md={6} lg={6} style={{ marginLeft: "30px" }}>
@@ -402,6 +404,7 @@ const CreateRolePlayModal = props => {
                     <img
                       src={backgroundSource}
                       style={{ width: "120px", marginLeft: "30px" }}
+                      alt="background"
                     />
                   </Col>
                   <Col style={{ marginLeft: "30px" }} sm={6} md={6} lg={6}>
