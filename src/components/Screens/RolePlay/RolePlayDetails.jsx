@@ -19,6 +19,7 @@ const RolePlayDetails = props => {
     const [backgroundImage,setBackgroundImage] = useState();
     const [conversationDetails,setConversationDetails] = useState();
     const [openAddConversationModal,setOpenAddConversationModal] = useState(false);
+    const [conversationDetailsType,setConversationDetailsType] = useState();
     
     useEffect(() => {
         const fetchDetails = async () => {
@@ -28,13 +29,21 @@ const RolePlayDetails = props => {
             rolePlayId
           );
           setLoading(false);
-          //console.log(details.result.article_conversation);
+          console.log(details.result.article_conversation);
           setAvatarOneName(details.result.rp_article_details.avatar_details[0].name);
           setAvatarTwoName(details.result.rp_article_details.avatar_details[1].name);
           setAvatarOneImage(details.result.rp_article_details.avatar_details[0].media_url);
           setAvatarTwoImage(details.result.rp_article_details.avatar_details[1].media_url);
           setBackgroundImage(details.result.rp_article_details.background_url);
           setConversationDetails(details.result.article_conversation);
+          
+          let tempList = [];
+          for( let i=0;i<details.result.article_conversation.length;i++){
+             tempList.push(details.result.article_conversation[i].type);
+          }
+          setConversationDetailsType(tempList);
+          console.log(conversationDetailsType);
+          console.log(tempList);
           
           
         };
@@ -90,11 +99,15 @@ const RolePlayDetails = props => {
                   dataSource={conversationDetails}
                   renderItem={item => (
                 <List.Item>
-                     <List.Item.Meta style={{border:"1px solid #999999",padding:"20px",borderRadius:"5px"}}
-          
+                  
+                     <List.Item.Meta style={
+                       {border:"1px solid #999999",padding:"20px",borderRadius:"5px"}
+                     }
+                         
                          title={<div><span>{item.type}</span><span style={{float:"right"}}>{item.timer} Sec</span></div>}
                          description={item.text}
                  />
+                 
                 </List.Item>
                  )}
                />

@@ -19,7 +19,7 @@ const { Option } = Select;
     const [loader, setLoader] = useState(false);
     const [type,SetType] = useState();
     const [text,SetText] = useState();
-    const [timer,SetTimer] = useState();
+    const [timer,SetTimer] = useState(25);
     const [title,setTitle] = useState();
 
     const onSelectTypeChange = (value) =>{
@@ -31,7 +31,9 @@ const { Option } = Select;
     }
 
     const onTimerChange = (event) =>{
+      
         SetTimer(event.target.value);
+        
     }
 
     const onTitleChange = (event) =>{
@@ -63,11 +65,13 @@ const { Option } = Select;
              timer === null ||
              timer === ""  ||
              timer === " " ||
-             timer === undefined
+             timer === undefined ||
+             timer < 25
             ){
                 message.warning("Please Add Timer");
                 return; 
             }
+        
         
         let formValues = {
             text: text,
@@ -128,7 +132,9 @@ const { Option } = Select;
              <Input
               style={{ maxWidth: "450px", width: "100%" }}
               type="number"
-              placeholder="Timer"
+              min="25"
+              step="10"
+              placeholder="Timer Minimum time 25 sec"
               onChange={onTimerChange}
              />
              </div>
