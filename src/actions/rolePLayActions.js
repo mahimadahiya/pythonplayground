@@ -42,10 +42,11 @@ export const rolePlayList = async authToken => {
   export const addConversation = async (authToken,formValues) => {
       let response = null;
       let formData = new FormData();
-      formData.append("title",formValues.title)
+      
       formData.append("text",formValues.text)
       formData.append("conversation_type",formValues.conversation_type)
       formData.append("rp_article_id",formValues.rp_article_id)
+      formData.append("timer",formValues.timer)
       response = await adminPanelApi(authToken).post(
        "/v1/admin/rp/article/conversation/create/",
          formData

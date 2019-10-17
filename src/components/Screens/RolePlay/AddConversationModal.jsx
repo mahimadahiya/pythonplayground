@@ -1,22 +1,26 @@
 import React, { useState } from "react";
-
+import { addConversation } from "../../../actions";
 import { useSelector } from "react-redux";
 import {
   Input,
   Modal,
   Button,
   Select,
-  message
+  message,
+  Card
 } from "antd";
 
 import "./index.css";
 const { Option } = Select;
 
  const AddConversationModal = props => {
-
+    const user = useSelector(state => state.userAuth);
+    const rolePlayId = props.rolePlayId;
+    const [loader, setLoader] = useState(false);
     const [type,SetType] = useState();
     const [text,SetText] = useState();
     const [timer,SetTimer] = useState();
+    const [title,setTitle] = useState();
 
     const onSelectTypeChange = (value) =>{
         SetType(value);
@@ -27,7 +31,12 @@ const { Option } = Select;
     }
 
     const onTimerChange = (event) =>{
+        //console.log(event.target.value);
         SetTimer(event.target.value);
+    }
+
+    const onTitleChange = (event) =>{
+        setTitle(event.target.value);
     }
 
     const onAddingConversation = async () => {
@@ -38,10 +47,48 @@ const { Option } = Select;
             type === undefined
             
             ){
-                message.warning("Type is Null");
+                message.warning("Please Select Type");
                 return;
             }
-    }
+        
+        if(text === null ||
+            text === ""  ||
+            text === " " ||
+            text === undefined
+            ){
+                message.warning("Please Fill Text");
+                return; 
+            }
+         if(timer === null ||
+                timer === ""  ||
+                timer === " " ||
+                timer === undefined
+                ){
+                    message.warning("Please Add Timer");
+                    return; 
+                }
+        
+        let formValues = {
+            text: text,
+            conversation_type: type,
+            timer: timer,
+            rp_article_id: rolePlayId,
+            title: title
+        };
+        setLoader(true);
+        try{
+            await addConversation(user.Authorization, formValues);
+            message.success("Conversation Added");
+            console.log("running");
+            props.onSubmitValues();
+            setLoader(false);
+            props.setLoadAgain(!props.loadAgain);
+            
+        }catch (error){
+            setLoader(false);
+        }
+
+    };
 
 
 
@@ -57,6 +104,7 @@ const { Option } = Select;
                 destroyOnClose={true}
                 footer={false}
             >
+                <Card loading={loader}>
              <div>
              <div>
              <Select
@@ -91,10 +139,20 @@ const { Option } = Select;
              />
              </div>
 
+             <div style={{marginTop:"30px"}}>
+             <Input
+              style={{ maxWidth: "450px", width: "100%" }}
+              
+              placeholder="Title"
+              onChange={onTitleChange}
+             />
+             </div>
+
              <div style={{marginTop:"30px",textAlign:"center"}}>
              <Button type="primary" onClick={onAddingConversation} >Add </Button>
              </div>
              </div>
+             </Card>
             </Modal>
 
         </div>

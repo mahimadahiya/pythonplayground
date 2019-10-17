@@ -6,6 +6,9 @@ import AddConversationModal from "./AddConversationModal";
 
 const RolePlayDetails = props => {
     const user = useSelector(state => state.userAuth);
+    const [loading,setLoading] = useState(true);
+    const [loadAgain,setLoadAgain] = useState(false);
+    const rolePlayId = props.match.params.id
 
     const [avatarOneName,setAvatarOneName] = useState();
     const [avatarOneImage,setAvatarOneImage] = useState();
@@ -19,11 +22,12 @@ const RolePlayDetails = props => {
     
     useEffect(() => {
         const fetchDetails = async () => {
-            
+          setLoading(true);
           const details = await rolePlayConversationDetails(
             user.Authorization,
-            props.match.params.id
+            rolePlayId
           );
+          setLoading(false);
           console.log(details.result.article_conversation);
           setAvatarOneName(details.result.rp_article_details.avatar_details[0].name);
           setAvatarTwoName(details.result.rp_article_details.avatar_details[1].name);
@@ -35,7 +39,7 @@ const RolePlayDetails = props => {
           
         };
         fetchDetails();
-      }, [user, props.match.params.id]);
+      }, [user, rolePlayId,loadAgain ]);
 
       const onAddConversationClick = () =>{
         setOpenAddConversationModal(true);
@@ -82,12 +86,13 @@ const RolePlayDetails = props => {
               <div style={{padding:"35px"}}>
               <List
                   itemLayout="horizontal"
+                  loading={loading}
                   dataSource={conversationDetails}
                   renderItem={item => (
                 <List.Item>
                      <List.Item.Meta style={{border:"1px solid #999999",padding:"20px",borderRadius:"5px"}}
           
-                         title={<div><span>{item.type}</span><span style={{float:"right"}}>{item.timer}</span></div>}
+                         title={<div><span>{item.type}</span><span style={{float:"right"}}>{item.timer} Sec</span></div>}
                          description={item.text}
                  />
                 </List.Item>
@@ -104,7 +109,10 @@ const RolePlayDetails = props => {
              <AddConversationModal 
                 visible={openAddConversationModal}
                 onCancel={onConversationModalClose}
-              
+                onSubmitValues={onConversationModalClose}
+                rolePlayId={rolePlayId}
+                setLoadAgain={setLoadAgain}
+                loadAgain={loadAgain}
             /> 
 
         </div>
