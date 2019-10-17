@@ -42,13 +42,15 @@ const RolePlayDetails = props => {
              tempList.push(details.result.article_conversation[i].type);
           }
           setConversationDetailsType(tempList);
-          console.log(conversationDetailsType);
+          
           console.log(tempList);
           
           
         };
         fetchDetails();
       }, [user, rolePlayId,loadAgain ]);
+
+      
 
       const onAddConversationClick = () =>{
         setOpenAddConversationModal(true);
@@ -101,7 +103,27 @@ const RolePlayDetails = props => {
                 <List.Item>
                   
                      <List.Item.Meta style={
-                       {border:"1px solid #999999",padding:"20px",borderRadius:"5px"}
+                       
+                       (
+                        () => {
+                          switch(conversationDetailsType) {
+                                    case 'Full Overlay' :
+                                      return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};
+                                    case 'Right Overlay' :
+                                      return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};  
+                                    case 'Left Overlay' :
+                                       return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};  
+                                    case 'Speaking-Left' :
+                                       return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};  
+                                    case 'Speaking-Right' :
+                                       return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"}; 
+                                    default :
+                                      return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};
+                                    
+                                       }
+                                   }
+                      )
+                                  
                      }
                          
                          title={<div><span>{item.type}</span><span style={{float:"right"}}>{item.timer} Sec</span></div>}
