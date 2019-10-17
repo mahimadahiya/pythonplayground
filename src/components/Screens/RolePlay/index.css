@@ -8,3 +8,24 @@ body > div:nth-child(7) > div > div.ant-modal-wrap > div
 {
     width: 650px !important;
 }
+
+@media only screen and (max-width: 600px) {
+  #root > div > div > div > section > section > main > div > div > div:nth-child(2) > div > div.ant-col.ant-col-sm-22.ant-col-md-16.ant-col-lg-16 > div:nth-child(1),
+  #root > div > div > div > section > section > main > div > div > div:nth-child(2) > div > div.ant-col.ant-col-sm-22.ant-col-md-16.ant-col-lg-16 > div:nth-child(2)
+{
+    flex-flow: column;
+}
+
+#root > div > div > div > section > section > main > div > div > div:nth-child(2) > div > div.ant-col.ant-col-sm-22.ant-col-md-16.ant-col-lg-16 > div:nth-child(1) > div:nth-child(1),
+#root > div > div > div > section > section > main > div > div > div:nth-child(2) > div > div.ant-col.ant-col-sm-22.ant-col-md-16.ant-col-lg-16 > div:nth-child(1) > div:nth-child(2),
+#root > div > div > div > section > section > main > div > div > div:nth-child(2) > div > div.ant-col.ant-col-sm-22.ant-col-md-16.ant-col-lg-16 > div:nth-child(2) > div:nth-child(1),
+#root > div > div > div > section > section > main > div > div > div:nth-child(2) > div > div.ant-col.ant-col-sm-22.ant-col-md-16.ant-col-lg-16 > div:nth-child(2) > div:nth-child(2)
+{
+    width: 100% !important;
+}
+
+#root > div > div > div > section > section > main > div > div > div:nth-child(2) > div > div.ant-col.ant-col-sm-22.ant-col-md-16.ant-col-lg-16
+{
+    margin-left: 0px !important;
+}
+}

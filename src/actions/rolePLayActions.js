@@ -1,5 +1,5 @@
 import adminPanelApi from "../apis/adminPanel";
-import { async } from "q";
+
 
 
 export const rolePlayList = async authToken => {
@@ -35,7 +35,7 @@ export const rolePlayList = async authToken => {
           rp_article_id:id
         }
       }    );
-    console.log(response);
+    //console.log(response);
     return response.data;
   };
 
@@ -47,6 +47,7 @@ export const rolePlayList = async authToken => {
       formData.append("conversation_type",formValues.conversation_type)
       formData.append("rp_article_id",formValues.rp_article_id)
       formData.append("timer",formValues.timer)
+      formData.append("title",formValues.title)
       response = await adminPanelApi(authToken).post(
        "/v1/admin/rp/article/conversation/create/",
          formData

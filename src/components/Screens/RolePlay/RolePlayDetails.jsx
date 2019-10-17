@@ -28,7 +28,7 @@ const RolePlayDetails = props => {
             rolePlayId
           );
           setLoading(false);
-          console.log(details.result.article_conversation);
+          //console.log(details.result.article_conversation);
           setAvatarOneName(details.result.rp_article_details.avatar_details[0].name);
           setAvatarTwoName(details.result.rp_article_details.avatar_details[1].name);
           setAvatarOneImage(details.result.rp_article_details.avatar_details[0].media_url);
@@ -60,7 +60,7 @@ const RolePlayDetails = props => {
                               <div style={{width:"50%",textAlign:"center"}}> <img src={avatarOneImage} style={{width:"90px"}} alt="leftAvatar" /> </div>
                           </div>
 
-                          <div style={{display:"flex"}}>
+                          <div style={{display:"flex",marginBottom:"30px"}}>
                               <div style={{width:"40%"}}> <h3 style={{border:"1px solid #999999",padding:"12px",marginBottom:"30px",borderRadius:"5px"}} >{avatarTwoName}</h3></div>
                               <div style={{width:"50%",textAlign:"center"}}> <img src={avatarTwoImage} style={{width:"90px"}} alt="rightAvatar" /> </div>
                           </div>

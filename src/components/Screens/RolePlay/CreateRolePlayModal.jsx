@@ -145,8 +145,8 @@ const CreateRolePlayModal = props => {
     }
     if (
       avatarName1 === null ||
-      avatarName1 === "" ||
-      avatarName1 === " " ||
+      avatarName1 === ""   ||
+      avatarName1 === " "  ||
       avatarName1 === undefined
     ) {
       message.warning("Please Fill Avatar 1 Name ");
@@ -154,8 +154,8 @@ const CreateRolePlayModal = props => {
     }
     if (
       avatarImage1 === null ||
-      avatarImage1 === "" ||
-      avatarImage1 === " " ||
+      avatarImage1 === ""   ||
+      avatarImage1 === " "  ||
       avatarImage1 === undefined
     ) {
       message.warning("Please Upload Avatar 1 Image ");
@@ -163,8 +163,8 @@ const CreateRolePlayModal = props => {
     }
     if (
       avatarName2 === null ||
-      avatarName2 === "" ||
-      avatarName2 === " " ||
+      avatarName2 === ""   ||
+      avatarName2 === " "  ||
       avatarName2 === undefined
     ) {
       message.warning("Please Fill Avatar 2 Name ");
@@ -172,8 +172,8 @@ const CreateRolePlayModal = props => {
     }
     if (
       avatarImage2 === null ||
-      avatarImage2 === "" ||
-      avatarImage2 === " " ||
+      avatarImage2 === ""   ||
+      avatarImage2 === " "  ||
       avatarImage2 === undefined
     ) {
       message.warning("Please Upload Avatar 2 Image ");
@@ -181,8 +181,8 @@ const CreateRolePlayModal = props => {
     }
     if (
       backgroundImage === null ||
-      backgroundImage === "" ||
-      backgroundImage === " " ||
+      backgroundImage === ""   ||
+      backgroundImage === " "  ||
       backgroundImage === undefined
     ) {
       message.warning("Please Upload Background Image ");

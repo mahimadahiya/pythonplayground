@@ -40,32 +40,34 @@ const { Option } = Select;
 
     const onAddingConversation = async () => {
 
-        if(type === null ||
-            type === "" ||
-            type === " " ||
+        if(
+            type === null ||
+            type === ""   ||
+            type === " "  ||
             type === undefined
-            
             ){
                 message.warning("Please Select Type");
                 return;
             }
         
-        if(text === null ||
-            text === ""  ||
-            text === " " ||
+        if(
+            text === null ||
+            text === ""   ||
+            text === " "  ||
             text === undefined
             ){
                 message.warning("Please Fill Text");
                 return; 
             }
-         if(timer === null ||
-                timer === ""  ||
-                timer === " " ||
-                timer === undefined
-                ){
-                    message.warning("Please Add Timer");
-                    return; 
-                }
+         if(    
+             timer === null ||
+             timer === ""  ||
+             timer === " " ||
+             timer === undefined
+            ){
+                message.warning("Please Add Timer");
+                return; 
+            }
         
         let formValues = {
             text: text,
@@ -81,20 +83,14 @@ const { Option } = Select;
             props.onSubmitValues();
             setLoader(false);
             props.setLoadAgain(!props.loadAgain);
-            
         }catch (error){
             setLoader(false);
         }
-
     };
-
-
-
 
 
     return (
         <div>
-            
             <Modal
                 title="Add A Conversation"
                 visible={props.visible}
@@ -140,7 +136,6 @@ const { Option } = Select;
              <div style={{marginTop:"30px"}}>
              <Input
               style={{ maxWidth: "450px", width: "100%" }}
-              
               placeholder="Title"
               onChange={onTitleChange}
              />
@@ -156,7 +151,5 @@ const { Option } = Select;
         </div>
         );
 };
-
-
 
 export default AddConversationModal;
