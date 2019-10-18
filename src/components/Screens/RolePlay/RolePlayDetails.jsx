@@ -30,6 +30,8 @@ const RolePlayDetails = props => {
           );
           setLoading(false);
           console.log(details.result.article_conversation);
+         // console.log(details.result.article_conversation[0].extra_points);
+
           setAvatarOneName(details.result.rp_article_details.avatar_details[0].name);
           setAvatarTwoName(details.result.rp_article_details.avatar_details[1].name);
           setAvatarOneImage(details.result.rp_article_details.avatar_details[0].media_url);
@@ -44,11 +46,15 @@ const RolePlayDetails = props => {
                type: details.result.article_conversation[i].type
              });
           }
-        console.log(tempList)
-         
-          setConversationDetailsType(tempList);
+        //console.log(tempList)
+         setConversationDetailsType(tempList);
           
-          console.log(tempList);
+        let tempEpList = [];
+        for(let i=0;i<details.result.article_conversation;i++){
+          tempEpList.push(details.result.article_conversation[i].extra_points);
+        }
+        console.log(tempEpList);
+          
 
 
           

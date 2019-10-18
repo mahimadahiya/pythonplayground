@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 import { Table, Card, Row, Button } from "antd";
 import moment from "moment";
 import CreateRolePlayModal from "./CreateRolePlayModal";
+import MapRolePlayParametersModal from "./MapRolePlayParametersModal";
 
 const RolePlay = () => {
   const [loading, setLoading] = useState(true);
   const [List, setList] = useState([]);
   const [showCreateRolePlayModal, setShowCreateRolePlayModal] = useState(false);
+  const [showMapRolePlayParametersModal,setShowMapRolePlayParametersModal] = useState(false);
   const user = useSelector(state => state.userAuth);
   const [loadAgain, setLoadAgain] = useState(false);
 
@@ -25,6 +27,14 @@ const RolePlay = () => {
   const onCloseRolePLayModal = () => {
     setShowCreateRolePlayModal(false);
   };
+
+  const onMappingParameters =() =>{
+    setShowMapRolePlayParametersModal(true);
+  }
+
+  const onCloseRolePlayParametersModal = () => {
+    setShowMapRolePlayParametersModal(false);
+  }
 
   const column = [
     {
@@ -51,6 +61,16 @@ const RolePlay = () => {
       render: date => {
         return moment(date).format("YYYY-MM-DD");
       }
+    },
+    {
+      title: "Map Parameters",
+      dataIndex: "Map",
+      key: "Map",
+      render: text => (
+        <span onClick={onMappingParameters} style={{cursor:"pointer",color:"#22a4ef"}}>
+          Map
+        </span>
+      )
     }
   ];
 
@@ -90,6 +110,12 @@ const RolePlay = () => {
         setLoadAgain={setLoadAgain}
         loadAgain={loadAgain}
       />
+
+      <MapRolePlayParametersModal 
+          visible={showMapRolePlayParametersModal}
+          onCancel={onCloseRolePlayParametersModal}
+      />
+
     </div>
   );
 };
