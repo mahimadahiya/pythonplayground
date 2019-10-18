@@ -7,7 +7,8 @@ import {
   Button,
   Select,
   message,
-  Card
+  Card,
+  Icon
 } from "antd";
 
 import "./index.css";
@@ -101,7 +102,7 @@ const { Option } = Select;
             timer: timer,
             rp_article_id: rolePlayId,
             title: title,
-            extraPoints : extraPoints
+            extraPoints : JSON.stringify(extraPoints)
         };
         setLoader(true);
         try{
@@ -188,12 +189,10 @@ const { Option } = Select;
              </div>
 
              <div>
-                 <div>
-                     Extra Points
+                 <div style={{marginTop:"18px",fontWeight:"bold"}}>
+                     Extra Points <Icon onClick={addEpInputField} type="plus-circle-o" style={{color:"green"}}></Icon>
                  </div>
-                 <div onClick={addEpInputField}>
-                     PLUS
-                 </div>
+                 
                  <div>
                  {
                  renderExtraPointsUi(extraPoints)
