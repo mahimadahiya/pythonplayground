@@ -20,7 +20,7 @@ const RolePlayDetails = props => {
     const [conversationDetails,setConversationDetails] = useState();
     const [openAddConversationModal,setOpenAddConversationModal] = useState(false);
     const [conversationDetailsType,setConversationDetailsType] = useState();
-    
+
     useEffect(() => {
         const fetchDetails = async () => {
           setLoading(true);
@@ -39,12 +39,18 @@ const RolePlayDetails = props => {
           
           let tempList = [];
           for( let i=0;i<details.result.article_conversation.length;i++){
-             tempList.push(details.result.article_conversation[i].type);
+             tempList.push({
+               bgColor: "red",
+               type: details.result.article_conversation[i].type
+             });
           }
+        console.log(tempList)
+         
           setConversationDetailsType(tempList);
           
           console.log(tempList);
-          
+
+
           
         };
         fetchDetails();
@@ -102,28 +108,9 @@ const RolePlayDetails = props => {
                   renderItem={item => (
                 <List.Item>
                   
-                     <List.Item.Meta style={
-                       
-                       (
-                        () => {
-                          switch(conversationDetailsType) {
-                                    case 'Full Overlay' :
-                                      return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};
-                                    case 'Right Overlay' :
-                                      return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};  
-                                    case 'Left Overlay' :
-                                       return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};  
-                                    case 'Speaking-Left' :
-                                       return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};  
-                                    case 'Speaking-Right' :
-                                       return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"}; 
-                                    default :
-                                      return {border:"1px solid #999999",padding:"20px",borderRadius:"5px"};
-                                    
-                                       }
-                                   }
-                      )
-                                  
+                     <List.Item.Meta style={{
+                              border:"1px solid #999999",padding:"20px",borderRadius:"5px", backgroundColor: item.bgColor}                       
+                                                          
                      }
                          
                          title={<div><span>{item.type}</span><span style={{float:"right"}}>{item.timer} Sec</span></div>}

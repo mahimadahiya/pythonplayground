@@ -15,12 +15,25 @@ const { Option } = Select;
 
  const AddConversationModal = props => {
     const user = useSelector(state => state.userAuth);
+    
+
     const rolePlayId = props.rolePlayId;
     const [loader, setLoader] = useState(false);
     const [type,SetType] = useState();
     const [text,SetText] = useState();
     const [timer,SetTimer] = useState(25);
     const [title,setTitle] = useState();
+   
+
+  const [extraPoints,setExtraPoints] = useState([
+            {
+                id: 1,
+                point: ""
+            }
+        ]
+);
+
+    
 
     const onSelectTypeChange = (value) =>{
         SetType(value);
@@ -38,6 +51,15 @@ const { Option } = Select;
 
     const onTitleChange = (event) =>{
         setTitle(event.target.value);
+    }
+
+    const onExtraPoints = (i, event) => {
+       let {name,value} = event.target;
+       let ePoints = [...extraPoints];
+       ePoints[i] = {...ePoints[i], [name]: value};
+       ePoints[i] = { ...ePoints[i], id: (extraPoints.length +1) };
+    //    setExtraPoints({ePoints})
+       setExtraPoints(ePoints);
     }
 
     const onAddingConversation = async () => {
@@ -78,7 +100,8 @@ const { Option } = Select;
             conversation_type: type,
             timer: timer,
             rp_article_id: rolePlayId,
-            title: title
+            title: title,
+            extraPoints : extraPoints
         };
         setLoader(true);
         try{
@@ -92,6 +115,23 @@ const { Option } = Select;
         }
     };
 
+    const renderExtraPointsUi = data => 
+         data.map((item,i) => (
+                 <div style={{marginTop:"30px"}} key={i}>
+                     
+                 <Input
+                  style={{ maxWidth: "450px", width: "100%" }}
+                  placeholder="ExtraPoints"
+                  name="point"
+                  value={item.point || ""}
+                  onChange={value => onExtraPoints(i, value)} 
+                 />
+                 </div>
+         ));
+         
+    const addEpInputField  = () => {
+
+      };     
 
     return (
         <div>
@@ -138,7 +178,7 @@ const { Option } = Select;
               onChange={onTimerChange}
              />
              </div>
-
+           
              <div style={{marginTop:"30px"}}>
              <Input
               style={{ maxWidth: "450px", width: "100%" }}
@@ -146,6 +186,21 @@ const { Option } = Select;
               onChange={onTitleChange}
              />
              </div>
+
+             <div>
+                 <div>
+                     Extra Points
+                 </div>
+                 <div onClick={addEpInputField}>
+                     PLUS
+                 </div>
+                 <div>
+                 {
+                 renderExtraPointsUi(extraPoints)
+                }
+                </div>
+             </div>
+
 
              <div style={{marginTop:"30px",textAlign:"center"}}>
              <Button type="primary" onClick={onAddingConversation} >Add </Button>
