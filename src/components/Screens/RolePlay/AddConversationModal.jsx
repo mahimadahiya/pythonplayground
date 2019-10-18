@@ -88,12 +88,28 @@ const { Option } = Select;
              timer === null ||
              timer === ""  ||
              timer === " " ||
-             timer === undefined ||
-             timer < 25
+             timer === undefined 
+             
             ){
                 message.warning("Please Add Timer");
                 return; 
             }
+        if(timer < 25){
+            message.warning(" Timer cannot be less than 25 sec");
+            return; 
+        }
+
+         if(    
+             extraPoints === null ||
+             extraPoints === ""  ||
+             extraPoints === " " ||
+             extraPoints === undefined ||
+             extraPoints === []
+             
+            ){
+                message.warning("Please Add Extra Points");
+                return; 
+               }
         
         
         let formValues = {
