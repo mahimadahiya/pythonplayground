@@ -55,3 +55,10 @@ export const rolePlayList = async authToken => {
       );
     return response;
   }
+
+  export const rolePlayArticleParametersList = async (authToken) => {
+    const response = await adminPanelApi(authToken).get(
+      "/v1/admin/rp/article/parameter/list"
+    );
+    return response.data.result;
+  }

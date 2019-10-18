@@ -49,11 +49,11 @@ const RolePlayDetails = props => {
         //console.log(tempList)
          setConversationDetailsType(tempList);
           
-        let tempEpList = [];
-        for(let i=0;i<details.result.article_conversation;i++){
-          tempEpList.push(details.result.article_conversation[i].extra_points);
-        }
-        console.log(tempEpList);
+        // let tempEpList = [];
+        // for(let i=0;i<details.result.article_conversation;i++){
+        //   tempEpList.push(details.result.article_conversation[i].extra_points);
+        // }
+        // console.log(tempEpList);
           
 
 
@@ -120,7 +120,23 @@ const RolePlayDetails = props => {
                      }
                          
                          title={<div><span>{item.type}</span><span style={{float:"right"}}>{item.timer} Sec</span></div>}
-                         description={item.text}
+                         description={<div>
+                           <div>{item.text}</div>
+                           <hr/>
+                           <div style={{color: "#666666", marginTop: "8px", fontWeight: 600}}>Extra Points</div>
+                           <div>
+                             {
+                               item.extra_points.length !==0 ? 
+                               <div>
+                                 {
+                                   item.extra_points.map((item, i) => 
+                                    <div>{i+1}. {item}</div>
+                                    )
+                                }
+                               </div>: null
+                             }
+                           </div>
+                         </div>}
                  />
                  
                 </List.Item>
