@@ -151,7 +151,7 @@ import {
 
 import { fetchSPOCList, createSPOC } from './spocActions';
 
-import {rolePlayList,addRolePlay,rolePlayConversationDetails,addConversation,rolePlayArticleParametersList} from './rolePLayActions'
+import {rolePlayList,addRolePlay,rolePlayConversationDetails,addConversation,rolePlayArticleParametersList,mapRolePlayParameters} from './rolePLayActions'
 
 export {
   getOrganizationModules,
@@ -273,7 +273,8 @@ export {
   addRolePlay,
   rolePlayConversationDetails,
   addConversation,
-  rolePlayArticleParametersList
+  rolePlayArticleParametersList,
+  mapRolePlayParameters
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

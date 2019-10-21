@@ -114,6 +114,7 @@ const RolePlay = () => {
       <MapRolePlayParametersModal 
           visible={showMapRolePlayParametersModal}
           onCancel={onCloseRolePlayParametersModal}
+          onValuesSubmit={onCloseRolePlayParametersModal}
       />
 
     </div>

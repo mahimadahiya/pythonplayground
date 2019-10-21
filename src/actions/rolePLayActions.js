@@ -1,5 +1,5 @@
 import adminPanelApi from "../apis/adminPanel";
-
+import qs from "querystring";
 
 
 export const rolePlayList = async authToken => {
@@ -56,9 +56,22 @@ export const rolePlayList = async authToken => {
     return response;
   }
 
-  export const rolePlayArticleParametersList = async (authToken) => {
+  export const rolePlayArticleParametersList = async (authToken,module_id) => {
     const response = await adminPanelApi(authToken).get(
-      "/v1/admin/rp/article/parameter/list"
+      "/v1/admin/rp/article/parameter/list",
+      {
+        params: {
+          module_id: module_id
+        }
+      }
     );
     return response.data.result;
   }
+
+  export const mapRolePlayParameters = async (authToken, values) => {
+    const response = await adminPanelApi(authToken).post(
+      "/v1/admin/rp/article/parameter/map/",
+      qs.stringify(values)
+    );
+    return response;
+  };
