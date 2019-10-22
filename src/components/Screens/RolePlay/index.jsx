@@ -10,9 +10,14 @@ const RolePlay = () => {
   const [loading, setLoading] = useState(true);
   const [List, setList] = useState([]);
   const [showCreateRolePlayModal, setShowCreateRolePlayModal] = useState(false);
-  const [showMapRolePlayParametersModal,setShowMapRolePlayParametersModal] = useState(false);
+  const [
+    showMapRolePlayParametersModal,
+    setShowMapRolePlayParametersModal
+  ] = useState(false);
   const user = useSelector(state => state.userAuth);
   const [loadAgain, setLoadAgain] = useState(false);
+
+  const [rpArticleId, setRpArticleId] = useState(null);
 
   useEffect(() => {
     const fetchList = async () => {
@@ -28,13 +33,14 @@ const RolePlay = () => {
     setShowCreateRolePlayModal(false);
   };
 
-  const onMappingParameters =() =>{
+  const onMappingParameters = data => {
+    setRpArticleId(data.id);
     setShowMapRolePlayParametersModal(true);
-  }
+  };
 
   const onCloseRolePlayParametersModal = () => {
     setShowMapRolePlayParametersModal(false);
-  }
+  };
 
   const column = [
     {
@@ -66,8 +72,11 @@ const RolePlay = () => {
       title: "Map Parameters",
       dataIndex: "Map",
       key: "Map",
-      render: text => (
-        <span onClick={onMappingParameters} style={{cursor:"pointer",color:"#22a4ef"}}>
+      render: (text, record) => (
+        <span
+          onClick={() => onMappingParameters(record)}
+          style={{ cursor: "pointer", color: "#22a4ef" }}
+        >
           Map
         </span>
       )
@@ -103,20 +112,26 @@ const RolePlay = () => {
         </Row>
       </Card>
 
-      <CreateRolePlayModal
-        visible={showCreateRolePlayModal}
-        onCancel={onCloseRolePLayModal}
-        onModalClose={onCloseRolePLayModal}
-        setLoadAgain={setLoadAgain}
-        loadAgain={loadAgain}
-      />
+      {showCreateRolePlayModal === true ? (
+        <CreateRolePlayModal
+          visible={showCreateRolePlayModal}
+          onCancel={onCloseRolePLayModal}
+          onModalClose={onCloseRolePLayModal}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+        />
+      ) : null}
 
-      <MapRolePlayParametersModal 
+      {showMapRolePlayParametersModal === true ? (
+        <MapRolePlayParametersModal
           visible={showMapRolePlayParametersModal}
           onCancel={onCloseRolePlayParametersModal}
           onValuesSubmit={onCloseRolePlayParametersModal}
-      />
-
+          rpArticleId={rpArticleId}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+        />
+      ) : null}
     </div>
   );
 };
