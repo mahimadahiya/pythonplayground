@@ -16,6 +16,8 @@ const AddConversationModal = props => {
   const [timer, SetTimer] = useState(25);
   const [title, setTitle] = useState();
 
+  const [timerError, setTimerError] = useState(false);
+
   const [extraPoints, setExtraPoints] = useState([
     {
       id: 1,
@@ -32,7 +34,12 @@ const AddConversationModal = props => {
   };
 
   const onTimerChange = event => {
-    SetTimer(event.target.value);
+    if (event.target.value < 25) {
+      setTimerError(true);
+    } else {
+      setTimerError(false);
+      SetTimer(event.target.value);
+    }
   };
 
   const onTitleChange = event => {
@@ -178,14 +185,35 @@ const AddConversationModal = props => {
             </div>
 
             <div style={{ marginTop: "30px" }}>
-              <Input
-                style={{ maxWidth: "400px", width: "100%" }}
-                type="number"
-                min="25"
-                step="10"
-                placeholder="Timer Minimum time 25 sec"
-                onChange={onTimerChange}
-              />
+              <div>
+                <Input
+                  type="number"
+                  min="25"
+                  step="10"
+                  placeholder="Timer Minimum time 25 sec"
+                  onChange={onTimerChange}
+                  style={
+                    timerError === true
+                      ? {
+                          border: "1px solid red",
+                          maxWidth: "400px",
+                          width: "100%",
+                          outline: "none"
+                        }
+                      : {
+                          border: "1px solid #d9d9d9",
+                          maxWidth: "400px",
+                          width: "100%",
+                          outline: "none"
+                        }
+                  }
+                />
+              </div>
+              {timerError === true ? (
+                <div style={{ color: "red" }}>
+                  * Time should not be less than 25 secs
+                </div>
+              ) : null}
             </div>
 
             <div style={{ marginTop: "30px" }}>
