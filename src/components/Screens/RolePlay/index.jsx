@@ -22,9 +22,37 @@ const RolePlay = () => {
   useEffect(() => {
     const fetchList = async () => {
       setLoading(true);
-      const response = await rolePlayList(user.Authorization);
-      setList(response.rp_article_details);
-      setLoading(false);
+
+      try {
+        const response = await rolePlayList(user.Authorization);
+
+        response.rp_article_details = response.rp_article_details
+          // .sort((a, b) => {
+          //   return (
+          //     new Date(a.created_at).getTime() -
+          //     new Date(b.created_at).getTime()
+          //   );
+          // })
+          // .reverse();
+          .sort(function(a, b) {
+            if (
+              new Date(a.created_at).getTime() >
+              new Date(b.created_at).getTime()
+            )
+              return -1;
+            if (
+              new Date(a.created_at).getTime() <
+              new Date(b.created_at).getTime()
+            )
+              return 1;
+            return 0;
+          });
+
+        setList(response.rp_article_details);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
     };
     fetchList();
   }, [user, loadAgain]);
