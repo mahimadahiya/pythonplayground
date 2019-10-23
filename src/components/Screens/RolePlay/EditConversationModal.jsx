@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { updateRPConversation } from "../../../actions";
+import { updateRPConversation, fetchRpLayoutList } from "../../../actions";
 import { useSelector } from "react-redux";
 import { Input, Modal, Button, Select, message, Card, Icon } from "antd";
 
@@ -24,7 +24,21 @@ const EditConversationModal = props => {
 
   const [extraPoints, setExtraPoints] = useState([]);
 
+  const [typeLayoutList, setTypeLayoutList] = useState([]);
+
   useEffect(() => {
+    const fetchList = async () => {
+      setLoader(true);
+      try {
+        let response = await fetchRpLayoutList(user.Authorization);
+        setTypeLayoutList(response.data.result.layout_list);
+        setLoader(false);
+      } catch (error) {
+        setLoader(false);
+      }
+    };
+    fetchList();
+
     SetType(props.conversationDetails.type);
     setTitle(props.conversationDetails.title);
     SetText(props.conversationDetails.text);
@@ -128,7 +142,7 @@ const EditConversationModal = props => {
       timer: timer,
       rp_article_id: rolePlayId,
       title: title,
-      extraPoints: JSON.stringify(tempExtraPoints),
+      extra_points: JSON.stringify(tempExtraPoints),
       rp_conversation_id: rpConversationId
     };
     setLoader(true);
@@ -201,11 +215,18 @@ const EditConversationModal = props => {
                 onChange={onSelectTypeChange}
                 value={type}
               >
-                <Option value="Full Overlay">Full Overlay</Option>
+                {typeLayoutList.map(item => {
+                  return (
+                    <Option value={item.slug} key={item.slug}>
+                      {item.name}
+                    </Option>
+                  );
+                })}
+                {/* <Option value="Full Overlay">Full Overlay</Option>
                 <Option value="Right Overlay">Right Overlay</Option>
                 <Option value="Left Overlay">Left Overlay</Option>
                 <Option value="Speaking-Left">Speaking-Left</Option>
-                <Option value="Speaking-Right">Speaking-Right</Option>
+                <Option value="Speaking-Right">Speaking-Right</Option> */}
               </Select>
             </div>
 

@@ -86,6 +86,13 @@ export const updateRPConversation = async (authToken, formValues) => {
   return response;
 };
 
+export const fetchRpLayoutList = async authToken => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/rp/article/layout/list"
+  );
+  return response;
+};
+
 export const rolePlayArticleParametersList = async (authToken, rpArticleId) => {
   const response = await adminPanelApi(authToken).get(
     "/v1/admin/rp/article/parameter/list",
