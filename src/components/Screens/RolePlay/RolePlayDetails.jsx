@@ -13,7 +13,8 @@ import {
 import {
   rolePlayConversationDetails,
   rolePlayConversationChangeStatus,
-  rolePlayConversationDeleteConversation
+  rolePlayConversationDeleteConversation,
+  fetchRpLayoutList
 } from "../../../actions";
 import AddConversationModal from "./AddConversationModal";
 import EditConversationModal from "./EditConversationModal";
@@ -42,6 +43,8 @@ const RolePlayDetails = props => {
   const [editConverseDetails, setEditConverseDetails] = useState({});
   const [showEditConverseModal, setShowEditConverseModal] = useState(false);
 
+  const [typeLayoutList, setTypeLayoutList] = useState([]);
+
   useEffect(() => {
     const fetchDetails = async () => {
       setLoading(true);
@@ -51,7 +54,6 @@ const RolePlayDetails = props => {
           user.Authorization,
           rolePlayId
         );
-        setLoading(false);
 
         setAvatarOneName(
           details.result.rp_article_details.avatar_details[0].name
@@ -74,15 +76,15 @@ const RolePlayDetails = props => {
           item => {
             let bgColor = "";
 
-            if (item.type === "Full Overlay") {
+            if (item.type === "full_overlay") {
               bgColor = "#FFF1E9";
-            } else if (item.type === "Right Overlay") {
+            } else if (item.type === "right_overlay") {
               bgColor = "#ECFCFF";
-            } else if (item.type === "Left Overlay") {
+            } else if (item.type === "left_overlay") {
               bgColor = "#F9F9F9";
-            } else if (item.type === "Speaking-Left") {
+            } else if (item.type === "left_speaking") {
               bgColor = "#EEEEEE";
-            } else if (item.type === "Speaking-Right") {
+            } else if (item.type === "right_speaking") {
               bgColor = "#F1D4D4";
             }
 
@@ -93,6 +95,15 @@ const RolePlayDetails = props => {
           }
         );
         setConversationDetails(details.result.article_conversation);
+
+        try {
+          let response = await fetchRpLayoutList(user.Authorization);
+          setTypeLayoutList(response.data.result.layout_list);
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+        }
+        setLoading(false);
       } catch (error) {
         setLoading(false);
       }
@@ -349,7 +360,18 @@ const RolePlayDetails = props => {
                         </Popconfirm>
                       </div>
                       <div>
-                        <span>{item.type}</span>
+                        <span>
+                          {typeLayoutList.map(lay => {
+                            return (
+                              <span>
+                                {item.type === lay.slug ? (
+                                  <span>{lay.name}</span>
+                                ) : null}
+                              </span>
+                            );
+                          })}
+                        </span>
+                        {/* <span>{item.type}</span> */}
                         <span style={{ float: "right" }}>{item.timer} Sec</span>
                       </div>
                     </div>

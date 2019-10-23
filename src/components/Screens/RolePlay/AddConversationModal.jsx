@@ -88,6 +88,7 @@ const AddConversationModal = props => {
   };
 
   const onAddingConversation = async () => {
+    console.log(extraPoints);
     if (timerError === true) {
       message.warning("Timer cannot be less than 25 sec");
       return;
@@ -156,7 +157,7 @@ const AddConversationModal = props => {
       timer: timer,
       rp_article_id: rolePlayId,
       title: title,
-      extra_points: JSON.stringify(tempExtraPoints)
+      extraPoints: JSON.stringify(tempExtraPoints)
     };
     setLoader(true);
     try {
