@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addConversation } from "../../../actions";
 import { useSelector } from "react-redux";
 import { Input, Modal, Button, Select, message, Card, Icon } from "antd";
@@ -11,10 +11,10 @@ const AddConversationModal = props => {
 
   const rolePlayId = props.rolePlayId;
   const [loader, setLoader] = useState(false);
-  const [type, SetType] = useState();
-  const [text, SetText] = useState();
+  const [type, SetType] = useState("");
+  const [text, SetText] = useState("");
   const [timer, SetTimer] = useState(null);
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState("");
 
   const [timerError, setTimerError] = useState(false);
 
@@ -24,6 +24,24 @@ const AddConversationModal = props => {
       point: ""
     }
   ]);
+
+  useEffect(() => {
+    // console.log("???????????");
+    return () => {
+      // console.log("?>>>>>>>>>>>>>>>>>");
+      SetType("");
+      SetText("");
+      SetTimer(null);
+      setTitle("");
+      setTimerError(false);
+      setExtraPoints([
+        {
+          id: 1,
+          point: ""
+        }
+      ]);
+    };
+  }, [user.Authorization]);
 
   const onSelectTypeChange = value => {
     SetType(value);
@@ -144,7 +162,8 @@ const AddConversationModal = props => {
           style={{
             color: "red",
             fontSize: "18px",
-            marginLeft: "10px"
+            marginLeft: "10px",
+            marginTop: "10px"
           }}
         />
       </div>
