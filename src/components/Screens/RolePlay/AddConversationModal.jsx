@@ -83,13 +83,18 @@ const AddConversationModal = props => {
       return;
     }
 
-    if (
-      title === null ||
-      title === "" ||
-      title === " " ||
-      title === undefined
-    ) {
-      message.warning("Please Fill Title");
+    // if (
+    //   title === null ||
+    //   title === "" ||
+    //   title === " " ||
+    //   title === undefined
+    // ) {
+    //   message.warning("Please Fill Title");
+    //   return;
+    // }
+
+    if (text === null || text === "" || text === " " || text === undefined) {
+      message.warning("Please Fill Text");
       return;
     }
     if (
@@ -225,6 +230,14 @@ const AddConversationModal = props => {
             </div>
 
             <div style={{ marginTop: "30px" }}>
+              <Input
+                style={{ maxWidth: "400px", width: "100%" }}
+                onChange={onTextChange}
+                placeholder="Text"
+              />
+            </div>
+
+            <div style={{ marginTop: "30px" }}>
               <div>
                 <Input
                   type="number"
@@ -254,14 +267,6 @@ const AddConversationModal = props => {
                   * Timer cannot not be less than 25 secs
                 </div>
               ) : null}
-            </div>
-
-            <div style={{ marginTop: "30px" }}>
-              <Input
-                style={{ maxWidth: "400px", width: "100%" }}
-                onChange={onTextChange}
-                placeholder="Text"
-              />
             </div>
 
             <div>
