@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { Row, Col, List, Button, Card, Popconfirm, message } from "antd";
 import {
   rolePlayConversationDetails,
-  rolePlayConversationChangeStatus
+  rolePlayConversationChangeStatus,
+  rolePlayConversationDeleteConversation
 } from "../../../actions";
 import AddConversationModal from "./AddConversationModal";
 
@@ -116,6 +117,28 @@ const RolePlayDetails = props => {
       setLoading(false);
       await rolePlayConversationChangeStatus(user.Authorization, formValues);
       message.success("Role Play status changed.");
+      setLoadAgain(!loadAgain);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const onDeleteConversation = async id => {
+    if (id === null || id === undefined || id === "") {
+      message.warning("Please select conversation");
+      return;
+    }
+
+    let converseId = id;
+
+    setLoading(true);
+    try {
+      setLoading(false);
+      await rolePlayConversationDeleteConversation(
+        user.Authorization,
+        converseId
+      );
+      message.success("Conversation deleted");
       setLoadAgain(!loadAgain);
     } catch (error) {
       setLoading(false);
@@ -275,8 +298,22 @@ const RolePlayDetails = props => {
                   key={item.id}
                   title={
                     <div>
-                      <span>{item.type}</span>
-                      <span style={{ float: "right" }}>{item.timer} Sec</span>
+                      <div style={{ marginBottom: "20px", textAlign: "right" }}>
+                        <Popconfirm
+                          onConfirm={() => onDeleteConversation(item.id)}
+                          okText="Delete"
+                          placement="bottomLeft"
+                          title={"Are you sure you want to delete?"}
+                        >
+                          <Button style={{ background: "red", color: "#fff" }}>
+                            Delete
+                          </Button>
+                        </Popconfirm>
+                      </div>
+                      <div>
+                        <span>{item.type}</span>
+                        <span style={{ float: "right" }}>{item.timer} Sec</span>
+                      </div>
                     </div>
                   }
                   description={

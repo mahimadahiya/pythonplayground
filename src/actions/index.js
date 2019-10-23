@@ -158,7 +158,8 @@ import {
   addConversation,
   rolePlayArticleParametersList,
   mapRolePlayParameters,
-  rolePlayConversationChangeStatus
+  rolePlayConversationChangeStatus,
+  rolePlayConversationDeleteConversation
 } from "./rolePLayActions";
 
 export {
@@ -283,7 +284,8 @@ export {
   addConversation,
   rolePlayArticleParametersList,
   mapRolePlayParameters,
-  rolePlayConversationChangeStatus
+  rolePlayConversationChangeStatus,
+  rolePlayConversationDeleteConversation
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

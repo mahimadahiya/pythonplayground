@@ -40,6 +40,14 @@ export const rolePlayConversationDetails = async (authToken, id) => {
   return response.data;
 };
 
+export const rolePlayConversationDeleteConversation = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).delete(
+    "/v1/admin/rp/article/conversation/delete/" + id
+  );
+  //console.log(response);
+  return response.data;
+};
+
 export const rolePlayConversationChangeStatus = async (
   authToken,
   formValues
