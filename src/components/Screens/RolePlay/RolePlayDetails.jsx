@@ -109,7 +109,8 @@ const RolePlayDetails = props => {
     });
 
     let formValues = {
-      sequence_details: JSON.stringify(tempList)
+      sequence_details: JSON.stringify(tempList),
+      rp_article_id: rolePlayId
     };
 
     setLoading(true);
