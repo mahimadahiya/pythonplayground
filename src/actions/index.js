@@ -1,8 +1,8 @@
-import pyLearningApi from '../apis/pylearning';
+import pyLearningApi from "../apis/pylearning";
 
-import qs from 'querystring';
-import * as ACTION_TYPE from './actionTypes';
-import history from '../history';
+import qs from "querystring";
+import * as ACTION_TYPE from "./actionTypes";
+import history from "../history";
 import {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -10,14 +10,14 @@ import {
   fetchOrganizations,
   clearModules,
   fetchUsers
-} from './organizationActions';
-import { loginUser, logoutUser } from './authActions';
+} from "./organizationActions";
+import { loginUser, logoutUser } from "./authActions";
 import {
   fetchQuestionList,
   fetchQuestionDetail,
   updateQuestion,
   createQuestion
-} from './question';
+} from "./question";
 import {
   createSimulationOrgMapping,
   fetchModuleSimulations,
@@ -25,25 +25,25 @@ import {
   fetchSimulation,
   fetchDefaultModuleSimulations,
   clearSimulations
-} from './simulationActions';
+} from "./simulationActions";
 
-import { fetchDonDonList, fetchDonDonDetails } from './dondonActions';
+import { fetchDonDonList, fetchDonDonDetails } from "./dondonActions";
 import {
   fetchMagicphraseList,
   fetchMagicphraseDetails
-} from './magicPhraseActions';
+} from "./magicPhraseActions";
 
-import { fetchRegions, fetchStates } from './regionActions';
+import { fetchRegions, fetchStates } from "./regionActions";
 
-import { fetchContentComplexityLevel } from './contentActions';
-import { fetchCategories, fetchParameters, fetchTags } from './categoryActions';
-import { addMTF, fetchMTFList, editMTF, fetchMTFDetails } from './mtfActions';
+import { fetchContentComplexityLevel } from "./contentActions";
+import { fetchCategories, fetchParameters, fetchTags } from "./categoryActions";
+import { addMTF, fetchMTFList, editMTF, fetchMTFDetails } from "./mtfActions";
 import {
   addQuad,
   fetchQuadList,
   editQuad,
   fetchQuadDetails
-} from './quadActions';
+} from "./quadActions";
 
 import {
   fetchComprehensionsList,
@@ -53,7 +53,7 @@ import {
   fetchAllComprehensions,
   fetchMappedQuestions,
   mapComprehensionQuestions
-} from './comprehensionActions';
+} from "./comprehensionActions";
 
 import {
   fetchFlashCardsList,
@@ -64,7 +64,7 @@ import {
   fetchModulesFlash,
   fetchMappedCards,
   mapFlashCards
-} from './flashActions';
+} from "./flashActions";
 
 import {
   fetchArticleList,
@@ -73,7 +73,7 @@ import {
   updateArticle,
   addArticle,
   setStep
-} from './articleActions';
+} from "./articleActions";
 import {
   fetchOrganizationList,
   fetchOrganizationDetails,
@@ -81,8 +81,8 @@ import {
   fetchIndustries,
   createOrganization,
   fetchAllOrganizations
-} from './adminOrganizationActions';
-import adminPanelApi from '../apis/adminPanel';
+} from "./adminOrganizationActions";
+import adminPanelApi from "../apis/adminPanel";
 
 import {
   fetchCategoryList,
@@ -101,7 +101,7 @@ import {
   createModule,
   fetchTagList,
   createService
-} from './masterActions';
+} from "./masterActions";
 
 import {
   mapModuleParameter,
@@ -110,13 +110,13 @@ import {
   getAlreadyMappedParameters,
   getAlreadyMappedServices,
   getAlreadyMappedModuleServices
-} from './mappingActions';
+} from "./mappingActions";
 
 import {
   fetchModules,
   createModuleMap,
   fetchAllModules
-} from './moduleActions';
+} from "./moduleActions";
 
 import {
   fetchTraitsList,
@@ -127,9 +127,9 @@ import {
   fetchOptionsList,
   createOption,
   mapOption
-} from './psychometricActions';
+} from "./psychometricActions";
 
-import { fetchAllServices, createServiceMap } from './serviceActions';
+import { fetchAllServices, createServiceMap } from "./serviceActions";
 
 import {
   fetchJargonList,
@@ -147,11 +147,19 @@ import {
   deleteKeyword,
   mapJargonClusterJargons,
   mapJargonCluster
-} from './dictActions';
+} from "./dictActions";
 
-import { fetchSPOCList, createSPOC } from './spocActions';
+import { fetchSPOCList, createSPOC } from "./spocActions";
 
-import {rolePlayList,addRolePlay,rolePlayConversationDetails,addConversation,rolePlayArticleParametersList,mapRolePlayParameters} from './rolePLayActions'
+import {
+  rolePlayList,
+  addRolePlay,
+  rolePlayConversationDetails,
+  addConversation,
+  rolePlayArticleParametersList,
+  mapRolePlayParameters,
+  rolePlayConversationChangeStatus
+} from "./rolePLayActions";
 
 export {
   getOrganizationModules,
@@ -274,7 +282,8 @@ export {
   rolePlayConversationDetails,
   addConversation,
   rolePlayArticleParametersList,
-  mapRolePlayParameters
+  mapRolePlayParameters,
+  rolePlayConversationChangeStatus
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -291,7 +300,7 @@ export const setUserAuthValue = formValues => {
 // MODULE TRACKS
 
 export const fetchModuleTracks = authToken => async dispatch => {
-  const response = await pyLearningApi(authToken).get('/react/track/list');
+  const response = await pyLearningApi(authToken).get("/react/track/list");
   if (response.status === 200) {
     dispatch({ type: ACTION_TYPE.FETCH_MODULE_TRACKS, payload: response.data });
   } else {
@@ -310,7 +319,7 @@ export const fetchModuleTrack = (authToken, id) => async dispatch => {
 
 export const createModuleTrack = (authToken, formValues) => async dispatch => {
   const response = await pyLearningApi(authToken).post(
-    '/react/track/create/',
+    "/react/track/create/",
     qs.stringify(formValues)
   );
   if (response.status === 200) {
@@ -322,7 +331,7 @@ export const createModuleTrack = (authToken, formValues) => async dispatch => {
 
 export const fetchTrackAssessments = (authToken, id) => async dispatch => {
   const response = await adminPanelApi(authToken).get(
-    '/v1/admin/track/assessment/list',
+    "/v1/admin/track/assessment/list",
     {
       params: {
         track_id: id
@@ -340,7 +349,7 @@ export const createModuleTrackMapping = (
   formValues
 ) => async dispatch => {
   const response = await pyLearningApi(authToken).post(
-    '/react/track/module/map/',
+    "/react/track/module/map/",
     qs.stringify(formValues)
   );
   if (response.status === 200) {
@@ -348,7 +357,7 @@ export const createModuleTrackMapping = (
       type: ACTION_TYPE.CREATE_MODULE_TRACK_MAPPING,
       payload: response.data
     });
-    history.push('/tracks');
+    history.push("/tracks");
   } else dispatch({ type: ACTION_TYPE.CREATE_MODULE_TRACK_MAPPING_ERROR });
 };
 
@@ -357,7 +366,7 @@ export const createUserTrackMapping = (
   formValues
 ) => async dispatch => {
   const response = await pyLearningApi(authToken).post(
-    '/react/user/track/mapping/',
+    "/react/user/track/mapping/",
     qs.stringify(formValues)
   );
   if (response.status === 200) {
@@ -365,7 +374,7 @@ export const createUserTrackMapping = (
       type: ACTION_TYPE.CREATE_USER_TRACK_MAPPING,
       payload: response.data
     });
-    history.push('/tracks');
+    history.push("/tracks");
   } else dispatch({ type: ACTION_TYPE.CREATE_USER_TRACK_MAPPING_ERROR });
 };
 

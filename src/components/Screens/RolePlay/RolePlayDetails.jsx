@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Row, Col, List, Button, Card } from "antd";
-import { rolePlayConversationDetails } from "../../../actions";
+import { Row, Col, List, Button, Card, Popconfirm, message } from "antd";
+import {
+  rolePlayConversationDetails,
+  rolePlayConversationChangeStatus
+} from "../../../actions";
 import AddConversationModal from "./AddConversationModal";
 
 const RolePlayDetails = props => {
@@ -91,9 +94,47 @@ const RolePlayDetails = props => {
     setOpenAddConversationModal(false);
   };
 
+  const onRolePlayStatusChange = async () => {
+    if (conversationDetails.length === 0) {
+      message.warning("Please add conversation");
+      return;
+    }
+    let tempList = [];
+    tempList = conversationDetails.map(item => {
+      return {
+        id: item.id,
+        sequence: item.sequence
+      };
+    });
+
+    let formValues = {
+      sequence_details: JSON.stringify(tempList)
+    };
+
+    setLoading(true);
+    try {
+      setLoading(false);
+      await rolePlayConversationChangeStatus(user.Authorization, formValues);
+      message.success("Role Play status changed.");
+      setLoadAgain(!loadAgain);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <Card loading={loading} bodyStyle={{ padding: "0px" }}>
+        <div style={{ margin: "30px", textAlign: "right" }}>
+          <Popconfirm
+            onConfirm={() => onRolePlayStatusChange()}
+            okText="Submit"
+            placement="bottomLeft"
+            title={"Are you sure you want to change status?"}
+          >
+            <Button type="primary">Change Status</Button>
+          </Popconfirm>
+        </div>
         <div style={{ textAlign: "center", background: "lightblue" }}>
           <h3 style={{ lineHeight: "44px" }}>Role Play</h3>
         </div>

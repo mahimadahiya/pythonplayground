@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { rolePlayList } from "../../../actions";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Button } from "antd";
+import { Table, Card, Row, Button, Divider } from "antd";
 import moment from "moment";
 import CreateRolePlayModal from "./CreateRolePlayModal";
 import MapRolePlayParametersModal from "./MapRolePlayParametersModal";
@@ -97,7 +97,7 @@ const RolePlay = () => {
       }
     },
     {
-      title: "Map Parameters",
+      title: "Actions",
       dataIndex: "Map",
       key: "Map",
       render: (text, record) => (
@@ -105,7 +105,8 @@ const RolePlay = () => {
           onClick={() => onMappingParameters(record)}
           style={{ cursor: "pointer", color: "#22a4ef" }}
         >
-          Map
+          Map Parameters
+          <Divider type="vertical" />
         </span>
       )
     }

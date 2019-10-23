@@ -40,6 +40,19 @@ export const rolePlayConversationDetails = async (authToken, id) => {
   return response.data;
 };
 
+export const rolePlayConversationChangeStatus = async (
+  authToken,
+  formValues
+) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/rp/article/conversation/save/",
+
+    qs.stringify(formValues)
+  );
+  //console.log(response);
+  return response.data;
+};
+
 export const addConversation = async (authToken, formValues) => {
   let response = null;
   let formData = new FormData();
