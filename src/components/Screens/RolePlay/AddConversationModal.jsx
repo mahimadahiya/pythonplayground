@@ -94,6 +94,18 @@ const AddConversationModal = props => {
       return;
     }
 
+    for (let i = 0; i < extraPoints.length; i++) {
+      if (
+        extraPoints[i].point === null ||
+        extraPoints[i].point === "" ||
+        extraPoints[i].point === " " ||
+        extraPoints[i].point === undefined
+      ) {
+        message.warning("Please fill all fields of extra points");
+        return;
+      }
+    }
+
     const tempExtraPoints = extraPoints.map(item => item.point);
 
     let formValues = {
