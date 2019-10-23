@@ -83,8 +83,13 @@ const AddConversationModal = props => {
       return;
     }
 
-    if (text === null || text === "" || text === " " || text === undefined) {
-      message.warning("Please Fill Text");
+    if (
+      title === null ||
+      title === "" ||
+      title === " " ||
+      title === undefined
+    ) {
+      message.warning("Please Fill Title");
       return;
     }
     if (
@@ -214,8 +219,8 @@ const AddConversationModal = props => {
             <div style={{ marginTop: "30px" }}>
               <Input
                 style={{ maxWidth: "400px", width: "100%" }}
-                onChange={onTextChange}
-                placeholder="Text"
+                placeholder="Title"
+                onChange={onTitleChange}
               />
             </div>
 
@@ -254,8 +259,8 @@ const AddConversationModal = props => {
             <div style={{ marginTop: "30px" }}>
               <Input
                 style={{ maxWidth: "400px", width: "100%" }}
-                placeholder="Title"
-                onChange={onTitleChange}
+                onChange={onTextChange}
+                placeholder="Text"
               />
             </div>
 
