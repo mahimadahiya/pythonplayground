@@ -13,7 +13,7 @@ const AddConversationModal = props => {
   const [loader, setLoader] = useState(false);
   const [type, SetType] = useState();
   const [text, SetText] = useState();
-  const [timer, SetTimer] = useState(25);
+  const [timer, SetTimer] = useState(null);
   const [title, setTitle] = useState();
 
   const [timerError, setTimerError] = useState(false);
@@ -56,6 +56,10 @@ const AddConversationModal = props => {
   };
 
   const onAddingConversation = async () => {
+    if (timerError === true) {
+      message.warning("Timer cannot be less than 25 sec");
+      return;
+    }
     if (type === null || type === "" || type === " " || type === undefined) {
       message.warning("Please Select Type");
       return;
@@ -75,7 +79,7 @@ const AddConversationModal = props => {
       return;
     }
     if (timer < 25) {
-      message.warning(" Timer cannot be less than 25 sec");
+      message.warning("Timer cannot be less than 25 sec");
       return;
     }
 
@@ -211,7 +215,7 @@ const AddConversationModal = props => {
               </div>
               {timerError === true ? (
                 <div style={{ color: "red" }}>
-                  * Time should not be less than 25 secs
+                  * Timer cannot not be less than 25 secs
                 </div>
               ) : null}
             </div>

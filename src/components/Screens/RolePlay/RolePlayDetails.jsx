@@ -276,14 +276,16 @@ const RolePlayDetails = props => {
           </div>
         </div>
       </Card>
-      <AddConversationModal
-        visible={openAddConversationModal}
-        onCancel={onConversationModalClose}
-        onSubmitValues={onConversationModalClose}
-        rolePlayId={rolePlayId}
-        setLoadAgain={setLoadAgain}
-        loadAgain={loadAgain}
-      />
+      {openAddConversationModal === true ? (
+        <AddConversationModal
+          visible={openAddConversationModal}
+          onCancel={onConversationModalClose}
+          onSubmitValues={onConversationModalClose}
+          rolePlayId={rolePlayId}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+        />
+      ) : null}
     </div>
   );
 };
