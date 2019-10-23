@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Row, Col, List, Button, Card, Popconfirm, message } from "antd";
+import {
+  Row,
+  Col,
+  List,
+  Button,
+  Card,
+  Popconfirm,
+  message,
+  Divider
+} from "antd";
 import {
   rolePlayConversationDetails,
   rolePlayConversationChangeStatus,
   rolePlayConversationDeleteConversation
 } from "../../../actions";
 import AddConversationModal from "./AddConversationModal";
+import EditConversationModal from "./EditConversationModal";
 
 const RolePlayDetails = props => {
   const user = useSelector(state => state.userAuth);
@@ -28,6 +38,9 @@ const RolePlayDetails = props => {
 
   const [description, setDescription] = useState("");
   const [postDescription, setPostDescription] = useState("");
+
+  const [editConverseDetails, setEditConverseDetails] = useState({});
+  const [showEditConverseModal, setShowEditConverseModal] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -144,6 +157,21 @@ const RolePlayDetails = props => {
     } catch (error) {
       setLoading(false);
     }
+  };
+
+  const onEditConversation = id => {
+    if (id === null || id === undefined || id === "") {
+      message.warning("Please select conversation");
+      return;
+    }
+    let tempList = null;
+    for (let i = 0; i < conversationDetails.length; i++) {
+      if (conversationDetails[i].id === id) {
+        tempList = conversationDetails[i];
+      }
+    }
+    setEditConverseDetails(tempList);
+    setShowEditConverseModal(true);
   };
 
   return (
@@ -300,6 +328,15 @@ const RolePlayDetails = props => {
                   title={
                     <div>
                       <div style={{ marginBottom: "20px", textAlign: "right" }}>
+                        <Button
+                          onClick={() => onEditConversation(item.id)}
+                          style={{ background: "#F1BC31", color: "#fff" }}
+                        >
+                          Edit
+                        </Button>
+
+                        <Divider type="vertical" />
+
                         <Popconfirm
                           onConfirm={() => onDeleteConversation(item.id)}
                           okText="Delete"
@@ -355,6 +392,8 @@ const RolePlayDetails = props => {
           </div>
         </div>
       </Card>
+
+      {/* add conversation modal start */}
       {openAddConversationModal === true ? (
         <AddConversationModal
           visible={openAddConversationModal}
@@ -365,6 +404,22 @@ const RolePlayDetails = props => {
           loadAgain={loadAgain}
         />
       ) : null}
+      {/* add conversation modal end */}
+
+      {/* edit conversation modal start */}
+      {showEditConverseModal === true ? (
+        <EditConversationModal
+          visible={showEditConverseModal}
+          onCancel={() => setShowEditConverseModal(false)}
+          onSubmitValues={() => setShowEditConverseModal(false)}
+          rolePlayId={rolePlayId}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+          conversationDetails={editConverseDetails}
+          setShowEditConverseModal={setShowEditConverseModal}
+        />
+      ) : null}
+      {/* edit conversation modal end */}
     </div>
   );
 };

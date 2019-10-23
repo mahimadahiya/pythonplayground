@@ -78,6 +78,14 @@ export const addConversation = async (authToken, formValues) => {
   return response;
 };
 
+export const updateRPConversation = async (authToken, formValues) => {
+  const response = await adminPanelApi(authToken).put(
+    "/v1/admin/rp/article/conversation/update/",
+    qs.stringify(formValues)
+  );
+  return response;
+};
+
 export const rolePlayArticleParametersList = async (authToken, rpArticleId) => {
   const response = await adminPanelApi(authToken).get(
     "/v1/admin/rp/article/parameter/list",
