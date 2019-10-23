@@ -126,16 +126,16 @@ const AddConversationModal = props => {
       return;
     }
 
-    if (
-      extraPoints === null ||
-      extraPoints === "" ||
-      extraPoints === " " ||
-      extraPoints === undefined ||
-      extraPoints.length === 0
-    ) {
-      message.warning("Please Add Extra Points");
-      return;
-    }
+    // if (
+    //   extraPoints === null ||
+    //   extraPoints === "" ||
+    //   extraPoints === " " ||
+    //   extraPoints === undefined ||
+    //   extraPoints.length === 0
+    // ) {
+    //   message.warning("Please Add Extra Points");
+    //   return;
+    // }
 
     for (let i = 0; i < extraPoints.length; i++) {
       if (
@@ -144,7 +144,9 @@ const AddConversationModal = props => {
         extraPoints[i].point === " " ||
         extraPoints[i].point === undefined
       ) {
-        message.warning("Please fill all fields of extra points");
+        message.warning(
+          "Please fill all fields of extra points or delete the field"
+        );
         return;
       }
     }
@@ -159,6 +161,7 @@ const AddConversationModal = props => {
       title: title,
       extraPoints: JSON.stringify(tempExtraPoints)
     };
+
     setLoader(true);
     try {
       await addConversation(user.Authorization, formValues);

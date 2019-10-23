@@ -63,17 +63,18 @@ export const rolePlayConversationChangeStatus = async (
 
 export const addConversation = async (authToken, formValues) => {
   let response = null;
-  let formData = new FormData();
+  // let formData = new FormData();
 
-  formData.append("text", formValues.text);
-  formData.append("conversation_type", formValues.conversation_type);
-  formData.append("rp_article_id", formValues.rp_article_id);
-  formData.append("timer", formValues.timer);
-  formData.append("title", formValues.title);
-  formData.append("extra_points", formValues.extraPoints);
+  // formData.append("text", formValues.text);
+  // formData.append("conversation_type", formValues.conversation_type);
+  // formData.append("rp_article_id", formValues.rp_article_id);
+  // formData.append("timer", formValues.timer);
+  // formData.append("title", formValues.title);
+  // formData.append("extra_points", formValues.extraPoints);
+
   response = await adminPanelApi(authToken).post(
     "/v1/admin/rp/article/conversation/create/",
-    formData
+    qs.stringify(formValues)
   );
   return response;
 };

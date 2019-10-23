@@ -363,7 +363,7 @@ const RolePlayDetails = props => {
                         <span>
                           {typeLayoutList.map(lay => {
                             return (
-                              <span>
+                              <span key={lay.slug}>
                                 {item.type === lay.slug ? (
                                   <span>{lay.name}</span>
                                 ) : null}
@@ -390,7 +390,20 @@ const RolePlayDetails = props => {
                         Extra Points
                       </div>
                       <div>
-                        {item.extra_points.length !== 0 ? (
+                        {item.extra_points !== null ? (
+                          <div>
+                            {item.extra_points.length !== 0 ? (
+                              <div>
+                                {item.extra_points.map((ep, i) => (
+                                  <div key={i}>
+                                    {i + 1}. {ep}
+                                  </div>
+                                ))}
+                              </div>
+                            ) : null}
+                          </div>
+                        ) : null}
+                        {/* {item.extra_points.length !== 0 ? (
                           <div>
                             {item.extra_points.map((ep, i) => (
                               <div key={i}>
@@ -398,7 +411,7 @@ const RolePlayDetails = props => {
                               </div>
                             ))}
                           </div>
-                        ) : null}
+                        ) : null} */}
                       </div>
                     </div>
                   }

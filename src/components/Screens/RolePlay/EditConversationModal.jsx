@@ -8,7 +8,7 @@ const { Option } = Select;
 
 const EditConversationModal = props => {
   const user = useSelector(state => state.userAuth);
-  console.log(props);
+  //   console.log(props);
 
   const rolePlayId = props.rolePlayId;
   const [loader, setLoader] = useState(false);
@@ -45,14 +45,23 @@ const EditConversationModal = props => {
     SetTimer(props.conversationDetails.timer);
     setRpConversationId(props.conversationDetails.id);
 
-    if (props.conversationDetails.extra_points.length > 0) {
-      let tempList = props.conversationDetails.extra_points.map((item, i) => {
-        return {
-          id: i + 1,
-          point: item
-        };
-      });
-      setExtraPoints(tempList);
+    if (props.conversationDetails.extra_points !== null) {
+      if (props.conversationDetails.extra_points.length > 0) {
+        let tempList = props.conversationDetails.extra_points.map((item, i) => {
+          return {
+            id: i + 1,
+            point: item
+          };
+        });
+        setExtraPoints(tempList);
+      } else {
+        setExtraPoints([
+          {
+            id: 1,
+            point: ""
+          }
+        ]);
+      }
     } else {
       setExtraPoints([
         {
@@ -129,7 +138,9 @@ const EditConversationModal = props => {
         extraPoints[i].point === " " ||
         extraPoints[i].point === undefined
       ) {
-        message.warning("Please fill all fields of extra points");
+        message.warning(
+          "Please fill all fields of extra points or delete the field"
+        );
         return;
       }
     }
