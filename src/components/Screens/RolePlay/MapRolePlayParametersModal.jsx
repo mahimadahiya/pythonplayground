@@ -46,7 +46,8 @@ const MapRolePlayParametersModal = props => {
       if (!err) {
         const values = {
           rp_article_id: rp_article_id,
-          parameter_id_list: JSON.stringify(parameters)
+          // parameter_id_list: JSON.stringify(parameters)
+          parameter_id_list: JSON.stringify(formValues.parameter)
         };
 
         setCardLoading(true);
