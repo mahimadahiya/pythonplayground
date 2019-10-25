@@ -50,7 +50,7 @@ const EditConversationModal = props => {
         let tempList = props.conversationDetails.extra_points.map((item, i) => {
           return {
             id: i + 1,
-            point: item
+            point: item.text
           };
         });
         setExtraPoints(tempList);

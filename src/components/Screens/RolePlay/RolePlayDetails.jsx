@@ -380,23 +380,36 @@ const RolePlayDetails = props => {
                     <div>
                       <div>{item.text}</div>
                       <hr />
-                      <div
-                        style={{
-                          color: "#666666",
-                          marginTop: "8px",
-                          fontWeight: 600
-                        }}
-                      >
-                        Extra Points
-                      </div>
+
+                      {item.extra_points !== null ? (
+                        <div>
+                          {item.extra_points.length !== 0 ? (
+                            <div
+                              style={{
+                                color: "#666666",
+                                marginTop: "8px",
+                                fontWeight: 600
+                              }}
+                            >
+                              Extra Points
+                            </div>
+                          ) : null}
+                        </div>
+                      ) : null}
+
                       <div>
                         {item.extra_points !== null ? (
                           <div>
                             {item.extra_points.length !== 0 ? (
                               <div>
-                                {item.extra_points.map((ep, i) => (
+                                {/* {item.extra_points.map((ep, i) => (
                                   <div key={i}>
                                     {i + 1}. {ep}
+                                  </div>
+                                ))} */}
+                                {item.extra_points.map((ep, i) => (
+                                  <div key={i}>
+                                    {i + 1}. {ep.text}
                                   </div>
                                 ))}
                               </div>
