@@ -164,7 +164,11 @@ import {
   fetchRpLayoutList
 } from "./rolePLayActions";
 
-import { wyrActionList, wyrActionDelete } from "./wyrActions";
+import {
+  wyrActionList,
+  wyrActionDelete,
+  createNewWyrAction
+} from "./wyrActions";
 
 export {
   getOrganizationModules,
@@ -294,7 +298,8 @@ export {
   fetchRpLayoutList,
   // wyr
   wyrActionList,
-  wyrActionDelete
+  wyrActionDelete,
+  createNewWyrAction
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

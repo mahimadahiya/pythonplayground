@@ -4,14 +4,15 @@ import {
   Card,
   Button,
   Select,
-  Icon,
   Divider,
   Popconfirm,
-  message
+  message,
+  Modal
 } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { wyrActionList, wyrActionDelete } from "../../../../actions";
+import Create from "./Create";
 
 const WyrActionIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -19,6 +20,9 @@ const WyrActionIndex = props => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
   const [selectedTechnicalId, setSelectedTechnicalId] = useState(null);
+
+  // create new Modal
+  const [createNewModalShow, setCreateNewModalShow] = useState(false);
 
   const columnName = [
     {
@@ -140,27 +144,41 @@ const WyrActionIndex = props => {
     }
   };
 
+  // create new actions functions
   const createNew = () => {
-    console.log("pressed here");
+    setCreateNewModalShow(true);
+  };
+  const closeCreateNewActionModal = () => {
+    setCreateNewModalShow(false);
+  };
+  const submitCreateNewAction = techincalService => {
+    if (techincalService === null || techincalService === undefined) {
+      setSelectedTechnicalId(null);
+    } else {
+      setSelectedTechnicalId(techincalService);
+      onChangeFetchList(techincalService);
+    }
   };
 
   return (
     <div>
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
-        {/* <div style={{ textAlign: "right", marginBottom: "40px" }}>
+        <div style={{ textAlign: "right", marginBottom: "40px" }}>
           <Button type="primary" onClick={() => createNew()}>
             Create New Action
           </Button>
-        </div> */}
+        </div>
         <div style={{ width: "100%", textAlign: "center" }}>
           <Select
             style={{ maxWidth: "300px", width: "100%" }}
             placeholder="Select technical service"
+            value={selectedTechnicalId}
             onChange={onChangeFetchList}
             allowClear={true}
           >
-            <Select.Option value="1">Behavioral Module</Select.Option>
-            <Select.Option value="2">Functional Module</Select.Option>
+            <Select.Option value={null}>Select technical service</Select.Option>
+            <Select.Option value={1}>Behavioral Module</Select.Option>
+            <Select.Option value={2}>Functional Module</Select.Option>
           </Select>
         </div>
 
@@ -180,6 +198,23 @@ const WyrActionIndex = props => {
           )}
         </div>
       </Card>
+
+      {/* create new modal starts */}
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Create New Action"
+        closable={true}
+        footer={null}
+        onCancel={closeCreateNewActionModal}
+        visible={createNewModalShow}
+        destroyOnClose={true}
+      >
+        <Create
+          submitCreateNewAction={submitCreateNewAction}
+          setCreateNewModalShow={setCreateNewModalShow}
+        />
+      </Modal>
+      {/* create new modal end  */}
     </div>
   );
 };

@@ -17,3 +17,11 @@ export const wyrActionDelete = async (authToken, selected_id) => {
   );
   return response.data;
 };
+
+export const createNewWyrAction = async (authToken, formValues) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/wyr/action",
+    qs.stringify(formValues)
+  );
+  return response.data;
+};
