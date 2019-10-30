@@ -38,7 +38,7 @@ const WyrActionIndex = props => {
     {
       title: "Action",
       dataIndex: "action",
-      key: "action",
+      key: "actions",
       render: record => {
         return (
           <div>
