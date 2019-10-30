@@ -10,7 +10,7 @@ import {
   message
 } from "antd";
 import { useSelector } from "react-redux";
-// import moment from "moment";
+import moment from "moment";
 import { wyrActionList, wyrActionDelete } from "../../../../actions";
 
 const WyrActionIndex = props => {
@@ -36,9 +36,9 @@ const WyrActionIndex = props => {
       }
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
       render: record => {
         return (
           <div>
@@ -50,33 +50,19 @@ const WyrActionIndex = props => {
       }
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Created At",
+      dataIndex: "created_at",
+      key: "created_at",
       render: record => {
         return (
           <div>
             {record === null || record === "" || record === undefined
               ? "-"
-              : record}
+              : moment(record).format("DD-MM-YYYY")}
           </div>
         );
       }
     },
-    // {
-    //   title: "Created At",
-    //   dataIndex: "created_at",
-    //   key: "created_at",
-    //   render: record => {
-    //     return (
-    //       <div>
-    //         {record === null || record === "" || record === undefined
-    //           ? "-"
-    //           : moment(record).format("DD-MM-YYYY")}
-    //       </div>
-    //     );
-    //   }
-    // },
     {
       title: "Status",
       dataIndex: "status",
@@ -114,19 +100,23 @@ const WyrActionIndex = props => {
   ];
 
   const onChangeFetchList = async value => {
-    try {
-      setLoading(true);
-      setSelectedTechnicalId(value);
-      const response = await wyrActionList(user.Authorization, value);
+    if (value === undefined || value === null) {
+      setSelectedTechnicalId(null);
+    } else {
+      try {
+        setLoading(true);
+        setSelectedTechnicalId(value);
+        const response = await wyrActionList(user.Authorization, value);
 
-      if (response.result.rp_article_details.length > 0) {
-        setList(response.result.rp_article_details);
-      } else {
-        setList([]);
+        if (response.result.wyr_action_list.length > 0) {
+          setList(response.result.wyr_action_list);
+        } else {
+          setList([]);
+        }
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
       }
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
     }
   };
 
@@ -150,18 +140,22 @@ const WyrActionIndex = props => {
   return (
     <div>
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
-        <div style={{ width: "100%", textAlign: "right" }}>
+        {/* <div style={{ textAlign: "right", marginBottom: "40px" }}>
+          <Button type="primary">Map Users</Button>
+        </div> */}
+        <div style={{ width: "100%", textAlign: "center" }}>
           <Select
             style={{ maxWidth: "300px", width: "100%" }}
             placeholder="Select technical service"
             onChange={onChangeFetchList}
+            allowClear={true}
           >
             <Select.Option value="1">Behavioral Module</Select.Option>
             <Select.Option value="2">Functional Module</Select.Option>
           </Select>
         </div>
 
-        <div style={{ margin: "40px 0px" }}>
+        <div style={{ margin: "40px 0px", textAlign: "center" }}>
           {selectedTechnicalId === null ? (
             <div style={{ fontWeight: 500 }}>
               Select technical service from dropdown to view list

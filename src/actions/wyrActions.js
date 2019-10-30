@@ -3,14 +3,11 @@ import qs from "querystring";
 
 // Actions Api
 export const wyrActionList = async (authToken, technical_service_id) => {
-  const response = await adminPanelApi(authToken).get(
-    "/v1/admin/rp/article/list",
-    {
-      params: {
-        technical_service_id: technical_service_id
-      }
+  const response = await adminPanelApi(authToken).get("/v1/admin/wyr/action", {
+    params: {
+      technical_service_id: technical_service_id
     }
-  );
+  });
   return response.data;
 };
 
