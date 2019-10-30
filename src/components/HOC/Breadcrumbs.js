@@ -51,6 +51,10 @@ const routes = [
   {
     path: "/role-play",
     breadcrumb: "Role-Play"
+  },
+  {
+    path: "/wyr/actions",
+    breadcrumb: "Actions List"
   }
 ];
 

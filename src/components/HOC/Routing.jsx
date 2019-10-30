@@ -1,69 +1,71 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Route, Redirect, Switch } from 'react-router-dom';
-import ServiceList from '../Screens/MasterTable/Service/List';
-import Login from '../Screens/Login/Login';
-import HomeScreen from '../Screens/Dashboard/TrackList';
-import SimulationMapping from '../Screens/Simulation/SimulationMapping';
-import SimulationList from '../Screens/Simulation/SimulationList';
-import QuestionList from '../Screens/Questions/index';
-import MapQuestionChoices from '../Screens/Questions/mapChoices';
-import UploadDonDon from '../Screens/Games/DonDon/Upload';
-import UploadMagicPhrase from '../Screens/Games/MagicPhrase/Upload';
-import ListDonDon from '../Screens/Games/DonDon/List';
-import ListMagicPhrase from '../Screens/Games/MagicPhrase/List';
-import EditDonDon from '../Screens/Games/DonDon/Edit';
-import EditMagicPhrase from '../Screens/Games/MagicPhrase/Edit';
-import QuestionEdit from '../Screens/Questions/edit';
-import AddResponse from '../Screens/Simulation/AddResponse';
-import EditResponse from '../Screens/Simulation/EditResponse';
-import AddQuestion from '../Screens/Questions/AddQuestion';
-import QuestionDetails from '../Screens/Questions/QuestionDetails';
-import MapCategoriesQuestion from '../Screens/Questions/MapCategories';
-import ComprehensionUpload from '../Screens/Comprehension/ComprehensionUpload';
-import MapCategoriesComprehension from '../Screens/Comprehension/MapCategories';
-import AddMTF from '../Screens/Games/MTF/Add';
-import ListMTF from '../Screens/Games/MTF/List';
-import EditMTF from '../Screens/Games/MTF/Edit';
-import AddQuad from '../Screens/Games/Quad/Add';
-import ListQuad from '../Screens/Games/Quad/List';
-import ComprehensionList from '../Screens/Comprehension/ComprehensionList';
-import EditQuad from '../Screens/Games/Quad/Edit';
-import ComprehensionEdit from '../Screens/Comprehension/ComprehensionEdit';
-import FlashCardList from '../Screens/FlashCards/List';
-import FlashCardAdd from '../Screens//FlashCards/Add';
-import FlashCardEdit from '../Screens//FlashCards/Edit';
-import MapFlash from '../Screens/FlashCards/MapFlash';
-import ComprehensionDetail from '../Screens/Comprehension/ComprehensionDetails';
-import ArticleDetail from '../Screens/Article/ArticleDetail';
-import ArticleList from '../Screens/Article/List';
-import OrganizationList from '../Screens/MasterTable/Organization/List';
-import OrganizationDetails from '../Screens/MasterTable/Organization/OrganizationDetails';
-import CategoryList from '../Screens/MasterTable/Category/Category';
-import ParameterList from '../Screens/MasterTable/Parameter/Parameter';
-import ParameterDetails from '../Screens/MasterTable/Parameter/ParameterDetails';
-import TagList from '../Screens/MasterTable/Tag/Tag';
-import TagDetails from '../Screens/MasterTable/Tag/TagDetails';
-import CategoryDetails from '../Screens/MasterTable/Category/CategoryDetails';
-import ModuleParameterMapping from '../Screens/Mapping/ModuleParameterMapping';
-import OrganizationServiceMapping from '../Screens/Mapping/OrganizationServiceMapping';
-import ServiceModuleMapping from '../Screens/Mapping/ServiceModuleMapping';
-import ModuleList from '../Screens/Module/List';
-import MapAssessments from '../Screens/Psychometric/MapAssessments';
-import TraitsList from '../Screens/Psychometric/TraitsList';
-import MapTraits from '../Screens/Psychometric/MapTraits';
-import OptionsList from '../Screens/Psychometric/OptionsList';
-import ServiceDetails from '../Screens/MasterTable/Service/ServiceDetails';
-import ModuleDetails from '../Screens/Module/ModuleDetails';
-import KeywordsList from '../Screens/Dictionary/Keywords/List';
-import JargonDetails from '../Screens/Dictionary/Jargons/Details';
-import JargonHome from '../Screens/Dictionary/Jargons/Home';
-import NotAuthorized from '../Screens/Dashboard/NotFound';
-import RolePlay from '../Screens/RolePlay';
-import RolePlayDetails from '../Screens/RolePlay/RolePlayDetails';
+import React from "react";
+import { connect } from "react-redux";
+import { Route, Redirect, Switch } from "react-router-dom";
+import ServiceList from "../Screens/MasterTable/Service/List";
+import Login from "../Screens/Login/Login";
+import HomeScreen from "../Screens/Dashboard/TrackList";
+import SimulationMapping from "../Screens/Simulation/SimulationMapping";
+import SimulationList from "../Screens/Simulation/SimulationList";
+import QuestionList from "../Screens/Questions/index";
+import MapQuestionChoices from "../Screens/Questions/mapChoices";
+import UploadDonDon from "../Screens/Games/DonDon/Upload";
+import UploadMagicPhrase from "../Screens/Games/MagicPhrase/Upload";
+import ListDonDon from "../Screens/Games/DonDon/List";
+import ListMagicPhrase from "../Screens/Games/MagicPhrase/List";
+import EditDonDon from "../Screens/Games/DonDon/Edit";
+import EditMagicPhrase from "../Screens/Games/MagicPhrase/Edit";
+import QuestionEdit from "../Screens/Questions/edit";
+import AddResponse from "../Screens/Simulation/AddResponse";
+import EditResponse from "../Screens/Simulation/EditResponse";
+import AddQuestion from "../Screens/Questions/AddQuestion";
+import QuestionDetails from "../Screens/Questions/QuestionDetails";
+import MapCategoriesQuestion from "../Screens/Questions/MapCategories";
+import ComprehensionUpload from "../Screens/Comprehension/ComprehensionUpload";
+import MapCategoriesComprehension from "../Screens/Comprehension/MapCategories";
+import AddMTF from "../Screens/Games/MTF/Add";
+import ListMTF from "../Screens/Games/MTF/List";
+import EditMTF from "../Screens/Games/MTF/Edit";
+import AddQuad from "../Screens/Games/Quad/Add";
+import ListQuad from "../Screens/Games/Quad/List";
+import ComprehensionList from "../Screens/Comprehension/ComprehensionList";
+import EditQuad from "../Screens/Games/Quad/Edit";
+import ComprehensionEdit from "../Screens/Comprehension/ComprehensionEdit";
+import FlashCardList from "../Screens/FlashCards/List";
+import FlashCardAdd from "../Screens//FlashCards/Add";
+import FlashCardEdit from "../Screens//FlashCards/Edit";
+import MapFlash from "../Screens/FlashCards/MapFlash";
+import ComprehensionDetail from "../Screens/Comprehension/ComprehensionDetails";
+import ArticleDetail from "../Screens/Article/ArticleDetail";
+import ArticleList from "../Screens/Article/List";
+import OrganizationList from "../Screens/MasterTable/Organization/List";
+import OrganizationDetails from "../Screens/MasterTable/Organization/OrganizationDetails";
+import CategoryList from "../Screens/MasterTable/Category/Category";
+import ParameterList from "../Screens/MasterTable/Parameter/Parameter";
+import ParameterDetails from "../Screens/MasterTable/Parameter/ParameterDetails";
+import TagList from "../Screens/MasterTable/Tag/Tag";
+import TagDetails from "../Screens/MasterTable/Tag/TagDetails";
+import CategoryDetails from "../Screens/MasterTable/Category/CategoryDetails";
+import ModuleParameterMapping from "../Screens/Mapping/ModuleParameterMapping";
+import OrganizationServiceMapping from "../Screens/Mapping/OrganizationServiceMapping";
+import ServiceModuleMapping from "../Screens/Mapping/ServiceModuleMapping";
+import ModuleList from "../Screens/Module/List";
+import MapAssessments from "../Screens/Psychometric/MapAssessments";
+import TraitsList from "../Screens/Psychometric/TraitsList";
+import MapTraits from "../Screens/Psychometric/MapTraits";
+import OptionsList from "../Screens/Psychometric/OptionsList";
+import ServiceDetails from "../Screens/MasterTable/Service/ServiceDetails";
+import ModuleDetails from "../Screens/Module/ModuleDetails";
+import KeywordsList from "../Screens/Dictionary/Keywords/List";
+import JargonDetails from "../Screens/Dictionary/Jargons/Details";
+import JargonHome from "../Screens/Dictionary/Jargons/Home";
+import NotAuthorized from "../Screens/Dashboard/NotFound";
+import RolePlay from "../Screens/RolePlay";
+import RolePlayDetails from "../Screens/RolePlay/RolePlayDetails";
 
+// Would you rather
+import WyrActionIndex from "../Screens/WouldYouRather/Actions";
 
-const Sidebar = React.lazy(() => import('./Sidebar'));
+const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, accessGroup, ...rest }) => {
   return (
@@ -76,10 +78,10 @@ const PrivateRoute = ({ component: Component, user, accessGroup, ...rest }) => {
               <Component {...props} />
             </Sidebar>
           ) : (
-            <Redirect to={{ pathname: '/na' }} />
+            <Redirect to={{ pathname: "/na" }} />
           )
         ) : (
-          <Redirect to={{ pathname: '/login' }} />
+          <Redirect to={{ pathname: "/login" }} />
         )
       }
     />
@@ -94,18 +96,25 @@ class Routing extends React.Component {
         <React.Fragment>
           <Switch>
             <PrivateRoute
-            path="/role-play"
-            component={RolePlay}
-            user={user}
-            exact
-            accessGroup={[1]}
+              path="/wyr/actions"
+              component={WyrActionIndex}
+              user={user}
+              exact
+              accessGroup={[1]}
             />
-             <PrivateRoute
-            path="/role-play/details/:id"
-            component={RolePlayDetails}
-            user={user}
-            exact
-            accessGroup={[1]}
+            <PrivateRoute
+              path="/role-play"
+              component={RolePlay}
+              user={user}
+              exact
+              accessGroup={[1]}
+            />
+            <PrivateRoute
+              path="/role-play/details/:id"
+              component={RolePlayDetails}
+              user={user}
+              exact
+              accessGroup={[1]}
             />
             <PrivateRoute
               path="/"

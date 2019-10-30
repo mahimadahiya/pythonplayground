@@ -270,7 +270,26 @@ const list = [
         key: "/role-play",
         label: "List",
         onClick: () => history.push("/role-play")
-      },
+      }
+    ],
+    accessGroup: [1]
+  },
+  {
+    key: "wyr",
+    icon: "branches",
+    label: "Would You Rather",
+    subMenu: [
+      {
+        key: "wyr-actions",
+        label: "Actions",
+        menuList: [
+          {
+            key: "/wyr/actions",
+            label: "List",
+            onClick: () => history.push("/wyr/actions")
+          }
+        ]
+      }
     ],
     accessGroup: [1]
   }

@@ -164,6 +164,8 @@ import {
   fetchRpLayoutList
 } from "./rolePLayActions";
 
+import { wyrActionList, wyrActionDelete } from "./wyrActions";
+
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -289,7 +291,10 @@ export {
   rolePlayConversationChangeStatus,
   rolePlayConversationDeleteConversation,
   updateRPConversation,
-  fetchRpLayoutList
+  fetchRpLayoutList,
+  // wyr
+  wyrActionList,
+  wyrActionDelete
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
