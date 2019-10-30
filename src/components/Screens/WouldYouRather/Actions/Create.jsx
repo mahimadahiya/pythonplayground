@@ -33,6 +33,8 @@ const Create = props => {
   const [complexity, setComplexity] = useState(null);
   const [level, setLevel] = useState(null);
 
+  const [mediaType, setMediaType] = useState("");
+
   const onActionChange = event => {
     if (
       event.target.value === "" ||
@@ -42,6 +44,17 @@ const Create = props => {
       setAction(null);
     } else {
       setAction(event.target.value);
+    }
+  };
+
+  const onMediaTypeChange = event => {
+    setMediaType(event);
+    if (event === "image") {
+      setFileAcceptType("image/*");
+    } else if (event === "audio") {
+      setFileAcceptType("audio/*");
+    } else if (event === "video") {
+      setFileAcceptType("video/*");
     }
   };
 
@@ -147,6 +160,7 @@ const Create = props => {
             }}
           >
             Action
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
             <div>
@@ -182,6 +196,7 @@ const Create = props => {
             }}
           >
             Technical Service
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
             <div>
@@ -210,6 +225,7 @@ const Create = props => {
             }}
           >
             Level
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
             <div>
@@ -241,6 +257,7 @@ const Create = props => {
             }}
           >
             Complexity
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
             <div>
@@ -264,7 +281,7 @@ const Create = props => {
         {/* Complexity ends */}
 
         {/* media type starts */}
-        {/* <div style={{ display: "flex", marginBottom: "35px" }}>
+        <div style={{ display: "flex", marginBottom: "35px" }}>
           <div
             style={{
               width: "140px",
@@ -274,7 +291,11 @@ const Create = props => {
             Media Type
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <Select style={{ width: "100%" }} placeholder="Select Media Type">
+            <Select
+              style={{ width: "100%" }}
+              placeholder="Select Media Type"
+              onChange={onMediaTypeChange}
+            >
               {mediaTypeList.map((item, i) => (
                 <Select.Option key={i} value={item.slug}>
                   {item.name}
@@ -282,46 +303,52 @@ const Create = props => {
               ))}
             </Select>
           </div>
-        </div> */}
+        </div>
         {/* media type ends */}
 
         {/* media file starts */}
-        {/* <div style={{ display: "flex", marginBottom: "25px" }}>
-          <div
-            style={{
-              width: "140px",
-              fontWeight: 600
-            }}
-          >
-            Media Upload
+        {mediaType === "" ||
+        mediaType === " " ||
+        mediaType === null ||
+        mediaType === undefined ? null : (
+          <div style={{ display: "flex", marginBottom: "25px" }}>
+            <div
+              style={{
+                width: "140px",
+                fontWeight: 600
+              }}
+            >
+              Media Upload
+            </div>
+            <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+              <label>
+                <Input
+                  type="file"
+                  style={{ display: "none" }}
+                  accept={fileAcceptType}
+                  onChange={filechangeHandler}
+                />
+                <span
+                  style={{
+                    border: "1px solid #1890ff",
+                    background: "#fff",
+                    color: "#1890ff",
+                    fontWeight: 400,
+                    cursor: "pointer",
+                    fontSize: "14px",
+                    padding: "6.5px 15px",
+                    borderRadius: "4px",
+                    lineHeight: "1.499"
+                  }}
+                >
+                  <Icon type="upload" style={{ paddingRight: "5px" }} />
+                  Upload
+                </span>
+              </label>
+            </div>
           </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <label>
-              <Input
-                type="file"
-                style={{ display: "none" }}
-                accept={fileAcceptType}
-                onChange={filechangeHandler}
-              />
-              <span
-                style={{
-                  border: "1px solid #1890ff",
-                  background: "#fff",
-                  color: "#1890ff",
-                  fontWeight: 400,
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  padding: "6.5px 15px",
-                  borderRadius: "4px",
-                  lineHeight: "1.499"
-                }}
-              >
-                <Icon type="upload" style={{ paddingRight: "5px" }} />
-                Upload
-              </span>
-            </label>
-          </div>
-        </div> */}
+        )}
+
         {/* media file ends */}
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
