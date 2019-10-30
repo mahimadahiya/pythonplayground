@@ -79,7 +79,7 @@ const WyrActionIndex = props => {
           <Button
             type="link"
             onClick={() => onEdit(record)}
-            style={{ marginRight: 10 }}
+            style={{ padding: 0, marginRight: "10px" }}
           >
             Update
           </Button>
@@ -90,7 +90,10 @@ const WyrActionIndex = props => {
             cancelText="No"
             onConfirm={() => onDelete(record)}
           >
-            <Button type="link" style={{ marginRight: 10, color: "red" }}>
+            <Button
+              type="link"
+              style={{ color: "red", padding: 0, marginRight: "10px" }}
+            >
               Delete
             </Button>
           </Popconfirm>
@@ -137,11 +140,17 @@ const WyrActionIndex = props => {
     }
   };
 
+  const createNew = () => {
+    console.log("pressed here");
+  };
+
   return (
     <div>
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
         {/* <div style={{ textAlign: "right", marginBottom: "40px" }}>
-          <Button type="primary">Map Users</Button>
+          <Button type="primary" onClick={() => createNew()}>
+            Create New Action
+          </Button>
         </div> */}
         <div style={{ width: "100%", textAlign: "center" }}>
           <Select
