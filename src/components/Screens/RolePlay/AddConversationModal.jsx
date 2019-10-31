@@ -159,7 +159,7 @@ const AddConversationModal = props => {
       timer: timer,
       rp_article_id: rolePlayId,
       title: title,
-      extraPoints: JSON.stringify(tempExtraPoints)
+      extra_points: JSON.stringify(tempExtraPoints)
     };
 
     setLoader(true);
