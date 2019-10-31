@@ -1,5 +1,5 @@
 import adminPanelApi from "../apis/adminPanel";
-import qs from "querystring";
+// import qs from "querystring";
 
 // Actions Api
 export const wyrActionList = async (authToken, technical_service_id) => {
@@ -19,9 +19,23 @@ export const wyrActionDelete = async (authToken, selected_id) => {
 };
 
 export const createNewWyrAction = async (authToken, formValues) => {
+  let formData = new FormData();
+  formData.append("action", formValues.action);
+  formData.append("technical_service_id", formValues.technical_service_id);
+  formData.append("complexity", formValues.complexity);
+  formData.append("level", formValues.level);
+
+  if (formValues.hasOwnProperty("media_type") === true) {
+    formData.append("media_type", formValues.media_type);
+  }
+
+  if (formValues.hasOwnProperty("media_file") === true) {
+    formData.append("media_file", formValues.media_file);
+  }
+
   const response = await adminPanelApi(authToken).post(
     "/v1/admin/wyr/action",
-    qs.stringify(formValues)
+    formData
   );
   return response.data;
 };

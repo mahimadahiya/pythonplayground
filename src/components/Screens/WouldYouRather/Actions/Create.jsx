@@ -34,6 +34,9 @@ const Create = props => {
   const [level, setLevel] = useState(null);
 
   const [mediaType, setMediaType] = useState("");
+  const [mediaFile, setMediaFile] = useState(null);
+  const [isFileUplaoded, setIsFileUplaoded] = useState(false);
+  const [fileSrc, setFileSrc] = useState("");
 
   const onActionChange = event => {
     if (
@@ -49,6 +52,9 @@ const Create = props => {
 
   const onMediaTypeChange = event => {
     setMediaType(event);
+    setIsFileUplaoded(false);
+    setFileSrc("");
+    setMediaFile(null);
     if (event === "image") {
       setFileAcceptType("image/*");
     } else if (event === "audio") {
@@ -60,13 +66,46 @@ const Create = props => {
 
   const filechangeHandler = event => {
     let fileType = event.target.files[0].type;
+
+    // media check
+    if (mediaType === "image") {
+      if (fileType.split("/")[0] === "image") {
+        setMediaFile(event.target.files[0]);
+      } else {
+        message.warning("Please upload image");
+        setMediaFile(null);
+        return;
+      }
+    } else if (mediaType === "audio") {
+      if (fileType.split("/")[0] === "audio") {
+        setMediaFile(event.target.files[0]);
+      } else {
+        message.warning("Please upload audio");
+        setMediaFile(null);
+        return;
+      }
+    } else if (mediaType === "video") {
+      if (fileType.split("/")[0] === "video") {
+        setMediaFile(event.target.files[0]);
+      } else {
+        message.warning("Please upload video");
+        setMediaFile(null);
+        return;
+      }
+    }
     var reader = new FileReader();
     var url = reader.readAsDataURL(event.target.files[0]);
     reader.onloadend = e => {
-      console.log(reader.result);
+      setIsFileUplaoded(true);
+      setFileSrc(reader.result);
     };
+  };
 
-    // fileType === "image/jpg" ||
+  const reuploadMedia = () => {
+    setMediaType("");
+    setIsFileUplaoded(false);
+    setFileSrc("");
+    setMediaFile(null);
   };
 
   const createNew = async () => {
@@ -123,15 +162,38 @@ const Create = props => {
       return;
     }
 
-    let formValues = {
-      action: action,
-      technical_service_id: techincalService,
-      complexity: complexity,
-      level: level
-    };
+    let formValues = {};
+
+    if (
+      mediaType === "" ||
+      mediaType === undefined ||
+      mediaType === null ||
+      mediaType === " "
+    ) {
+      formValues = {
+        action: action,
+        technical_service_id: techincalService,
+        complexity: complexity,
+        level: level
+      };
+    } else {
+      if (mediaFile === null || mediaFile === undefined) {
+        message.warning("Please upload media file or clear media type");
+        return;
+      } else {
+        formValues = {
+          action: action,
+          technical_service_id: techincalService,
+          complexity: complexity,
+          level: level,
+          media_type: mediaType,
+          media_file: mediaFile
+        };
+      }
+    }
 
     try {
-      console.log(formValues);
+      // console.log(formValues);
       setLoading(true);
       const response = await createNewWyrAction(user.Authorization, formValues);
       setLoading(false);
@@ -295,7 +357,12 @@ const Create = props => {
               style={{ width: "100%" }}
               placeholder="Select Media Type"
               onChange={onMediaTypeChange}
+              allowClear={true}
+              value={mediaType}
             >
+              <Select.Option key={""} value={""} disabled>
+                Select Media Type
+              </Select.Option>
               {mediaTypeList.map((item, i) => (
                 <Select.Option key={i} value={item.slug}>
                   {item.name}
@@ -321,30 +388,65 @@ const Create = props => {
               Media Upload
             </div>
             <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-              <label>
-                <Input
-                  type="file"
-                  style={{ display: "none" }}
-                  accept={fileAcceptType}
-                  onChange={filechangeHandler}
-                />
-                <span
-                  style={{
-                    border: "1px solid #1890ff",
-                    background: "#fff",
-                    color: "#1890ff",
-                    fontWeight: 400,
-                    cursor: "pointer",
-                    fontSize: "14px",
-                    padding: "6.5px 15px",
-                    borderRadius: "4px",
-                    lineHeight: "1.499"
-                  }}
-                >
-                  <Icon type="upload" style={{ paddingRight: "5px" }} />
-                  Upload
-                </span>
-              </label>
+              {isFileUplaoded === false ? (
+                <label>
+                  <Input
+                    type="file"
+                    style={{ display: "none" }}
+                    accept={fileAcceptType}
+                    onChange={filechangeHandler}
+                  />
+                  <span
+                    style={{
+                      border: "1px solid #1890ff",
+                      background: "#fff",
+                      color: "#1890ff",
+                      fontWeight: 400,
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      padding: "6.5px 15px",
+                      borderRadius: "4px",
+                      lineHeight: "1.499"
+                    }}
+                  >
+                    <Icon type="upload" style={{ paddingRight: "5px" }} />
+                    Upload
+                  </span>
+                </label>
+              ) : (
+                <div style={{ maxWidth: "100%" }}>
+                  <div style={{ marginBottom: "20px", textAlign: "right" }}>
+                    <Button type="danger" onClick={() => reuploadMedia()}>
+                      Change Media
+                    </Button>
+                  </div>
+                  <div>
+                    {mediaType === "image" ? (
+                      <img
+                        src={fileSrc}
+                        alt="image"
+                        style={{ maxWidth: "60%" }}
+                      />
+                    ) : null}
+
+                    {mediaType === "audio" ? (
+                      <audio
+                        src={fileSrc}
+                        controls
+                        style={{ maxWidth: "60%" }}
+                      ></audio>
+                    ) : null}
+
+                    {mediaType === "video" ? (
+                      <video
+                        src={fileSrc}
+                        controls
+                        style={{ maxWidth: "60%" }}
+                      ></video>
+                    ) : null}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
