@@ -293,20 +293,32 @@ const WyrActionIndex = props => {
             Create New Action
           </Button>
         </div>
-        <div style={{ width: "100%", textAlign: "center" }}>
-          <Select
-            style={{ maxWidth: "300px", width: "100%" }}
-            placeholder="Select technical service"
-            value={selectedTechnicalId}
-            onChange={onChangeFetchList}
-            allowClear={true}
+        <div style={{ width: "100%", display: "flex" }}>
+          <div
+            style={{
+              width: "calc(100% - 450px)",
+              textAlign: "left",
+              fontWeight: 600
+            }}
           >
-            <Select.Option value={null} disabled>
-              Select technical service
-            </Select.Option>
-            <Select.Option value={1}>Behavioral Module</Select.Option>
-            <Select.Option value={2}>Functional Module</Select.Option>
-          </Select>
+            {selectedTechnicalId === 1 ? "Behavioral Module" : null}
+            {selectedTechnicalId === 2 ? "Functional Module" : null}
+          </div>
+          <div style={{ width: "450px", textAlign: "right" }}>
+            <Select
+              style={{ maxWidth: "300px", width: "100%" }}
+              placeholder="Select technical service"
+              value={selectedTechnicalId}
+              onChange={onChangeFetchList}
+              allowClear={true}
+            >
+              <Select.Option value={null} disabled>
+                Select technical service
+              </Select.Option>
+              <Select.Option value={1}>Behavioral Module</Select.Option>
+              <Select.Option value={2}>Functional Module</Select.Option>
+            </Select>
+          </div>
         </div>
 
         <div style={{ margin: "40px 0px", textAlign: "center" }}>
