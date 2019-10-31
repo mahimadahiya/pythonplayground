@@ -42,6 +42,8 @@ const Edit = props => {
 
   const [technicalServiceId, setTechnicalServiceId] = useState(null);
 
+  const [isFileChanged, setIsFileChanged] = useState(false);
+
   useEffect(() => {
     // console.log(actionDetails);
 
@@ -51,6 +53,26 @@ const Edit = props => {
       setTechnicalServiceId(actionDetails.technical_service_id);
       setLevel(actionDetails.level);
       setComplexity(actionDetails.complexity);
+
+      if (
+        actionDetails.mediaType !== null ||
+        actionDetails.mediaType !== undefined ||
+        actionDetails.mediaType !== "" ||
+        actionDetails.mediaType !== " "
+      ) {
+        setMediaType(actionDetails.media_type);
+      }
+
+      if (
+        actionDetails.media_url !== null ||
+        actionDetails.media_url !== undefined ||
+        actionDetails.media_url !== "" ||
+        actionDetails.media_url !== " "
+      ) {
+        setIsFileChanged(false);
+        setIsFileUplaoded(true);
+        setFileSrc(actionDetails.media_url);
+      }
     }
 
     return () => {};
@@ -69,6 +91,7 @@ const Edit = props => {
   };
 
   const onMediaTypeChange = event => {
+    setIsFileChanged(true);
     setMediaType(event);
     setIsFileUplaoded(false);
     setFileSrc("");
@@ -120,10 +143,18 @@ const Edit = props => {
   };
 
   const reuploadMedia = () => {
+    setIsFileChanged(true);
     setMediaType("");
     setIsFileUplaoded(false);
     setFileSrc("");
     setMediaFile(null);
+  };
+
+  const discardMediaChange = () => {
+    setIsFileChanged(false);
+    setMediaType(actionDetails.media_type);
+    setIsFileUplaoded(true);
+    setFileSrc(actionDetails.media_url);
   };
 
   const createNew = async () => {
@@ -183,16 +214,24 @@ const Edit = props => {
         level: level
       };
     } else {
-      if (mediaFile === null || mediaFile === undefined) {
-        message.warning("Please upload media file or clear media type");
-        return;
+      if (isFileChanged === true) {
+        if (mediaFile === null || mediaFile === undefined) {
+          message.warning("Please upload media file or clear media type");
+          return;
+        } else {
+          formValues = {
+            action: action,
+            complexity: complexity,
+            level: level,
+            media_type: mediaType,
+            media_file: mediaFile
+          };
+        }
       } else {
         formValues = {
           action: action,
           complexity: complexity,
-          level: level,
-          media_type: mediaType,
-          media_file: mediaFile
+          level: level
         };
       }
     }
@@ -364,22 +403,31 @@ const Edit = props => {
             Media Type
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <Select
-              style={{ width: "100%" }}
-              placeholder="Select Media Type"
-              onChange={onMediaTypeChange}
-              allowClear={true}
-              value={mediaType}
-            >
-              <Select.Option key={""} value={""} disabled>
-                Select Media Type
-              </Select.Option>
-              {mediaTypeList.map((item, i) => (
-                <Select.Option key={i} value={item.slug}>
-                  {item.name}
+            <div>
+              <Select
+                style={{ width: "100%" }}
+                placeholder="Select Media Type"
+                onChange={onMediaTypeChange}
+                allowClear={true}
+                value={mediaType}
+              >
+                <Select.Option key={""} value={""} disabled>
+                  Select Media Type
                 </Select.Option>
-              ))}
-            </Select>
+                {mediaTypeList.map((item, i) => (
+                  <Select.Option key={i} value={item.slug}>
+                    {item.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </div>
+            {isFileChanged === true ? (
+              <div style={{ marginTop: "30px", textAlign: "right" }}>
+                <Button type="danger" onClick={() => discardMediaChange()}>
+                  Discard Media Change
+                </Button>
+              </div>
+            ) : null}
           </div>
         </div>
         {/* media type ends */}
