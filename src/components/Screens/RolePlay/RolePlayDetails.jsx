@@ -259,7 +259,7 @@ const RolePlayDetails = props => {
               <div style={{ textAlign: "center" }}>
                 <div>
                   <img
-                    style={{ width: "120px", height: "150px" }}
+                    style={{ height: "150px" }}
                     src={backgroundImage}
                     alt="background"
                   />
