@@ -18,6 +18,7 @@ import {
 } from "../../../../actions";
 import Create from "./Create";
 import ActionMapParameters from "./MapParameters";
+import ActionMapCourses from "./MapCourses";
 
 const WyrActionIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -32,6 +33,10 @@ const WyrActionIndex = props => {
   // mapping parameters
   const [paramActionId, setParamActionId] = useState(null);
   const [showMapParametersModal, setShowMapParametersModal] = useState(false);
+
+  // mapping courses
+  const [courseActionId, setCourseActionId] = useState(null);
+  const [showMapCoursesModal, setShowMapCoursesModal] = useState(false);
 
   const columnName = [
     {
@@ -228,7 +233,14 @@ const WyrActionIndex = props => {
   // mapping parameters modal funtion end
 
   // mapping courses modal funtion starts
-  const onMappingCourses = data => {};
+  const onMappingCourses = data => {
+    setCourseActionId(data.id);
+    setShowMapCoursesModal(true);
+  };
+  const onCloseCoursesModal = () => {
+    setShowMapCoursesModal(false);
+    onChangeFetchList(selectedTechnicalId);
+  };
   // mapping courses modal funtion ends
 
   const onChangeFetchList = async value => {
@@ -364,6 +376,18 @@ const WyrActionIndex = props => {
           onValuesSubmit={onCloseParametersModal}
           selectedTechnicalId={selectedTechnicalId}
           actionId={paramActionId}
+        />
+      ) : null}
+      {/* mapping parameters end */}
+
+      {/* mapping courses start */}
+      {showMapCoursesModal === true ? (
+        <ActionMapCourses
+          visible={showMapCoursesModal}
+          onCancel={onCloseCoursesModal}
+          onValuesSubmit={onCloseCoursesModal}
+          selectedTechnicalId={selectedTechnicalId}
+          actionId={courseActionId}
         />
       ) : null}
       {/* mapping parameters end */}
