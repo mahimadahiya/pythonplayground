@@ -298,7 +298,8 @@ const WyrActionIndex = props => {
             style={{
               width: "calc(100% - 450px)",
               textAlign: "left",
-              fontWeight: 600
+              fontWeight: 600,
+              fontSize: "16px"
             }}
           >
             {selectedTechnicalId === 1 ? "Behavioral Module" : null}
