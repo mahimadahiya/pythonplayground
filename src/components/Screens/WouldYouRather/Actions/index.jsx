@@ -11,7 +11,11 @@ import {
 } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { wyrActionList, wyrActionDelete } from "../../../../actions";
+import {
+  wyrActionList,
+  wyrActionDelete,
+  wyrActionStatusUpdate
+} from "../../../../actions";
 import Create from "./Create";
 import ActionMapParameters from "./MapParameters";
 
@@ -76,8 +80,69 @@ const WyrActionIndex = props => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: record => {
-        return <div>{record === 1 ? "Draft" : "Live"}</div>;
+      render: (text, record) => {
+        // return <div>{record === 1 ? "Draft" : "Live"}</div>;
+        return (
+          <div>
+            {text === 1 ? (
+              <Button.Group>
+                <Button
+                  style={{
+                    color: "#fff",
+                    background: "red",
+                    border: "1px solid red"
+                  }}
+                >
+                  Draft
+                </Button>
+                <Popconfirm
+                  title="Are you sure you want to change status to Live ?"
+                  okText="Yes"
+                  cancelText="No"
+                  onConfirm={() => changeCurrentActionStatus(record)}
+                >
+                  <Button
+                    style={{
+                      color: "green",
+                      background: "#fff",
+                      border: "1px solid green"
+                    }}
+                  >
+                    Live
+                  </Button>
+                </Popconfirm>
+              </Button.Group>
+            ) : (
+              <Button.Group>
+                <Popconfirm
+                  title="Are you sure you want to change status to Draft ?"
+                  okText="Yes"
+                  cancelText="No"
+                  onConfirm={() => changeCurrentActionStatus(record)}
+                >
+                  <Button
+                    style={{
+                      color: "red",
+                      background: "#fff",
+                      border: "1px solid red"
+                    }}
+                  >
+                    Draft
+                  </Button>
+                </Popconfirm>
+                <Button
+                  style={{
+                    color: "#fff",
+                    background: "green",
+                    border: "1px solid green"
+                  }}
+                >
+                  Live
+                </Button>
+              </Button.Group>
+            )}
+          </div>
+        );
       }
     },
     {
@@ -134,6 +199,22 @@ const WyrActionIndex = props => {
       )
     }
   ];
+
+  // changeCurrentActionStatus starts
+  const changeCurrentActionStatus = async data => {
+    let actionId = data.id;
+    setLoading(true);
+    try {
+      await wyrActionStatusUpdate(user.Authorization, actionId);
+      message.success("Status Updated");
+      setLoading(false);
+      onChangeFetchList(selectedTechnicalId);
+    } catch (error) {
+      message.warning("Internal Server Error!!");
+      setLoading(false);
+    }
+  };
+  // changeCurrentActionStatus end
 
   // mapping parameters modal funtion starts
   const onMappingParameters = data => {

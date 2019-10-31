@@ -47,3 +47,10 @@ export const wyrActionMapParameters = async (authToken, values) => {
   );
   return response;
 };
+
+export const wyrActionStatusUpdate = async (authToken, actionId) => {
+  const response = await adminPanelApi(authToken).put(
+    "/v1/admin/wyr/action/status/update/" + actionId
+  );
+  return response;
+};

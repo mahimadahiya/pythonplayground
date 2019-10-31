@@ -168,7 +168,8 @@ import {
   wyrActionList,
   wyrActionDelete,
   createNewWyrAction,
-  wyrActionMapParameters
+  wyrActionMapParameters,
+  wyrActionStatusUpdate
 } from "./wyrActions";
 
 export {
@@ -301,7 +302,8 @@ export {
   wyrActionList,
   wyrActionDelete,
   createNewWyrAction,
-  wyrActionMapParameters
+  wyrActionMapParameters,
+  wyrActionStatusUpdate
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

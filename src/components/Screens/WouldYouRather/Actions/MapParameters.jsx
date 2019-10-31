@@ -13,7 +13,7 @@ const ActionMapParameters = props => {
   const technical_service_id = props.selectedTechnicalId;
 
   const [cardLoading, setCardLoading] = useState(false);
-  const [parameters, setParameters] = useState([]);
+  // const [parameters, setParameters] = useState([]);
   const [selectedParameters, setSelectedParameters] = useState([]);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const ActionMapParameters = props => {
       }
     };
     fetchAlreadyMappedList();
-  }, [user.Authorization, actionId]);
+  }, [user.Authorization, actionId, technical_service_id]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -83,7 +83,7 @@ const ActionMapParameters = props => {
   };
 
   const onParameterChange = value => {
-    setParameters(value);
+    // setParameters(value);
   };
 
   const { getFieldDecorator } = props.form;
