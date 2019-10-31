@@ -103,7 +103,6 @@ const ActionMapCourses = props => {
   };
 
   const filterCourses = (val, option) => {
-    console.log(option);
     const filteredList = courses.filter(({ name }) => {
       if (name.toLowerCase().includes(val) || option.key.includes(val)) {
         return true;
