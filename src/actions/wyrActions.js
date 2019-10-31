@@ -54,3 +54,24 @@ export const wyrActionStatusUpdate = async (authToken, actionId) => {
   );
   return response;
 };
+
+export const updateWyrAction = async (authToken, actionId, formValues) => {
+  let formData = new FormData();
+  formData.append("action", formValues.action);
+  formData.append("complexity", formValues.complexity);
+  formData.append("level", formValues.level);
+
+  if (formValues.hasOwnProperty("media_type") === true) {
+    formData.append("media_type", formValues.media_type);
+  }
+
+  if (formValues.hasOwnProperty("media_file") === true) {
+    formData.append("media_file", formValues.media_file);
+  }
+
+  const response = await adminPanelApi(authToken).put(
+    "/v1/admin/wyr/action/" + actionId,
+    formData
+  );
+  return response.data;
+};

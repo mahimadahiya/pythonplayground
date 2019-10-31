@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Select, Input, Icon, Button, message } from "antd";
-import { createNewWyrAction } from "../../../../actions";
+import { updateWyrAction } from "../../../../actions";
 import { useSelector } from "react-redux";
 
-const Create = props => {
+const Edit = props => {
+  const actionDetails = props.actionDetails;
   const user = useSelector(state => state.userAuth);
+
+  const [actionId, setActionId] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -29,7 +32,6 @@ const Create = props => {
 
   // formValues
   const [action, setAction] = useState("");
-  const [techincalService, setTechincalService] = useState(null);
   const [complexity, setComplexity] = useState(null);
   const [level, setLevel] = useState(null);
 
@@ -37,6 +39,22 @@ const Create = props => {
   const [mediaFile, setMediaFile] = useState(null);
   const [isFileUplaoded, setIsFileUplaoded] = useState(false);
   const [fileSrc, setFileSrc] = useState("");
+
+  const [technicalServiceId, setTechnicalServiceId] = useState(null);
+
+  useEffect(() => {
+    // console.log(actionDetails);
+
+    if (actionDetails && Object.keys(actionDetails).length !== 0) {
+      setActionId(actionDetails.id);
+      setAction(actionDetails.action);
+      setTechnicalServiceId(actionDetails.technical_service_id);
+      setLevel(actionDetails.level);
+      setComplexity(actionDetails.complexity);
+    }
+
+    return () => {};
+  }, [actionDetails]);
 
   const onActionChange = event => {
     if (
@@ -66,6 +84,7 @@ const Create = props => {
 
   const filechangeHandler = event => {
     let fileType = event.target.files[0].type;
+
     // media check
     if (mediaType === "image") {
       if (fileType.split("/")[0] === "image") {
@@ -119,17 +138,6 @@ const Create = props => {
     }
 
     if (
-      techincalService === null ||
-      techincalService === undefined ||
-      techincalService === "" ||
-      techincalService === " "
-    ) {
-      setTechincalService(undefined);
-      message.warning("Please select techincal service");
-      return;
-    }
-
-    if (
       level === null ||
       level === undefined ||
       level === "" ||
@@ -171,7 +179,6 @@ const Create = props => {
     ) {
       formValues = {
         action: action,
-        technical_service_id: techincalService,
         complexity: complexity,
         level: level
       };
@@ -182,7 +189,6 @@ const Create = props => {
       } else {
         formValues = {
           action: action,
-          technical_service_id: techincalService,
           complexity: complexity,
           level: level,
           media_type: mediaType,
@@ -194,14 +200,14 @@ const Create = props => {
     try {
       // console.log(formValues);
       setLoading(true);
-      await createNewWyrAction(user.Authorization, formValues);
+      await updateWyrAction(user.Authorization, actionId, formValues);
       setLoading(false);
-      message.success("Action Created");
-      props.setCreateNewModalShow(false);
-      props.submitCreateNewAction(techincalService);
+      message.success("Action Updated");
+      props.setEditModalShow(false);
+      props.submitEditAction(props.selectedTechnicalId);
     } catch (error) {
       setLoading(false);
-      props.setCreateNewModalShow(false);
+      props.setEditModalShow(false);
     }
   };
 
@@ -239,6 +245,7 @@ const Create = props => {
                       }
                 }
                 onChange={onActionChange}
+                value={action}
               />
             </div>
             {action === null ? (
@@ -257,22 +264,19 @@ const Create = props => {
             }}
           >
             Technical Service
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+            {/* <span style={{ color: "red", paddingLeft: "4px" }}>*</span> */}
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Select
-                style={{ width: "100%" }}
-                placeholder="Select technical service"
-                onChange={value => setTechincalService(value)}
-              >
-                <Select.Option value={1}>Behavioral Module</Select.Option>
-                <Select.Option value={2}>Functional Module</Select.Option>
-              </Select>
-            </div>
-            {techincalService === undefined ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
+            <Input
+              type="text"
+              style={{ color: "#777777" }}
+              value={
+                technicalServiceId === 1
+                  ? "Behavioral Module"
+                  : "Functional Module"
+              }
+              disabled
+            />
           </div>
         </div>
         {/* techincalService ends */}
@@ -294,7 +298,11 @@ const Create = props => {
                 style={{ width: "100%" }}
                 placeholder="Select Level"
                 onChange={value => setLevel(value)}
+                value={level}
               >
+                <Select.Option key={null} value={null}>
+                  Select Level
+                </Select.Option>
                 {levelList.map((item, i) => (
                   <Select.Option key={i} value={item}>
                     {item}
@@ -326,7 +334,11 @@ const Create = props => {
                 style={{ width: "100%" }}
                 placeholder="Select Complexity"
                 onChange={value => setComplexity(value)}
+                value={complexity}
               >
+                <Select.Option key={null} value={null}>
+                  Select Complexity
+                </Select.Option>
                 {complexityList.map((item, i) => (
                   <Select.Option key={i} value={item}>
                     {item}
@@ -452,7 +464,7 @@ const Create = props => {
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>
-            Create New Action
+            Update Action
           </Button>
         </div>
       </Card>
@@ -460,4 +472,4 @@ const Create = props => {
   );
 };
 
-export default Create;
+export default Edit;

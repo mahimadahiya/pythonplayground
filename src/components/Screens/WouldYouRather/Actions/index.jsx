@@ -19,6 +19,7 @@ import {
 import Create from "./Create";
 import ActionMapParameters from "./MapParameters";
 import ActionMapCourses from "./MapCourses";
+import Edit from "./Edit";
 
 const WyrActionIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -37,6 +38,10 @@ const WyrActionIndex = props => {
   // mapping courses
   const [courseActionId, setCourseActionId] = useState(null);
   const [showMapCoursesModal, setShowMapCoursesModal] = useState(false);
+
+  // update action
+  const [updateActionDetails, setUpdateActionDetails] = useState([]);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   const columnName = [
     {
@@ -264,9 +269,26 @@ const WyrActionIndex = props => {
     }
   };
 
+  // edit/update action starts
   const onEdit = async item => {
-    console.log(item);
+    setUpdateActionDetails(item);
+    setEditModalShow(true);
   };
+
+  const closeEditNewActionModal = () => {
+    setEditModalShow(false);
+  };
+
+  const submitEditAction = techId => {
+    if (techId === null || techId === undefined) {
+      setSelectedTechnicalId(null);
+    } else {
+      setSelectedTechnicalId(techId);
+      onChangeFetchList(techId);
+    }
+  };
+
+  // edit/update action ends
 
   const onDelete = async item => {
     try {
@@ -391,6 +413,25 @@ const WyrActionIndex = props => {
         />
       ) : null}
       {/* mapping parameters end */}
+
+      {/* edit new modal starts */}
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Edit Action"
+        closable={true}
+        footer={null}
+        onCancel={closeEditNewActionModal}
+        visible={editModalShow}
+        destroyOnClose={true}
+      >
+        <Edit
+          submitEditAction={submitEditAction}
+          selectedTechnicalId={selectedTechnicalId}
+          setEditModalShow={setEditModalShow}
+          actionDetails={updateActionDetails}
+        />
+      </Modal>
+      {/* edit new modal end  */}
     </div>
   );
 };
