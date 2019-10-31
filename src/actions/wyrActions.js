@@ -1,5 +1,5 @@
 import adminPanelApi from "../apis/adminPanel";
-// import qs from "querystring";
+import qs from "querystring";
 
 // Actions Api
 export const wyrActionList = async (authToken, technical_service_id) => {
@@ -38,4 +38,12 @@ export const createNewWyrAction = async (authToken, formValues) => {
     formData
   );
   return response.data;
+};
+
+export const wyrActionMapParameters = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/wyr/action/map/",
+    qs.stringify(values)
+  );
+  return response;
 };

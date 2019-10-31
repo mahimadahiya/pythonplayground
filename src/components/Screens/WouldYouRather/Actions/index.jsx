@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import { wyrActionList, wyrActionDelete } from "../../../../actions";
 import Create from "./Create";
+import ActionMapParameters from "./MapParameters";
 
 const WyrActionIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -23,6 +24,10 @@ const WyrActionIndex = props => {
 
   // create new Modal
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
+
+  // mapping parameters
+  const [paramActionId, setParamActionId] = useState(null);
+  const [showMapParametersModal, setShowMapParametersModal] = useState(false);
 
   const columnName = [
     {
@@ -80,6 +85,30 @@ const WyrActionIndex = props => {
       key: "action",
       render: record => (
         <span>
+          {selectedTechnicalId === 1 ? (
+            <span>
+              <Button
+                type="link"
+                onClick={() => onMappingParameters(record)}
+                style={{ padding: 0, marginRight: "10px" }}
+              >
+                Map Parameters
+              </Button>
+              <Divider type="vertical" />
+            </span>
+          ) : (
+            <span>
+              <Button
+                type="link"
+                onClick={() => onMappingCourses(record)}
+                style={{ padding: 0, marginRight: "10px" }}
+              >
+                Map Courses
+              </Button>
+              <Divider type="vertical" />
+            </span>
+          )}
+
           <Button
             type="link"
             onClick={() => onEdit(record)}
@@ -105,6 +134,21 @@ const WyrActionIndex = props => {
       )
     }
   ];
+
+  // mapping parameters modal funtion starts
+  const onMappingParameters = data => {
+    setParamActionId(data.id);
+    setShowMapParametersModal(true);
+  };
+  const onCloseParametersModal = () => {
+    setShowMapParametersModal(false);
+    onChangeFetchList(selectedTechnicalId);
+  };
+  // mapping parameters modal funtion end
+
+  // mapping courses modal funtion starts
+  const onMappingCourses = data => {};
+  // mapping courses modal funtion ends
 
   const onChangeFetchList = async value => {
     if (value === undefined || value === null) {
@@ -176,7 +220,9 @@ const WyrActionIndex = props => {
             onChange={onChangeFetchList}
             allowClear={true}
           >
-            <Select.Option value={null}>Select technical service</Select.Option>
+            <Select.Option value={null} disabled>
+              Select technical service
+            </Select.Option>
             <Select.Option value={1}>Behavioral Module</Select.Option>
             <Select.Option value={2}>Functional Module</Select.Option>
           </Select>
@@ -215,6 +261,18 @@ const WyrActionIndex = props => {
         />
       </Modal>
       {/* create new modal end  */}
+
+      {/* mapping Parameters start */}
+      {showMapParametersModal === true ? (
+        <ActionMapParameters
+          visible={showMapParametersModal}
+          onCancel={onCloseParametersModal}
+          onValuesSubmit={onCloseParametersModal}
+          selectedTechnicalId={selectedTechnicalId}
+          actionId={paramActionId}
+        />
+      ) : null}
+      {/* mapping parameters end */}
     </div>
   );
 };
