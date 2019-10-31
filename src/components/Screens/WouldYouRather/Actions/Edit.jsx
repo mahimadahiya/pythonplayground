@@ -35,7 +35,7 @@ const Edit = props => {
   const [complexity, setComplexity] = useState(null);
   const [level, setLevel] = useState(null);
 
-  const [mediaType, setMediaType] = useState("");
+  const [mediaType, setMediaType] = useState(null);
   const [mediaFile, setMediaFile] = useState(null);
   const [isFileUplaoded, setIsFileUplaoded] = useState(false);
   const [fileSrc, setFileSrc] = useState("");
@@ -144,7 +144,7 @@ const Edit = props => {
 
   const reuploadMedia = () => {
     setIsFileChanged(true);
-    setMediaType("");
+    setMediaType(null);
     setIsFileUplaoded(false);
     setFileSrc("");
     setMediaFile(null);
@@ -216,7 +216,7 @@ const Edit = props => {
     } else {
       if (isFileChanged === true) {
         if (mediaFile === null || mediaFile === undefined) {
-          message.warning("Please upload media file or clear media type");
+          message.warning("Please upload media file or discard media change");
           return;
         } else {
           formValues = {
@@ -411,7 +411,7 @@ const Edit = props => {
                 allowClear={true}
                 value={mediaType}
               >
-                <Select.Option key={""} value={""} disabled>
+                <Select.Option key={"a"} value={null} disabled>
                   Select Media Type
                 </Select.Option>
                 {mediaTypeList.map((item, i) => (
