@@ -17,7 +17,7 @@ import {
   wyrScenarioDelete
 } from "../../../../actions";
 // import Create from "./Create";
-// import ActionMapParameters from "./MapParameters";
+import ScenarioMapParameters from "./MapParameters";
 // import ActionMapCourses from "./MapCourses";
 // import Edit from "./Edit";
 
@@ -32,8 +32,8 @@ const WyrScenarioIndex = props => {
   //   const [createNewModalShow, setCreateNewModalShow] = useState(false);
 
   // mapping parameters
-  //   const [paramActionId, setParamActionId] = useState(null);
-  //   const [showMapParametersModal, setShowMapParametersModal] = useState(false);
+  const [paramScenarioId, setParamScenarioId] = useState(null);
+  const [showMapParametersModal, setShowMapParametersModal] = useState(false);
 
   // mapping courses
   //   const [courseActionId, setCourseActionId] = useState(null);
@@ -189,7 +189,7 @@ const WyrScenarioIndex = props => {
             <span>
               <Button
                 type="link"
-                // onClick={() => onMappingParameters(record)}
+                onClick={() => onMappingParameters(record)}
                 style={{ padding: 0, marginRight: "10px" }}
               >
                 Map Parameters
@@ -252,27 +252,27 @@ const WyrScenarioIndex = props => {
   };
   // changeCurrentScenarioStatus end
 
-  //   // mapping parameters modal funtion starts
-  //   const onMappingParameters = data => {
-  //     setParamActionId(data.id);
-  //     setShowMapParametersModal(true);
-  //   };
-  //   const onCloseParametersModal = () => {
-  //     setShowMapParametersModal(false);
-  //     onChangeFetchList(selectedTechnicalId);
-  //   };
-  //   // mapping parameters modal funtion end
+  // mapping parameters modal funtion starts
+  const onMappingParameters = data => {
+    setParamScenarioId(data.id);
+    setShowMapParametersModal(true);
+  };
+  const onCloseParametersModal = () => {
+    setShowMapParametersModal(false);
+    onChangeFetchList(selectedTechnicalId);
+  };
+  // mapping parameters modal funtion end
 
-  //   // mapping courses modal funtion starts
-  //   const onMappingCourses = data => {
-  //     setCourseActionId(data.id);
-  //     setShowMapCoursesModal(true);
-  //   };
-  //   const onCloseCoursesModal = () => {
-  //     setShowMapCoursesModal(false);
-  //     onChangeFetchList(selectedTechnicalId);
-  //   };
-  //   // mapping courses modal funtion ends
+  // // mapping courses modal funtion starts
+  // const onMappingCourses = data => {
+  //   setCourseActionId(data.id);
+  //   setShowMapCoursesModal(true);
+  // };
+  // const onCloseCoursesModal = () => {
+  //   setShowMapCoursesModal(false);
+  //   onChangeFetchList(selectedTechnicalId);
+  // };
+  // // mapping courses modal funtion ends
 
   const onChangeFetchList = async value => {
     if (value === undefined || value === null) {
@@ -417,15 +417,15 @@ const WyrScenarioIndex = props => {
       {/* create new modal end  */}
 
       {/* mapping Parameters start */}
-      {/* {showMapParametersModal === true ? (
-        <ActionMapParameters
+      {showMapParametersModal === true ? (
+        <ScenarioMapParameters
           visible={showMapParametersModal}
           onCancel={onCloseParametersModal}
           onValuesSubmit={onCloseParametersModal}
           selectedTechnicalId={selectedTechnicalId}
-          actionId={paramActionId}
+          scenarioId={paramScenarioId}
         />
-      ) : null} */}
+      ) : null}
       {/* mapping parameters end */}
 
       {/* mapping courses start */}

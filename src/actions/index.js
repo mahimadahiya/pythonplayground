@@ -176,7 +176,8 @@ import {
 import {
   wyrScenarioList,
   wyrScenarioStatusUpdate,
-  wyrScenarioDelete
+  wyrScenarioDelete,
+  wyrScenarioMapParameters
 } from "./wyrScenario";
 
 export {
@@ -315,7 +316,8 @@ export {
   // wyr wyrScenario
   wyrScenarioList,
   wyrScenarioStatusUpdate,
-  wyrScenarioDelete
+  wyrScenarioDelete,
+  wyrScenarioMapParameters
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -27,3 +27,11 @@ export const wyrScenarioDelete = async (authToken, selected_id) => {
   );
   return response.data;
 };
+
+export const wyrScenarioMapParameters = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/wyr/scenario/map/",
+    qs.stringify(values)
+  );
+  return response;
+};
