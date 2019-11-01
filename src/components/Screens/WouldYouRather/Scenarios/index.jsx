@@ -214,14 +214,14 @@ const WyrScenarioIndex = props => {
             </span>
           )}
 
-          <Button
+          {/* <Button
             type="link"
             // onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
           </Button>
-          <Divider type="vertical" />
+          <Divider type="vertical" /> */}
           <Popconfirm
             title="Are you sure you want to delete ?"
             okText="Yes"
@@ -367,7 +367,7 @@ const WyrScenarioIndex = props => {
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
           {/* <Button type="primary" onClick={() => createNew()}> */}
-          <Button type="primary">Create New Scenario</Button>
+          {/* <Button type="primary">Create New Scenario</Button> */}
         </div>
         <div style={{ width: "100%", display: "flex" }}>
           <div
