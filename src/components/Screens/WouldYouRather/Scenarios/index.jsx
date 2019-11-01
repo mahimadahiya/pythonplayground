@@ -19,6 +19,7 @@ import {
 // import Create from "./Create";
 import ScenarioMapParameters from "./MapParameters";
 import ScenarioMapCourses from "./MapCourses";
+import ScenarioMapActions from "./MapActions";
 // import Edit from "./Edit";
 
 const WyrScenarioIndex = props => {
@@ -38,6 +39,10 @@ const WyrScenarioIndex = props => {
   // mapping courses
   const [courseScenarioId, setCourseScenarioId] = useState(null);
   const [showMapCoursesModal, setShowMapCoursesModal] = useState(false);
+
+  // mapping actions
+  const [actionScenarioId, setActionScenarioId] = useState(null);
+  const [showMapActionModal, setShowMapActionModal] = useState(false);
 
   // update action
   //   const [updateActionDetails, setUpdateActionDetails] = useState([]);
@@ -178,7 +183,7 @@ const WyrScenarioIndex = props => {
           <span>
             <Button
               type="link"
-              // onClick={() => onMappingActions(record)}
+              onClick={() => onMappingActions(record)}
               style={{ padding: 0, marginRight: "10px" }}
             >
               Map Actions
@@ -263,7 +268,7 @@ const WyrScenarioIndex = props => {
   };
   // mapping parameters modal funtion end
 
-  // // mapping courses modal funtion starts
+  // mapping courses modal funtion starts
   const onMappingCourses = data => {
     setCourseScenarioId(data.id);
     setShowMapCoursesModal(true);
@@ -272,7 +277,18 @@ const WyrScenarioIndex = props => {
     setShowMapCoursesModal(false);
     onChangeFetchList(selectedTechnicalId);
   };
-  // // mapping courses modal funtion ends
+  // mapping courses modal funtion ends
+
+  // mapping actions modal funtion starts
+  const onMappingActions = data => {
+    setActionScenarioId(data.id);
+    setShowMapActionModal(true);
+  };
+  const onCloseActionModal = () => {
+    setShowMapActionModal(false);
+    onChangeFetchList(selectedTechnicalId);
+  };
+  // mapping courses modal funtion ends
 
   const onChangeFetchList = async value => {
     if (value === undefined || value === null) {
@@ -351,7 +367,7 @@ const WyrScenarioIndex = props => {
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
           {/* <Button type="primary" onClick={() => createNew()}> */}
-          <Button type="primary">Create New Action</Button>
+          <Button type="primary">Create New Scenario</Button>
         </div>
         <div style={{ width: "100%", display: "flex" }}>
           <div
@@ -438,7 +454,19 @@ const WyrScenarioIndex = props => {
           scenarioId={courseScenarioId}
         />
       ) : null}
-      {/* mapping parameters end */}
+      {/* mapping courses end */}
+
+      {/* mapping courses start */}
+      {showMapActionModal === true ? (
+        <ScenarioMapActions
+          visible={showMapActionModal}
+          onCancel={onCloseActionModal}
+          onValuesSubmit={onCloseActionModal}
+          selectedTechnicalId={selectedTechnicalId}
+          scenarioId={actionScenarioId}
+        />
+      ) : null}
+      {/* mapping courses end */}
 
       {/* edit new modal starts */}
       {/* <Modal
