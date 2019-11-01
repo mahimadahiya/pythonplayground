@@ -18,7 +18,7 @@ import {
 } from "../../../../actions";
 // import Create from "./Create";
 import ScenarioMapParameters from "./MapParameters";
-// import ActionMapCourses from "./MapCourses";
+import ScenarioMapCourses from "./MapCourses";
 // import Edit from "./Edit";
 
 const WyrScenarioIndex = props => {
@@ -36,8 +36,8 @@ const WyrScenarioIndex = props => {
   const [showMapParametersModal, setShowMapParametersModal] = useState(false);
 
   // mapping courses
-  //   const [courseActionId, setCourseActionId] = useState(null);
-  //   const [showMapCoursesModal, setShowMapCoursesModal] = useState(false);
+  const [courseScenarioId, setCourseScenarioId] = useState(null);
+  const [showMapCoursesModal, setShowMapCoursesModal] = useState(false);
 
   // update action
   //   const [updateActionDetails, setUpdateActionDetails] = useState([]);
@@ -200,7 +200,7 @@ const WyrScenarioIndex = props => {
             <span>
               <Button
                 type="link"
-                // onClick={() => onMappingCourses(record)}
+                onClick={() => onMappingCourses(record)}
                 style={{ padding: 0, marginRight: "10px" }}
               >
                 Map Courses
@@ -264,14 +264,14 @@ const WyrScenarioIndex = props => {
   // mapping parameters modal funtion end
 
   // // mapping courses modal funtion starts
-  // const onMappingCourses = data => {
-  //   setCourseActionId(data.id);
-  //   setShowMapCoursesModal(true);
-  // };
-  // const onCloseCoursesModal = () => {
-  //   setShowMapCoursesModal(false);
-  //   onChangeFetchList(selectedTechnicalId);
-  // };
+  const onMappingCourses = data => {
+    setCourseScenarioId(data.id);
+    setShowMapCoursesModal(true);
+  };
+  const onCloseCoursesModal = () => {
+    setShowMapCoursesModal(false);
+    onChangeFetchList(selectedTechnicalId);
+  };
   // // mapping courses modal funtion ends
 
   const onChangeFetchList = async value => {
@@ -429,15 +429,15 @@ const WyrScenarioIndex = props => {
       {/* mapping parameters end */}
 
       {/* mapping courses start */}
-      {/* {showMapCoursesModal === true ? (
-        <ActionMapCourses
+      {showMapCoursesModal === true ? (
+        <ScenarioMapCourses
           visible={showMapCoursesModal}
           onCancel={onCloseCoursesModal}
           onValuesSubmit={onCloseCoursesModal}
           selectedTechnicalId={selectedTechnicalId}
-          actionId={courseActionId}
+          scenarioId={courseScenarioId}
         />
-      ) : null} */}
+      ) : null}
       {/* mapping parameters end */}
 
       {/* edit new modal starts */}
