@@ -173,6 +173,12 @@ import {
   updateWyrAction
 } from "./wyrActions";
 
+import {
+  wyrScenarioList,
+  wyrScenarioStatusUpdate,
+  wyrScenarioDelete
+} from "./wyrScenario";
+
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -299,13 +305,17 @@ export {
   rolePlayConversationDeleteConversation,
   updateRPConversation,
   fetchRpLayoutList,
-  // wyr
+  // wyr actions
   wyrActionList,
   wyrActionDelete,
   createNewWyrAction,
   wyrActionMapParameters,
   wyrActionStatusUpdate,
-  updateWyrAction
+  updateWyrAction,
+  // wyr wyrScenario
+  wyrScenarioList,
+  wyrScenarioStatusUpdate,
+  wyrScenarioDelete
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

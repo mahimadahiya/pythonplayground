@@ -289,6 +289,17 @@ const list = [
             onClick: () => history.push("/wyr/actions")
           }
         ]
+      },
+      {
+        key: "wyr-scenario",
+        label: "Scenarios",
+        menuList: [
+          {
+            key: "/wyr/scenario",
+            label: "List",
+            onClick: () => history.push("/wyr/scenario")
+          }
+        ]
       }
     ],
     accessGroup: [1]
