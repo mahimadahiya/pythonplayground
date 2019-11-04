@@ -66,7 +66,7 @@ const AddConversationModal = props => {
   };
 
   const onTimerChange = event => {
-    if (event.target.value < 25) {
+    if (event.target.value < 5) {
       setTimerError(true);
     } else {
       setTimerError(false);
@@ -90,7 +90,7 @@ const AddConversationModal = props => {
   const onAddingConversation = async () => {
     console.log(extraPoints);
     if (timerError === true) {
-      message.warning("Timer cannot be less than 25 sec");
+      message.warning("Timer cannot be less than 5 sec");
       return;
     }
     if (type === null || type === "" || type === " " || type === undefined) {
@@ -121,8 +121,8 @@ const AddConversationModal = props => {
       message.warning("Please Add Timer");
       return;
     }
-    if (timer < 25) {
-      message.warning("Timer cannot be less than 25 sec");
+    if (timer < 5) {
+      message.warning("Timer cannot be less than 5 sec");
       return;
     }
 
@@ -266,9 +266,9 @@ const AddConversationModal = props => {
               <div>
                 <Input
                   type="number"
-                  min="25"
-                  step="10"
-                  placeholder="Timer Minimum time 25 sec"
+                  min="5"
+                  step="5"
+                  placeholder="Timer Minimum time 5 sec"
                   onChange={onTimerChange}
                   style={
                     timerError === true
@@ -289,7 +289,7 @@ const AddConversationModal = props => {
               </div>
               {timerError === true ? (
                 <div style={{ color: "red" }}>
-                  * Timer cannot not be less than 25 secs
+                  * Timer cannot not be less than 5 secs
                 </div>
               ) : null}
             </div>
