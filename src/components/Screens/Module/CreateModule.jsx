@@ -12,11 +12,13 @@ const CreateModule = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formValues) => {
       if (!err) {
+      if(image === null || image === "" || image === undefined || image === " "){
+      message.warning("Icon is required for creating module")
+      return;
+      }
         let values = {
           ...formValues,
-          image_url: image,
-          filter: "{}",
-          flag: 1
+          icon2_url: image
         };
         let NewFormValues = {
           fields: JSON.stringify(values)
