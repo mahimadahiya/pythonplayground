@@ -35,7 +35,15 @@ const ModuleList = () => {
       dataIndex: "id",
       key: "id",
       render: id => {
-        return <Link to={`/modules/${id}`}>{id}</Link>;
+        return (
+          <span>
+            {id === null || id === undefined ? (
+              "-"
+            ) : (
+              <Link to={`/modules/${id}`}>{id}</Link>
+            )}
+          </span>
+        );
       }
     },
     {
@@ -44,7 +52,11 @@ const ModuleList = () => {
       key: "name",
       width: "30%",
       render: text => {
-        return <div style={{ minHeight: "60px" }}>{text}</div>;
+        return (
+          <div style={{ minHeight: "60px" }}>
+            {text === null || text === undefined || text === "" ? "-" : text}
+          </div>
+        );
       }
     },
     {
@@ -53,7 +65,11 @@ const ModuleList = () => {
       key: "description",
       width: "60%",
       render: text => {
-        return <div style={{ minHeight: "60px" }}>{text}</div>;
+        return (
+          <div style={{ minHeight: "60px" }}>
+            {text === null || text === undefined || text === "" ? "-" : text}
+          </div>
+        );
       }
     }
   ];

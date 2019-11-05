@@ -45,6 +45,8 @@ const RolePlayDetails = props => {
 
   const [typeLayoutList, setTypeLayoutList] = useState([]);
 
+  const [status, setStatus] = useState(null);
+
   useEffect(() => {
     const fetchDetails = async () => {
       setLoading(true);
@@ -54,6 +56,7 @@ const RolePlayDetails = props => {
           user.Authorization,
           rolePlayId
         );
+        setStatus(details.result.rp_article_details.status);
 
         setAvatarOneName(
           details.result.rp_article_details.avatar_details[0].name
@@ -195,7 +198,10 @@ const RolePlayDetails = props => {
             placement="bottomLeft"
             title={"Are you sure you want to change status?"}
           >
-            <Button type="primary">Change Status</Button>
+            <Button type="primary">
+              Change Status to
+              <span >{status === 1 ? "Live" : "Draft"}</span>
+            </Button>
           </Popconfirm>
         </div>
         <div style={{ textAlign: "center", background: "lightblue" }}>

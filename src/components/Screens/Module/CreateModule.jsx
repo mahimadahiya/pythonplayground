@@ -12,12 +12,23 @@ const CreateModule = props => {
     e.preventDefault();
     props.form.validateFields(async (err, formValues) => {
       if (!err) {
-        await createModule(user.Authorization, {
+        let values = {
           ...formValues,
           image_url: image,
           filter: "{}",
           flag: 1
-        });
+        };
+        let NewFormValues = {
+          fields: JSON.stringify(values)
+        };
+        await createModule(
+          user.Authorization,
+          // ...formValues,
+          // image_url: image,
+          // filter: "{}",
+          // flag: 1
+          NewFormValues
+        );
         message.success("Service created successfully");
       }
     });
