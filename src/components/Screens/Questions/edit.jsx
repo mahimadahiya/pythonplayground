@@ -80,7 +80,14 @@ class QuestionEdit extends React.Component {
           values
         );
         message.success("Updated successfully");
-        history.push("/question/map/choices/" + this.props.match.params.id);
+
+        if (this.props.question.question.quiz_type === "interview") {
+          history.push("/question/map/" + this.props.match.params.id);
+        } else {
+          history.push("/question/map/choices/" + this.props.match.params.id);
+        }
+        // if (history.push("/question/map/choices/" + this.props.match.params.id);
+        // history.push("/question/map/" + this.props.match.params.id);
       }
     });
   };

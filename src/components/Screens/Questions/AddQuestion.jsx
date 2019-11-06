@@ -122,6 +122,9 @@ class AddQuestion extends Component {
                       <Select.Option value="kp" key="kp">
                         Key Phrases
                       </Select.Option>
+                        <Select.Option value="interview" key="interview">
+                        Simulation
+                      </Select.Option>
                     </Select>
                   )}
                 </Form.Item>
