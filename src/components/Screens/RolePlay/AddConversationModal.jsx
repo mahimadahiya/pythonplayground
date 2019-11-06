@@ -18,12 +18,7 @@ const AddConversationModal = props => {
 
   const [timerError, setTimerError] = useState(false);
 
-  const [extraPoints, setExtraPoints] = useState([
-    {
-      id: 1,
-      point: ""
-    }
-  ]);
+  const [extraPoints, setExtraPoints] = useState([]);
 
   const [typeLayoutList, setTypeLayoutList] = useState([]);
 
@@ -294,32 +289,28 @@ const AddConversationModal = props => {
               ) : null}
             </div>
 
-            {
-              (
-                type === "left_speaking" || 
-                type === "right_speaking" || 
-                type === "" )
-               
-            ?  null : <div>
-              <div style={{ marginTop: "18px", fontWeight: "bold" }}>
-                Extra Points
+            {type === "left_speaking" ||
+            type === "right_speaking" ||
+            type === "" ? null : (
+              <div>
+                <div style={{ marginTop: "18px", fontWeight: "bold" }}>
+                  Extra Points
+                </div>
+                <div style={{ maxWidth: "400px", textAlign: "right" }}>
+                  <Icon
+                    onClick={addEpInputField}
+                    type="plus-circle"
+                    theme="filled"
+                    style={{
+                      color: "blue",
+                      fontSize: "18px"
+                    }}
+                  ></Icon>
+                </div>
+
+                <div>{renderExtraPointsUi(extraPoints)}</div>
               </div>
-              <div style={{ maxWidth: "400px", textAlign: "right" }}>
-                <Icon
-                  onClick={addEpInputField}
-                  type="plus-circle"
-                  theme="filled"
-                  style={{
-                    color: "blue",
-                    fontSize: "18px"
-                  }}
-                ></Icon>
-              </div>
-                
-              <div>{renderExtraPointsUi(extraPoints)}</div>
-            </div>
-               
-                }
+            )}
 
             <div style={{ marginTop: "30px", textAlign: "center" }}>
               <Button type="primary" onClick={onAddingConversation}>
