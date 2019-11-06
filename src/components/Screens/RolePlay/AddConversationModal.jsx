@@ -294,7 +294,13 @@ const AddConversationModal = props => {
               ) : null}
             </div>
 
-            <div>
+            {
+              (
+                type === "left_speaking" || 
+                type === "right_speaking" || 
+                type === "" )
+               
+            ?  null : <div>
               <div style={{ marginTop: "18px", fontWeight: "bold" }}>
                 Extra Points
               </div>
@@ -309,9 +315,11 @@ const AddConversationModal = props => {
                   }}
                 ></Icon>
               </div>
-
+                
               <div>{renderExtraPointsUi(extraPoints)}</div>
             </div>
+               
+                }
 
             <div style={{ marginTop: "30px", textAlign: "center" }}>
               <Button type="primary" onClick={onAddingConversation}>
