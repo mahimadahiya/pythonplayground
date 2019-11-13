@@ -177,7 +177,9 @@ import {
   wyrScenarioList,
   wyrScenarioStatusUpdate,
   wyrScenarioDelete,
-  wyrScenarioMapParameters
+  wyrScenarioMapParameters,
+  createNewWyrScenario,
+  updateWyrScenario
 } from "./wyrScenario";
 
 export {
@@ -317,7 +319,9 @@ export {
   wyrScenarioList,
   wyrScenarioStatusUpdate,
   wyrScenarioDelete,
-  wyrScenarioMapParameters
+  wyrScenarioMapParameters,
+  createNewWyrScenario,
+  updateWyrScenario
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

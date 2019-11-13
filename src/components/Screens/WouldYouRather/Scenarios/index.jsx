@@ -16,11 +16,11 @@ import {
   wyrScenarioStatusUpdate,
   wyrScenarioDelete
 } from "../../../../actions";
-// import Create from "./Create";
+import Create from "./Create";
 import ScenarioMapParameters from "./MapParameters";
 import ScenarioMapCourses from "./MapCourses";
 import ScenarioMapActions from "./MapActions";
-// import Edit from "./Edit";
+import Edit from "./Edit";
 
 const WyrScenarioIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -30,7 +30,7 @@ const WyrScenarioIndex = props => {
   const [selectedTechnicalId, setSelectedTechnicalId] = useState(null);
 
   // create new Modal
-  //   const [createNewModalShow, setCreateNewModalShow] = useState(false);
+ const [createNewModalShow, setCreateNewModalShow] = useState(false);
 
   // mapping parameters
   const [paramScenarioId, setParamScenarioId] = useState(null);
@@ -45,8 +45,8 @@ const WyrScenarioIndex = props => {
   const [showMapActionModal, setShowMapActionModal] = useState(false);
 
   // update action
-  //   const [updateActionDetails, setUpdateActionDetails] = useState([]);
-  //   const [editModalShow, setEditModalShow] = useState(false);
+    const [updateActionDetails, setUpdateActionDetails] = useState([]);
+    const [editModalShow, setEditModalShow] = useState(false);
 
   const columnName = [
     {
@@ -214,14 +214,14 @@ const WyrScenarioIndex = props => {
             </span>
           )}
 
-          {/* <Button
+           <Button
             type="link"
-            // onClick={() => onEdit(record)}
+            onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
           </Button>
-          <Divider type="vertical" /> */}
+          <Divider type="vertical" /> 
           <Popconfirm
             title="Are you sure you want to delete ?"
             okText="Yes"
@@ -312,25 +312,25 @@ const WyrScenarioIndex = props => {
   };
 
   //   // edit/update action starts
-  //   const onEdit = async item => {
-  //     setUpdateActionDetails(item);
-  //     setEditModalShow(true);
-  //   };
+   const onEdit = async item => {
+       setUpdateActionDetails(item);
+       setEditModalShow(true);
+     };
 
-  //   const closeEditNewActionModal = () => {
-  //     setEditModalShow(false);
-  //   };
+     const closeEditNewActionModal = () => {
+       setEditModalShow(false);
+     };
 
-  //   const submitEditAction = techId => {
-  //     if (techId === null || techId === undefined) {
-  //       setSelectedTechnicalId(null);
-  //     } else {
-  //       setSelectedTechnicalId(techId);
-  //       onChangeFetchList(techId);
-  //     }
-  //   };
+     const submitEditAction = techId => {
+       if (techId === null || techId === undefined) {
+         setSelectedTechnicalId(null);
+       } else {
+         setSelectedTechnicalId(techId);
+         onChangeFetchList(techId);
+       }
+     };
 
-  //   // edit/update action ends
+     // edit/update action ends
 
   const onDelete = async item => {
     try {
@@ -347,27 +347,27 @@ const WyrScenarioIndex = props => {
   };
 
   //   // create new actions functions
-  //   const createNew = () => {
-  //     setCreateNewModalShow(true);
-  //   };
-  //   const closeCreateNewActionModal = () => {
-  //     setCreateNewModalShow(false);
-  //   };
-  //   const submitCreateNewAction = techincalService => {
-  //     if (techincalService === null || techincalService === undefined) {
-  //       setSelectedTechnicalId(null);
-  //     } else {
-  //       setSelectedTechnicalId(techincalService);
-  //       onChangeFetchList(techincalService);
-  //     }
-  //   };
+    const createNew = () => {
+      setCreateNewModalShow(true);
+    };
+    const closeCreateNewActionModal = () => {
+      setCreateNewModalShow(false);
+     };
+    const submitCreateNewAction = techincalService => {
+      if (techincalService === null || techincalService === undefined) {
+        setSelectedTechnicalId(null);
+      } else {
+        setSelectedTechnicalId(techincalService);
+        onChangeFetchList(techincalService);
+      }
+    };
 
   return (
     <div>
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
-          {/* <Button type="primary" onClick={() => createNew()}> */}
-          {/* <Button type="primary">Create New Scenario</Button> */}
+           <Button type="primary" onClick={() => createNew()}>Create New Scenario </Button>
+          {/*  <Button type="primary">Create New Scenario</Button> */}
         </div>
         <div style={{ width: "100%", display: "flex" }}>
           <div
@@ -416,7 +416,7 @@ const WyrScenarioIndex = props => {
       </Card>
 
       {/* create new modal starts */}
-      {/* <Modal
+       <Modal
         style={{ minWidth: "600px" }}
         title="Create New Action"
         closable={true}
@@ -425,11 +425,13 @@ const WyrScenarioIndex = props => {
         visible={createNewModalShow}
         destroyOnClose={true}
       >
+        
         <Create
           submitCreateNewAction={submitCreateNewAction}
           setCreateNewModalShow={setCreateNewModalShow}
         />
-      </Modal> */}
+        
+      </Modal> 
       {/* create new modal end  */}
 
       {/* mapping Parameters start */}
@@ -469,7 +471,7 @@ const WyrScenarioIndex = props => {
       {/* mapping courses end */}
 
       {/* edit new modal starts */}
-      {/* <Modal
+       <Modal
         style={{ minWidth: "600px" }}
         title="Edit Action"
         closable={true}
@@ -484,9 +486,10 @@ const WyrScenarioIndex = props => {
           setEditModalShow={setEditModalShow}
           actionDetails={updateActionDetails}
         />
-      </Modal> */}
+      </Modal> 
       {/* edit new modal end  */}
     </div>
+    
   );
 };
 
