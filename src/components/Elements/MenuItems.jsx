@@ -300,6 +300,30 @@ const list = [
             onClick: () => history.push("/wyr/scenario")
           }
         ]
+      },
+      {
+        key: "wyr-tree",
+        label: "Tree",
+        menuList: [
+          {
+            key: "/wyr/tree",
+            label: "List",
+            onClick: () => history.push("/wyr/tree")
+          }
+        ]
+      }
+    ],
+    accessGroup: [1]
+  },
+  {
+    key: "tech-assesment",
+    icon: "tool",
+    label: "Technical Assesment",
+    menuList: [
+      {
+        key: "/techAss",
+        label: "List",
+        onClick: () => history.push("/techAss")
       }
     ],
     accessGroup: [1]

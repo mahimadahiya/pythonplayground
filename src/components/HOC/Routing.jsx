@@ -65,6 +65,10 @@ import RolePlayDetails from "../Screens/RolePlay/RolePlayDetails";
 // Would you rather
 import WyrActionIndex from "../Screens/WouldYouRather/Actions";
 import WyrScenarioIndex from "../Screens/WouldYouRather/Scenarios";
+import WyrTreeIndex from "../Screens/WouldYouRather/Tree";
+
+//technical assesment
+import TechnicalAssesmentIndex from "../Screens/TechnicalAssesment/TechnicalAssesmentIndex";
 
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
@@ -106,6 +110,20 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/wyr/actions"
               component={WyrActionIndex}
+              user={user}
+              exact
+              accessGroup={[1]}
+            />
+            <PrivateRoute
+              path="/wyr/tree"
+              component={WyrTreeIndex}
+              user={user}
+              exact
+              accessGroup={[1]}
+            />
+            <PrivateRoute
+              path="/techAss"
+              component={TechnicalAssesmentIndex}
               user={user}
               exact
               accessGroup={[1]}

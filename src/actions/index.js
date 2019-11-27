@@ -182,6 +182,14 @@ import {
   updateWyrScenario
 } from "./wyrScenario";
 
+import {
+  wyrTreeList,
+  wyrTreeStatusUpdate,
+  wyrTreeDelete
+} from "./wyrTreeAction";
+
+import { getTechnicalAssesmentList } from "./technicalAssesmentActions";
+
 export {
   getOrganizationModules,
   fetchOrganizationBatches,
@@ -321,7 +329,13 @@ export {
   wyrScenarioDelete,
   wyrScenarioMapParameters,
   createNewWyrScenario,
-  updateWyrScenario
+  updateWyrScenario,
+  // wyr tree
+  wyrTreeList,
+  wyrTreeStatusUpdate,
+  wyrTreeDelete,
+  //technical assesment
+  getTechnicalAssesmentList
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
