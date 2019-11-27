@@ -188,7 +188,10 @@ import {
   wyrTreeDelete
 } from "./wyrTreeAction";
 
-import { getTechnicalAssesmentList } from "./technicalAssesmentActions";
+import {
+  getTechnicalAssesmentList,
+  createNewTechnicalService
+} from "./technicalAssesmentActions";
 
 export {
   getOrganizationModules,
@@ -335,7 +338,8 @@ export {
   wyrTreeStatusUpdate,
   wyrTreeDelete,
   //technical assesment
-  getTechnicalAssesmentList
+  getTechnicalAssesmentList,
+  createNewTechnicalService
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
