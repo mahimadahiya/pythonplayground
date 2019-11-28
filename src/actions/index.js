@@ -190,7 +190,10 @@ import {
 
 import {
   getTechnicalAssesmentList,
-  createNewTechnicalService
+  createNewTechnicalService,
+  getOrgnizationAssesmentDetails,
+  editTechnicalAssesment,
+  deleteTechnicalAssesment
 } from "./technicalAssesmentActions";
 
 export {
@@ -339,7 +342,10 @@ export {
   wyrTreeDelete,
   //technical assesment
   getTechnicalAssesmentList,
-  createNewTechnicalService
+  createNewTechnicalService,
+  getOrgnizationAssesmentDetails,
+  editTechnicalAssesment,
+  deleteTechnicalAssesment
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

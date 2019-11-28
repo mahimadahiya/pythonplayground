@@ -1,9 +1,22 @@
 import adminPanelApi from "../apis/adminPanel";
 import qs from "querystring";
 
-export const getTechnicalAssesmentList = async AuthToken => {
+function clean(obj) {
+  for (var propName in obj) {
+    if (obj[propName] === null || obj[propName] === undefined) {
+      delete obj[propName];
+    }
+  }
+}
+
+export const getTechnicalAssesmentList = async (AuthToken, search) => {
   const response = await adminPanelApi(AuthToken).get(
-    "/v1/admin/technical/assessment/group/"
+    "/v1/admin/technical/assessment/group/",
+    {
+      params: {
+        search
+      }
+    }
   );
   return response;
 };
@@ -14,6 +27,37 @@ export const createNewTechnicalService = async (AuthToken, values) => {
     qs.stringify({
       fields: JSON.stringify(values)
     })
+  );
+  return response;
+};
+
+export const getOrgnizationAssesmentDetails = async (
+  organization_assessment_group_id,
+  AuthToken
+) => {
+  const response = await adminPanelApi(AuthToken).get(
+    `/v1/admin/technical/assessment/`,
+    {
+      params: {
+        organization_assessment_group_id
+      }
+    }
+  );
+  return response;
+};
+
+export const editTechnicalAssesment = async (id, AuthToken, values) => {
+  clean(values);
+  const response = await adminPanelApi(AuthToken).put(
+    `/v1/admin/technical/assessment/group/${id}/`,
+    qs.stringify(values)
+  );
+  return response;
+};
+
+export const deleteTechnicalAssesment = async (id, AuthToken) => {
+  const response = await adminPanelApi(AuthToken).delete(
+    `/v1/admin/technical/assessment/group/${id}/`
   );
   return response;
 };

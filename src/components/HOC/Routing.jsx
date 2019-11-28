@@ -69,6 +69,7 @@ import WyrTreeIndex from "../Screens/WouldYouRather/Tree";
 
 //technical assesment
 import TechnicalAssesmentIndex from "../Screens/TechnicalAssesment/TechnicalAssesmentIndex";
+import TechnicalAssesmentDetails from "../Screens/TechnicalAssesment/TechnicalAssesmentDetails";
 
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
@@ -127,6 +128,13 @@ class Routing extends React.Component {
               user={user}
               exact
               accessGroup={[1]}
+            />
+            <PrivateRoute
+              path="/techAss/detail/:id"
+              component={TechnicalAssesmentDetails}
+              user={user}
+              accessGroup={[1]}
+              exact
             />
             <PrivateRoute
               path="/role-play"
