@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Card, Table } from "antd";
+import { Card, Table, Input, Button } from "antd";
 import moment from "moment";
 import { getOrgnizationAssesmentDetails } from "../../../actions";
 
@@ -9,6 +9,7 @@ const TechnicalAssesmentDetails = props => {
   const AuthToken = user.Authorization;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
 
   const columnName = [
     {
@@ -35,13 +36,18 @@ const TechnicalAssesmentDetails = props => {
     }
   ];
 
+  const onSearchInputChange = async e => {
+    setSearch(e.target.value);
+  };
+
   useEffect(() => {
     const callDetailsApi = async () => {
       setLoading(true);
       try {
         const response = await getOrgnizationAssesmentDetails(
           props.match.params.id,
-          AuthToken
+          AuthToken,
+          search
         );
         // console.log(response.data.result);
         setData(response.data.result);
@@ -51,7 +57,7 @@ const TechnicalAssesmentDetails = props => {
       }
     };
     callDetailsApi();
-  }, [props.match.params.id]);
+  }, [props.match.params.id, search]);
 
   return (
     <div>
@@ -60,6 +66,24 @@ const TechnicalAssesmentDetails = props => {
         style={{ borderRadius: "5px" }}
         bodyStyle={{ borderRadius: "5px" }}
       >
+        <div style={{ display: "flex" }}>
+          <div style={{ width: "45%" }}>
+            <Input
+              onChange={onSearchInputChange}
+              placeholder="Search by Name"
+            />
+          </div>
+          <div
+            style={{ textAlign: "right", marginBottom: "40px", width: "50%" }}
+          >
+            <Button
+              type="primary"
+              // onClick={() => createNew()}
+            >
+              Create New Group
+            </Button>
+          </div>
+        </div>
         <div style={{ margin: "40px 0px", textAlign: "center" }}>
           <Table
             loading={loading}

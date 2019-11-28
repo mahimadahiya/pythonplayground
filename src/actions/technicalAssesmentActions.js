@@ -33,13 +33,15 @@ export const createNewTechnicalService = async (AuthToken, values) => {
 
 export const getOrgnizationAssesmentDetails = async (
   organization_assessment_group_id,
-  AuthToken
+  AuthToken,
+  search
 ) => {
   const response = await adminPanelApi(AuthToken).get(
     `/v1/admin/technical/assessment/`,
     {
       params: {
-        organization_assessment_group_id
+        organization_assessment_group_id,
+        search
       }
     }
   );
