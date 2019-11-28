@@ -18,6 +18,8 @@ import {
 } from "../../../actions";
 import AddConversationModal from "./AddConversationModal";
 import EditConversationModal from "./EditConversationModal";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import arrayMove from "array-move";
 
 const RolePlayDetails = props => {
   const user = useSelector(state => state.userAuth);
@@ -128,10 +130,10 @@ const RolePlayDetails = props => {
       return;
     }
     let tempList = [];
-    tempList = conversationDetails.map(item => {
+    tempList = conversationDetails.map((item, i) => {
       return {
         id: item.id,
-        sequence: item.sequence
+        sequence: i + 1
       };
     });
 
@@ -186,6 +188,109 @@ const RolePlayDetails = props => {
     }
     setEditConverseDetails(tempList);
     setShowEditConverseModal(true);
+  };
+
+  const SortableItemConversation = SortableElement(({ value }) => (
+    <li
+      style={{
+        display: "inline-block",
+        border: "1px solid #999999",
+        borderRadius: "5px",
+        padding: "20px",
+        margin: "10px 0px",
+        width: "100%",
+        cursor: "pointer",
+        backgroundColor: value.bgColor
+      }}
+    >
+      {/* title */}
+      <div>
+        <div style={{ marginBottom: "20px", textAlign: "right" }}>
+          <Button
+            onClick={() => onEditConversation(value.id)}
+            style={{ background: "#F1BC31", color: "#fff" }}
+          >
+            Edit
+          </Button>
+
+          <Divider type="vertical" />
+
+          <Popconfirm
+            onConfirm={() => onDeleteConversation(value.id)}
+            okText="Delete"
+            placement="bottomLeft"
+            title={"Are you sure you want to delete?"}
+          >
+            <Button style={{ background: "red", color: "#fff" }}>Delete</Button>
+          </Popconfirm>
+        </div>
+        <div>
+          <span>
+            {typeLayoutList.map(lay => {
+              return (
+                <span key={lay.slug}>
+                  {value.type === lay.slug ? <span>{lay.name}</span> : null}
+                </span>
+              );
+            })}
+          </span>
+          <span style={{ float: "right" }}>{value.timer} Sec</span>
+        </div>
+      </div>
+      {/* description */}
+      <div>
+        <div>{value.text}</div>
+        <hr />
+
+        {value.extra_points !== null ? (
+          <div>
+            {value.extra_points.length !== 0 ? (
+              <div
+                style={{
+                  color: "#666666",
+                  marginTop: "8px",
+                  fontWeight: 600
+                }}
+              >
+                Extra Points
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+
+        <div>
+          {value.extra_points !== null ? (
+            <div>
+              {value.extra_points.length !== 0 ? (
+                <div>
+                  {value.extra_points.map((ep, i) => (
+                    <div key={i}>
+                      {i + 1}. {ep.text}
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </li>
+  ));
+  const SortableListConversation = SortableContainer(({ items }) => {
+    return (
+      <ul style={{ padding: 0 }}>
+        {items.map((item, index) => (
+          <SortableItemConversation
+            key={`item-${item.id}`}
+            index={index}
+            value={item}
+          />
+        ))}
+      </ul>
+    );
+  });
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setConversationDetails(arrayMove(conversationDetails, oldIndex, newIndex));
   };
 
   return (
@@ -325,120 +430,16 @@ const RolePlayDetails = props => {
             </div>
           </div>
         </div>
-
         <div style={{ textAlign: "center", background: "lightblue" }}>
           <h3 style={{ lineHeight: "44px" }}>Sequence</h3>
         </div>
-
-        <div style={{ padding: "35px" }}>
-          <List
-            itemLayout="horizontal"
-            dataSource={conversationDetails}
-            renderItem={item => (
-              <List.Item>
-                <List.Item.Meta
-                  style={{
-                    border: "1px solid #999999",
-                    padding: "20px",
-                    borderRadius: "5px",
-                    backgroundColor: item.bgColor
-                  }}
-                  key={item.id}
-                  title={
-                    <div>
-                      <div style={{ marginBottom: "20px", textAlign: "right" }}>
-                        <Button
-                          onClick={() => onEditConversation(item.id)}
-                          style={{ background: "#F1BC31", color: "#fff" }}
-                        >
-                          Edit
-                        </Button>
-
-                        <Divider type="vertical" />
-
-                        <Popconfirm
-                          onConfirm={() => onDeleteConversation(item.id)}
-                          okText="Delete"
-                          placement="bottomLeft"
-                          title={"Are you sure you want to delete?"}
-                        >
-                          <Button style={{ background: "red", color: "#fff" }}>
-                            Delete
-                          </Button>
-                        </Popconfirm>
-                      </div>
-                      <div>
-                        <span>
-                          {typeLayoutList.map(lay => {
-                            return (
-                              <span key={lay.slug}>
-                                {item.type === lay.slug ? (
-                                  <span>{lay.name}</span>
-                                ) : null}
-                              </span>
-                            );
-                          })}
-                        </span>
-                        {/* <span>{item.type}</span> */}
-                        <span style={{ float: "right" }}>{item.timer} Sec</span>
-                      </div>
-                    </div>
-                  }
-                  description={
-                    <div>
-                      <div>{item.text}</div>
-                      <hr />
-
-                      {item.extra_points !== null ? (
-                        <div>
-                          {item.extra_points.length !== 0 ? (
-                            <div
-                              style={{
-                                color: "#666666",
-                                marginTop: "8px",
-                                fontWeight: 600
-                              }}
-                            >
-                              Extra Points
-                            </div>
-                          ) : null}
-                        </div>
-                      ) : null}
-
-                      <div>
-                        {item.extra_points !== null ? (
-                          <div>
-                            {item.extra_points.length !== 0 ? (
-                              <div>
-                                {/* {item.extra_points.map((ep, i) => (
-                                  <div key={i}>
-                                    {i + 1}. {ep}
-                                  </div>
-                                ))} */}
-                                {item.extra_points.map((ep, i) => (
-                                  <div key={i}>
-                                    {i + 1}. {ep.text}
-                                  </div>
-                                ))}
-                              </div>
-                            ) : null}
-                          </div>
-                        ) : null}
-                        {/* {item.extra_points.length !== 0 ? (
-                          <div>
-                            {item.extra_points.map((ep, i) => (
-                              <div key={i}>
-                                {i + 1}. {ep}
-                              </div>
-                            ))}
-                          </div>
-                        ) : null} */}
-                      </div>
-                    </div>
-                  }
-                />
-              </List.Item>
-            )}
+        <div style={{ margin: "30px 20px", fontWeight: 600 }}>
+          Re-arrange to change sequence
+        </div>
+        <div style={{ margin: "35px" }}>
+          <SortableListConversation
+            items={conversationDetails}
+            onSortEnd={onSortEnd}
           />
 
           <div style={{ textAlign: "center" }}>
