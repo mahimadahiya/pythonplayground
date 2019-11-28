@@ -12,7 +12,10 @@ import {
   Form,
   Row,
   Col,
-  Icon
+  Icon,
+  Tag,
+  message,
+  Modal
 } from "antd";
 import { fetchQuestionList, updateQuestion } from "../../../actions";
 import Filters from "../../Elements/Helper/Filters";
@@ -29,7 +32,9 @@ class QuestionList extends React.Component {
     quizType: null,
     complexity: null,
     status: null,
-    offset: 0
+    offset: 0,
+    choiceMediaUrl: "",
+    openChoiceMediaModal: false
   };
 
   componentWillMount = async () => {
@@ -269,12 +274,77 @@ class QuestionList extends React.Component {
       {
         title: "Question Type",
         dataIndex: "quiz_type",
-        key: "quiz_type"
+        key: "quiz_type",
+        width: 100
+      },
+      {
+        title: "Answer",
+        key: "answer",
+        render: (record, i) => (
+          <span key={i}>
+            {Array.isArray(record.choices3) === true ? (
+              record.choices3.length === 0 ? null : (
+                record.choices3.map(item => {
+                  let style = {
+                    marginTop: "7px",
+                    background: "#fff",
+                    border: "0.5px solid #999999",
+                    color: "#222222"
+                  };
+
+                  if (item.id === record.answer) {
+                    style = {
+                      marginTop: "7px",
+                      background: "rgba(46, 220, 60, 1)",
+                      border: "0.5px solid #2edc3c",
+                      color: "#ffffff"
+                    };
+                  }
+
+                  return (
+                    <span key={item.id}>
+                      {item.type === "text" ? (
+                        <span>
+                          {item.choice ? (
+                            <Tag key={item.id} style={style}>
+                              {item.choice}
+                            </Tag>
+                          ) : null}
+                        </span>
+                      ) : (
+                        <span>
+                          {item.media.media_type === "image" ? (
+                            <Icon
+                              onClick={() =>
+                                this.openChoiceMediaView(item.media)
+                              }
+                              type="file-image"
+                              style={{
+                                cursor: "pointer",
+                                borderRadius: "5px",
+                                padding: "3px 5px",
+                                marginTop: "7px",
+                                marginRight: "7px",
+                                border: "0.5px solid #999999"
+                              }}
+                            />
+                          ) : null}
+                        </span>
+                      )}
+                    </span>
+                  );
+                })
+              )
+            ) : (
+              <span>No Choices Available</span>
+            )}
+          </span>
+        )
       },
       {
         title: "Actions",
         key: "action",
-        width: 360,
+        width: 180,
         render: record => (
           <span>
             <Link to={`/question/edit/${record.id}`}>
@@ -317,6 +387,20 @@ class QuestionList extends React.Component {
       }
     ];
     return column;
+  };
+
+  openChoiceMediaView = media => {
+    if (
+      media.media_url === null ||
+      media.media_url === "" ||
+      media.media_url === " " ||
+      media.media_url === undefined
+    ) {
+      message.warning("No Media Image");
+    } else {
+      this.setState({ choiceMediaUrl: media.media_url });
+      this.setState({ openChoiceMediaModal: true });
+    }
   };
 
   handlePageChange = async pageNumber => {
@@ -431,6 +515,20 @@ class QuestionList extends React.Component {
             </span>
           </div>
         </Card>
+        <Modal
+          closable={true}
+          onCancel={() => this.setState({ openChoiceMediaModal: false })}
+          visible={this.state.openChoiceMediaModal}
+          footer={false}
+        >
+          <div style={{ textAlign: "center" }}>
+            <img
+              src={this.state.choiceMediaUrl}
+              alt="choiceMediaUrl"
+              style={{ maxHeight: "500px" }}
+            />
+          </div>
+        </Modal>
       </div>
     );
   }
