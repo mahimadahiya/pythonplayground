@@ -9,7 +9,7 @@ const Edit = props => {
 
   const { getFieldDecorator } = props.form;
   const details = props.selectedDetails;
-  console.log(details);
+  //console.log(details);
   const [name, setName] = useState("");
 
   const onEditNameChange = e => {
