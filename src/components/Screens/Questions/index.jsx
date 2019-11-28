@@ -11,7 +11,8 @@ import {
   Popconfirm,
   Form,
   Row,
-  Col
+  Col,
+  Icon
 } from "antd";
 import { fetchQuestionList, updateQuestion } from "../../../actions";
 import Filters from "../../Elements/Helper/Filters";
@@ -276,13 +277,20 @@ class QuestionList extends React.Component {
         width: 360,
         render: record => (
           <span>
-            <Link to={`/question/edit/${record.id}`}>Edit</Link>
+            <Link to={`/question/edit/${record.id}`}>
+              <Icon type="edit" theme="filled" style={{ fontSize: "16px" }} />
+            </Link>
             <Divider type="vertical" />
             <Popconfirm
               title="Delete"
               onConfirm={() => this.onDelete(record.id)}
             >
-              <Button type="link">Delete</Button>
+              {/* <Button type="link">Delete</Button> */}
+              <Icon
+                type="delete"
+                theme="filled"
+                style={{ fontSize: "16px", color: "red" }}
+              />
             </Popconfirm>
             <Divider type="vertical" />
             <Link to={`/question/map/choices/${record.id}`}>Map Choices</Link>
@@ -295,7 +303,12 @@ class QuestionList extends React.Component {
                   : () => this.onUnpublish(record.id)
               }
             >
-              <Button type="link">
+              <Button
+                type="link"
+                style={
+                  record.status === 1 ? { color: "#22a4ef" } : { color: "red" }
+                }
+              >
                 {record.status === 1 ? "Publish" : "Unpublish"}
               </Button>
             </Popconfirm>
@@ -431,7 +444,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchQuestionList, updateQuestion }
-)(Form.create()(QuestionList));
+export default connect(mapStateToProps, { fetchQuestionList, updateQuestion })(
+  Form.create()(QuestionList)
+);
