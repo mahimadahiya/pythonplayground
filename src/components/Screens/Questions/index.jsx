@@ -320,6 +320,10 @@ class QuestionList extends React.Component {
                               }
                               type="file-image"
                               style={{
+                                background:
+                                  item.id === record.answer
+                                    ? "rgba(46, 220, 60, 1)"
+                                    : "#fff",
                                 cursor: "pointer",
                                 borderRadius: "5px",
                                 padding: "3px 5px",
