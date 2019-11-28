@@ -200,7 +200,9 @@ const RolePlayDetails = props => {
           >
             <Button type="primary">
               Change Status to
-              <span >{status === 1 ? "Live" : "Draft"}</span>
+              <span style={{ marginLeft: "5px" }}>
+                {status === 1 ? "Live" : "Draft"}
+              </span>
             </Button>
           </Popconfirm>
         </div>
