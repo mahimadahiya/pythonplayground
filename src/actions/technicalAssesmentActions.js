@@ -1,5 +1,6 @@
 import adminPanelApi from "../apis/adminPanel";
 import qs from "querystring";
+import { async } from "q";
 
 function clean(obj) {
   for (var propName in obj) {
@@ -31,6 +32,24 @@ export const createNewTechnicalService = async (AuthToken, values) => {
   return response;
 };
 
+export const editTechnicalAssesment = async (id, AuthToken, values) => {
+  clean(values);
+  const response = await adminPanelApi(AuthToken).put(
+    `/v1/admin/technical/assessment/group/${id}/`,
+    qs.stringify(values)
+  );
+  return response;
+};
+
+export const deleteTechnicalAssesment = async (id, AuthToken) => {
+  const response = await adminPanelApi(AuthToken).delete(
+    `/v1/admin/technical/assessment/group/${id}/`
+  );
+  return response;
+};
+
+/* organisation assesment starts*/
+
 export const getOrgnizationAssesmentDetails = async (
   organization_assessment_group_id,
   AuthToken,
@@ -48,18 +67,14 @@ export const getOrgnizationAssesmentDetails = async (
   return response;
 };
 
-export const editTechnicalAssesment = async (id, AuthToken, values) => {
-  clean(values);
-  const response = await adminPanelApi(AuthToken).put(
-    `/v1/admin/technical/assessment/group/${id}/`,
-    qs.stringify(values)
+export const createNewOrganizationAssesment = async (AuthToken, values) => {
+  const response = await adminPanelApi(AuthToken).post(
+    "/v1/admin/technical/assessment/",
+    qs.stringify({
+      fields: JSON.stringify(values)
+    })
   );
   return response;
 };
 
-export const deleteTechnicalAssesment = async (id, AuthToken) => {
-  const response = await adminPanelApi(AuthToken).delete(
-    `/v1/admin/technical/assessment/group/${id}/`
-  );
-  return response;
-};
+/* organisation assesment ends*/

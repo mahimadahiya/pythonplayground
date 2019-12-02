@@ -16,10 +16,13 @@ import {
 } from "../../../actions";
 import Create from "./Create";
 import Edit from "./Edit";
+import TechnicalAssesmentDetails from "./TechnicalAssesmentDetails";
 
 const TechnicalAssesmentIndex = () => {
   const user = useSelector(state => state.userAuth);
   const AuthToken = user.Authorization;
+
+  const [screenType, setScreenType] = useState("technicalAssesment");
 
   const [listData, setListData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,6 +32,8 @@ const TechnicalAssesmentIndex = () => {
 
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
+
+  const [selectedOrganizationData, setSelectedOrganizationData] = useState([]);
 
   const onDelete = async item => {
     try {
@@ -46,6 +51,7 @@ const TechnicalAssesmentIndex = () => {
 
   useEffect(() => {
     const callTechAssListApi = async () => {
+      setScreenType("technicalAssesment");
       setLoading(true);
       try {
         const response = await getTechnicalAssesmentList(AuthToken, search);
@@ -78,19 +84,31 @@ const TechnicalAssesmentIndex = () => {
   const closeEditModal = () => {
     setEditModalShow(false);
   };
+  const onDetailsPageClick = data => {
+    setSelectedOrganizationData(data);
+    //console.log(data);
+    setScreenType("organizationAssesment");
+  };
 
   const columnName = [
     {
       title: "ID",
-      dataIndex: "id",
+      // dataIndex: "id",
       key: "id",
-      render: id => {
+      render: record => {
         return (
           <div>
-            {id === null || id === "" || id === undefined ? (
+            {record.id === null ||
+            record.id === "" ||
+            record.id === undefined ? (
               "-"
             ) : (
-              <a href={`/techAss/detail/${id}`}>{id}</a>
+              <a
+                onClick={() => onDetailsPageClick(record)}
+                // href={`/techAss/detail/${record.id}`}
+              >
+                {record.id}
+              </a>
             )}
           </div>
         );
@@ -130,36 +148,45 @@ const TechnicalAssesmentIndex = () => {
 
   return (
     <div>
-      <Card
-        title={<div className="card-title">Technical Assesment List</div>}
-        style={{ borderRadius: "5px" }}
-        bodyStyle={{ borderRadius: "5px" }}
-      >
-        <div style={{ display: "flex" }}>
-          <div style={{ width: "45%" }}>
-            <Input
-              onChange={onSearchInputChange}
-              placeholder="search by id and name"
+      {screenType === "technicalAssesment" ? (
+        <Card
+          title={<div className="card-title">Technical Assesment List</div>}
+          style={{ borderRadius: "5px" }}
+          bodyStyle={{ borderRadius: "5px" }}
+        >
+          <div style={{ display: "flex" }}>
+            <div style={{ width: "45%" }}>
+              <Input
+                onChange={onSearchInputChange}
+                placeholder="search by id and name"
+              />
+            </div>
+            <div
+              style={{ textAlign: "right", marginBottom: "40px", width: "50%" }}
+            >
+              <Button type="primary" onClick={() => createNew()}>
+                Create New Assesment
+              </Button>
+            </div>
+          </div>
+          <div style={{ margin: "40px 0px", textAlign: "center" }}>
+            <Table
+              loading={loading}
+              dataSource={listData}
+              columns={columnName}
+              rowKey={row => row.id}
+              pagination={true}
             />
           </div>
-          <div
-            style={{ textAlign: "right", marginBottom: "40px", width: "50%" }}
-          >
-            <Button type="primary" onClick={() => createNew()}>
-              Create New Assesment
-            </Button>
-          </div>
-        </div>
-        <div style={{ margin: "40px 0px", textAlign: "center" }}>
-          <Table
-            loading={loading}
-            dataSource={listData}
-            columns={columnName}
-            rowKey={row => row.id}
-            pagination={true}
-          />
-        </div>
-      </Card>
+        </Card>
+      ) : null}
+
+      {screenType === "organizationAssesment" ? (
+        <TechnicalAssesmentDetails
+          selectedOrganizationData={selectedOrganizationData}
+          setScreenType={setScreenType}
+        />
+      ) : null}
       {/* create new modal starts */}
       <Modal
         style={{ minWidth: "600px" }}

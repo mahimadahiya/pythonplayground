@@ -193,7 +193,8 @@ import {
   createNewTechnicalService,
   getOrgnizationAssesmentDetails,
   editTechnicalAssesment,
-  deleteTechnicalAssesment
+  deleteTechnicalAssesment,
+  createNewOrganizationAssesment
 } from "./technicalAssesmentActions";
 
 export {
@@ -345,7 +346,8 @@ export {
   createNewTechnicalService,
   getOrgnizationAssesmentDetails,
   editTechnicalAssesment,
-  deleteTechnicalAssesment
+  deleteTechnicalAssesment,
+  createNewOrganizationAssesment
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

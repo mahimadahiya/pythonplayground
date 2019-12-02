@@ -30,6 +30,7 @@ const Categories = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth);
   const categories = useSelector(state => state.category.categories);
+
   React.useEffect(() => {
     dispatch(fetchCategories(user.Authorization));
   }, [user, dispatch]);

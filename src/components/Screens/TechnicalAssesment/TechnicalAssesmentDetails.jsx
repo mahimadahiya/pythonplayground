@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Card, Table, Input, Button } from "antd";
+import { Card, Table, Input, Button, Modal, Icon } from "antd";
 import moment from "moment";
 import { getOrgnizationAssesmentDetails } from "../../../actions";
+import CreateOrgAssesment from "./CreateOrgAssesment";
 
 const TechnicalAssesmentDetails = props => {
   const user = useSelector(state => state.userAuth);
   const AuthToken = user.Authorization;
+
+  const organizationId = props.selectedOrganizationData.organization_id;
+  const organizationGroupId = props.selectedOrganizationData.id;
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [loadAgain, setLoadAgain] = useState(false);
+
+  const [createNewModalShow, setCreateNewModalShow] = useState(false);
 
   const columnName = [
     {
@@ -45,11 +53,11 @@ const TechnicalAssesmentDetails = props => {
       setLoading(true);
       try {
         const response = await getOrgnizationAssesmentDetails(
-          props.match.params.id,
+          props.selectedOrganizationData.id,
           AuthToken,
           search
         );
-
+        console.log(response.data.result);
         setData(response.data.result);
         setLoading(false);
       } catch (error) {
@@ -57,12 +65,38 @@ const TechnicalAssesmentDetails = props => {
       }
     };
     callDetailsApi();
-  }, [props.match.params.id, search]);
+  }, [search, loadAgain]);
+
+  const closeCreateNewModal = () => {
+    setCreateNewModalShow(false);
+  };
+  const createNew = () => {
+    setCreateNewModalShow(true);
+  };
+  const onBackToTechListClick = () => {
+    props.setScreenType("technicalAssesment");
+  };
 
   return (
     <div>
       <Card
-        title={<div className="card-title">Organisation Assesment List</div>}
+        title={
+          <div style={{ display: "flex" }}>
+            <div style={{ width: "50%" }} className="card-title">
+              Organisation Assesment List
+            </div>
+            <div style={{ width: "50%", textAlign: "right" }}>
+              <Button
+                onClick={onBackToTechListClick}
+                style={{ fontSize: "16px", fontWeight: 700 }}
+                type="link"
+              >
+                <Icon type="arrow-left" />
+                Back To Tech List
+              </Button>
+            </div>
+          </div>
+        }
         style={{ borderRadius: "5px" }}
         bodyStyle={{ borderRadius: "5px" }}
       >
@@ -76,11 +110,8 @@ const TechnicalAssesmentDetails = props => {
           <div
             style={{ textAlign: "right", marginBottom: "40px", width: "50%" }}
           >
-            <Button
-              type="primary"
-              // onClick={() => createNew()}
-            >
-              Create New Group
+            <Button type="primary" onClick={() => createNew()}>
+              Create New
             </Button>
           </div>
         </div>
@@ -94,6 +125,25 @@ const TechnicalAssesmentDetails = props => {
           />
         </div>
       </Card>
+      {/* create new modal starts */}
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Create New "
+        closable={true}
+        footer={null}
+        onCancel={closeCreateNewModal}
+        visible={createNewModalShow}
+        destroyOnClose={true}
+      >
+        <CreateOrgAssesment
+          setCreateNewModalShow={setCreateNewModalShow}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+          organizationId={organizationId}
+          organizationGroupId={organizationGroupId}
+        />
+      </Modal>
+      {/* create new modal ends */}
     </div>
   );
 };

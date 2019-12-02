@@ -55,6 +55,10 @@ const routes = [
   {
     path: "/wyr/actions",
     breadcrumb: "Actions List"
+  },
+  {
+    path: "/techAss",
+    breadcrumb: "Technical assesment list"
   }
 ];
 
