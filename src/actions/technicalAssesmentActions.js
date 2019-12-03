@@ -77,4 +77,12 @@ export const createNewOrganizationAssesment = async (AuthToken, values) => {
   return response;
 };
 
+export const updateOrganizationAssesment = async (id, AuthToken, values) => {
+  const response = await adminPanelApi(AuthToken).get(
+    `/v1/admin/technical/assessment/${id}/`,
+    qs.stringify(values)
+  );
+  return response;
+};
+
 /* organisation assesment ends*/

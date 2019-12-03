@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Input,
@@ -12,12 +12,12 @@ import {
   InputNumber
 } from "antd";
 import { useSelector } from "react-redux";
-import { createNewOrganizationAssesment } from "../../../actions";
+import { updateOrganizationAssesment } from "../../../actions";
 import Categories from "../../Elements/Categories";
 import MButton from "../../Elements/MButton";
 const { Option } = Select;
 
-const CreateOrgAssesment = props => {
+const EditOrgAssesment = props => {
   const user = useSelector(state => state.userAuth);
   const [guideLinesCount, setGuideLinesCount] = useState(1);
   const [popupCount, setPopupCount] = useState(1);
@@ -25,51 +25,53 @@ const CreateOrgAssesment = props => {
   const [popupData, setPopupData] = useState([{ id: 1, title: "" }]);
   const [showPopup, setShowPopup] = useState();
 
+  const selectedData = props.selectedOrgDetails;
+  const selectedGuidelineData = selectedData.guidelines.guidelines;
+  const selectedPopupData = selectedData.popup_text.points;
+  const selectedId = selectedData.id;
+  const organizationId = selectedData.organization;
+  //console.log(selectedData);
+
+  useEffect(() => {
+    const dataCall = () => {
+      setPopupData(selectedPopupData);
+      setGuideLinesCount(selectedGuidelineData.length);
+      setPopupCount(selectedPopupData.length);
+
+      let recivedGuidelineData = [];
+      for (let i = 0; i < selectedGuidelineData.length; i++) {
+        recivedGuidelineData = [
+          ...recivedGuidelineData,
+          { id: i + 1, title: selectedGuidelineData[i] }
+        ];
+      }
+      setGuideLineData(recivedGuidelineData);
+      let recivedPopupData = [];
+      for (let i = 0; i < selectedPopupData.length; i++) {
+        recivedPopupData = [
+          ...recivedPopupData,
+          { id: i + 1, title: selectedPopupData[i] }
+        ];
+      }
+      setPopupData(recivedPopupData);
+    };
+    dataCall();
+  }, []);
+
   const onSubmit = e => {
     e.preventDefault();
 
     props.form.validateFields(async (err, formValues) => {
       if (!err) {
         let finalGuidelineData = guideLineData.map(item => item.title);
-        if (finalGuidelineData.length === 0) {
-          message.warning("Please add guidelines");
-          return;
-        } else {
-          for (let i = 0; i < finalGuidelineData.length; i++) {
-            if (
-              finalGuidelineData[i] === "" ||
-              finalGuidelineData[i] === " " ||
-              finalGuidelineData[i] === null ||
-              finalGuidelineData[i] === undefined
-            ) {
-              message.warning("Please fill all guidelines");
-              return;
-            }
-          }
-        }
 
         let finalPopupData = popupData.map(item => item.title);
-        if (finalPopupData.length === 0) {
-          message.warning("Please add Popup");
-          return;
-        } else {
-          for (let i = 0; i < finalPopupData.length; i++) {
-            if (
-              finalPopupData[i] === "" ||
-              finalPopupData[i] === " " ||
-              finalPopupData[i] === null ||
-              finalPopupData[i] === undefined
-            ) {
-              message.warning("Please fill all Popup");
-              return;
-            }
-          }
-        }
+        // console.log(finalPopupData);
 
         const values = {
           name: formValues.name,
           slug: formValues.slug,
-          organization_id: props.organizationId,
+          organization_id: organizationId,
           category_id: formValues.categories,
           validity: formValues.validity,
           duration: formValues.duration,
@@ -94,18 +96,21 @@ const CreateOrgAssesment = props => {
           organization_assessment_group_id: props.organizationGroupId
         };
 
-        const response = await createNewOrganizationAssesment(
+        const response = await updateOrganizationAssesment(
+          selectedId,
           user.Authorization,
           values
         );
-        if (response.status === 201) {
-          message.success("Organization Assesment created successfully");
-          props.setCreateNewModalShow(false);
+        if (response.status === 200) {
+          message.success("Organization Assesment updated successfully");
+          props.setEditModalShow(false);
           props.setLoadAgain(!props.loadAgain);
         }
       }
     });
   };
+
+  // console.log(popupData);
 
   const onAddGuidelinesContent = () => {
     setGuideLinesCount(guideLinesCount + 1);
@@ -147,13 +152,13 @@ const CreateOrgAssesment = props => {
   };
 
   const onInputGuidelinesChange = (e, i) => {
-    let guideliines_data = [...guideLineData];
-    guideliines_data[i] = {
-      ...guideliines_data[i],
+    let guidelines_data = [...guideLineData];
+    guidelines_data[i] = {
+      ...guidelines_data[i],
       title: e.target.value
     };
-    console.log(guideliines_data);
-    setGuideLineData(guideliines_data);
+    //console.log(guideliines_data);
+    setGuideLineData(guidelines_data);
   };
 
   const onInputPopupChange = (e, i) => {
@@ -179,7 +184,7 @@ const CreateOrgAssesment = props => {
               <Input
                 placeholder="Enter title"
                 onChange={e => onInputGuidelinesChange(e, i)}
-                value={guideLineData[i].title}
+                value={col.title}
               />
             </Form.Item>
 
@@ -209,7 +214,7 @@ const CreateOrgAssesment = props => {
               <Input
                 placeholder="Enter title"
                 onChange={e => onInputPopupChange(e, i)}
-                value={popupData[i].title}
+                value={col.title}
               />
             </Form.Item>
 
@@ -238,7 +243,8 @@ const CreateOrgAssesment = props => {
         <Form onSubmit={onSubmit}>
           <Form.Item label="Name">
             {getFieldDecorator("name", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.name
             })(
               <Input
                 type="text"
@@ -251,7 +257,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Slug">
             {getFieldDecorator("slug", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.slug
             })(
               <Input
                 type="text"
@@ -264,12 +271,14 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Categories">
             {getFieldDecorator("categories", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.category
             })(<Categories />)}
           </Form.Item>
           <Form.Item label="Validity (days)">
             {getFieldDecorator("validity", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.validity
             })(
               <InputNumber
                 min={1}
@@ -281,7 +290,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Duration (seconds)">
             {getFieldDecorator("duration", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.duration
             })(
               <InputNumber
                 min={1}
@@ -293,7 +303,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Lockout Period (hours)">
             {getFieldDecorator("next_assessment_lockout_period", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.next_assessment_lockout_period
             })(
               <InputNumber
                 min={1}
@@ -305,7 +316,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Attempts">
             {getFieldDecorator("attempts", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.attempts
             })(
               <InputNumber
                 min={1}
@@ -317,7 +329,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Attempts Logout Period (hours)">
             {getFieldDecorator("attempt_lockout_period", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.attempt_lockout_period
             })(
               <InputNumber
                 min={1}
@@ -329,11 +342,11 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Passing Percentage">
             {getFieldDecorator("passing_percentage", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.passing_percentage
             })(
               <InputNumber
                 min={1}
-                max={100}
                 style={{
                   width: "100%"
                 }}
@@ -343,7 +356,8 @@ const CreateOrgAssesment = props => {
 
           <Form.Item label="Sequential">
             {getFieldDecorator("is_sequential", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.is_sequential
             })(
               <Select placeholder="Select Sequential">
                 <Option value={1}>true</Option>
@@ -353,7 +367,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Sequence">
             {getFieldDecorator("sequence", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.sequence
             })(
               <InputNumber
                 min={1}
@@ -365,7 +380,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Going Live At">
             {getFieldDecorator("going_live_at", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.going_live_at
             })(
               <Input
                 type="datetime-local"
@@ -378,7 +394,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Resumable">
             {getFieldDecorator("is_resumable", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.is_resumable
             })(
               <Select placeholder="Select Resumable">
                 <Option value={1}>true</Option>
@@ -388,7 +405,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Sections">
             {getFieldDecorator("sections", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.sections
             })(
               <InputNumber
                 min={1}
@@ -400,7 +418,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Show Certificate">
             {getFieldDecorator("show_certificate", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.show_certificate
             })(
               <Select placeholder="Select Show Certificate">
                 <Option value={1}>true</Option>
@@ -410,7 +429,8 @@ const CreateOrgAssesment = props => {
           </Form.Item>
           <Form.Item label="Show Popup">
             {getFieldDecorator("show_popup", {
-              rules: [{ required: true }]
+              rules: [{ required: true }],
+              initialValue: selectedData.show_popup
             })(
               <Radio.Group onChange={onShowPopupChange}>
                 <Radio value={1}>True</Radio>
@@ -418,7 +438,7 @@ const CreateOrgAssesment = props => {
               </Radio.Group>
             )}
           </Form.Item>
-          {showPopup === 1 ? (
+          {selectedData.show_popup === 1 ? (
             <div>
               <Row>
                 <Form.Item label="Pop Up">{renderPopupFields()}</Form.Item>
@@ -460,4 +480,4 @@ const CreateOrgAssesment = props => {
   );
 };
 
-export default Form.create()(CreateOrgAssesment);
+export default Form.create()(EditOrgAssesment);

@@ -4,6 +4,7 @@ import { Card, Table, Input, Button, Modal, Icon } from "antd";
 import moment from "moment";
 import { getOrgnizationAssesmentDetails } from "../../../actions";
 import CreateOrgAssesment from "./CreateOrgAssesment";
+import EditOrgAssesment from "./EditOrgAssesment";
 
 const TechnicalAssesmentDetails = props => {
   const user = useSelector(state => state.userAuth);
@@ -16,8 +17,10 @@ const TechnicalAssesmentDetails = props => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [loadAgain, setLoadAgain] = useState(false);
+  const [selectedOrgDetails, setSelectedOrgDetails] = useState([]);
 
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   const columnName = [
     {
@@ -41,8 +44,29 @@ const TechnicalAssesmentDetails = props => {
       render: date => {
         return moment(date).format("YYYY-MM-DD");
       }
+    },
+    {
+      title: "Actions",
+      key: "action",
+      width: 360,
+      render: record => (
+        <span>
+          <Button onClick={() => onEditOrgAssesment(record)} type="link">
+            Edit
+          </Button>
+        </span>
+      )
     }
   ];
+
+  const onEditOrgAssesment = data => {
+    setSelectedOrgDetails(data);
+    setEditModalShow(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModalShow(false);
+  };
 
   const onSearchInputChange = async e => {
     setSearch(e.target.value);
@@ -143,6 +167,26 @@ const TechnicalAssesmentDetails = props => {
         />
       </Modal>
       {/* create new modal ends */}
+      {/* edit  modal starts */}
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Edit Technical Assesment"
+        closable={true}
+        footer={null}
+        onCancel={closeEditModal}
+        visible={editModalShow}
+        destroyOnClose={true}
+      >
+        <EditOrgAssesment
+          selectedOrgDetails={selectedOrgDetails}
+          setEditModalShow={setEditModalShow}
+          loadAgain={loadAgain}
+          setLoadAgain={setLoadAgain}
+          organizationGroupId={organizationGroupId}
+        />
+      </Modal>
+
+      {/* edit  modal ends */}
     </div>
   );
 };

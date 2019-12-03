@@ -194,7 +194,8 @@ import {
   getOrgnizationAssesmentDetails,
   editTechnicalAssesment,
   deleteTechnicalAssesment,
-  createNewOrganizationAssesment
+  createNewOrganizationAssesment,
+  updateOrganizationAssesment
 } from "./technicalAssesmentActions";
 
 export {
@@ -347,7 +348,8 @@ export {
   getOrgnizationAssesmentDetails,
   editTechnicalAssesment,
   deleteTechnicalAssesment,
-  createNewOrganizationAssesment
+  createNewOrganizationAssesment,
+  updateOrganizationAssesment
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
