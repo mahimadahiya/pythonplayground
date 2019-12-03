@@ -30,7 +30,7 @@ const EditOrgAssesment = props => {
   const selectedPopupData = selectedData.popup_text.points;
   const selectedId = selectedData.id;
   const organizationId = selectedData.organization;
-  //console.log(selectedData);
+  //console.log(selectedId);
 
   useEffect(() => {
     const dataCall = () => {
@@ -95,6 +95,7 @@ const EditOrgAssesment = props => {
           }),
           organization_assessment_group_id: props.organizationGroupId
         };
+        console.log(values);
 
         const response = await updateOrganizationAssesment(
           selectedId,

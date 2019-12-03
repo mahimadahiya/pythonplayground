@@ -78,7 +78,7 @@ export const createNewOrganizationAssesment = async (AuthToken, values) => {
 };
 
 export const updateOrganizationAssesment = async (id, AuthToken, values) => {
-  const response = await adminPanelApi(AuthToken).get(
+  const response = await adminPanelApi(AuthToken).put(
     `/v1/admin/technical/assessment/${id}/`,
     qs.stringify(values)
   );
