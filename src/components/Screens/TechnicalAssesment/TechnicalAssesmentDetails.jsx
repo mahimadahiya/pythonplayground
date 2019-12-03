@@ -57,7 +57,7 @@ const TechnicalAssesmentDetails = props => {
           AuthToken,
           search
         );
-        console.log(response.data.result);
+        //console.log(response.data.result);
         setData(response.data.result);
         setLoading(false);
       } catch (error) {

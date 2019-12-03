@@ -8,7 +8,8 @@ import {
   Row,
   Col,
   Icon,
-  Radio
+  Radio,
+  InputNumber
 } from "antd";
 import { useSelector } from "react-redux";
 import { createNewOrganizationAssesment } from "../../../actions";
@@ -226,10 +227,8 @@ const CreateOrgAssesment = props => {
             {getFieldDecorator("validity", {
               rules: [{ required: true }]
             })(
-              <Input
-                type="number"
-                placeholder="Validity"
-                min="0"
+              <InputNumber
+                min={1}
                 style={{
                   width: "100%"
                 }}
@@ -240,10 +239,8 @@ const CreateOrgAssesment = props => {
             {getFieldDecorator("duration", {
               rules: [{ required: true }]
             })(
-              <Input
-                type="number"
-                placeholder="Duration"
-                min="0"
+              <InputNumber
+                min={1}
                 style={{
                   width: "100%"
                 }}
@@ -254,10 +251,8 @@ const CreateOrgAssesment = props => {
             {getFieldDecorator("next_assessment_lockout_period", {
               rules: [{ required: true }]
             })(
-              <Input
-                type="number"
-                placeholder="Lockout Period"
-                min="0"
+              <InputNumber
+                min={1}
                 style={{
                   width: "100%"
                 }}
@@ -268,9 +263,8 @@ const CreateOrgAssesment = props => {
             {getFieldDecorator("attempts", {
               rules: [{ required: true }]
             })(
-              <Input
-                type="number"
-                placeholder="Attempts"
+              <InputNumber
+                min={1}
                 style={{
                   width: "100%"
                 }}
@@ -281,10 +275,8 @@ const CreateOrgAssesment = props => {
             {getFieldDecorator("attempt_lockout_period", {
               rules: [{ required: true }]
             })(
-              <Input
-                type="number"
-                placeholder="Attempts Logout Period"
-                min="0"
+              <InputNumber
+                min={1}
                 style={{
                   width: "100%"
                 }}
@@ -295,9 +287,8 @@ const CreateOrgAssesment = props => {
             {getFieldDecorator("passing_percentage", {
               rules: [{ required: true }]
             })(
-              <Input
-                type="number"
-                placeholder="Passing Percentage"
+              <InputNumber
+                min={1}
                 style={{
                   width: "100%"
                 }}
@@ -319,9 +310,8 @@ const CreateOrgAssesment = props => {
             {getFieldDecorator("sequence", {
               rules: [{ required: true }]
             })(
-              <Input
-                type="number"
-                placeholder="Sequence"
+              <InputNumber
+                min={1}
                 style={{
                   width: "100%"
                 }}
@@ -355,9 +345,8 @@ const CreateOrgAssesment = props => {
             {getFieldDecorator("sections", {
               rules: [{ required: true }]
             })(
-              <Input
-                type="number"
-                placeholder="Sections"
+              <InputNumber
+                min={1}
                 style={{
                   width: "100%"
                 }}
