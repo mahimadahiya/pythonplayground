@@ -95,7 +95,7 @@ const EditOrgAssesment = props => {
           }),
           organization_assessment_group_id: props.organizationGroupId
         };
-        console.log(values);
+        //console.log(values);
 
         const response = await updateOrganizationAssesment(
           selectedId,
