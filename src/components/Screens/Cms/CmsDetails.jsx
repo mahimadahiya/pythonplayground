@@ -11,7 +11,6 @@ const CmsDetails = props => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [loadAgain, setLoadAgain] = useState(false);
 
   const columnName = [
     {
@@ -54,7 +53,7 @@ const CmsDetails = props => {
       }
     };
     callDetailsApi();
-  }, [search, loadAgain]);
+  }, [search]);
 
   const onBackToCmsListClick = () => {
     props.setScreenType("cmsList");
