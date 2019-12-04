@@ -327,6 +327,19 @@ const list = [
       }
     ],
     accessGroup: [1]
+  },
+  {
+    key: "cms",
+    icon: "tool",
+    label: "Cms",
+    menuList: [
+      {
+        key: "/cms",
+        label: "List",
+        onClick: () => history.push("/cms")
+      }
+    ],
+    accessGroup: [1]
   }
 ];
 

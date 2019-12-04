@@ -71,6 +71,9 @@ import WyrTreeIndex from "../Screens/WouldYouRather/Tree";
 import TechnicalAssesmentIndex from "../Screens/TechnicalAssesment/TechnicalAssesmentIndex";
 import TechnicalAssesmentDetails from "../Screens/TechnicalAssesment/TechnicalAssesmentDetails";
 
+//Cms
+import CmsIndex from "../Screens/Cms/CmsIndex";
+
 const Sidebar = React.lazy(() => import("./Sidebar"));
 
 const PrivateRoute = ({ component: Component, user, accessGroup, ...rest }) => {
@@ -130,11 +133,11 @@ class Routing extends React.Component {
               accessGroup={[1]}
             />
             <PrivateRoute
-              path="/techAss/detail/:id"
-              component={TechnicalAssesmentDetails}
+              path="/cms"
+              component={CmsIndex}
               user={user}
-              accessGroup={[1]}
               exact
+              accessGroup={[1]}
             />
             <PrivateRoute
               path="/role-play"
