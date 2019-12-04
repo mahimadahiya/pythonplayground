@@ -1,9 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getTechnicalAssesmentList } from "../../../actions";
 import { Card, Table } from "antd";
 
 const CmsIndex = () => {
+  const user = useSelector(state => state.userAuth);
+  const AuthToken = user.Authorization;
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const callTechAssListApi = async () => {
+      setLoading(true);
+      try {
+        const response = await getTechnicalAssesmentList(AuthToken);
+        setTableData(response.data.result);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    };
+    callTechAssListApi();
+  }, [AuthToken]);
 
   const columnName = [
     {
