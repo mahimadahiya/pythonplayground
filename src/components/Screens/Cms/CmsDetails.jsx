@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+{
+  /* import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Card, Table, Input, Button, Modal, Icon } from "antd";
 import moment from "moment";
@@ -109,3 +110,6 @@ const CmsDetails = props => {
 };
 
 export default CmsDetails;
+
+*/
+}

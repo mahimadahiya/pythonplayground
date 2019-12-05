@@ -132,6 +132,7 @@ class Routing extends React.Component {
               exact
               accessGroup={[1]}
             />
+            {/* 
             <PrivateRoute
               path="/cms"
               component={CmsIndex}
@@ -139,6 +140,7 @@ class Routing extends React.Component {
               exact
               accessGroup={[1]}
             />
+            */}
             <PrivateRoute
               path="/role-play"
               component={RolePlay}

@@ -327,7 +327,8 @@ const list = [
       }
     ],
     accessGroup: [1]
-  },
+  }
+  /*
   {
     key: "cms",
     icon: "tool",
@@ -341,6 +342,7 @@ const list = [
     ],
     accessGroup: [1]
   }
+  */
 ];
 
 const subMenuList = userAccessGroup => {
