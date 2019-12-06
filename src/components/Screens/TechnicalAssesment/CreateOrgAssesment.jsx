@@ -49,22 +49,6 @@ const CreateOrgAssesment = props => {
         }
 
         let finalPopupData = popupData.map(item => item.title);
-        if (finalPopupData.length === 0) {
-          message.warning("Please add Popup");
-          return;
-        } else {
-          for (let i = 0; i < finalPopupData.length; i++) {
-            if (
-              finalPopupData[i] === "" ||
-              finalPopupData[i] === " " ||
-              finalPopupData[i] === null ||
-              finalPopupData[i] === undefined
-            ) {
-              message.warning("Please fill all Popup");
-              return;
-            }
-          }
-        }
 
         const values = {
           name: formValues.name,
