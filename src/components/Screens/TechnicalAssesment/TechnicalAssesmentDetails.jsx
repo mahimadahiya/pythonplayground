@@ -24,9 +24,36 @@ const TechnicalAssesmentDetails = props => {
 
   const columnName = [
     {
+      title: "ID",
+      // dataIndex: "id",
+      key: "id",
+      width: 120,
+      fixed: "left",
+      render: record => {
+        return (
+          <div>
+            {record.id === null ||
+            record.id === "" ||
+            record.id === undefined ? (
+              "-"
+            ) : (
+              <Button
+                type="link"
+                //onClick={() => onDetailsPageClick(record)}
+              >
+                {record.id}
+              </Button>
+            )}
+          </div>
+        );
+      }
+    },
+    {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      fixed: "left",
+      width: 150,
       render: record => {
         return (
           <div>
@@ -38,9 +65,75 @@ const TechnicalAssesmentDetails = props => {
       }
     },
     {
+      title: "Attempts",
+      dataIndex: "attempts",
+      key: "attempts",
+      width: 120,
+      render: record => {
+        return (
+          <div>
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record}
+          </div>
+        );
+      }
+    },
+    {
+      title: "Passing Percentage",
+      dataIndex: "passing_percentage",
+      key: "passing_percentage",
+      width: 120,
+      render: record => {
+        return (
+          <div>
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record}
+          </div>
+        );
+      }
+    },
+    {
+      title: "Sequential",
+      dataIndex: "is_sequential",
+      key: "is_sequential",
+      width: 120,
+      render: record => {
+        return (
+          <div>
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record === 1
+              ? "True"
+              : "False"}
+          </div>
+        );
+      }
+    },
+    {
       title: "Going Live At",
       dataIndex: "going_live_at",
       key: "going_live_at",
+      width: 120,
+      render: date => {
+        return moment(date).format("YYYY-MM-DD");
+      }
+    },
+    {
+      title: "Created At",
+      dataIndex: "created_at",
+      key: "created_at",
+      width: 120,
+      render: date => {
+        return moment(date).format("YYYY-MM-DD");
+      }
+    },
+    {
+      title: "Updated At",
+      dataIndex: "updated_at",
+      key: "updated_at",
+      width: 120,
       render: date => {
         return moment(date).format("YYYY-MM-DD");
       }
@@ -48,7 +141,9 @@ const TechnicalAssesmentDetails = props => {
     {
       title: "Actions",
       key: "action",
-      width: 360,
+      // width: 360,
+      width: 200,
+      fixed: "right",
       render: record => (
         <span>
           <Button onClick={() => onEditOrgAssesment(record)} type="link">
@@ -145,6 +240,7 @@ const TechnicalAssesmentDetails = props => {
             columns={columnName}
             rowKey={row => row.id}
             pagination={true}
+            scroll={{ x: 1200 }}
           />
         </div>
       </Card>
