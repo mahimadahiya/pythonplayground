@@ -172,9 +172,9 @@ const CreateOrgAssesment = props => {
 
   const renderGuideLinesFields = () => {
     return guideLineData.map((col, i) => (
-      <div key={i} style={{ marginBottom: 15 }}>
-        <Row gutter={48}>
-          <Col span={23}>
+      <div key={i} style={{}}>
+        <Row gutter={24}>
+          <Col span={20}>
             <Form.Item label="Title">
               <Input
                 placeholder="Enter title"
@@ -182,18 +182,16 @@ const CreateOrgAssesment = props => {
                 value={guideLineData[i].title}
               />
             </Form.Item>
+          </Col>
 
-            <Row type="flex" justify="space-between">
-              <Col span={2} style={{ paddingLeft: 15 }}>
-                <Icon
-                  type="minus-circle"
-                  onClick={() => onGuideFieldDelete(col.id)}
-                  theme="twoTone"
-                  twoToneColor="red"
-                  style={{ fontSize: 35 }}
-                />
-              </Col>
-            </Row>
+          <Col span={4} style={{ paddingLeft: 15, paddingTop: 43 }}>
+            <Icon
+              type="minus-circle"
+              onClick={() => onGuideFieldDelete(col.id)}
+              theme="twoTone"
+              twoToneColor="red"
+              style={{ fontSize: 30 }}
+            />
           </Col>
         </Row>
       </div>
@@ -202,9 +200,9 @@ const CreateOrgAssesment = props => {
 
   const renderPopupFields = () => {
     return popupData.map((col, i) => (
-      <div key={i} style={{ marginBottom: 15 }}>
-        <Row gutter={48}>
-          <Col span={23}>
+      <div key={i} style={{}}>
+        <Row gutter={24}>
+          <Col span={20}>
             <Form.Item label="Title">
               <Input
                 placeholder="Enter title"
@@ -212,18 +210,16 @@ const CreateOrgAssesment = props => {
                 value={popupData[i].title}
               />
             </Form.Item>
+          </Col>
 
-            <Row type="flex" justify="space-between">
-              <Col span={2} style={{ paddingLeft: 15 }}>
-                <Icon
-                  type="minus-circle"
-                  onClick={() => onPopupFieldDelete(col.id)}
-                  theme="twoTone"
-                  twoToneColor="red"
-                  style={{ fontSize: 35 }}
-                />
-              </Col>
-            </Row>
+          <Col span={4} style={{ paddingLeft: 15, paddingTop: 43 }}>
+            <Icon
+              type="minus-circle"
+              onClick={() => onPopupFieldDelete(col.id)}
+              theme="twoTone"
+              twoToneColor="red"
+              style={{ fontSize: 30 }}
+            />
           </Col>
         </Row>
       </div>
@@ -236,188 +232,235 @@ const CreateOrgAssesment = props => {
     <div>
       <Card>
         <Form onSubmit={onSubmit}>
-          <Form.Item label="Name">
-            {getFieldDecorator("name", {
-              rules: [{ required: true }]
-            })(
-              <Input
-                type="text"
-                placeholder="Name"
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Slug">
-            {getFieldDecorator("slug", {
-              rules: [{ required: true }]
-            })(
-              <Input
-                type="text"
-                placeholder="Slug"
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Categories">
-            {getFieldDecorator("categories", {
-              rules: [{ required: true }]
-            })(<Categories />)}
-          </Form.Item>
-          <Form.Item label="Validity (days)">
-            {getFieldDecorator("validity", {
-              rules: [{ required: true }]
-            })(
-              <InputNumber
-                min={1}
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Duration (seconds)">
-            {getFieldDecorator("duration", {
-              rules: [{ required: true }]
-            })(
-              <InputNumber
-                min={1}
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Lockout Period (hours)">
-            {getFieldDecorator("next_assessment_lockout_period", {
-              rules: [{ required: true }]
-            })(
-              <InputNumber
-                min={1}
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Attempts">
-            {getFieldDecorator("attempts", {
-              rules: [{ required: true }]
-            })(
-              <InputNumber
-                min={1}
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Attempts Logout Period (hours)">
-            {getFieldDecorator("attempt_lockout_period", {
-              rules: [{ required: true }]
-            })(
-              <InputNumber
-                min={1}
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Passing Percentage">
-            {getFieldDecorator("passing_percentage", {
-              rules: [{ required: true }]
-            })(
-              <InputNumber
-                min={1}
-                max={100}
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-
-          <Form.Item label="Sequential">
-            {getFieldDecorator("is_sequential", {
-              rules: [{ required: true }]
-            })(
-              <Select placeholder="Select Sequential">
-                <Option value={1}>true</Option>
-                <Option value={0}>flase</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item label="Sequence">
-            {getFieldDecorator("sequence", {
-              rules: [{ required: true }]
-            })(
-              <InputNumber
-                min={1}
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Going Live At">
-            {getFieldDecorator("going_live_at", {
-              rules: [{ required: true }]
-            })(
-              <Input
-                type="datetime-local"
-                placeholder="Going Live At"
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Resumable">
-            {getFieldDecorator("is_resumable", {
-              rules: [{ required: true }]
-            })(
-              <Select placeholder="Select Resumable">
-                <Option value={1}>true</Option>
-                <Option value={0}>flase</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item label="Sections">
-            {getFieldDecorator("sections", {
-              rules: [{ required: true }]
-            })(
-              <InputNumber
-                min={1}
-                style={{
-                  width: "100%"
-                }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Show Certificate">
-            {getFieldDecorator("show_certificate", {
-              rules: [{ required: true }]
-            })(
-              <Select placeholder="Select Show Certificate">
-                <Option value={1}>true</Option>
-                <Option value={0}>flase</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item label="Show Popup">
-            {getFieldDecorator("show_popup", {
-              rules: [{ required: true }]
-            })(
-              <Radio.Group onChange={onShowPopupChange}>
-                <Radio value={1}>True</Radio>
-                <Radio value={0}>False</Radio>
-              </Radio.Group>
-            )}
-          </Form.Item>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Name">
+                {getFieldDecorator("name", {
+                  rules: [{ required: true }]
+                })(
+                  <Input
+                    type="text"
+                    placeholder="Name"
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Slug">
+                {getFieldDecorator("slug", {
+                  rules: [{ required: true }]
+                })(
+                  <Input
+                    type="text"
+                    placeholder="Slug"
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Categories">
+                {getFieldDecorator("categories", {
+                  rules: [{ required: true }]
+                })(<Categories />)}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Validity (days)">
+                {getFieldDecorator("validity", {
+                  rules: [{ required: true }]
+                })(
+                  <InputNumber
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Duration (seconds)">
+                {getFieldDecorator("duration", {
+                  rules: [{ required: true }]
+                })(
+                  <InputNumber
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Lockout Period (hours)">
+                {getFieldDecorator("next_assessment_lockout_period", {
+                  rules: [{ required: true }]
+                })(
+                  <InputNumber
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Attempts">
+                {getFieldDecorator("attempts", {
+                  rules: [{ required: true }]
+                })(
+                  <InputNumber
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Attempts Logout Period (hours)">
+                {getFieldDecorator("attempt_lockout_period", {
+                  rules: [{ required: true }]
+                })(
+                  <InputNumber
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Passing Percentage">
+                {getFieldDecorator("passing_percentage", {
+                  rules: [{ required: true }]
+                })(
+                  <InputNumber
+                    min={1}
+                    max={100}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Sequential">
+                {getFieldDecorator("is_sequential", {
+                  rules: [{ required: true }]
+                })(
+                  <Select placeholder="Select Sequential">
+                    <Option value={1}>true</Option>
+                    <Option value={0}>flase</Option>
+                  </Select>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Sequence">
+                {getFieldDecorator("sequence", {
+                  rules: [{ required: true }]
+                })(
+                  <InputNumber
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Going Live At">
+                {getFieldDecorator("going_live_at", {
+                  rules: [{ required: true }]
+                })(
+                  <Input
+                    type="datetime-local"
+                    placeholder="Going Live At"
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Resumable">
+                {getFieldDecorator("is_resumable", {
+                  rules: [{ required: true }]
+                })(
+                  <Select placeholder="Select Resumable">
+                    <Option value={1}>true</Option>
+                    <Option value={0}>flase</Option>
+                  </Select>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Sections">
+                {getFieldDecorator("sections", {
+                  rules: [{ required: true }]
+                })(
+                  <InputNumber
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Show Certificate">
+                {getFieldDecorator("show_certificate", {
+                  rules: [{ required: true }]
+                })(
+                  <Select placeholder="Select Show Certificate">
+                    <Option value={1}>true</Option>
+                    <Option value={0}>flase</Option>
+                  </Select>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Show Popup">
+                {getFieldDecorator("show_popup", {
+                  rules: [{ required: true }]
+                })(
+                  <Radio.Group onChange={onShowPopupChange}>
+                    <Radio value={1}>True</Radio>
+                    <Radio value={0}>False</Radio>
+                  </Radio.Group>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
           {showPopup === 1 ? (
             <div>
               <Row>
@@ -431,7 +474,7 @@ const CreateOrgAssesment = props => {
                   <Icon
                     type="plus-circle"
                     theme="twoTone"
-                    style={{ marginLeft: 15, fontSize: 35 }}
+                    style={{ marginLeft: 15, fontSize: 30 }}
                   />
                 </div>
               </Row>
@@ -448,7 +491,7 @@ const CreateOrgAssesment = props => {
               <Icon
                 type="plus-circle"
                 theme="twoTone"
-                style={{ marginLeft: 15, fontSize: 35 }}
+                style={{ marginLeft: 15, fontSize: 30 }}
               />
             </div>
           </Row>
