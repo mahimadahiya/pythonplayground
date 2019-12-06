@@ -9,12 +9,14 @@ import {
   Col,
   Icon,
   Radio,
-  InputNumber
+  InputNumber,
+  DatePicker
 } from "antd";
 import { useSelector } from "react-redux";
 import { createNewOrganizationAssesment } from "../../../actions";
 import Categories from "../../Elements/Categories";
 import MButton from "../../Elements/MButton";
+import moment from "moment";
 const { Option } = Select;
 
 const CreateOrgAssesment = props => {
@@ -24,11 +26,13 @@ const CreateOrgAssesment = props => {
   const [guideLineData, setGuideLineData] = useState([{ id: 1, title: "" }]);
   const [popupData, setPopupData] = useState([{ id: 1, title: "" }]);
   const [showPopup, setShowPopup] = useState();
+  const [goingLiveAt, setGoingLiveAt] = useState("");
 
   const onSubmit = e => {
     e.preventDefault();
 
     props.form.validateFields(async (err, formValues) => {
+      //console.log(formValues.going_live_at);
       if (!err) {
         let finalGuidelineData = guideLineData.map(item => item.title);
         if (finalGuidelineData.length === 0) {
@@ -64,7 +68,7 @@ const CreateOrgAssesment = props => {
           passing_percentage: formValues.passing_percentage,
           is_sequential: formValues.is_sequential,
           sequence: formValues.sequence,
-          going_live_at: formValues.going_live_at,
+          going_live_at: goingLiveAt,
           is_resumable: formValues.is_resumable,
           sections: formValues.sections,
           show_certificate: formValues.show_certificate,
@@ -208,6 +212,11 @@ const CreateOrgAssesment = props => {
         </Row>
       </div>
     ));
+  };
+
+  const onTimeDateChange = (date, dateString) => {
+    //console.log(dateString);
+    setGoingLiveAt(dateString);
   };
 
   const { getFieldDecorator } = props.form;
@@ -380,12 +389,10 @@ const CreateOrgAssesment = props => {
                 {getFieldDecorator("going_live_at", {
                   rules: [{ required: true }]
                 })(
-                  <Input
-                    type="datetime-local"
-                    placeholder="Going Live At"
-                    style={{
-                      width: "100%"
-                    }}
+                  <DatePicker
+                    format="YYYY-MM-DDTHH:mm:ss"
+                    showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }}
+                    onChange={onTimeDateChange}
                   />
                 )}
               </Form.Item>

@@ -9,12 +9,14 @@ import {
   Col,
   Icon,
   Radio,
-  InputNumber
+  InputNumber,
+  DatePicker
 } from "antd";
 import { useSelector } from "react-redux";
 import { updateOrganizationAssesment } from "../../../actions";
 import Categories from "../../Elements/Categories";
 import MButton from "../../Elements/MButton";
+import moment from "moment";
 const { Option } = Select;
 
 const EditOrgAssesment = props => {
@@ -409,14 +411,12 @@ const EditOrgAssesment = props => {
               <Form.Item label="Going Live At">
                 {getFieldDecorator("going_live_at", {
                   rules: [{ required: true }],
-                  initialValue: selectedData.going_live_at
+                  initialValue: moment(selectedData.going_live_at)
                 })(
-                  <Input
-                    type="datetime-local"
-                    placeholder="Going Live At"
-                    style={{
-                      width: "100%"
-                    }}
+                  <DatePicker
+                    format="YYYY-MM-DDTHH:mm:ss"
+                    showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }}
+                    // onChange={onTimeDateChange}
                   />
                 )}
               </Form.Item>
