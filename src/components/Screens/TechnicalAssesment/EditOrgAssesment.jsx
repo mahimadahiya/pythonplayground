@@ -89,6 +89,7 @@ const EditOrgAssesment = props => {
           sections: formValues.sections,
           show_certificate: formValues.show_certificate,
           show_popup: formValues.show_popup,
+          is_duration: formValues.is_duration,
           guidelines: JSON.stringify({
             guidelines: finalGuidelineData
           }),
