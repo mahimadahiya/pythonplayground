@@ -58,7 +58,7 @@ const CreateOrgAssesment = props => {
 
         const values = {
           name: formValues.name,
-          slug: formValues.slug,
+          slug: formValues.name,
           organization_id: props.organizationId,
           category_id: formValues.categories,
           validity: formValues.validity,
@@ -245,29 +245,14 @@ const CreateOrgAssesment = props => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Slug">
-                {getFieldDecorator("slug", {
-                  rules: [{ required: true }]
-                })(
-                  <Input
-                    type="text"
-                    placeholder="Slug"
-                    style={{
-                      width: "100%"
-                    }}
-                  />
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={24}>
-            <Col span={12}>
               <Form.Item label="Categories">
                 {getFieldDecorator("categories", {
                   rules: [{ required: true }]
                 })(<Categories />)}
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Validity (days)">
                 {getFieldDecorator("validity", {
@@ -282,8 +267,6 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Duration (seconds)">
                 {getFieldDecorator("duration", {
@@ -298,6 +281,8 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Lockout Period (hours)">
                 {getFieldDecorator("next_assessment_lockout_period", {
@@ -312,8 +297,6 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Attempts">
                 {getFieldDecorator("attempts", {
@@ -321,6 +304,7 @@ const CreateOrgAssesment = props => {
                 })(
                   <InputNumber
                     min={1}
+                    max={100}
                     style={{
                       width: "100%"
                     }}
@@ -328,6 +312,8 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Attempts Lockout Period (hours)">
                 {getFieldDecorator("attempt_lockout_period", {
@@ -342,8 +328,6 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Passing Percentage">
                 {getFieldDecorator("passing_percentage", {
@@ -359,6 +343,8 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Sequential">
                 {getFieldDecorator("is_sequential", {
@@ -372,24 +358,27 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+            <Col span={12}>
+              {props.isSequential === 1 ? (
+                <Form.Item label="Sequence">
+                  {getFieldDecorator("sequence", {
+                    rules: [
+                      { required: props.isSequential === 1 ? true : false }
+                    ]
+                  })(
+                    <InputNumber
+                      disabled={props.isSequential === 1 ? false : true}
+                      min={1}
+                      style={{
+                        width: "100%"
+                      }}
+                    />
+                  )}
+                </Form.Item>
+              ) : null}
+            </Col>
           </Row>
           <Row gutter={24}>
-            <Col span={12}>
-              <Form.Item label="Sequence">
-                {getFieldDecorator("sequence", {
-                  rules: [{ required: props.isSequential === 1 ? true : false }]
-                })(
-                  <InputNumber
-                    disabled={props.isSequential === 1 ? false : true}
-                    min={1}
-                    style={{
-                      width: "100%"
-                    }}
-                  />
-                )}
-              </Form.Item>
-            </Col>
-
             <Col span={12}>
               <Form.Item label="Going Live At">
                 {getFieldDecorator("going_live_at", {
@@ -403,8 +392,6 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Resumable">
                 {getFieldDecorator("is_resumable", {
@@ -417,8 +404,10 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={24}>
             <Col span={12}>
-              <Form.Item label="Sections">
+              <Form.Item label="No. of Questions/Parameter">
                 {getFieldDecorator("sections", {
                   rules: [{ required: true }]
                 })(
@@ -431,8 +420,6 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Show Certificate">
                 {getFieldDecorator("show_certificate", {
@@ -445,8 +432,10 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={24}>
             <Col span={12}>
-              <Form.Item label="Is Duration">
+              <Form.Item label="Timer/Questions">
                 {getFieldDecorator("is_duration", {
                   rules: [{ required: true }]
                 })(
@@ -457,8 +446,6 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Show Popup">
                 {getFieldDecorator("show_popup", {
@@ -472,6 +459,7 @@ const CreateOrgAssesment = props => {
               </Form.Item>
             </Col>
           </Row>
+
           {showPopup === 1 ? (
             <div>
               <Row>
