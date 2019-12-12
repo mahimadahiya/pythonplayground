@@ -28,7 +28,7 @@ const CreateOrgAssesment = props => {
   const [showPopup, setShowPopup] = useState();
   const [goingLiveAt, setGoingLiveAt] = useState("");
 
-  console.log(props.isSequential);
+  // console.log(props.isSequential);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -367,7 +367,7 @@ const CreateOrgAssesment = props => {
                 })(
                   <Select disabled placeholder="Select Sequential">
                     <Option value={1}>true</Option>
-                    <Option value={0}>flase</Option>
+                    <Option value={0}>false</Option>
                   </Select>
                 )}
               </Form.Item>
@@ -412,7 +412,7 @@ const CreateOrgAssesment = props => {
                 })(
                   <Select placeholder="Select Resumable">
                     <Option value={1}>true</Option>
-                    <Option value={0}>flase</Option>
+                    <Option value={0}>false</Option>
                   </Select>
                 )}
               </Form.Item>
@@ -440,7 +440,7 @@ const CreateOrgAssesment = props => {
                 })(
                   <Select placeholder="Select Show Certificate">
                     <Option value={1}>true</Option>
-                    <Option value={0}>flase</Option>
+                    <Option value={0}>false</Option>
                   </Select>
                 )}
               </Form.Item>

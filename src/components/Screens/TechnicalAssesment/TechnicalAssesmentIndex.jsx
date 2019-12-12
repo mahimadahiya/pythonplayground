@@ -56,7 +56,7 @@ const TechnicalAssesmentIndex = () => {
       try {
         const response = await getTechnicalAssesmentList(AuthToken, search);
         setListData(response.data.result);
-        console.log(response.data.result);
+        // console.log(response.data.result);
         setLoading(false);
       } catch (error) {
         setLoading(false);

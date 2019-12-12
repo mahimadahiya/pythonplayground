@@ -74,7 +74,7 @@ const Edit = props => {
           <Form.Item label="Sequence">
             {getFieldDecorator("is_sequential", {
               rules: [{ required: true }],
-              initialValue: details.is_sequential === 0 ? "flase" : "true"
+              initialValue: details.is_sequential === 0 ? "false" : "true"
             })(
               <Input
                 disabled

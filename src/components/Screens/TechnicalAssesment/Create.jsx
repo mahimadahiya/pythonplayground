@@ -61,7 +61,7 @@ const Create = props => {
             })(
               <Select placeholder="Select Sequential">
                 <Option value={1}>true</Option>
-                <Option value={0}>flase</Option>
+                <Option value={0}>false</Option>
               </Select>
             )}
           </Form.Item>

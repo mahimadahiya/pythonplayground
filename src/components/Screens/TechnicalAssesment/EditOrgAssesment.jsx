@@ -386,7 +386,7 @@ const EditOrgAssesment = props => {
                 })(
                   <Select disabled placeholder="Select Sequential">
                     <Option value={1}>true</Option>
-                    <Option value={0}>flase</Option>
+                    <Option value={0}>false</Option>
                   </Select>
                 )}
               </Form.Item>
@@ -439,7 +439,7 @@ const EditOrgAssesment = props => {
                 })(
                   <Select placeholder="Select Resumable">
                     <Option value={1}>true</Option>
-                    <Option value={0}>flase</Option>
+                    <Option value={0}>false</Option>
                   </Select>
                 )}
               </Form.Item>
@@ -469,7 +469,7 @@ const EditOrgAssesment = props => {
                 })(
                   <Select placeholder="Select Show Certificate">
                     <Option value={1}>true</Option>
-                    <Option value={0}>flase</Option>
+                    <Option value={0}>false</Option>
                   </Select>
                 )}
               </Form.Item>
