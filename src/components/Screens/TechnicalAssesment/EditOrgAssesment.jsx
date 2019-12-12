@@ -89,7 +89,7 @@ const EditOrgAssesment = props => {
           sections: formValues.sections,
           show_certificate: formValues.show_certificate,
           show_popup: formValues.show_popup,
-          is_duration: formValues.is_duration,
+          is_duration_per_question: formValues.is_duration_per_question,
           guidelines: JSON.stringify({
             guidelines: finalGuidelineData
           }),
@@ -463,7 +463,7 @@ const EditOrgAssesment = props => {
           <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Timer/Questions">
-                {getFieldDecorator("is_duration", {
+                {getFieldDecorator("is_duration_per_question", {
                   rules: [{ required: true }],
                   initialValue: selectedData.is_duration
                 })(

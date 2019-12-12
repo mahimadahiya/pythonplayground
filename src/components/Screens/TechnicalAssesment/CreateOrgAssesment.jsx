@@ -74,7 +74,7 @@ const CreateOrgAssesment = props => {
           is_resumable: formValues.is_resumable,
           sections: formValues.sections,
           show_certificate: formValues.show_certificate,
-          is_duration: formValues.is_duration,
+          is_duration_per_question: formValues.is_duration_per_question,
           show_popup: formValues.show_popup,
           guidelines: JSON.stringify({
             guidelines: finalGuidelineData
@@ -436,7 +436,7 @@ const CreateOrgAssesment = props => {
           <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Timer/Questions">
-                {getFieldDecorator("is_duration", {
+                {getFieldDecorator("is_duration_per_question", {
                   rules: [{ required: true }]
                 })(
                   <Radio.Group>
