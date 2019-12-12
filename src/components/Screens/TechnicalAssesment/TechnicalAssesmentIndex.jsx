@@ -56,6 +56,7 @@ const TechnicalAssesmentIndex = () => {
       try {
         const response = await getTechnicalAssesmentList(AuthToken, search);
         setListData(response.data.result);
+        console.log(response.data.result);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -185,6 +186,7 @@ const TechnicalAssesmentIndex = () => {
         <TechnicalAssesmentDetails
           selectedOrganizationData={selectedOrganizationData}
           setScreenType={setScreenType}
+          //isSequential={setListData.is_sequential}
         />
       ) : null}
       {/* create new modal starts */}
@@ -195,6 +197,7 @@ const TechnicalAssesmentIndex = () => {
         footer={null}
         onCancel={closeCreateNewActionModal}
         visible={createNewModalShow}
+        maskClosable={false}
         destroyOnClose={true}
       >
         <Create
@@ -212,6 +215,7 @@ const TechnicalAssesmentIndex = () => {
         closable={true}
         footer={null}
         onCancel={closeEditModal}
+        maskClosable={false}
         visible={editModalShow}
         destroyOnClose={true}
       >

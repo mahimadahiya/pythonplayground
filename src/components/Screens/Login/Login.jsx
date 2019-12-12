@@ -12,7 +12,7 @@ class NormalLoginForm extends React.Component {
     error: null
   };
 
-  allowedGroupID = [1,10]
+  allowedGroupID = [1, 10];
 
   setCookies = () => {
     if (this.props.userAuth.isSignedIn) {
@@ -25,7 +25,7 @@ class NormalLoginForm extends React.Component {
         userName,
         groupId
       } = this.props.userAuth;
-      console.log(groupId)
+      console.log(groupId);
       cookies.set("Authorization", Authorization, { path: "/" });
       cookies.set("isSignedIn", isSignedIn, { path: "/" });
       cookies.set("userId", userId, { path: "/" });
@@ -136,7 +136,6 @@ const mapStateToProps = (state, ownProps) => {
   return { userAuth: state.userAuth, cookies: ownProps.cookies };
 };
 
-export default connect(
-  mapStateToProps,
-  { loginUser, logoutUser }
-)(Form.create()(NormalLoginForm));
+export default connect(mapStateToProps, { loginUser, logoutUser })(
+  Form.create()(NormalLoginForm)
+);

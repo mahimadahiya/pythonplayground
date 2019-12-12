@@ -34,9 +34,6 @@ class App extends React.Component {
   }
 }
 
-const wrappedApp = connect(
-  null,
-  { setUserAuthValue }
-)(App);
+const wrappedApp = connect(null, { setUserAuthValue })(App);
 
 export default withCookies(wrappedApp);

@@ -28,6 +28,8 @@ const CreateOrgAssesment = props => {
   const [showPopup, setShowPopup] = useState();
   const [goingLiveAt, setGoingLiveAt] = useState("");
 
+  console.log(props.isSequential);
+
   const onSubmit = e => {
     e.preventDefault();
 
@@ -72,6 +74,7 @@ const CreateOrgAssesment = props => {
           is_resumable: formValues.is_resumable,
           sections: formValues.sections,
           show_certificate: formValues.show_certificate,
+          is_duration: formValues.is_duration,
           show_popup: formValues.show_popup,
           guidelines: JSON.stringify({
             guidelines: finalGuidelineData
@@ -326,7 +329,7 @@ const CreateOrgAssesment = props => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Attempts Logout Period (hours)">
+              <Form.Item label="Attempts Lockout Period (hours)">
                 {getFieldDecorator("attempt_lockout_period", {
                   rules: [{ required: true }]
                 })(
@@ -359,9 +362,10 @@ const CreateOrgAssesment = props => {
             <Col span={12}>
               <Form.Item label="Sequential">
                 {getFieldDecorator("is_sequential", {
-                  rules: [{ required: true }]
+                  rules: [{ required: true }],
+                  initialValue: props.isSequential
                 })(
-                  <Select placeholder="Select Sequential">
+                  <Select disabled placeholder="Select Sequential">
                     <Option value={1}>true</Option>
                     <Option value={0}>flase</Option>
                   </Select>
@@ -373,9 +377,10 @@ const CreateOrgAssesment = props => {
             <Col span={12}>
               <Form.Item label="Sequence">
                 {getFieldDecorator("sequence", {
-                  rules: [{ required: true }]
+                  rules: [{ required: props.isSequential === 1 ? true : false }]
                 })(
                   <InputNumber
+                    disabled={props.isSequential === 1 ? false : true}
                     min={1}
                     style={{
                       width: "100%"
@@ -384,6 +389,7 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+
             <Col span={12}>
               <Form.Item label="Going Live At">
                 {getFieldDecorator("going_live_at", {
@@ -439,6 +445,20 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+            <Col span={12}>
+              <Form.Item label="Is Duration">
+                {getFieldDecorator("is_duration", {
+                  rules: [{ required: true }]
+                })(
+                  <Radio.Group>
+                    <Radio value={1}>True</Radio>
+                    <Radio value={0}>False</Radio>
+                  </Radio.Group>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Show Popup">
                 {getFieldDecorator("show_popup", {

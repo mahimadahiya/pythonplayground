@@ -10,8 +10,10 @@ const TechnicalAssesmentDetails = props => {
   const user = useSelector(state => state.userAuth);
   const AuthToken = user.Authorization;
 
+  //console.log(props.selectedOrganizationData.is_sequential);
   const organizationId = props.selectedOrganizationData.organization_id;
   const organizationGroupId = props.selectedOrganizationData.id;
+  const isSequential = props.selectedOrganizationData.is_sequential;
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -68,7 +70,7 @@ const TechnicalAssesmentDetails = props => {
       title: "Attempts",
       dataIndex: "attempts",
       key: "attempts",
-      width: 120,
+      width: 150,
       render: record => {
         return (
           <div>
@@ -83,7 +85,7 @@ const TechnicalAssesmentDetails = props => {
       title: "Passing Percentage",
       dataIndex: "passing_percentage",
       key: "passing_percentage",
-      width: 120,
+      width: 200,
       render: record => {
         return (
           <div>
@@ -98,7 +100,7 @@ const TechnicalAssesmentDetails = props => {
       title: "Sequential",
       dataIndex: "is_sequential",
       key: "is_sequential",
-      width: 120,
+      width: 150,
       render: record => {
         return (
           <div>
@@ -115,11 +117,13 @@ const TechnicalAssesmentDetails = props => {
       title: "Going Live At",
       dataIndex: "going_live_at",
       key: "going_live_at",
-      width: 120,
+      width: 200,
       render: date => {
-        return moment(date).format("YYYY-MM-DD");
+        return moment(date).format("YYYY-MM-DD HH:mm:ss");
       }
     },
+    {
+      /* 
     {
       title: "Created At",
       dataIndex: "created_at",
@@ -137,6 +141,8 @@ const TechnicalAssesmentDetails = props => {
       render: date => {
         return moment(date).format("YYYY-MM-DD");
       }
+    },
+    */
     },
     {
       title: "Actions",
@@ -241,6 +247,7 @@ const TechnicalAssesmentDetails = props => {
             rowKey={row => row.id}
             pagination={true}
             scroll={{ x: 1200 }}
+            style={{ textAlign: "center" }}
           />
         </div>
       </Card>
@@ -252,6 +259,7 @@ const TechnicalAssesmentDetails = props => {
         footer={null}
         onCancel={closeCreateNewModal}
         visible={createNewModalShow}
+        maskClosable={false}
         destroyOnClose={true}
       >
         <CreateOrgAssesment
@@ -260,6 +268,7 @@ const TechnicalAssesmentDetails = props => {
           loadAgain={loadAgain}
           organizationId={organizationId}
           organizationGroupId={organizationGroupId}
+          isSequential={isSequential}
         />
       </Modal>
       {/* create new modal ends */}
@@ -270,6 +279,7 @@ const TechnicalAssesmentDetails = props => {
         closable={true}
         footer={null}
         onCancel={closeEditModal}
+        maskClosable={false}
         visible={editModalShow}
         destroyOnClose={true}
       >

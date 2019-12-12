@@ -346,7 +346,7 @@ const EditOrgAssesment = props => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Attempts Logout Period (hours)">
+              <Form.Item label="Attempts Lockout Period (hours)">
                 {getFieldDecorator("attempt_lockout_period", {
                   rules: [{ required: true }],
                   initialValue: selectedData.attempt_lockout_period
@@ -383,7 +383,7 @@ const EditOrgAssesment = props => {
                   rules: [{ required: true }],
                   initialValue: selectedData.is_sequential
                 })(
-                  <Select placeholder="Select Sequential">
+                  <Select disabled placeholder="Select Sequential">
                     <Option value={1}>true</Option>
                     <Option value={0}>flase</Option>
                   </Select>
@@ -395,10 +395,17 @@ const EditOrgAssesment = props => {
             <Col span={12}>
               <Form.Item label="Sequence">
                 {getFieldDecorator("sequence", {
-                  rules: [{ required: true }],
+                  rules: [
+                    {
+                      required: selectedData.is_sequential === 1 ? true : false
+                    }
+                  ],
                   initialValue: selectedData.sequence
+                    ? selectedData.sequence
+                    : null
                 })(
                   <InputNumber
+                    disabled={selectedData.is_sequential === 1 ? false : true}
                     min={1}
                     style={{
                       width: "100%"
@@ -466,6 +473,21 @@ const EditOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+            <Col span={12}>
+              <Form.Item label="Is Duration">
+                {getFieldDecorator("is_duration", {
+                  rules: [{ required: true }],
+                  initialValue: selectedData.is_duration
+                })(
+                  <Radio.Group>
+                    <Radio value={1}>True</Radio>
+                    <Radio value={0}>False</Radio>
+                  </Radio.Group>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Show Popup">
                 {getFieldDecorator("show_popup", {
