@@ -90,6 +90,7 @@ const EditOrgAssesment = props => {
           show_certificate: formValues.show_certificate,
           show_popup: formValues.show_popup,
           is_duration_per_question: formValues.is_duration_per_question,
+          negative_marks_per_question: formValues.negative_marks_per_question,
           guidelines: JSON.stringify({
             guidelines: finalGuidelineData
           }),
@@ -475,6 +476,24 @@ const EditOrgAssesment = props => {
               </Form.Item>
             </Col>
             <Col span={12}>
+              <Form.Item label="Negative Marking">
+                {getFieldDecorator("negative_marks_per_question", {
+                  rules: [{ required: true }],
+                  initialValue: selectedData.negative_marks_per_question
+                })(
+                  <InputNumber
+                    min={0}
+                    max={10}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
+            <Col span={12}>
               <Form.Item label="Show Popup">
                 {getFieldDecorator("show_popup", {
                   rules: [{ required: true }],
@@ -488,7 +507,6 @@ const EditOrgAssesment = props => {
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={24}></Row>
           {selectedData.show_popup === 1 ? (
             <div>
               <Row>

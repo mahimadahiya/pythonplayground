@@ -75,6 +75,7 @@ const CreateOrgAssesment = props => {
           sections: formValues.sections,
           show_certificate: formValues.show_certificate,
           is_duration_per_question: formValues.is_duration_per_question,
+          negative_marks_per_question: formValues.negative_marks_per_question,
           show_popup: formValues.show_popup,
           guidelines: JSON.stringify({
             guidelines: finalGuidelineData
@@ -446,6 +447,23 @@ const CreateOrgAssesment = props => {
                 )}
               </Form.Item>
             </Col>
+            <Col span={12}>
+              <Form.Item label="Negative Marking">
+                {getFieldDecorator("negative_marks_per_question", {
+                  rules: [{ required: true }]
+                })(
+                  <InputNumber
+                    min={0}
+                    max={10}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
             <Col span={12}>
               <Form.Item label="Show Popup">
                 {getFieldDecorator("show_popup", {
