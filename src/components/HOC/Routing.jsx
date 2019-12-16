@@ -119,7 +119,7 @@ class Routing extends React.Component {
               accessGroup={[1]}
             />
             <PrivateRoute
-              path="/wyr/tree"
+              path="/wyr/episode"
               component={WyrTreeIndex}
               user={user}
               exact

@@ -302,13 +302,13 @@ const list = [
         ]
       },
       {
-        key: "wyr-tree",
-        label: "Tree",
+        key: "wyr-episode",
+        label: "Episode",
         menuList: [
           {
-            key: "/wyr/tree",
+            key: "/wyr/episode",
             label: "List",
-            onClick: () => history.push("/wyr/tree")
+            onClick: () => history.push("/wyr/episode")
           }
         ]
       }

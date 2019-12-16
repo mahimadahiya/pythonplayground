@@ -40,7 +40,7 @@ const WyrTreeIndex = props => {
       }
     },
     {
-      title: "Tree",
+      title: "Episode",
       dataIndex: "name",
       key: "name",
       render: record => {
@@ -165,6 +165,9 @@ const WyrTreeIndex = props => {
             </span>
           )}
 
+          <Button type="link">Map LI</Button>
+
+          <Divider type="vertical" />
           <Button
             type="link"
             // onClick={() => onEdit(record)}
@@ -200,8 +203,8 @@ const WyrTreeIndex = props => {
         setSelectedTechnicalId(value);
         const response = await wyrTreeList(user.Authorization, value);
         console.log(response.data);
-        if (response.data.result.wyr_tree_list.length > 0) {
-          setList(response.data.result.wyr_tree_list);
+        if (response.data.result.wyr_episode_list.length > 0) {
+          setList(response.data.result.wyr_episode_list);
         } else {
           setList([]);
         }
@@ -231,7 +234,7 @@ const WyrTreeIndex = props => {
       let selectedId = item.id;
       setLoading(true);
       await wyrTreeDelete(user.Authorization, selectedId);
-      message.success("Action Deleted");
+      message.success("Episode Deleted");
       setLoading(false);
       onChangeFetchList(selectedTechnicalId);
     } catch (error) {
@@ -243,9 +246,12 @@ const WyrTreeIndex = props => {
     <div>
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
-          {/*  <Button type="primary" onClick={() => createNew()}>
-            Create New Action
-          </Button> */}
+          <Button
+            type="primary"
+            // onClick={() => createNew()}
+          >
+            Create New Episode
+          </Button>
         </div>
         <div style={{ width: "100%", display: "flex" }}>
           <div
