@@ -16,6 +16,7 @@ import {
   wyrTreeStatusUpdate,
   wyrTreeDelete
 } from "../../../../actions";
+import Create from "./Create";
 
 const WyrTreeIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -23,6 +24,7 @@ const WyrTreeIndex = props => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
   const [selectedTechnicalId, setSelectedTechnicalId] = useState(null);
+  const [createNewModalShow, setCreateNewModalShow] = useState(false);
 
   const columnName = [
     {
@@ -242,14 +244,19 @@ const WyrTreeIndex = props => {
     }
   };
 
+  const createNew = () => {
+    setCreateNewModalShow(true);
+  };
+
+  const closeCreateNewEpisodeModal = () => {
+    setCreateNewModalShow(false);
+  };
+
   return (
     <div>
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
-          <Button
-            type="primary"
-            // onClick={() => createNew()}
-          >
+          <Button type="primary" onClick={() => createNew()}>
             Create New Episode
           </Button>
         </div>
@@ -302,18 +309,17 @@ const WyrTreeIndex = props => {
       {/* create new modal starts */}
       <Modal
         style={{ minWidth: "600px" }}
-        title="Create New Action"
+        title="Create New Episode"
         closable={true}
         footer={null}
-        // onCancel={closeCreateNewActionModal}
-        // visible={createNewModalShow}
+        onCancel={closeCreateNewEpisodeModal}
+        visible={createNewModalShow}
         destroyOnClose={true}
       >
-        {/*  <Create
-          submitCreateNewAction={submitCreateNewAction}
+        <Create
+          //submitCreateNewEpisode={submitCreateNewAction}
           setCreateNewModalShow={setCreateNewModalShow}
         />
-        */}
       </Modal>
       {/* create new modal end  */}
     </div>
