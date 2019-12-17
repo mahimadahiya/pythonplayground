@@ -186,7 +186,8 @@ import {
   wyrTreeList,
   wyrTreeStatusUpdate,
   wyrTreeDelete,
-  wyrTreeCreate
+  wyrTreeCreate,
+  wyrTreeUpdate
 } from "./wyrTreeAction";
 
 import {
@@ -344,6 +345,7 @@ export {
   wyrTreeStatusUpdate,
   wyrTreeDelete,
   wyrTreeCreate,
+  wyrTreeUpdate,
   //technical assesment
   getTechnicalAssesmentList,
   createNewTechnicalService,

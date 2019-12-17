@@ -26,6 +26,18 @@ export const wyrTreeCreate = async (authToken, formValues) => {
   return response.data;
 };
 
+/* edit */
+export const wyrTreeUpdate = async (authToken, id, formValues) => {
+  let formData = new FormData();
+  formData.append("episode_icon", formValues.episode_icon);
+
+  const response = await adminPanelApi(authToken).put(
+    `/v1/admin/wyr/tree/${id}`
+  );
+
+  return response;
+};
+
 /* status update  */
 export const wyrTreeStatusUpdate = async (authToken, actionId) => {
   const response = await adminPanelApi(authToken).put(

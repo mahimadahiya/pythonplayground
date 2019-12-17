@@ -17,6 +17,7 @@ import {
   wyrTreeDelete
 } from "../../../../actions";
 import Create from "./Create";
+import Edit from "./Edit";
 
 const WyrTreeIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -25,6 +26,8 @@ const WyrTreeIndex = props => {
   const [list, setList] = useState([]);
   const [selectedTechnicalId, setSelectedTechnicalId] = useState(null);
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
+  const [updateEpisodeDetails, setUpdateEpisodeDetails] = useState([]);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   const columnName = [
     {
@@ -172,7 +175,7 @@ const WyrTreeIndex = props => {
           <Divider type="vertical" />
           <Button
             type="link"
-            // onClick={() => onEdit(record)}
+            onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
@@ -261,6 +264,25 @@ const WyrTreeIndex = props => {
     }
   };
 
+  const onEdit = data => {
+    console.log(data);
+    setUpdateEpisodeDetails(data);
+    setEditModalShow(true);
+  };
+
+  const closeEditEpisodeModal = () => {
+    setEditModalShow(false);
+  };
+
+  const submitEditEpisode = techId => {
+    if (techId === null || techId === undefined) {
+      setSelectedTechnicalId(null);
+    } else {
+      setSelectedTechnicalId(techId);
+      onChangeFetchList(techId);
+    }
+  };
+
   return (
     <div>
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
@@ -331,6 +353,24 @@ const WyrTreeIndex = props => {
         />
       </Modal>
       {/* create new modal end  */}
+      {/* Update modal starts */}
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Edit Action"
+        closable={true}
+        footer={null}
+        onCancel={closeEditEpisodeModal}
+        visible={editModalShow}
+        destroyOnClose={true}
+      >
+        <Edit
+          submitEditEpisode={submitEditEpisode}
+          selectedTechnicalId={selectedTechnicalId}
+          setEditModalShow={setEditModalShow}
+          episodeDetails={updateEpisodeDetails}
+        />
+      </Modal>
+      {/* Update modal ends */}
     </div>
   );
 };

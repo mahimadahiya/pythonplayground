@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Select, Input, Icon, Button, message } from "antd";
-import { wyrTreeCreate } from "../../../../actions";
+import { wyrTreeUpdate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
-const Create = props => {
+const Edit = props => {
+  const episodeDetails = props.episodeDetails;
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
@@ -14,6 +15,31 @@ const Create = props => {
   const [fileSrc, setFileSrc] = useState("");
   const [mediaFile, setMediaFile] = useState(null);
   const [visibility, setVisibility] = useState("");
+  const [episodeId, setEpisodeId] = useState(null);
+  const [isFileChanged, setIsFileChanged] = useState(false);
+
+  useEffect(() => {
+    // console.log(actionDetails);
+
+    if (episodeDetails && Object.keys(episodeDetails).length !== 0) {
+      setEpisodeId(episodeDetails.id);
+      setName(episodeDetails.name);
+      setDescription(episodeDetails.description);
+      setTechincalService(episodeDetails.technical_service_id);
+      if (
+        episodeDetails.assets.episode_icon !== null ||
+        episodeDetails.assets.episode_icon !== undefined ||
+        episodeDetails.assets.episode_icon !== "" ||
+        episodeDetails.assets.episode_icon !== " "
+      ) {
+        setIsFileChanged(false);
+        setIsFileUplaoded(true);
+        setFileSrc(episodeDetails.assets.episode_icon);
+      }
+    }
+
+    return () => {};
+  }, [episodeDetails]);
 
   const filechangeHandler = event => {
     //let fileType = event.target.files[0].type;
@@ -27,9 +53,13 @@ const Create = props => {
   };
 
   const reuploadMedia = () => {
+    setIsFileChanged(true);
     setIsFileUplaoded(false);
     setFileSrc("");
   };
+
+  {
+    /* 
 
   const onNameChange = event => {
     if (
@@ -53,23 +83,16 @@ const Create = props => {
       setDescription(event.target.value);
     }
   };
+  */
+  }
+
+  const discardMediaChange = () => {
+    setIsFileChanged(false);
+    setIsFileUplaoded(true);
+    setFileSrc(episodeDetails.assets.episode_icon);
+  };
 
   const createNew = async () => {
-    if (name === null || name === undefined || name === "" || name === " ") {
-      message.warning("Please enter action");
-      return;
-    }
-
-    if (
-      techincalService === null ||
-      techincalService === undefined ||
-      techincalService === "" ||
-      techincalService === " "
-    ) {
-      setTechincalService(undefined);
-      message.warning("Please select techincal service");
-      return;
-    }
     if (
       mediaFile === null ||
       mediaFile === undefined ||
@@ -80,38 +103,24 @@ const Create = props => {
       return;
     }
 
-    if (
-      visibility === null ||
-      visibility === undefined ||
-      visibility === "" ||
-      visibility === " "
-    ) {
-      message.warning("Please select Episode Icon");
-      return;
-    }
-
     let formValues = {};
 
     {
       formValues = {
-        technical_service_id: techincalService,
-        name: name,
-        description: description,
-        visibility: visibility,
         episode_icon: mediaFile
       };
 
       try {
         // console.log(formValues);
         setLoading(true);
-        await wyrTreeCreate(user.Authorization, formValues);
+        await wyrTreeUpdate(user.Authorization, episodeId, formValues);
         setLoading(false);
-        message.success("Episode Created");
-        props.setCreateNewModalShow(false);
-        props.submitCreateNewAction(techincalService);
+        message.success("Episode Updated");
+        props.setEditModalShow(false);
+        props.submitEditEpisode(techincalService);
       } catch (error) {
         setLoading(false);
-        props.setCreateNewModalShow(false);
+        props.setEditModalShow(false);
       }
     }
   };
@@ -132,22 +141,19 @@ const Create = props => {
             }}
           >
             Technical Service
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+            {/* <span style={{ color: "red", paddingLeft: "4px" }}>*</span> */}
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Select
-                style={{ width: "100%" }}
-                placeholder="Select technical service"
-                onChange={value => setTechincalService(value)}
-              >
-                <Select.Option value={1}>Behavioral Module</Select.Option>
-                <Select.Option value={2}>Functional Module</Select.Option>
-              </Select>
-            </div>
-            {techincalService === undefined ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
+            <Input
+              type="text"
+              style={{ color: "#777777" }}
+              value={
+                techincalService === 1
+                  ? "Behavioral Module"
+                  : "Functional Module"
+              }
+              disabled
+            />
           </div>
         </div>
         {/* technical service id ends*/}
@@ -166,23 +172,15 @@ const Create = props => {
             <div>
               <Input
                 type="text"
+                value={name}
+                disabled
                 placeholder="Episode Name"
-                style={
-                  name === null
-                    ? {
-                        width: "100%",
-                        border: "0.5px solid red"
-                      }
-                    : {
-                        width: "100%"
-                      }
-                }
-                onChange={onNameChange}
+                style={{
+                  width: "100%"
+                }}
+                //onChange={onNameChange}
               />
             </div>
-            {name === null ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
           </div>
         </div>
         {/* Name ends*/}
@@ -201,23 +199,15 @@ const Create = props => {
             <div>
               <Input
                 type="text"
+                value={description}
+                disabled
                 placeholder="Episode Name"
-                style={
-                  description === null
-                    ? {
-                        width: "100%",
-                        border: "0.5px solid red"
-                      }
-                    : {
-                        width: "100%"
-                      }
-                }
-                onChange={onDescriptionChange}
+                style={{
+                  width: "100%"
+                }}
+                // onChange={onDescriptionChange}
               />
             </div>
-            {description === null ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
           </div>
         </div>
         {/* Description ends*/}
@@ -264,6 +254,13 @@ const Create = props => {
                     Change Media
                   </Button>
                 </div>
+                {isFileChanged === true ? (
+                  <div style={{ marginTop: "30px", textAlign: "right" }}>
+                    <Button type="danger" onClick={() => discardMediaChange()}>
+                      Discard Media Change
+                    </Button>
+                  </div>
+                ) : null}
                 <div>
                   <img src={fileSrc} alt="icon" style={{ maxWidth: "60%" }} />
                 </div>
@@ -273,6 +270,7 @@ const Create = props => {
         </div>
         {/* Episode Icon ends*/}
         {/* Visibility starts*/}
+        {/* 
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -299,11 +297,12 @@ const Create = props => {
             ) : null}
           </div>
         </div>
+        */}
         {/* Visibility ends*/}
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>
-            Create New Episode
+            Update Episode
           </Button>
         </div>
       </Card>
@@ -311,4 +310,4 @@ const Create = props => {
   );
 };
 
-export default Create;
+export default Edit;
