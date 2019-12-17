@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Select, Input, Icon, Button, message, Form } from "antd";
 import { getActivityList, wyrTreeActivityCreate } from "../../../../actions";
-import MButton from "../../../Elements/MButton";
+import Parameters from "../../../Elements/Parameters";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
@@ -12,6 +12,7 @@ const AddLI = props => {
   const [loading, setLoading] = useState(false);
   const [activity, setActivity] = useState([]);
   const [activityId, setActivityId] = useState(null);
+  const [entityId, setEntityId] = useState(null);
 
   useEffect(() => {
     const callActivityData = async () => {
@@ -32,9 +33,14 @@ const AddLI = props => {
     });
   };
 
-  const handleChange = val => {
+  const onActivityChange = val => {
     //console.log(val);
     setActivityId(val);
+  };
+
+  const onParameterChange = val => {
+    //console.log(val);
+    setEntityId(val);
   };
 
   const createNew = async () => {
@@ -42,12 +48,17 @@ const AddLI = props => {
       message.warning("Please Select Activity");
       return;
     }
+    if (entityId === null || entityId === undefined) {
+      message.warning("Please Select Parameter");
+      return;
+    }
 
     let formValues = {};
     {
       formValues = {
         wyr_episode_id: props.selectedEpisodeId,
-        activity_id: activity
+        activity_id: activityId,
+        entity_id: entityId
       };
 
       try {
@@ -59,6 +70,7 @@ const AddLI = props => {
         props.setAddLIModalShow(false);
       } catch (error) {
         setLoading(false);
+        //message.warning(error);
         props.setAddLIModalShow(false);
       }
     }
@@ -71,6 +83,7 @@ const AddLI = props => {
         loading={loading}
         bordered={false}
       >
+        {/*activity starts */}
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -86,10 +99,33 @@ const AddLI = props => {
               <Select
                 placeholder="Select Activity"
                 style={{ width: "100%" }}
-                onChange={handleChange}
+                onChange={onActivityChange}
               >
                 {renderOptions(activity)}
               </Select>
+            </div>
+          </div>
+        </div>
+        {/*activity ends */}
+        <div style={{ display: "flex", marginBottom: "25px" }}>
+          <div
+            style={{
+              width: "140px",
+              fontWeight: 600
+            }}
+          >
+            Parameter
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+          </div>
+          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+            <div>
+              <Parameters
+                style={{ width: "100%" }}
+                mode="default"
+                value={entityId}
+                onChange={onParameterChange}
+                categories={[null]}
+              />
             </div>
           </div>
         </div>

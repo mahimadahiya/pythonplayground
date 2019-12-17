@@ -412,7 +412,10 @@ const WyrTreeIndex = props => {
         visible={addLIModalShow}
         destroyOnClose={true}
       >
-        <AddLI selectedEpisodeId={selectedEpisodeId} />
+        <AddLI
+          selectedEpisodeId={selectedEpisodeId}
+          setAddLIModalShow={setAddLIModalShow}
+        />
       </Modal>
       {/* Map LI modal ends */}
 
