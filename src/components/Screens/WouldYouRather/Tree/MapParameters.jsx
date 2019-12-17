@@ -26,24 +26,28 @@ const EpisodeParameterMap = props => {
         );
         let tempList = [];
 
-        for (let i = 0; i < response.result.wyr_episode_list.length; i++) {
-          if (response.result.wyr_episode_list[i].id === actionId) {
+        for (let i = 0; i < response.data.result.wyr_episode_list.length; i++) {
+          if (response.data.result.wyr_episode_list[i].id === actionId) {
             if (
-              response.result.wyr_episode_list[i].mapped_parameter.length > 0
+              response.data.result.wyr_episode_list[i].mapped_parameter.length >
+              0
             ) {
               for (
                 let j = 0;
-                j < response.result.wyr_episode_list[i].mapped_parameter.length;
+                j <
+                response.data.result.wyr_episode_list[i].mapped_parameter
+                  .length;
                 j++
               ) {
                 tempList.push(
-                  response.result.wyr_episode_list[i].mapped_parameter[j]
+                  response.data.result.wyr_episode_list[i].mapped_parameter[j]
                     .parameter_id
                 );
               }
             }
           }
         }
+        //console.log(tempList);
         setSelectedParameters(tempList);
         setCardLoading(false);
       } catch (error) {
@@ -53,14 +57,16 @@ const EpisodeParameterMap = props => {
     fetchAlreadyMappedList();
   }, [user.Authorization, actionId, technical_service_id]);
 
+  //console.log(selectedParameters);
+
   const onSubmit = e => {
     e.preventDefault();
     props.form.validateFields(async (err, formValues) => {
       if (!err) {
         const values = {
-          wyr_action_id: actionId,
+          wyr_tree_id: actionId,
           // parameter_id_list: JSON.stringify(parameters)
-          parameter_id_list: JSON.stringify(formValues.parameter)
+          parameter_list: JSON.stringify(formValues.parameter)
         };
 
         setCardLoading(true);
@@ -74,6 +80,7 @@ const EpisodeParameterMap = props => {
             message.success("Mapped successfully");
           }
           props.setLoadAgain(!props.loadAgain);
+          props.setShowMapParametersModal(false);
           setCardLoading(false);
         } catch (error) {
           setCardLoading(false);

@@ -24,6 +24,7 @@ const WyrTreeIndex = props => {
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
+  const [loadAgain, setLoadAgain] = useState(false);
   const [list, setList] = useState([]);
   const [selectedTechnicalId, setSelectedTechnicalId] = useState(null);
   const [updateEpisodeDetails, setUpdateEpisodeDetails] = useState([]);
@@ -417,6 +418,9 @@ const WyrTreeIndex = props => {
           onValuesSubmit={onCloseParametersModal}
           selectedTechnicalId={selectedTechnicalId}
           actionId={paramActionId}
+          loadAgain={loadAgain}
+          setLoadAgain={setLoadAgain}
+          setShowMapParametersModal={setShowMapParametersModal}
         />
       ) : null}
       {/* mapping parameters end */}
