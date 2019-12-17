@@ -18,6 +18,7 @@ import {
 } from "../../../../actions";
 import Create from "./Create";
 import Edit from "./Edit";
+import EpisodeParameterMap from "./MapParameters";
 
 const WyrTreeIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -25,9 +26,13 @@ const WyrTreeIndex = props => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
   const [selectedTechnicalId, setSelectedTechnicalId] = useState(null);
-  const [createNewModalShow, setCreateNewModalShow] = useState(false);
   const [updateEpisodeDetails, setUpdateEpisodeDetails] = useState([]);
+  const [paramActionId, setParamActionId] = useState(null);
+
+  const [createNewModalShow, setCreateNewModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
+  const [addLIModalShow, setAddLIModalShow] = useState(false);
+  const [showMapParametersModal, setShowMapParametersModal] = useState(false);
 
   const columnName = [
     {
@@ -150,7 +155,7 @@ const WyrTreeIndex = props => {
             <span>
               <Button
                 type="link"
-                // onClick={() => onMappingParameters(record)}
+                onClick={() => onMappingParameters(record)}
                 style={{ padding: 0, marginRight: "10px" }}
               >
                 Map Parameters
@@ -170,7 +175,9 @@ const WyrTreeIndex = props => {
             </span>
           )}
 
-          <Button type="link">Map LI</Button>
+          <Button type="link" onClick={() => onAddLI()}>
+            Add LI
+          </Button>
 
           <Divider type="vertical" />
           <Button
@@ -220,6 +227,17 @@ const WyrTreeIndex = props => {
     }
   };
 
+  const onMappingParameters = data => {
+    // console.log(data);
+    setParamActionId(data.id);
+    setShowMapParametersModal(true);
+  };
+
+  const onCloseParametersModal = () => {
+    setShowMapParametersModal(false);
+    onChangeFetchList(selectedTechnicalId);
+  };
+
   const changeCurrentActionStatus = async data => {
     let actionId = data.id;
     setLoading(true);
@@ -265,7 +283,7 @@ const WyrTreeIndex = props => {
   };
 
   const onEdit = data => {
-    console.log(data);
+    //console.log(data);
     setUpdateEpisodeDetails(data);
     setEditModalShow(true);
   };
@@ -281,6 +299,14 @@ const WyrTreeIndex = props => {
       setSelectedTechnicalId(techId);
       onChangeFetchList(techId);
     }
+  };
+
+  const onAddLI = () => {
+    setAddLIModalShow(true);
+  };
+
+  const closeMapLIModal = () => {
+    setAddLIModalShow(false);
   };
 
   return (
@@ -356,7 +382,7 @@ const WyrTreeIndex = props => {
       {/* Update modal starts */}
       <Modal
         style={{ minWidth: "600px" }}
-        title="Edit Action"
+        title="Edit Episode"
         closable={true}
         footer={null}
         onCancel={closeEditEpisodeModal}
@@ -371,6 +397,29 @@ const WyrTreeIndex = props => {
         />
       </Modal>
       {/* Update modal ends */}
+      {/* Map LI modal starts */}
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Map Learning Interventions"
+        closable={true}
+        footer={null}
+        onCancel={closeMapLIModal}
+        visible={addLIModalShow}
+        destroyOnClose={true}
+      ></Modal>
+      {/* Map LI modal ends */}
+
+      {/* mapping Parameters start */}
+      {showMapParametersModal === true ? (
+        <EpisodeParameterMap
+          visible={showMapParametersModal}
+          onCancel={onCloseParametersModal}
+          onValuesSubmit={onCloseParametersModal}
+          selectedTechnicalId={selectedTechnicalId}
+          actionId={paramActionId}
+        />
+      ) : null}
+      {/* mapping parameters end */}
     </div>
   );
 };
