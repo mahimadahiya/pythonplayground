@@ -104,11 +104,11 @@ const Create = props => {
       try {
         // console.log(formValues);
         setLoading(true);
-        //await wyrTreeCreate(user.Authorization, formValues);
+        await wyrTreeCreate(user.Authorization, formValues);
         setLoading(false);
         message.success("Action Created");
         props.setCreateNewModalShow(false);
-        // props.submitCreateNewAction(techincalService);
+        props.submitCreateNewAction(techincalService);
       } catch (error) {
         setLoading(false);
         props.setCreateNewModalShow(false);
@@ -300,6 +300,12 @@ const Create = props => {
           </div>
         </div>
         {/* Visibility ends*/}
+
+        <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
+          <Button type="primary" onClick={() => createNew()}>
+            Create New Episode
+          </Button>
+        </div>
       </Card>
     </div>
   );

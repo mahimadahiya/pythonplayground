@@ -204,7 +204,7 @@ const WyrTreeIndex = props => {
         setLoading(true);
         setSelectedTechnicalId(value);
         const response = await wyrTreeList(user.Authorization, value);
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.result.wyr_episode_list.length > 0) {
           setList(response.data.result.wyr_episode_list);
         } else {
@@ -250,6 +250,15 @@ const WyrTreeIndex = props => {
 
   const closeCreateNewEpisodeModal = () => {
     setCreateNewModalShow(false);
+  };
+
+  const submitCreateNewEpisode = techincalService => {
+    if (techincalService === null || techincalService === undefined) {
+      setSelectedTechnicalId(null);
+    } else {
+      setSelectedTechnicalId(techincalService);
+      onChangeFetchList(techincalService);
+    }
   };
 
   return (
@@ -317,7 +326,7 @@ const WyrTreeIndex = props => {
         destroyOnClose={true}
       >
         <Create
-          //submitCreateNewEpisode={submitCreateNewAction}
+          submitCreateNewEpisode={submitCreateNewEpisode}
           setCreateNewModalShow={setCreateNewModalShow}
         />
       </Modal>
