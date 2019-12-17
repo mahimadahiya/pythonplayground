@@ -19,6 +19,7 @@ import {
 import Create from "./Create";
 import Edit from "./Edit";
 import EpisodeParameterMap from "./MapParameters";
+import AddLI from "./AddLI";
 
 const WyrTreeIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -34,6 +35,8 @@ const WyrTreeIndex = props => {
   const [editModalShow, setEditModalShow] = useState(false);
   const [addLIModalShow, setAddLIModalShow] = useState(false);
   const [showMapParametersModal, setShowMapParametersModal] = useState(false);
+
+  const [selectedEpisodeId, setSelectedEpisodeId] = useState(null);
 
   const columnName = [
     {
@@ -176,7 +179,7 @@ const WyrTreeIndex = props => {
             </span>
           )}
 
-          <Button type="link" onClick={() => onAddLI()}>
+          <Button type="link" onClick={() => onAddLI(record)}>
             Add LI
           </Button>
 
@@ -302,8 +305,9 @@ const WyrTreeIndex = props => {
     }
   };
 
-  const onAddLI = () => {
+  const onAddLI = data => {
     setAddLIModalShow(true);
+    setSelectedEpisodeId(data.id);
   };
 
   const closeMapLIModal = () => {
@@ -401,13 +405,15 @@ const WyrTreeIndex = props => {
       {/* Map LI modal starts */}
       <Modal
         style={{ minWidth: "600px" }}
-        title="Map Learning Interventions"
+        title="Add Learning Interventions"
         closable={true}
         footer={null}
         onCancel={closeMapLIModal}
         visible={addLIModalShow}
         destroyOnClose={true}
-      ></Modal>
+      >
+        <AddLI selectedEpisodeId={selectedEpisodeId} />
+      </Modal>
       {/* Map LI modal ends */}
 
       {/* mapping Parameters start */}

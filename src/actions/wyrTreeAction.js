@@ -61,3 +61,24 @@ export const wyrTreeMapParameters = async (authToken, values) => {
   );
   return response;
 };
+
+/*activity list */
+
+export const getActivityList = async authToken => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/activity/");
+  return response;
+};
+
+/*Activity create */
+
+export const wyrTreeActivityCreate = async (authToken, formValues) => {
+  let formData = new FormData();
+  formData.append("wyr_episode_id", formValues.wyr_episode_id);
+  formData.append("activity_id", formValues.activity_id);
+  formData.append("entity_id", formValues.entity_id);
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/wyr/episode_activity/",
+    formData
+  );
+  return response;
+};
