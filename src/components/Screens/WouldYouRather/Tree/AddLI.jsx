@@ -71,6 +71,7 @@ const AddLI = props => {
         setLoading(false);
         message.success("LI Created");
         props.setAddLIModalShow(false);
+        props.submitCreateNewActivity(props.selectedTechnicalId);
       } catch (error) {
         setLoading(false);
         //message.warning(error);
@@ -82,7 +83,12 @@ const AddLI = props => {
   return (
     <div>
       <div style={{ marginBottom: "30px" }}>
-        <MappedActivityList selectedEpisodeDetails={selectedEpisodeDetails} />
+        <MappedActivityList
+          selectedEpisodeDetails={selectedEpisodeDetails}
+          selectedTechnicalId={props.selectedTechnicalId}
+          submitCreateNewActivity={props.submitCreateNewActivity}
+          setAddLIModalShow={props.setAddLIModalShow}
+        />
       </div>
       {selectedEpisodeDetails.mapped_activity.length < 3 ? (
         <Card

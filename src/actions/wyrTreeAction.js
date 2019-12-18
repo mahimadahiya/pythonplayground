@@ -82,3 +82,12 @@ export const wyrTreeActivityCreate = async (authToken, formValues) => {
   );
   return response;
 };
+
+/*delete activity */
+
+export const wyrTreeActivityDelete = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).delete(
+    `/v1/admin/wyr/episode_activity/${id}/`
+  );
+  return response;
+};

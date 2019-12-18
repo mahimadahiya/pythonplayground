@@ -9,10 +9,13 @@ import {
   message,
   Modal
 } from "antd";
+import { wyrTreeActivityDelete } from "../../../../actions";
+
 import { useSelector } from "react-redux";
 import MappedActivityDetails from "./MappedActivityDetails";
 
 const MappedActivityList = props => {
+  const user = useSelector(state => state.userAuth);
   const [mappedActivityLoading, setMappedActivityLoading] = useState(false);
   const [mappedList, setMappedList] = useState([]);
   const [liDetailsModalShow, setLiDetailsModalShow] = useState(false);
@@ -91,7 +94,7 @@ const MappedActivityList = props => {
             title="Are you sure you want to delete ?"
             okText="Yes"
             cancelText="No"
-            // onConfirm={() => onDelete(record)}
+            onConfirm={() => onDelete(record)}
           >
             <Button
               type="link"
@@ -104,6 +107,20 @@ const MappedActivityList = props => {
       )
     }
   ];
+
+  const onDelete = async item => {
+    try {
+      let selectedId = item.id;
+      setMappedActivityLoading(true);
+      await wyrTreeActivityDelete(user.Authorization, selectedId);
+      message.success("Activity Deleted");
+      setMappedActivityLoading(false);
+      props.submitCreateNewActivity(props.selectedTechnicalId);
+      props.setAddLIModalShow(false);
+    } catch (error) {
+      setMappedActivityLoading(false);
+    }
+  };
 
   return (
     <div>

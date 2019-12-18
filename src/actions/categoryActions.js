@@ -11,7 +11,7 @@ export const fetchCategories = authToken => async dispatch => {
 
 export const fetchParameters = (authToken, categories) => async dispatch => {
   let response = null;
-  console.log(categories[0]);
+  // console.log(categories[0]);
   if (
     categories[0] === null ||
     categories[0] === undefined ||

@@ -190,7 +190,8 @@ import {
   wyrTreeUpdate,
   wyrTreeMapParameters,
   getActivityList,
-  wyrTreeActivityCreate
+  wyrTreeActivityCreate,
+  wyrTreeActivityDelete
 } from "./wyrTreeAction";
 
 import {
@@ -352,6 +353,7 @@ export {
   wyrTreeMapParameters,
   getActivityList,
   wyrTreeActivityCreate,
+  wyrTreeActivityDelete,
   //technical assesment
   getTechnicalAssesmentList,
   createNewTechnicalService,

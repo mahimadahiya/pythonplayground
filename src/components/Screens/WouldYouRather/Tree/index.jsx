@@ -287,6 +287,15 @@ const WyrTreeIndex = props => {
     }
   };
 
+  const submitCreateNewActivity = techincalService => {
+    if (techincalService === null || techincalService === undefined) {
+      setSelectedTechnicalId(null);
+    } else {
+      setSelectedTechnicalId(techincalService);
+      onChangeFetchList(techincalService);
+    }
+  };
+
   const onEdit = data => {
     //console.log(data);
     setUpdateEpisodeDetails(data);
@@ -419,6 +428,8 @@ const WyrTreeIndex = props => {
           selectedEpisodeId={selectedEpisodeId}
           setAddLIModalShow={setAddLIModalShow}
           selectedEpisodeDetails={selectedEpisodeDetails}
+          submitCreateNewActivity={submitCreateNewActivity}
+          selectedTechnicalId={selectedTechnicalId}
         />
       </Modal>
       {/* Map LI modal ends */}
