@@ -21,7 +21,6 @@ const MappedActivityList = props => {
   const [liDetailsModalShow, setLiDetailsModalShow] = useState(false);
 
   const [selectedActivityDetails, setSelectedActivityDetails] = useState([]);
-  // console.log(props.selectedEpisodeDetails.mapped_activity);
 
   useEffect(() => {
     setMappedActivityLoading(true);
@@ -30,7 +29,6 @@ const MappedActivityList = props => {
   }, [props.selectedEpisodeDetails.mapped_activity]);
 
   const onDetailsClick = data => {
-    //console.log(data);
     setSelectedActivityDetails(data);
     setLiDetailsModalShow(true);
   };

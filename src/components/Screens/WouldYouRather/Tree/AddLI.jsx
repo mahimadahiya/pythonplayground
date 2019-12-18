@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Card, Select, Input, Icon, Button, message, Form } from "antd";
+import { Card, Select, Button, message } from "antd";
 import { getActivityList, wyrTreeActivityCreate } from "../../../../actions";
 import Parameters from "../../../Elements/Parameters";
 import MappedActivityList from "./MappedActivityList";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-
-const { Option } = Select;
 
 const AddLI = props => {
   const user = useSelector(state => state.userAuth);
@@ -20,7 +18,6 @@ const AddLI = props => {
   useEffect(() => {
     const callActivityData = async () => {
       const response = await getActivityList(user.Authorization);
-      //console.log(response.data.result);
       setActivity(response.data.result);
     };
     callActivityData();
@@ -37,12 +34,10 @@ const AddLI = props => {
   };
 
   const onActivityChange = val => {
-    //console.log(val);
     setActivityId(val);
   };
 
   const onParameterChange = val => {
-    //console.log(val);
     setEntityId(val);
   };
 
@@ -65,7 +60,6 @@ const AddLI = props => {
       };
 
       try {
-        // console.log(formValues);
         setLoading(true);
         await wyrTreeActivityCreate(user.Authorization, formValues);
         setLoading(false);
@@ -74,7 +68,6 @@ const AddLI = props => {
         props.submitCreateNewActivity(props.selectedTechnicalId);
       } catch (error) {
         setLoading(false);
-        //message.warning(error);
         props.setAddLIModalShow(false);
       }
     }

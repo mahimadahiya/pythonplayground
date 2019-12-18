@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table,
-  Card,
-  Button,
-  Select,
-  Divider,
-  Popconfirm,
-  message,
-  Modal
-} from "antd";
-import { useSelector } from "react-redux";
+import { Table, Card } from "antd";
 
 const MappedActivityDetails = props => {
   const selectedActivityDetails = props.selectedActivityDetails;
