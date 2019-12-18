@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Select, Input, Icon, Button, message, Form } from "antd";
 import { getActivityList, wyrTreeActivityCreate } from "../../../../actions";
 import Parameters from "../../../Elements/Parameters";
+import MappedActivityList from "./MappedActivityList";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
@@ -13,6 +14,8 @@ const AddLI = props => {
   const [activity, setActivity] = useState([]);
   const [activityId, setActivityId] = useState(null);
   const [entityId, setEntityId] = useState(null);
+
+  const selectedEpisodeDetails = props.selectedEpisodeDetails;
 
   useEffect(() => {
     const callActivityData = async () => {
@@ -78,63 +81,68 @@ const AddLI = props => {
 
   return (
     <div>
-      <Card
-        bodyStyle={{ padding: 0, fontSize: "15px" }}
-        loading={loading}
-        bordered={false}
-      >
-        {/*activity starts */}
-        <div style={{ display: "flex", marginBottom: "25px" }}>
-          <div
-            style={{
-              width: "140px",
-              fontWeight: 600
-            }}
-          >
-            Activity
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
-          </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Select
-                placeholder="Select Activity"
-                style={{ width: "100%" }}
-                onChange={onActivityChange}
-              >
-                {renderOptions(activity)}
-              </Select>
+      <div style={{ marginBottom: "30px" }}>
+        <MappedActivityList selectedEpisodeDetails={selectedEpisodeDetails} />
+      </div>
+      {selectedEpisodeDetails.mapped_activity.length < 3 ? (
+        <Card
+          bodyStyle={{ padding: 0, fontSize: "15px" }}
+          loading={loading}
+          bordered={false}
+        >
+          {/*activity starts */}
+          <div style={{ display: "flex", marginBottom: "25px" }}>
+            <div
+              style={{
+                width: "140px",
+                fontWeight: 600
+              }}
+            >
+              Activity
+              <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+            </div>
+            <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+              <div>
+                <Select
+                  placeholder="Select Activity"
+                  style={{ width: "100%" }}
+                  onChange={onActivityChange}
+                >
+                  {renderOptions(activity)}
+                </Select>
+              </div>
             </div>
           </div>
-        </div>
-        {/*activity ends */}
-        <div style={{ display: "flex", marginBottom: "25px" }}>
-          <div
-            style={{
-              width: "140px",
-              fontWeight: 600
-            }}
-          >
-            Parameter
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
-          </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Parameters
-                style={{ width: "100%" }}
-                mode="default"
-                value={entityId}
-                onChange={onParameterChange}
-                categories={[null]}
-              />
+          {/*activity ends */}
+          <div style={{ display: "flex", marginBottom: "25px" }}>
+            <div
+              style={{
+                width: "140px",
+                fontWeight: 600
+              }}
+            >
+              Parameter
+              <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+            </div>
+            <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+              <div>
+                <Parameters
+                  style={{ width: "100%" }}
+                  mode="default"
+                  value={entityId}
+                  onChange={onParameterChange}
+                  categories={[null]}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
-          <Button type="primary" onClick={() => createNew()}>
-            Add LI
-          </Button>
-        </div>
-      </Card>
+          <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
+            <Button type="primary" onClick={() => createNew()}>
+              Add LI
+            </Button>
+          </div>
+        </Card>
+      ) : null}
     </div>
   );
 };

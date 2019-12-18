@@ -37,6 +37,7 @@ const WyrTreeIndex = props => {
   const [showMapParametersModal, setShowMapParametersModal] = useState(false);
 
   const [selectedEpisodeId, setSelectedEpisodeId] = useState(null);
+  const [selectedEpisodeDetails, setSelectedEpisodeDetails] = useState([]);
 
   const columnName = [
     {
@@ -308,6 +309,7 @@ const WyrTreeIndex = props => {
   const onAddLI = data => {
     setAddLIModalShow(true);
     setSelectedEpisodeId(data.id);
+    setSelectedEpisodeDetails(data);
   };
 
   const closeMapLIModal = () => {
@@ -415,6 +417,7 @@ const WyrTreeIndex = props => {
         <AddLI
           selectedEpisodeId={selectedEpisodeId}
           setAddLIModalShow={setAddLIModalShow}
+          selectedEpisodeDetails={selectedEpisodeDetails}
         />
       </Modal>
       {/* Map LI modal ends */}
