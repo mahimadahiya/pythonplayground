@@ -32,6 +32,8 @@ const EditOrgAssesment = props => {
   const selectedPopupData = selectedData.popup_text.points;
   const selectedId = selectedData.id;
   const organizationId = selectedData.organization;
+
+  const [isResumable, setIsResumable] = useState(null);
   //console.log(selectedId);
 
   useEffect(() => {
@@ -39,6 +41,7 @@ const EditOrgAssesment = props => {
       setPopupData(selectedPopupData);
       setGuideLinesCount(selectedGuidelineData.length);
       setPopupCount(selectedPopupData.length);
+      setIsResumable(selectedData.is_resumable);
 
       let recivedGuidelineData = [];
       for (let i = 0; i < selectedGuidelineData.length; i++) {
@@ -179,6 +182,10 @@ const EditOrgAssesment = props => {
 
   const onShowPopupChange = e => {
     setShowPopup(e.target.value);
+  };
+  const onResumableChange = val => {
+    // console.log(val);
+    setIsResumable(val);
   };
 
   const renderGuideLinesFields = () => {
@@ -424,7 +431,10 @@ const EditOrgAssesment = props => {
                   rules: [{ required: true }],
                   initialValue: selectedData.is_resumable
                 })(
-                  <Select placeholder="Select Resumable">
+                  <Select
+                    onChange={onResumableChange}
+                    placeholder="Select Resumable"
+                  >
                     <Option value={1}>true</Option>
                     <Option value={0}>false</Option>
                   </Select>
@@ -499,13 +509,13 @@ const EditOrgAssesment = props => {
                 {getFieldDecorator("max_null_attempt", {
                   rules: [
                     {
-                      required: selectedData.is_resumable === 0 ? true : false
+                      required: isResumable === 0 ? true : false
                     }
                   ],
                   initialValue: selectedData.max_null_attempt
                 })(
                   <InputNumber
-                    disabled={selectedData.is_resumable === 0 ? false : true}
+                    disabled={isResumable === 0 ? false : true}
                     min={1}
                     style={{
                       width: "100%"
