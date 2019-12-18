@@ -314,6 +314,7 @@ const WyrTreeIndex = props => {
 
   const closeMapLIModal = () => {
     setAddLIModalShow(false);
+    onChangeFetchList(selectedTechnicalId);
   };
 
   return (

@@ -475,7 +475,7 @@ const CreateOrgAssesment = props => {
           </Row>
           <Row gutter={24}>
             <Col span={12}>
-              <Form.Item label="Max Null Attempts">
+              <Form.Item label="No. of Times Person Can Resume">
                 {getFieldDecorator("max_null_attempt", {
                   rules: [
                     {
