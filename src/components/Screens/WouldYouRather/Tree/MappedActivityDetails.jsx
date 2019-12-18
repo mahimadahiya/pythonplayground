@@ -12,7 +12,18 @@ import {
 import { useSelector } from "react-redux";
 
 const MappedActivityDetails = props => {
-  return <div></div>;
+  const selectedActivityDetails = props.selectedActivityDetails;
+  return (
+    <div>
+      <Card
+        bodyStyle={{ padding: 0, fontSize: "15px" }}
+        // loading={mappedActivityLoading}
+        bordered={false}
+      >
+        Details
+      </Card>
+    </div>
+  );
 };
 
 export default MappedActivityDetails;

@@ -10,10 +10,14 @@ import {
   Modal
 } from "antd";
 import { useSelector } from "react-redux";
+import MappedActivityDetails from "./MappedActivityDetails";
 
 const MappedActivityList = props => {
   const [mappedActivityLoading, setMappedActivityLoading] = useState(false);
   const [mappedList, setMappedList] = useState([]);
+  const [liDetailsModalShow, setLiDetailsModalShow] = useState(false);
+
+  const [selectedActivityDetails, setSelectedActivityDetails] = useState([]);
   // console.log(props.selectedEpisodeDetails.mapped_activity);
 
   useEffect(() => {
@@ -24,6 +28,12 @@ const MappedActivityList = props => {
 
   const onDetailsClick = data => {
     console.log(data);
+    setSelectedActivityDetails(data);
+    setLiDetailsModalShow(true);
+  };
+
+  const closeLiDetailsModal = () => {
+    setLiDetailsModalShow(false);
   };
 
   const columnName = [
@@ -110,6 +120,20 @@ const MappedActivityList = props => {
           pagination={false}
         />
       </Card>
+
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Li Details"
+        closable={true}
+        footer={null}
+        onCancel={closeLiDetailsModal}
+        visible={liDetailsModalShow}
+        destroyOnClose={true}
+      >
+        <MappedActivityDetails
+          selectedActivityDetails={selectedActivityDetails}
+        />
+      </Modal>
     </div>
   );
 };
