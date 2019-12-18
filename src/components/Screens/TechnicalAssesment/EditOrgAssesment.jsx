@@ -90,6 +90,7 @@ const EditOrgAssesment = props => {
           show_certificate: formValues.show_certificate,
           show_popup: formValues.show_popup,
           is_duration_per_question: formValues.is_duration_per_question,
+          max_null_attempt: formValues.max_null_attempt,
           negative_marks_per_question: formValues.negative_marks_per_question,
           guidelines: JSON.stringify({
             guidelines: finalGuidelineData
@@ -493,6 +494,26 @@ const EditOrgAssesment = props => {
             </Col>
           </Row>
           <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Max Null Attempts">
+                {getFieldDecorator("max_null_attempt", {
+                  rules: [
+                    {
+                      required: selectedData.is_resumable === 0 ? true : false
+                    }
+                  ],
+                  initialValue: selectedData.max_null_attempt
+                })(
+                  <InputNumber
+                    disabled={selectedData.is_resumable === 0 ? false : true}
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
             <Col span={12}>
               <Form.Item label="Show Popup">
                 {getFieldDecorator("show_popup", {

@@ -27,6 +27,7 @@ const CreateOrgAssesment = props => {
   const [popupData, setPopupData] = useState([{ id: 1, title: "" }]);
   const [showPopup, setShowPopup] = useState();
   const [goingLiveAt, setGoingLiveAt] = useState("");
+  const [isResumable, setIsResumable] = useState(null);
 
   // console.log(props.isSequential);
 
@@ -77,6 +78,7 @@ const CreateOrgAssesment = props => {
           is_duration_per_question: formValues.is_duration_per_question,
           negative_marks_per_question: formValues.negative_marks_per_question,
           show_popup: formValues.show_popup,
+          max_null_attempt: formValues.max_null_attempt,
           guidelines: JSON.stringify({
             guidelines: finalGuidelineData
           }),
@@ -160,6 +162,11 @@ const CreateOrgAssesment = props => {
 
   const onShowPopupChange = e => {
     setShowPopup(e.target.value);
+  };
+
+  const onResumableChange = val => {
+    // console.log(val);
+    setIsResumable(val);
   };
 
   const renderGuideLinesFields = () => {
@@ -398,7 +405,10 @@ const CreateOrgAssesment = props => {
                 {getFieldDecorator("is_resumable", {
                   rules: [{ required: true }]
                 })(
-                  <Select placeholder="Select Resumable">
+                  <Select
+                    onChange={onResumableChange}
+                    placeholder="Select Resumable"
+                  >
                     <Option value={1}>true</Option>
                     <Option value={0}>false</Option>
                   </Select>
@@ -464,6 +474,25 @@ const CreateOrgAssesment = props => {
             </Col>
           </Row>
           <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Max Null Attempts">
+                {getFieldDecorator("max_null_attempt", {
+                  rules: [
+                    {
+                      required: isResumable === 0 ? true : false
+                    }
+                  ]
+                })(
+                  <InputNumber
+                    disabled={isResumable === 0 ? false : true}
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
             <Col span={12}>
               <Form.Item label="Show Popup">
                 {getFieldDecorator("show_popup", {
