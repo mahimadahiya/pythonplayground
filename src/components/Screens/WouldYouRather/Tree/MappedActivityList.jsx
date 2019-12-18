@@ -27,7 +27,7 @@ const MappedActivityList = props => {
   }, [props.selectedEpisodeDetails.mapped_activity]);
 
   const onDetailsClick = data => {
-    console.log(data);
+    //console.log(data);
     setSelectedActivityDetails(data);
     setLiDetailsModalShow(true);
   };
