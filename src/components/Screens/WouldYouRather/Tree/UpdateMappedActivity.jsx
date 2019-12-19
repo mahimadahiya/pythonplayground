@@ -23,7 +23,7 @@ const UpdateMappedActivity = props => {
       setMappedEntity(tempList);
     };
     fetchList();
-  }, [mappedEntity]);
+  }, []);
 
   const renderInputOptions = details => {
     switch (details.activity__slug) {

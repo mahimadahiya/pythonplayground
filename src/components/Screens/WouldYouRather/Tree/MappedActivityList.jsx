@@ -36,7 +36,7 @@ const MappedActivityList = props => {
     setMappedActivityLoading(true);
     setMappedList(props.selectedEpisodeDetails.mapped_activity);
     setMappedActivityLoading(false);
-  }, [props.selectedEpisodeDetails.mapped_activity]);
+  }, []);
 
   const onDetailsClick = data => {
     setSelectedActivityDetails(data);
