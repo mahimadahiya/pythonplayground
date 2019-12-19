@@ -103,3 +103,10 @@ export const wyrTreeActivityUpdate = async (authToken, id, formValues) => {
   );
   return response;
 };
+
+/*stimulation list  */
+
+export const getStimulationList = async authToken => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/simulations");
+  return response;
+};

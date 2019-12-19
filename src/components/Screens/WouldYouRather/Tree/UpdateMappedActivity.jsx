@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const UpdateMappedActivity = props => {
   const user = useSelector(state => state.userAuth);
-  const [mappedEntity, setMappedEntity] = useState([]);
+  const [mappedEntityArticle, setMappedEntityArticle] = useState([]);
 
   useEffect(() => {
     const fetchList = () => {
@@ -20,7 +20,7 @@ const UpdateMappedActivity = props => {
         tempList.push(props.selectedMappedActivityDetails.mapped_entity[i].id);
       }
       // console.log(tempList);
-      setMappedEntity(tempList);
+      setMappedEntityArticle(tempList);
     };
     fetchList();
   }, []);
@@ -47,7 +47,7 @@ const UpdateMappedActivity = props => {
                   selectedMappedActivityDetails={
                     props.selectedMappedActivityDetails
                   }
-                  value={mappedEntity}
+                  value={mappedEntityArticle}
                 />
               </div>
             </div>
@@ -67,7 +67,11 @@ const UpdateMappedActivity = props => {
             </div>
             <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
               <div>
-                <SimulationList />
+                <SimulationList
+                  mode="multiple"
+                  onChange={onSimulationChange}
+                  value={mappedEntityArticle}
+                />
               </div>
             </div>
           </div>
@@ -78,22 +82,41 @@ const UpdateMappedActivity = props => {
   };
 
   const onArticleChange = val => {
-    setMappedEntity(val);
+    setMappedEntityArticle(val);
+  };
+
+  const onSimulationChange = val => {
+    setMappedEntityArticle(val);
   };
 
   const onUpdateLi = async () => {
     let formValues = {};
     if (props.selectedMappedActivityDetails.activity__slug === "article") {
-      if (mappedEntity.length < 1) {
-        return message.warning("Please select Atleast one Article");
+      if (mappedEntityArticle.length < 1) {
+        message.warning("Please select Atleast one Article");
+        return;
       } else {
         formValues = {
           extra_details: JSON.stringify({
-            article_list: mappedEntity
+            article_list: mappedEntityArticle
           })
         };
       }
     }
+
+    if (props.selectedMappedActivityDetails.activity__slug === "simulation") {
+      if (mappedEntityArticle.length < 1) {
+        message.warning("Please select Atleast one Simulation");
+        return;
+      } else {
+        formValues = {
+          extra_details: JSON.stringify({
+            question_list: mappedEntityArticle
+          })
+        };
+      }
+    }
+
     try {
       await wyrTreeActivityUpdate(
         user.Authorization,
