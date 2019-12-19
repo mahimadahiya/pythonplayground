@@ -91,3 +91,15 @@ export const wyrTreeActivityDelete = async (authToken, id) => {
   );
   return response;
 };
+
+/* update or map activity entity */
+
+export const wyrTreeActivityUpdate = async (authToken, id, formValues) => {
+  let formData = new FormData();
+  formData.append("extra_details", formValues.extra_details);
+  const response = await adminPanelApi(authToken).put(
+    `/v1/admin/wyr/episode_activity/${id}/`,
+    formData
+  );
+  return response;
+};

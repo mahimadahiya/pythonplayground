@@ -13,14 +13,24 @@ import { wyrTreeActivityDelete } from "../../../../actions";
 
 import { useSelector } from "react-redux";
 import MappedActivityDetails from "./MappedActivityDetails";
+import UpdateMappedActivity from "./UpdateMappedActivity";
 
 const MappedActivityList = props => {
+  //console.log(props);
   const user = useSelector(state => state.userAuth);
   const [mappedActivityLoading, setMappedActivityLoading] = useState(false);
   const [mappedList, setMappedList] = useState([]);
   const [liDetailsModalShow, setLiDetailsModalShow] = useState(false);
+  const [
+    mappedActivityUpdateModalShow,
+    setMappedActivityUpdateModalShow
+  ] = useState(false);
 
   const [selectedActivityDetails, setSelectedActivityDetails] = useState([]);
+  const [
+    selectedMappedActivityDetails,
+    setSelectedMappedActivityDetails
+  ] = useState([]);
 
   useEffect(() => {
     setMappedActivityLoading(true);
@@ -33,8 +43,18 @@ const MappedActivityList = props => {
     setLiDetailsModalShow(true);
   };
 
+  const onEdit = data => {
+    setSelectedMappedActivityDetails(data);
+    setMappedActivityUpdateModalShow(true);
+  };
+
   const closeLiDetailsModal = () => {
     setLiDetailsModalShow(false);
+  };
+
+  const closeMappedActivityUpdateModal = () => {
+    setMappedActivityUpdateModalShow(false);
+    props.submitCreateNewActivity(props.selectedTechnicalId);
   };
 
   const columnName = [
@@ -82,7 +102,7 @@ const MappedActivityList = props => {
           <Divider type="vertical" />
           <Button
             type="link"
-            //onClick={() => onEdit(record)}
+            onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
@@ -147,6 +167,23 @@ const MappedActivityList = props => {
       >
         <MappedActivityDetails
           selectedActivityDetails={selectedActivityDetails}
+        />
+      </Modal>
+
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Update Mapped Activity"
+        closable={true}
+        footer={null}
+        onCancel={closeMappedActivityUpdateModal}
+        visible={mappedActivityUpdateModalShow}
+        destroyOnClose={true}
+      >
+        <UpdateMappedActivity
+          selectedMappedActivityDetails={selectedMappedActivityDetails}
+          setMappedActivityUpdateModalShow={setMappedActivityUpdateModalShow}
+          submitCreateNewActivity={props.submitCreateNewActivity}
+          selectedTechnicalId={props.selectedTechnicalId}
         />
       </Modal>
     </div>

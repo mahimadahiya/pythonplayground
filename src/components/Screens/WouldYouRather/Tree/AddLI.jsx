@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Select, Button, message } from "antd";
 import { getActivityList, wyrTreeActivityCreate } from "../../../../actions";
-import Parameters from "../../../Elements/Parameters";
 import MappedActivityList from "./MappedActivityList";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
 const AddLI = props => {
   const user = useSelector(state => state.userAuth);
   const [loading, setLoading] = useState(false);
   const [activity, setActivity] = useState([]);
+  const [parameter, setParameter] = useState([]);
   const [activityId, setActivityId] = useState(null);
   const [entityId, setEntityId] = useState(null);
 
   const selectedEpisodeDetails = props.selectedEpisodeDetails;
 
   useEffect(() => {
+    setParameter(selectedEpisodeDetails.mapped_parameter);
     const callActivityData = async () => {
       const response = await getActivityList(user.Authorization);
       setActivity(response.data.result);
@@ -23,11 +23,24 @@ const AddLI = props => {
     callActivityData();
   }, []);
 
-  const renderOptions = activity => {
+  const renderActivityOptions = activity => {
     return activity.map(activity => {
       return (
         <Select.Option key={activity.id} value={activity.id}>
           {activity.name}
+        </Select.Option>
+      );
+    });
+  };
+
+  const renderParameterOptions = parameter => {
+    return parameter.map(parameter => {
+      return (
+        <Select.Option
+          key={parameter.parameter_id}
+          value={parameter.parameter_id}
+        >
+          {parameter.parameter__name}
         </Select.Option>
       );
     });
@@ -80,7 +93,6 @@ const AddLI = props => {
           selectedEpisodeDetails={selectedEpisodeDetails}
           selectedTechnicalId={props.selectedTechnicalId}
           submitCreateNewActivity={props.submitCreateNewActivity}
-          setAddLIModalShow={props.setAddLIModalShow}
         />
       </div>
       {selectedEpisodeDetails.mapped_activity.length < 3 ? (
@@ -105,9 +117,9 @@ const AddLI = props => {
                 <Select
                   placeholder="Select Activity"
                   style={{ width: "100%" }}
-                  onChange={onActivityChange}
+                  onChange={onParameterChange}
                 >
-                  {renderOptions(activity)}
+                  {renderActivityOptions(activity)}
                 </Select>
               </div>
             </div>
@@ -125,13 +137,13 @@ const AddLI = props => {
             </div>
             <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
               <div>
-                <Parameters
+                <Select
+                  placeholder="Select Parameter"
                   style={{ width: "100%" }}
-                  mode="default"
-                  value={entityId}
-                  onChange={onParameterChange}
-                  categories={[null]}
-                />
+                  onChange={onActivityChange}
+                >
+                  {renderParameterOptions(parameter)}
+                </Select>
               </div>
             </div>
           </div>
