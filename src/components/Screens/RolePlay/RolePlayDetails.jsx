@@ -20,6 +20,7 @@ import AddConversationModal from "./AddConversationModal";
 import EditConversationModal from "./EditConversationModal";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
+import "./index.css";
 
 const RolePlayDetails = props => {
   const user = useSelector(state => state.userAuth);
@@ -346,18 +347,11 @@ const RolePlayDetails = props => {
                 <div
                   style={{
                     margin: "auto",
-                    width: "45%"
+                    width: "45%",
+                    position: "relative"
                   }}
                 >
-                  <div
-                    style={{
-                      margin: "20px auto",
-                      padding: "12px",
-                      borderRadius: "5px",
-                      // maxHeight: "200px",
-                      textAlign: "center"
-                    }}
-                  >
+                  <div className="avatarImageContainer avatarImage">
                     <img
                       src={avatarOneImage}
                       style={{
@@ -365,58 +359,96 @@ const RolePlayDetails = props => {
                       }}
                       alt="leftAvatar"
                     />
+                    <div className="HoverOverlay"></div>
+                    <div className="HoverOverlayBtn">
+                      <Button
+                        style={{
+                          background: "#001529",
+                          border: "none",
+                          color: "#fff"
+                        }}
+                      >
+                        Edit
+                      </Button>
+                    </div>
                   </div>
                   <div
-                    style={{
-                      padding: "7px 12px",
-                      margin: "10px auto",
-                      borderRadius: "5px",
-                      maxWidth: "150px",
-                      textAlign: "center",
-                      background: "#D21B3E",
-                      color: "#fff"
-                    }}
+                    className="avatarImage"
+                    style={{ margin: "10px auto", padding: "10px 0px" }}
                   >
-                    {avatarOneName}
+                    <div
+                      className="avatarName "
+                      style={{ background: "#d21b3e" }}
+                    >
+                      {avatarOneName}
+                    </div>
+                    <div className="HoverOverlay"></div>
+                    <div className="HoverOverlayBtn">
+                      <Button
+                        style={{
+                          background: "#001529",
+                          border: "none",
+                          color: "#fff"
+                        }}
+                      >
+                        Edit
+                      </Button>
+                    </div>
                   </div>
                 </div>
                 {/* avatar 1 ends */}
+
                 {/* avatar 2 starts */}
                 <div
                   style={{
                     margin: "auto",
-                    width: "45%"
+                    width: "45%",
+                    position: "relative"
                   }}
                 >
-                  <div
-                    style={{
-                      margin: "20px auto",
-                      padding: "12px",
-                      borderRadius: "5px",
-                      // maxHeight: "200px",
-                      textAlign: "center"
-                    }}
-                  >
+                  <div className="avatarImageContainer avatarImage">
                     <img
                       src={avatarTwoImage}
                       style={{
                         maxHeight: "30vh"
                       }}
-                      alt="leftAvatar"
+                      alt="rightAvatar"
                     />
+                    <div className="HoverOverlay"></div>
+                    <div className="HoverOverlayBtn">
+                      <Button
+                        style={{
+                          background: "#001529",
+                          border: "none",
+                          color: "#fff"
+                        }}
+                      >
+                        Edit
+                      </Button>
+                    </div>
                   </div>
                   <div
-                    style={{
-                      padding: "7px 12px",
-                      margin: "10px auto",
-                      borderRadius: "5px",
-                      maxWidth: "150px",
-                      textAlign: "center",
-                      background: "#FCA829",
-                      color: "#fff"
-                    }}
+                    className="avatarImage"
+                    style={{ margin: "10px auto", padding: "10px 0px" }}
                   >
-                    {avatarTwoName}
+                    <div
+                      className="avatarName "
+                      style={{ background: "#d21b3e" }}
+                    >
+                      {avatarTwoName}
+                    </div>
+                    <div className="HoverOverlay"></div>
+                    <div className="HoverOverlayBtn">
+                      <Button
+                        style={{
+                          background: "#001529",
+                          border: "none",
+                          color: "#fff"
+                        }}
+                      >
+                        Edit
+                      </Button>
+                    </div>
                   </div>
                 </div>
                 {/* avatar 2 ends */}

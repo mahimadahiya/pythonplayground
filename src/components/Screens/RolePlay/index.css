@@ -111,3 +111,55 @@ body > div:nth-child(7) > div > div.ant-modal-wrap > div {
     margin-left: 0px !important;
   }
 }
+
+.avatarName {
+  padding: 7px 12px;
+  margin: 10px auto;
+  border-radius: 5px;
+  max-width: 150px;
+  text-align: center;
+  color: #fff;
+}
+
+.avatarImageContainer {
+  margin: 20px auto;
+  padding: 12px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.HoverOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.5s ease;
+  border-radius: 5px;
+}
+
+.avatarImage {
+  position: relative;
+  cursor: pointer;
+}
+
+.avatarImage:hover .HoverOverlay {
+  display: block;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+.HoverOverlayBtn {
+  position: absolute;
+  width: 500px;
+  right: 20px;
+  top: 10px;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.avatarImage:hover .HoverOverlayBtn {
+  opacity: 1;
+}
