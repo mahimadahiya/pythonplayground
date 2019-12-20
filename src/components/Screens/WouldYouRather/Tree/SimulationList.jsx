@@ -26,7 +26,7 @@ const SimulationList = props => {
           props.selectedParameterId
         );
         setSimulation(response.data.result.simulation);
-        console.log(response.data.result.simulation);
+        //console.log(response.data.result.simulation);
       } catch (error) {}
     };
 

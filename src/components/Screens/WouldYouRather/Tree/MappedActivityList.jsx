@@ -135,7 +135,7 @@ const MappedActivityList = props => {
       await wyrTreeActivityDelete(user.Authorization, selectedId);
       message.success("Activity Deleted");
       setMappedActivityLoading(false);
-      // props.submitCreateNewActivity(props.selectedTechnicalId);
+      props.submitCreateNewActivity(props.selectedTechnicalId);
       // props.setAddLIModalShow(false);
       props.closeMapLIModal();
     } catch (error) {

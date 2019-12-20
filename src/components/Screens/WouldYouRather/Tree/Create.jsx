@@ -108,7 +108,7 @@ const Create = props => {
         setLoading(false);
         message.success("Episode Created");
         props.setCreateNewModalShow(false);
-        props.submitCreateNewAction(techincalService);
+        props.submitCreateNewEpisode(techincalService);
       } catch (error) {
         setLoading(false);
         props.setCreateNewModalShow(false);

@@ -112,7 +112,7 @@ const UpdateMappedActivity = props => {
                 </div>
               </div>
             </div>
-            {/* 
+
             <div style={{ display: "flex", marginBottom: "25px" }}>
               <div
                 style={{
@@ -126,7 +126,7 @@ const UpdateMappedActivity = props => {
               <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
                 <div>
                   <InputNumber
-                    onChange={e => onGameAttemptsChange(e)}
+                    onChange={onGameAttemptsChange}
                     min={1}
                     style={{
                       width: "100%"
@@ -135,7 +135,6 @@ const UpdateMappedActivity = props => {
                 </div>
               </div>
             </div>
-            */}
           </div>
         );
       default:
@@ -156,7 +155,8 @@ const UpdateMappedActivity = props => {
   };
 
   const onGameAttemptsChange = e => {
-    setNumberOfAttempts(e.target.value);
+    setNumberOfAttempts(e);
+    //console.log(e);
   };
 
   const onUpdateLi = async () => {
@@ -167,9 +167,9 @@ const UpdateMappedActivity = props => {
         return;
       } else {
         formValues = {
-          extra_details: JSON.stringify({
+          extra_details: {
             article_list: mappedEntityArticle
-          })
+          }
         };
       }
     }
@@ -180,15 +180,18 @@ const UpdateMappedActivity = props => {
         return;
       } else {
         formValues = {
-          extra_details: JSON.stringify({
+          extra_details: {
             question_list: mappedEntityArticle
-          })
+          }
         };
       }
     }
 
     if (props.selectedMappedActivityDetails.activity__slug === "game") {
-      /*if (
+      const gameList = mappedEntityArticle.map(item => {
+        return { game_id: item, n_attempt: numberOfAttempts };
+      });
+      if (
         numberOfAttempts === null ||
         numberOfAttempts === undefined ||
         numberOfAttempts === "" ||
@@ -196,18 +199,21 @@ const UpdateMappedActivity = props => {
       ) {
         message.warning("Please enter no. of attempts");
         return;
-      }*/
+      }
       if (mappedEntityArticle.length < 1) {
         message.warning("Please select game");
         return;
       } else {
         formValues = {
-          extra_details: JSON.stringify({
-            game_list: mappedEntityArticle
-          })
+          extra_details: {
+            game_list: gameList
+            // n_attempt
+          }
         };
       }
     }
+
+    // console.log(formValues);
 
     try {
       await wyrTreeActivityUpdate(
@@ -218,6 +224,7 @@ const UpdateMappedActivity = props => {
       message.success("Entity Mapped Succesfully");
       props.setMappedActivityUpdateModalShow(false);
       props.setLoadAgain(!props.loadAgain);
+      // props.submitCreateNewActivity(props.selectedTechnicalId);
       props.closeMapLIModal();
     } catch (error) {
       props.setMappedActivityUpdateModalShow(false);

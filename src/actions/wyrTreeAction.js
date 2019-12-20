@@ -96,7 +96,7 @@ export const wyrTreeActivityDelete = async (authToken, id) => {
 
 export const wyrTreeActivityUpdate = async (authToken, id, formValues) => {
   let formData = new FormData();
-  formData.append("extra_details", formValues.extra_details);
+  formData.append("extra_details", JSON.stringify(formValues.extra_details));
   const response = await adminPanelApi(authToken).put(
     `/v1/admin/wyr/episode_activity/${id}/`,
     formData
