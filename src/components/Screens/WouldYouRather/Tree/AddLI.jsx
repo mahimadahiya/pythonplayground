@@ -117,7 +117,7 @@ const AddLI = props => {
                 <Select
                   placeholder="Select Activity"
                   style={{ width: "100%" }}
-                  onChange={onParameterChange}
+                  onChange={onActivityChange}
                 >
                   {renderActivityOptions(activity)}
                 </Select>
@@ -140,7 +140,7 @@ const AddLI = props => {
                 <Select
                   placeholder="Select Parameter"
                   style={{ width: "100%" }}
-                  onChange={onActivityChange}
+                  onChange={onParameterChange}
                 >
                   {renderParameterOptions(parameter)}
                 </Select>
