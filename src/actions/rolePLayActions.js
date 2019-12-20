@@ -27,6 +27,13 @@ export const addRolePlay = async (authToken, formValues) => {
   return response;
 };
 
+export const deleteRolePLay = async (authToken, rpId) => {
+  const response = await adminPanelApi(authToken).delete(
+    `/v1/admin/rp/article/delete/${rpId}`
+  );
+  return response;
+};
+
 export const updateRolePlay = async (authToken, rpId, formValues) => {
   const response = await adminPanelApi(authToken).put(
     `/v1/admin/rp/article/update/${rpId}`,
