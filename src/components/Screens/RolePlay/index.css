@@ -121,6 +121,7 @@ body > div:nth-child(7) > div > div.ant-modal-wrap > div {
   color: #fff;
 }
 
+/* avatar image hover overlay starts */
 .avatarImageContainer {
   margin: 20px auto;
   padding: 12px;
@@ -152,7 +153,6 @@ body > div:nth-child(7) > div > div.ant-modal-wrap > div {
 
 .HoverOverlayBtn {
   position: absolute;
-  width: 500px;
   right: 20px;
   top: 10px;
   text-align: right;
@@ -163,3 +163,26 @@ body > div:nth-child(7) > div > div.ant-modal-wrap > div {
 .avatarImage:hover .HoverOverlayBtn {
   opacity: 1;
 }
+
+/* avatar image hoveroverlay ends */
+
+/* background  hoveroverlay starts */
+.avatarBackground {
+  position: relative;
+  cursor: pointer;
+}
+
+.HoverBgOverlayBtn {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  text-align: right;
+  /* opacity: 0; */
+  transition: opacity 0.35s ease;
+}
+
+.avatarBackground:hover .HoverBgOverlayBtn {
+  opacity: 1;
+}
+
+/* background hover overlay ends */

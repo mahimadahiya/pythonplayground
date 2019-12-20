@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  Row,
-  Col,
-  List,
-  Button,
-  Card,
-  Popconfirm,
-  message,
-  Divider
-} from "antd";
+import { Modal, Button, Card, Popconfirm, message, Divider } from "antd";
 import {
   rolePlayConversationDetails,
   rolePlayConversationChangeStatus,
@@ -21,6 +12,7 @@ import EditConversationModal from "./EditConversationModal";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
 import "./index.css";
+import UpdateRp from "./UpdateRp";
 
 const RolePlayDetails = props => {
   const user = useSelector(state => state.userAuth);
@@ -46,6 +38,9 @@ const RolePlayDetails = props => {
   const [typeLayoutList, setTypeLayoutList] = useState([]);
 
   const [status, setStatus] = useState(null);
+
+  const [showUpdateRolePlayModal, setShowUpdateRolePlayModal] = useState(false);
+  const [changeTypeRp, setChangeTypeRp] = useState("");
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -288,6 +283,11 @@ const RolePlayDetails = props => {
     setConversationDetails(arrayMove(conversationDetails, oldIndex, newIndex));
   };
 
+  const updateRPDetail = type => {
+    setChangeTypeRp(type);
+    setShowUpdateRolePlayModal(true);
+  };
+
   return (
     <div>
       <Card loading={loading} bodyStyle={{ padding: "0px" }}>
@@ -322,7 +322,21 @@ const RolePlayDetails = props => {
               margin: "auto",
               position: "relative"
             }}
+            className="avatarBackground"
           >
+            <div className="HoverBgOverlayBtn">
+              <Button
+                style={{
+                  background: "#001529",
+                  border: "none",
+                  color: "#fff"
+                }}
+                onClick={() => updateRPDetail("background")}
+              >
+                Edit
+              </Button>
+            </div>
+
             <img
               src={backgroundImage}
               alt="backgroundImage"
@@ -367,6 +381,7 @@ const RolePlayDetails = props => {
                           border: "none",
                           color: "#fff"
                         }}
+                        onClick={() => updateRPDetail("avatar_left_img")}
                       >
                         Edit
                       </Button>
@@ -390,6 +405,7 @@ const RolePlayDetails = props => {
                           border: "none",
                           color: "#fff"
                         }}
+                        onClick={() => updateRPDetail("avatar_left_name")}
                       >
                         Edit
                       </Button>
@@ -422,6 +438,7 @@ const RolePlayDetails = props => {
                           border: "none",
                           color: "#fff"
                         }}
+                        onClick={() => updateRPDetail("avatar_right_img")}
                       >
                         Edit
                       </Button>
@@ -445,6 +462,7 @@ const RolePlayDetails = props => {
                           border: "none",
                           color: "#fff"
                         }}
+                        onClick={() => updateRPDetail("avatar_right_name")}
                       >
                         Edit
                       </Button>
@@ -503,6 +521,24 @@ const RolePlayDetails = props => {
         />
       ) : null}
       {/* edit conversation modal end */}
+
+      {/* update rp detail modal starts */}
+      <Modal
+        title="Update "
+        visible={showUpdateRolePlayModal}
+        onCancel={() => setShowUpdateRolePlayModal(false)}
+        destroyOnClose={true}
+        footer={false}
+      >
+        <UpdateRp
+          changeTypeRp={changeTypeRp}
+          closeModal={setShowUpdateRolePlayModal}
+          rolePlayId={rolePlayId}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+        />
+      </Modal>
+      {/* update rp detail modal ends */}
     </div>
   );
 };

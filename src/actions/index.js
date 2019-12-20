@@ -154,6 +154,7 @@ import { fetchSPOCList, createSPOC } from "./spocActions";
 import {
   rolePlayList,
   addRolePlay,
+  updateRolePlay,
   rolePlayConversationDetails,
   addConversation,
   rolePlayArticleParametersList,
@@ -322,8 +323,10 @@ export {
   getAlreadyMappedParameters,
   getAlreadyMappedServices,
   getAlreadyMappedModuleServices,
+  // role play
   rolePlayList,
   addRolePlay,
+  updateRolePlay,
   rolePlayConversationDetails,
   addConversation,
   rolePlayArticleParametersList,
