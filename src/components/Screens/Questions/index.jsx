@@ -281,7 +281,7 @@ class QuestionList extends React.Component {
         title: "Answer",
         key: "answer",
         render: (record, i) => (
-          <span key={i}>
+          <span key={i} style={{ maxWidth: "385px" }}>
             {Array.isArray(record.choices3) === true ? (
               record.choices3.length === 0 ? null : (
                 record.choices3.map(item => {
@@ -289,7 +289,9 @@ class QuestionList extends React.Component {
                     marginTop: "7px",
                     background: "#fff",
                     border: "0.5px solid #999999",
-                    color: "#222222"
+                    color: "#222222",
+                    maxWidth: "200px",
+                    whiteSpace: "normal"
                   };
 
                   if (item.id === record.answer) {
@@ -297,7 +299,9 @@ class QuestionList extends React.Component {
                       marginTop: "7px",
                       background: "rgba(46, 220, 60, 1)",
                       border: "0.5px solid #2edc3c",
-                      color: "#ffffff"
+                      color: "#ffffff",
+                      maxWidth: "200px",
+                      whiteSpace: "normal"
                     };
                   }
 
