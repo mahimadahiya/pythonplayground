@@ -39,9 +39,6 @@ const RolePlayDetails = props => {
     false
   );
 
-  const [description, setDescription] = useState("");
-  const [postDescription, setPostDescription] = useState("");
-
   const [editConverseDetails, setEditConverseDetails] = useState({});
   const [showEditConverseModal, setShowEditConverseModal] = useState(false);
 
@@ -73,9 +70,6 @@ const RolePlayDetails = props => {
           details.result.rp_article_details.avatar_details[1].media_url
         );
         setBackgroundImage(details.result.rp_article_details.background_url);
-
-        setDescription(details.result.rp_article_details.description);
-        setPostDescription(details.result.rp_article_details.post_description);
 
         details.result.article_conversation = details.result.article_conversation.map(
           item => {
@@ -316,117 +310,117 @@ const RolePlayDetails = props => {
         </div>
         <div
           style={{
-            border: "1px solid #999999",
             margin: "20px",
             borderRadius: "5px",
             padding: "35px"
           }}
         >
-          <Row style={{ marginTop: "50px" }}>
-            <Col sm={22} md={16} lg={16} style={{ marginLeft: "40px" }}>
-              <div style={{ display: "flex", marginBottom: "30px" }}>
-                <div style={{ width: "30%" }}>
-                  <h3
+          <div
+            style={{
+              maxWidth: "900px",
+              margin: "auto",
+              position: "relative"
+            }}
+          >
+            <img
+              src={backgroundImage}
+              alt="backgroundImage"
+              style={{
+                maxWidth: "100%"
+              }}
+            />
+
+            <div
+              style={{
+                position: "absolute",
+                bottom: "20px",
+                width: "100%"
+              }}
+            >
+              <div
+                style={{
+                  display: "flex"
+                }}
+              >
+                {/* avatar 1 starts */}
+                <div
+                  style={{
+                    margin: "auto",
+                    width: "45%"
+                  }}
+                >
+                  <div
                     style={{
-                      border: "1px solid #999999",
+                      margin: "20px auto",
                       padding: "12px",
-                      marginBottom: "30px",
-                      borderRadius: "5px"
+                      borderRadius: "5px",
+                      // maxHeight: "200px",
+                      textAlign: "center"
+                    }}
+                  >
+                    <img
+                      src={avatarOneImage}
+                      style={{
+                        maxHeight: "30vh"
+                      }}
+                      alt="leftAvatar"
+                    />
+                  </div>
+                  <div
+                    style={{
+                      padding: "7px 12px",
+                      margin: "10px auto",
+                      borderRadius: "5px",
+                      maxWidth: "150px",
+                      textAlign: "center",
+                      background: "#D21B3E",
+                      color: "#fff"
                     }}
                   >
                     {avatarOneName}
-                  </h3>
+                  </div>
                 </div>
-                <div style={{ width: "30%", textAlign: "center" }}>
-                  <img
-                    src={avatarOneImage}
-                    style={{ width: "80px" }}
-                    alt="leftAvatar"
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: "flex", marginBottom: "30px" }}>
-                <div style={{ width: "30%" }}>
-                  <h3
+                {/* avatar 1 ends */}
+                {/* avatar 2 starts */}
+                <div
+                  style={{
+                    margin: "auto",
+                    width: "45%"
+                  }}
+                >
+                  <div
                     style={{
-                      border: "1px solid #999999",
+                      margin: "20px auto",
                       padding: "12px",
-                      marginBottom: "30px",
-                      borderRadius: "5px"
+                      borderRadius: "5px",
+                      // maxHeight: "200px",
+                      textAlign: "center"
+                    }}
+                  >
+                    <img
+                      src={avatarTwoImage}
+                      style={{
+                        maxHeight: "30vh"
+                      }}
+                      alt="leftAvatar"
+                    />
+                  </div>
+                  <div
+                    style={{
+                      padding: "7px 12px",
+                      margin: "10px auto",
+                      borderRadius: "5px",
+                      maxWidth: "150px",
+                      textAlign: "center",
+                      background: "#FCA829",
+                      color: "#fff"
                     }}
                   >
                     {avatarTwoName}
-                  </h3>
+                  </div>
                 </div>
-                <div style={{ width: "30%", textAlign: "center" }}>
-                  <img
-                    src={avatarTwoImage}
-                    style={{ width: "80px" }}
-                    alt="rightAvatar"
-                  />
-                </div>
+                {/* avatar 2 ends */}
               </div>
-            </Col>
-            <Col sm={22} md={7} lg={7}>
-              <div style={{ textAlign: "center" }}>
-                <div>
-                  <img
-                    style={{ height: "150px" }}
-                    src={backgroundImage}
-                    alt="background"
-                  />
-                </div>
-                <div style={{ marginTop: "10px" }}>
-                  <span style={{ fontWeight: "bold" }}>Background</span>
-                </div>
-              </div>
-            </Col>
-          </Row>
-
-          <div
-            style={{
-              border: "1px solid #999999",
-              borderRadius: "5px",
-              margin: "30px 0px 20px 0px",
-              padding: "15px 30px",
-              fontSize: "15px"
-            }}
-          >
-            <div style={{ color: "#333333", fontWeight: 600 }}>
-              Description:
-            </div>
-            <div>
-              {description === "" ||
-              description === undefined ||
-              description === null ? (
-                <span>-</span>
-              ) : (
-                <span>{description}</span>
-              )}
-            </div>
-          </div>
-
-          <div
-            style={{
-              border: "1px solid #999999",
-              borderRadius: "5px",
-              margin: "30px 0px 20px 0px",
-              padding: "15px 30px",
-              fontSize: "15px"
-            }}
-          >
-            <div style={{ color: "#333333", fontWeight: 600 }}>
-              Post Description:
-            </div>
-            <div>
-              {postDescription === "" ||
-              postDescription === undefined ||
-              postDescription === null ? (
-                <span>-</span>
-              ) : (
-                <span>{postDescription}</span>
-              )}
             </div>
           </div>
         </div>
