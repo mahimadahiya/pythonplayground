@@ -11,8 +11,6 @@ const UpdateMappedActivity = props => {
   const [mappedEntityArticle, setMappedEntityArticle] = useState([]);
   const [numberOfAttempts, setNumberOfAttempts] = useState(null);
 
-  // console.log(props.selectedMappedActivityDetails.parameter_id);
-
   useEffect(() => {
     const fetchList = () => {
       let tempList = [];
@@ -23,7 +21,6 @@ const UpdateMappedActivity = props => {
       ) {
         tempList.push(props.selectedMappedActivityDetails.mapped_entity[i].id);
       }
-      // console.log(tempList);
       setMappedEntityArticle(tempList);
     };
     fetchList();
@@ -156,7 +153,6 @@ const UpdateMappedActivity = props => {
 
   const onGameAttemptsChange = e => {
     setNumberOfAttempts(e);
-    //console.log(e);
   };
 
   const onUpdateLi = async () => {
@@ -213,8 +209,6 @@ const UpdateMappedActivity = props => {
       }
     }
 
-    // console.log(formValues);
-
     try {
       await wyrTreeActivityUpdate(
         user.Authorization,
@@ -224,7 +218,6 @@ const UpdateMappedActivity = props => {
       message.success("Entity Mapped Succesfully");
       props.setMappedActivityUpdateModalShow(false);
       props.setLoadAgain(!props.loadAgain);
-      // props.submitCreateNewActivity(props.selectedTechnicalId);
       props.closeMapLIModal();
     } catch (error) {
       props.setMappedActivityUpdateModalShow(false);

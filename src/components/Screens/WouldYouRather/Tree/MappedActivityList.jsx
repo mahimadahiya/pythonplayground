@@ -16,7 +16,6 @@ import MappedActivityDetails from "./MappedActivityDetails";
 import UpdateMappedActivity from "./UpdateMappedActivity";
 
 const MappedActivityList = props => {
-  //console.log(props);
   const user = useSelector(state => state.userAuth);
   const [mappedActivityLoading, setMappedActivityLoading] = useState(false);
   const [mappedList, setMappedList] = useState([]);
@@ -136,7 +135,6 @@ const MappedActivityList = props => {
       message.success("Activity Deleted");
       setMappedActivityLoading(false);
       props.submitCreateNewActivity(props.selectedTechnicalId);
-      // props.setAddLIModalShow(false);
       props.closeMapLIModal();
     } catch (error) {
       setMappedActivityLoading(false);

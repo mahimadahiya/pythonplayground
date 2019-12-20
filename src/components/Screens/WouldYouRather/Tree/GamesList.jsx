@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Card, Select, Button, message } from "antd";
+import { Select } from "antd";
 import { getMappingActivityEntityList } from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const GameList = props => {
   const user = useSelector(state => state.userAuth);
-
   const [game, setGame] = useState([]);
 
   const renderOptions = game => {
@@ -39,14 +38,11 @@ const GameList = props => {
           props.selectedParameterId
         );
         setGame(response.data.result.game);
-        //console.log(response);
       } catch (error) {}
     };
 
     fetchList();
   }, [user.Authorization]);
-
-  //console.log(mappedEntity);
 
   return (
     <div>

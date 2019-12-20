@@ -219,7 +219,6 @@ const WyrTreeIndex = props => {
         setLoading(true);
         setSelectedTechnicalId(value);
         const response = await wyrTreeList(user.Authorization, value);
-        // console.log(response.data);
         if (response.data.result.wyr_episode_list.length > 0) {
           setList(response.data.result.wyr_episode_list);
         } else {
@@ -233,7 +232,6 @@ const WyrTreeIndex = props => {
   };
 
   const onMappingParameters = data => {
-    // console.log(data);
     setParamActionId(data.id);
     setShowMapParametersModal(true);
   };
@@ -297,7 +295,6 @@ const WyrTreeIndex = props => {
   };
 
   const onEdit = data => {
-    //console.log(data);
     setUpdateEpisodeDetails(data);
     setEditModalShow(true);
   };

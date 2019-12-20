@@ -102,7 +102,6 @@ const Create = props => {
       };
 
       try {
-        // console.log(formValues);
         setLoading(true);
         await wyrTreeCreate(user.Authorization, formValues);
         setLoading(false);

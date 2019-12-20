@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Select, Button, message } from "antd";
+import { Select } from "antd";
 import { getMappingActivityEntityList } from "../../../../actions";
 import { useSelector } from "react-redux";
 
@@ -39,14 +39,11 @@ const ArticleList = props => {
           props.selectedParameterId
         );
         setArticles(response.data.result.article);
-        //console.log(response.data.result.article);
       } catch (error) {}
     };
 
     fetchList();
   }, [user.Authorization]);
-
-  //console.log(mappedEntity);
 
   return (
     <div>
