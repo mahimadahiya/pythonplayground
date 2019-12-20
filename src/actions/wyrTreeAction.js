@@ -110,3 +110,17 @@ export const getStimulationList = async authToken => {
   const response = await adminPanelApi(authToken).get("/v1/admin/simulations");
   return response;
 };
+
+/* mapping activity  entity list  */
+
+export const getMappingActivityEntityList = async (authToken, parameter_id) => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/wyr/episode/parameter/activity/list",
+    {
+      params: {
+        parameter_id: parameter_id
+      }
+    }
+  );
+  return response;
+};

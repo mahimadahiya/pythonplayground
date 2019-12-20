@@ -93,6 +93,7 @@ const AddLI = props => {
           selectedEpisodeDetails={selectedEpisodeDetails}
           selectedTechnicalId={props.selectedTechnicalId}
           submitCreateNewActivity={props.submitCreateNewActivity}
+          closeMapLIModal={props.closeMapLIModal}
         />
       </div>
       {selectedEpisodeDetails.mapped_activity.length < 3 ? (

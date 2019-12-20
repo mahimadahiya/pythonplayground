@@ -3,23 +3,23 @@ import { Card, Select, Button, message } from "antd";
 import { getMappingActivityEntityList } from "../../../../actions";
 import { useSelector } from "react-redux";
 
-const ArticleList = props => {
+const GameList = props => {
   const user = useSelector(state => state.userAuth);
 
-  const [articles, setArticles] = useState([]);
+  const [game, setGame] = useState([]);
 
-  const renderOptions = articles => {
-    return articles.map(articles => {
+  const renderOptions = game => {
+    return game.map(game => {
       return (
-        <Select.Option key={articles.id} value={articles.id}>
-          {articles.name}
+        <Select.Option key={game.id} value={game.id}>
+          {game.name}
         </Select.Option>
       );
     });
   };
 
-  const filterArticles = (val, option, articles) => {
-    const filteredList = articles.filter(({ name }) => {
+  const filterGame = (val, option, game) => {
+    const filteredList = game.filter(({ name }) => {
       if (name.toLowerCase().includes(val) || option.key.includes(val)) {
         return true;
       }
@@ -38,8 +38,8 @@ const ArticleList = props => {
           user.Authorization,
           props.selectedParameterId
         );
-        setArticles(response.data.result.article);
-        //console.log(response.data.result.article);
+        setGame(response.data.result.game);
+        //console.log(response);
       } catch (error) {}
     };
 
@@ -51,19 +51,19 @@ const ArticleList = props => {
   return (
     <div>
       <Select
-        placeholder="Select a Article"
+        placeholder="Select a Game"
         onChange={props.onChange}
         mode={props.mode}
         style={{ width: "100%" }}
         showSearch
         value={props.value}
         allowClear
-        filterOption={(val, option) => filterArticles(val, option, articles)}
+        filterOption={(val, option) => filterGame(val, option, game)}
       >
-        {renderOptions(articles)}
+        {renderOptions(game)}
       </Select>
     </div>
   );
 };
 
-export default ArticleList;
+export default GameList;

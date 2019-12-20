@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Card, Select, Button, message } from "antd";
+import { Card, Select, Button, message, InputNumber } from "antd";
 import { wyrTreeActivityUpdate } from "../../../../actions";
 import ArticleList from "./ArticlesList";
 import SimulationList from "./SimulationList";
+import GameList from "./GamesList";
 import { useSelector } from "react-redux";
 
 const UpdateMappedActivity = props => {
   const user = useSelector(state => state.userAuth);
   const [mappedEntityArticle, setMappedEntityArticle] = useState([]);
+  const [numberOfAttempts, setNumberOfAttempts] = useState(null);
+
+  // console.log(props.selectedMappedActivityDetails.parameter_id);
 
   useEffect(() => {
     const fetchList = () => {
@@ -48,6 +52,9 @@ const UpdateMappedActivity = props => {
                     props.selectedMappedActivityDetails
                   }
                   value={mappedEntityArticle}
+                  selectedParameterId={
+                    props.selectedMappedActivityDetails.parameter_id
+                  }
                 />
               </div>
             </div>
@@ -71,9 +78,64 @@ const UpdateMappedActivity = props => {
                   mode="multiple"
                   onChange={onSimulationChange}
                   value={mappedEntityArticle}
+                  selectedParameterId={
+                    props.selectedMappedActivityDetails.parameter_id
+                  }
                 />
               </div>
             </div>
+          </div>
+        );
+      case "game":
+        return (
+          <div>
+            <div style={{ display: "flex", marginBottom: "25px" }}>
+              <div
+                style={{
+                  width: "140px",
+                  fontWeight: 600
+                }}
+              >
+                Game
+                <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+              </div>
+              <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+                <div>
+                  <GameList
+                    mode="multiple"
+                    onChange={onGameChange}
+                    value={mappedEntityArticle}
+                    selectedParameterId={
+                      props.selectedMappedActivityDetails.parameter_id
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+            {/* 
+            <div style={{ display: "flex", marginBottom: "25px" }}>
+              <div
+                style={{
+                  width: "140px",
+                  fontWeight: 600
+                }}
+              >
+                No. of Attempts
+                <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+              </div>
+              <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+                <div>
+                  <InputNumber
+                    onChange={e => onGameAttemptsChange(e)}
+                    min={1}
+                    style={{
+                      width: "100%"
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+            */}
           </div>
         );
       default:
@@ -87,6 +149,14 @@ const UpdateMappedActivity = props => {
 
   const onSimulationChange = val => {
     setMappedEntityArticle(val);
+  };
+
+  const onGameChange = val => {
+    setMappedEntityArticle(val);
+  };
+
+  const onGameAttemptsChange = e => {
+    setNumberOfAttempts(e.target.value);
   };
 
   const onUpdateLi = async () => {
@@ -117,6 +187,28 @@ const UpdateMappedActivity = props => {
       }
     }
 
+    if (props.selectedMappedActivityDetails.activity__slug === "game") {
+      /*if (
+        numberOfAttempts === null ||
+        numberOfAttempts === undefined ||
+        numberOfAttempts === "" ||
+        numberOfAttempts === " "
+      ) {
+        message.warning("Please enter no. of attempts");
+        return;
+      }*/
+      if (mappedEntityArticle.length < 1) {
+        message.warning("Please select game");
+        return;
+      } else {
+        formValues = {
+          extra_details: JSON.stringify({
+            game_list: mappedEntityArticle
+          })
+        };
+      }
+    }
+
     try {
       await wyrTreeActivityUpdate(
         user.Authorization,
@@ -124,8 +216,9 @@ const UpdateMappedActivity = props => {
         formValues
       );
       message.success("Entity Mapped Succesfully");
-      props.submitCreateNewActivity(props.selectedTechnicalId);
       props.setMappedActivityUpdateModalShow(false);
+      props.setLoadAgain(!props.loadAgain);
+      props.closeMapLIModal();
     } catch (error) {
       props.setMappedActivityUpdateModalShow(false);
     }

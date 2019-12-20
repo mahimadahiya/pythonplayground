@@ -193,7 +193,8 @@ import {
   wyrTreeActivityCreate,
   wyrTreeActivityDelete,
   wyrTreeActivityUpdate,
-  getStimulationList
+  getStimulationList,
+  getMappingActivityEntityList
 } from "./wyrTreeAction";
 
 import {
@@ -365,7 +366,8 @@ export {
   deleteTechnicalAssesment,
   createNewOrganizationAssesment,
   updateOrganizationAssesment,
-  getStimulationList
+  getStimulationList,
+  getMappingActivityEntityList
 };
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>REFACTOR BELOW>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

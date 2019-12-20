@@ -32,11 +32,13 @@ const MappedActivityList = props => {
     setSelectedMappedActivityDetails
   ] = useState([]);
 
+  const [loadAgain, setLoadAgain] = useState(false);
+
   useEffect(() => {
     setMappedActivityLoading(true);
     setMappedList(props.selectedEpisodeDetails.mapped_activity);
     setMappedActivityLoading(false);
-  }, []);
+  }, [loadAgain]);
 
   const onDetailsClick = data => {
     setSelectedActivityDetails(data);
@@ -133,8 +135,9 @@ const MappedActivityList = props => {
       await wyrTreeActivityDelete(user.Authorization, selectedId);
       message.success("Activity Deleted");
       setMappedActivityLoading(false);
-      props.submitCreateNewActivity(props.selectedTechnicalId);
-      props.setAddLIModalShow(false);
+      // props.submitCreateNewActivity(props.selectedTechnicalId);
+      // props.setAddLIModalShow(false);
+      props.closeMapLIModal();
     } catch (error) {
       setMappedActivityLoading(false);
     }
@@ -182,8 +185,9 @@ const MappedActivityList = props => {
         <UpdateMappedActivity
           selectedMappedActivityDetails={selectedMappedActivityDetails}
           setMappedActivityUpdateModalShow={setMappedActivityUpdateModalShow}
-          submitCreateNewActivity={props.submitCreateNewActivity}
-          selectedTechnicalId={props.selectedTechnicalId}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+          closeMapLIModal={props.closeMapLIModal}
         />
       </Modal>
     </div>

@@ -430,6 +430,7 @@ const WyrTreeIndex = props => {
           selectedEpisodeDetails={selectedEpisodeDetails}
           submitCreateNewActivity={submitCreateNewActivity}
           selectedTechnicalId={selectedTechnicalId}
+          closeMapLIModal={closeMapLIModal}
         />
       </Modal>
       {/* Map LI modal ends */}
