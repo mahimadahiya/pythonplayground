@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Card, Select, Button, message, InputNumber } from "antd";
-import { wyrTreeActivityUpdate } from "../../../../actions";
+import {
+  Card,
+  Select,
+  Button,
+  message,
+  InputNumber,
+  Popconfirm,
+  Table
+} from "antd";
+import {
+  getMappingActivityEntityList,
+  wyrTreeActivityUpdate
+} from "../../../../actions";
 import ArticleList from "./ArticlesList";
 import SimulationList from "./SimulationList";
 import GameList from "./GamesList";
@@ -9,22 +20,137 @@ import { useSelector } from "react-redux";
 const UpdateMappedActivity = props => {
   const user = useSelector(state => state.userAuth);
   const [mappedEntityArticle, setMappedEntityArticle] = useState([]);
-  const [numberOfAttempts, setNumberOfAttempts] = useState(null);
+  const [numberOfAttempts, setNumberOfAttempts] = useState([]);
+  const [normalGameList, setNormalGameList] = useState([]);
+  const [gameId, setGameId] = useState(null);
+  const [gameTableListLoading, setGameTableListLoading] = useState(false);
 
   useEffect(() => {
-    const fetchList = () => {
+    const fetchList = async () => {
+      setGameTableListLoading(true);
       let tempList = [];
       for (
         let i = 0;
         i < props.selectedMappedActivityDetails.mapped_entity.length;
         i++
       ) {
-        tempList.push(props.selectedMappedActivityDetails.mapped_entity[i].id);
+        if (props.selectedMappedActivityDetails.activity__slug === "game") {
+          tempList = [
+            ...tempList,
+            {
+              id: props.selectedMappedActivityDetails.mapped_entity[i].id,
+              n_attempt:
+                props.selectedMappedActivityDetails.mapped_entity[i].n_attempt,
+              name: props.selectedMappedActivityDetails.mapped_entity[i].name,
+              is_selected: true
+            }
+          ];
+        } else {
+          tempList.push(
+            props.selectedMappedActivityDetails.mapped_entity[i].id
+          );
+        }
       }
       setMappedEntityArticle(tempList);
+      setGameTableListLoading(false);
+
+      try {
+        const response = await getMappingActivityEntityList(
+          user.Authorization,
+          props.selectedMappedActivityDetails.parameter_id
+        );
+
+        let apiResponseGameList = response.data.result.game;
+        let mappedGameList = props.selectedMappedActivityDetails.mapped_entity;
+
+        for (let i = 0; i < apiResponseGameList.length; i++) {
+          apiResponseGameList[i]["is_selected"] = false;
+          apiResponseGameList[i]["n_attempt"] = null;
+
+          for (let j = 0; j < mappedGameList.length; j++) {
+            if (apiResponseGameList[i].id === mappedGameList[j].id) {
+              //console.log(apiResponseGameList[i]);
+              apiResponseGameList[i]["n_attempt"] =
+                mappedGameList[j]["n_attempt"];
+              apiResponseGameList[i]["is_selected"] = !apiResponseGameList[i][
+                "is_selected"
+              ];
+            }
+          }
+        }
+        setNormalGameList(apiResponseGameList);
+      } catch (error) {
+        setGameTableListLoading(false);
+      }
     };
     fetchList();
-  }, []);
+  }, [user.Authorization]);
+
+  const columnName = [
+    {
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
+      render: record => {
+        return (
+          <div>
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record}
+          </div>
+        );
+      }
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: record => {
+        return (
+          <div>
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record}
+          </div>
+        );
+      }
+    },
+    {
+      title: "Attempts",
+      dataIndex: "n_attempt",
+      key: "n_attempt",
+      render: record => {
+        return (
+          <div>
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record}
+          </div>
+        );
+      }
+    },
+    {
+      title: "Actions",
+      key: "action",
+      render: record => (
+        <span>
+          <Popconfirm
+            title="Are you sure you want to delete ?"
+            okText="Yes"
+            cancelText="No"
+            // onConfirm={() => onDelete(record)}
+          >
+            <Button
+              type="link"
+              style={{ color: "red", padding: 0, marginRight: "10px" }}
+            >
+              Delete
+            </Button>
+          </Popconfirm>
+        </span>
+      )
+    }
+  ];
 
   const renderInputOptions = details => {
     switch (details.activity__slug) {
@@ -99,17 +225,17 @@ const UpdateMappedActivity = props => {
               <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
                 <div>
                   <GameList
-                    mode="multiple"
+                    mode="default"
                     onChange={onGameChange}
-                    value={mappedEntityArticle}
+                    // value={mappedEntityArticle.id}
                     selectedParameterId={
                       props.selectedMappedActivityDetails.parameter_id
                     }
+                    normalGameList={normalGameList}
                   />
                 </div>
               </div>
             </div>
-
             <div style={{ display: "flex", marginBottom: "25px" }}>
               <div
                 style={{
@@ -124,6 +250,7 @@ const UpdateMappedActivity = props => {
                 <div>
                   <InputNumber
                     onChange={onGameAttemptsChange}
+                    placeholder="Number of Attempts"
                     min={1}
                     style={{
                       width: "100%"
@@ -131,6 +258,36 @@ const UpdateMappedActivity = props => {
                   />
                 </div>
               </div>
+            </div>
+
+            <div>
+              <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
+                <Button
+                  type="primary"
+                  onClick={() => onAddGame()}
+                  disabled={
+                    normalGameList.length === mappedEntityArticle.length
+                  }
+                >
+                  Add
+                </Button>
+              </div>
+            </div>
+
+            <div>
+              <Card
+                bodyStyle={{ padding: 0, fontSize: "15px" }}
+                // loading={mappedActivityLoading}
+                bordered={false}
+              >
+                <Table
+                  loading={gameTableListLoading}
+                  dataSource={mappedEntityArticle}
+                  columns={columnName}
+                  rowKey={row => row.id}
+                  pagination={false}
+                />
+              </Card>
             </div>
           </div>
         );
@@ -148,12 +305,48 @@ const UpdateMappedActivity = props => {
   };
 
   const onGameChange = val => {
-    setMappedEntityArticle(val);
+    //setMappedEntityArticle(val);
+    setGameId(val);
   };
 
   const onGameAttemptsChange = e => {
     setNumberOfAttempts(e);
   };
+
+  const onAddGame = () => {
+    setGameTableListLoading(true);
+    let final_game_list = [];
+    final_game_list = [...mappedEntityArticle];
+    final_game_list = [
+      ...final_game_list,
+      {
+        id: gameId,
+        n_attempt: numberOfAttempts,
+        is_selected: true
+      }
+    ];
+    for (let i = 0; i < normalGameList.length; i++) {
+      if (normalGameList[i].id === gameId) {
+        normalGameList[i]["is_selected"] = !normalGameList[i]["is_selected"];
+      }
+    }
+    setNormalGameList(normalGameList);
+    setMappedEntityArticle(final_game_list);
+    setGameTableListLoading(false);
+  };
+
+  const onDelete = data => {
+    for (let i = 0; i < normalGameList.length; i++) {
+      if (normalGameList[i].id === data.id) {
+        //console.log(normalGameList[i]);
+        normalGameList[i]["n_attempt"] = null;
+        normalGameList[i]["is_selected"] = !normalGameList[i]["is_selected"];
+      }
+    }
+    setNormalGameList(normalGameList);
+  };
+
+  // console.log(numberOfAttempts);
 
   const onUpdateLi = async () => {
     let formValues = {};
@@ -185,7 +378,10 @@ const UpdateMappedActivity = props => {
 
     if (props.selectedMappedActivityDetails.activity__slug === "game") {
       const gameList = mappedEntityArticle.map(item => {
-        return { game_id: item, n_attempt: numberOfAttempts };
+        return {
+          game_id: item.id,
+          n_attempt: item.n_attempt
+        };
       });
       if (
         numberOfAttempts === null ||
@@ -208,6 +404,8 @@ const UpdateMappedActivity = props => {
         };
       }
     }
+
+    //console.log(formValues);
 
     try {
       await wyrTreeActivityUpdate(

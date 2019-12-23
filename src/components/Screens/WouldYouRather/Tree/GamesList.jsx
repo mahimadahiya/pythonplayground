@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Select } from "antd";
-import { getMappingActivityEntityList } from "../../../../actions";
+import {} from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const GameList = props => {
@@ -10,7 +10,11 @@ const GameList = props => {
   const renderOptions = game => {
     return game.map(game => {
       return (
-        <Select.Option key={game.id} value={game.id}>
+        <Select.Option
+          key={game.id}
+          value={game.id}
+          disabled={game.is_selected}
+        >
           {game.name}
         </Select.Option>
       );
@@ -30,20 +34,6 @@ const GameList = props => {
     return false;
   };
 
-  useEffect(() => {
-    const fetchList = async () => {
-      try {
-        const response = await getMappingActivityEntityList(
-          user.Authorization,
-          props.selectedParameterId
-        );
-        setGame(response.data.result.game);
-      } catch (error) {}
-    };
-
-    fetchList();
-  }, [user.Authorization]);
-
   return (
     <div>
       <Select
@@ -56,7 +46,7 @@ const GameList = props => {
         allowClear
         filterOption={(val, option) => filterGame(val, option, game)}
       >
-        {renderOptions(game)}
+        {renderOptions(props.normalGameList)}
       </Select>
     </div>
   );
