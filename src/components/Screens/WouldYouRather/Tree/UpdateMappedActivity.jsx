@@ -381,8 +381,6 @@ const UpdateMappedActivity = props => {
     setNormalGameList(normalGameList);
   };
 
-  // console.log(numberOfAttempts);
-
   const onUpdateLi = async () => {
     let formValues = {};
     if (props.selectedMappedActivityDetails.activity__slug === "article") {
