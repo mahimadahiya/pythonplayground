@@ -23,6 +23,7 @@ const UpdateMappedActivity = props => {
   const [numberOfAttempts, setNumberOfAttempts] = useState([]);
   const [normalGameList, setNormalGameList] = useState([]);
   const [gameId, setGameId] = useState(null);
+  const [gameName, setGameName] = useState("");
   const [gameTableListLoading, setGameTableListLoading] = useState(false);
 
   useEffect(() => {
@@ -307,6 +308,12 @@ const UpdateMappedActivity = props => {
   const onGameChange = val => {
     //setMappedEntityArticle(val);
     setGameId(val);
+    const gameName = normalGameList.find(item => {
+      if (item.id === val) {
+        return item;
+      }
+    });
+    setGameName(gameName.name);
   };
 
   const onGameAttemptsChange = e => {
@@ -328,6 +335,7 @@ const UpdateMappedActivity = props => {
       ...final_game_list,
       {
         id: gameId,
+        name: gameName,
         n_attempt: numberOfAttempts,
         is_selected: true
       }
