@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { rolePlayList } from "../../../actions";
+import { rolePlayList, deleteRolePLay } from "../../../actions";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Button, Divider } from "antd";
+import { Table, Card, Row, Button, Divider, Popconfirm, message } from "antd";
 import moment from "moment";
 import CreateRolePlayModal from "./CreateRolePlayModal";
 import MapRolePlayParametersModal from "./MapRolePlayParametersModal";
@@ -101,16 +101,49 @@ const RolePlay = () => {
       dataIndex: "Map",
       key: "Map",
       render: (text, record) => (
-        <span
-          onClick={() => onMappingParameters(record)}
-          style={{ cursor: "pointer", color: "#22a4ef" }}
-        >
-          Map Parameters
+        <span>
+          <span
+            onClick={() => onMappingParameters(record)}
+            style={{ cursor: "pointer", color: "#22a4ef" }}
+          >
+            Map Parameters
+          </span>
           <Divider type="vertical" />
+          <Popconfirm
+            onConfirm={() => onDeleteRolePlay(record.id)}
+            okText="Delete"
+            placement="bottomLeft"
+            title={"Are you sure you want to delete?"}
+          >
+            <Button
+              style={{ color: "red", background: "#fff", border: "none" }}
+            >
+              Delete
+            </Button>
+          </Popconfirm>
         </span>
       )
     }
   ];
+
+  const onDeleteRolePlay = async id => {
+    if (id === null || id === undefined || id === "") {
+      message.warning("Please select role play");
+      return;
+    }
+
+    let rpId = id;
+
+    setLoading(true);
+    try {
+      setLoading(false);
+      await deleteRolePLay(user.Authorization, rpId);
+      message.success("Role Play deleted");
+      setLoadAgain(!loadAgain);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
 
   return (
     <div>

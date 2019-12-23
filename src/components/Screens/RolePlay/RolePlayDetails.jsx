@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  Row,
-  Col,
-  List,
-  Button,
-  Card,
-  Popconfirm,
-  message,
-  Divider
-} from "antd";
+import { Modal, Button, Card, Popconfirm, message, Divider } from "antd";
 import {
   rolePlayConversationDetails,
   rolePlayConversationChangeStatus,
@@ -20,6 +11,8 @@ import AddConversationModal from "./AddConversationModal";
 import EditConversationModal from "./EditConversationModal";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
+import "./index.css";
+import UpdateRp from "./UpdateRp";
 
 const RolePlayDetails = props => {
   const user = useSelector(state => state.userAuth);
@@ -39,15 +32,15 @@ const RolePlayDetails = props => {
     false
   );
 
-  const [description, setDescription] = useState("");
-  const [postDescription, setPostDescription] = useState("");
-
   const [editConverseDetails, setEditConverseDetails] = useState({});
   const [showEditConverseModal, setShowEditConverseModal] = useState(false);
 
   const [typeLayoutList, setTypeLayoutList] = useState([]);
 
   const [status, setStatus] = useState(null);
+
+  const [showUpdateRolePlayModal, setShowUpdateRolePlayModal] = useState(false);
+  const [changeTypeRp, setChangeTypeRp] = useState("");
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -73,9 +66,6 @@ const RolePlayDetails = props => {
           details.result.rp_article_details.avatar_details[1].media_url
         );
         setBackgroundImage(details.result.rp_article_details.background_url);
-
-        setDescription(details.result.rp_article_details.description);
-        setPostDescription(details.result.rp_article_details.post_description);
 
         details.result.article_conversation = details.result.article_conversation.map(
           item => {
@@ -293,6 +283,11 @@ const RolePlayDetails = props => {
     setConversationDetails(arrayMove(conversationDetails, oldIndex, newIndex));
   };
 
+  const updateRPDetail = type => {
+    setChangeTypeRp(type);
+    setShowUpdateRolePlayModal(true);
+  };
+
   return (
     <div>
       <Card loading={loading} bodyStyle={{ padding: "0px" }}>
@@ -316,117 +311,166 @@ const RolePlayDetails = props => {
         </div>
         <div
           style={{
-            border: "1px solid #999999",
             margin: "20px",
             borderRadius: "5px",
             padding: "35px"
           }}
         >
-          <Row style={{ marginTop: "50px" }}>
-            <Col sm={22} md={16} lg={16} style={{ marginLeft: "40px" }}>
-              <div style={{ display: "flex", marginBottom: "30px" }}>
-                <div style={{ width: "30%" }}>
-                  <h3
-                    style={{
-                      border: "1px solid #999999",
-                      padding: "12px",
-                      marginBottom: "30px",
-                      borderRadius: "5px"
-                    }}
-                  >
-                    {avatarOneName}
-                  </h3>
-                </div>
-                <div style={{ width: "30%", textAlign: "center" }}>
-                  <img
-                    src={avatarOneImage}
-                    style={{ width: "80px" }}
-                    alt="leftAvatar"
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: "flex", marginBottom: "30px" }}>
-                <div style={{ width: "30%" }}>
-                  <h3
-                    style={{
-                      border: "1px solid #999999",
-                      padding: "12px",
-                      marginBottom: "30px",
-                      borderRadius: "5px"
-                    }}
-                  >
-                    {avatarTwoName}
-                  </h3>
-                </div>
-                <div style={{ width: "30%", textAlign: "center" }}>
-                  <img
-                    src={avatarTwoImage}
-                    style={{ width: "80px" }}
-                    alt="rightAvatar"
-                  />
-                </div>
-              </div>
-            </Col>
-            <Col sm={22} md={7} lg={7}>
-              <div style={{ textAlign: "center" }}>
-                <div>
-                  <img
-                    style={{ height: "150px" }}
-                    src={backgroundImage}
-                    alt="background"
-                  />
-                </div>
-                <div style={{ marginTop: "10px" }}>
-                  <span style={{ fontWeight: "bold" }}>Background</span>
-                </div>
-              </div>
-            </Col>
-          </Row>
-
           <div
             style={{
-              border: "1px solid #999999",
-              borderRadius: "5px",
-              margin: "30px 0px 20px 0px",
-              padding: "15px 30px",
-              fontSize: "15px"
+              maxWidth: "900px",
+              margin: "auto",
+              position: "relative"
             }}
+            className="avatarBackground"
           >
-            <div style={{ color: "#333333", fontWeight: 600 }}>
-              Description:
+            <div className="HoverBgOverlayBtn">
+              <Button
+                style={{
+                  background: "#001529",
+                  border: "none",
+                  color: "#fff"
+                }}
+                onClick={() => updateRPDetail("background")}
+              >
+                Edit
+              </Button>
             </div>
-            <div>
-              {description === "" ||
-              description === undefined ||
-              description === null ? (
-                <span>-</span>
-              ) : (
-                <span>{description}</span>
-              )}
-            </div>
-          </div>
 
-          <div
-            style={{
-              border: "1px solid #999999",
-              borderRadius: "5px",
-              margin: "30px 0px 20px 0px",
-              padding: "15px 30px",
-              fontSize: "15px"
-            }}
-          >
-            <div style={{ color: "#333333", fontWeight: 600 }}>
-              Post Description:
-            </div>
-            <div>
-              {postDescription === "" ||
-              postDescription === undefined ||
-              postDescription === null ? (
-                <span>-</span>
-              ) : (
-                <span>{postDescription}</span>
-              )}
+            <img
+              src={backgroundImage}
+              alt="backgroundImage"
+              style={{
+                maxWidth: "100%"
+              }}
+            />
+
+            <div
+              style={{
+                position: "absolute",
+                bottom: "20px",
+                width: "100%"
+              }}
+            >
+              <div
+                style={{
+                  display: "flex"
+                }}
+              >
+                {/* avatar 1 starts */}
+                <div
+                  style={{
+                    margin: "auto",
+                    width: "45%",
+                    position: "relative"
+                  }}
+                >
+                  <div className="avatarImageContainer avatarImage">
+                    <img
+                      src={avatarOneImage}
+                      style={{
+                        maxHeight: "30vh"
+                      }}
+                      alt="leftAvatar"
+                    />
+                    <div className="HoverOverlay"></div>
+                    <div className="HoverOverlayBtn">
+                      <Button
+                        style={{
+                          background: "#001529",
+                          border: "none",
+                          color: "#fff"
+                        }}
+                        onClick={() => updateRPDetail("avatar_left_img")}
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  </div>
+                  <div
+                    className="avatarImage"
+                    style={{ margin: "10px auto", padding: "10px 0px" }}
+                  >
+                    <div
+                      className="avatarName "
+                      style={{ background: "#d21b3e" }}
+                    >
+                      {avatarOneName}
+                    </div>
+                    <div className="HoverOverlay"></div>
+                    <div className="HoverOverlayBtn">
+                      <Button
+                        style={{
+                          background: "#001529",
+                          border: "none",
+                          color: "#fff"
+                        }}
+                        onClick={() => updateRPDetail("avatar_left_name")}
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                {/* avatar 1 ends */}
+
+                {/* avatar 2 starts */}
+                <div
+                  style={{
+                    margin: "auto",
+                    width: "45%",
+                    position: "relative"
+                  }}
+                >
+                  <div className="avatarImageContainer avatarImage">
+                    <img
+                      src={avatarTwoImage}
+                      style={{
+                        maxHeight: "30vh"
+                      }}
+                      alt="rightAvatar"
+                    />
+                    <div className="HoverOverlay"></div>
+                    <div className="HoverOverlayBtn">
+                      <Button
+                        style={{
+                          background: "#001529",
+                          border: "none",
+                          color: "#fff"
+                        }}
+                        onClick={() => updateRPDetail("avatar_right_img")}
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  </div>
+                  <div
+                    className="avatarImage"
+                    style={{ margin: "10px auto", padding: "10px 0px" }}
+                  >
+                    <div
+                      className="avatarName "
+                      style={{ background: "#d21b3e" }}
+                    >
+                      {avatarTwoName}
+                    </div>
+                    <div className="HoverOverlay"></div>
+                    <div className="HoverOverlayBtn">
+                      <Button
+                        style={{
+                          background: "#001529",
+                          border: "none",
+                          color: "#fff"
+                        }}
+                        onClick={() => updateRPDetail("avatar_right_name")}
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                {/* avatar 2 ends */}
+              </div>
             </div>
           </div>
         </div>
@@ -477,6 +521,24 @@ const RolePlayDetails = props => {
         />
       ) : null}
       {/* edit conversation modal end */}
+
+      {/* update rp detail modal starts */}
+      <Modal
+        title="Update "
+        visible={showUpdateRolePlayModal}
+        onCancel={() => setShowUpdateRolePlayModal(false)}
+        destroyOnClose={true}
+        footer={false}
+      >
+        <UpdateRp
+          changeTypeRp={changeTypeRp}
+          closeModal={setShowUpdateRolePlayModal}
+          rolePlayId={rolePlayId}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+        />
+      </Modal>
+      {/* update rp detail modal ends */}
     </div>
   );
 };
