@@ -321,6 +321,26 @@ const UpdateMappedActivity = props => {
   };
 
   const onAddGame = () => {
+    if (
+      gameId === null ||
+      gameId === undefined ||
+      gameId === "" ||
+      gameId === ""
+    ) {
+      message.warning("Please Select Game");
+      return;
+    }
+
+    if (
+      numberOfAttempts === null ||
+      numberOfAttempts === undefined ||
+      numberOfAttempts === "" ||
+      numberOfAttempts === ""
+    ) {
+      message.warning("Please Select Game");
+      return;
+    }
+
     for (let i = 0; i < mappedEntityArticle.length; i++) {
       if (mappedEntityArticle[i].id === gameId) {
         message.warning("Game is Already Selected");
