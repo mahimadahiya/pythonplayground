@@ -42,7 +42,7 @@ const GameList = props => {
         mode={props.mode}
         style={{ width: "100%" }}
         showSearch
-        value={props.value}
+        //value={props.value}
         allowClear
         filterOption={(val, option) => filterGame(val, option, game)}
       >

@@ -314,6 +314,13 @@ const UpdateMappedActivity = props => {
   };
 
   const onAddGame = () => {
+    for (let i = 0; i < mappedEntityArticle.length; i++) {
+      if (mappedEntityArticle[i].id === gameId) {
+        message.warning("Game is Already Selected");
+        return;
+      }
+    }
+
     setGameTableListLoading(true);
     let final_game_list = [];
     final_game_list = [...mappedEntityArticle];
