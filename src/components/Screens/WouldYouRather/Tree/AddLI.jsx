@@ -100,65 +100,65 @@ const AddLI = props => {
           setLoadAgain={setLoadAgain}
         />
       </div>
-      {selectedEpisodeDetails.mapped_activity.length < 3 ? (
-        <Card
-          bodyStyle={{ padding: 0, fontSize: "15px" }}
-          loading={loading}
-          bordered={false}
-        >
-          {/*activity starts */}
-          <div style={{ display: "flex", marginBottom: "25px" }}>
-            <div
-              style={{
-                width: "140px",
-                fontWeight: 600
-              }}
-            >
-              Activity
-              <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
-            </div>
-            <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-              <div>
-                <Select
-                  placeholder="Select Activity"
-                  style={{ width: "100%" }}
-                  onChange={onActivityChange}
-                >
-                  {renderActivityOptions(activity)}
-                </Select>
-              </div>
+      {/*{selectedEpisodeDetails.mapped_activity.length < 3 ? (*/}
+      <Card
+        bodyStyle={{ padding: 0, fontSize: "15px" }}
+        loading={loading}
+        bordered={false}
+      >
+        {/*activity starts */}
+        <div style={{ display: "flex", marginBottom: "25px" }}>
+          <div
+            style={{
+              width: "140px",
+              fontWeight: 600
+            }}
+          >
+            Activity
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+          </div>
+          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+            <div>
+              <Select
+                placeholder="Select Activity"
+                style={{ width: "100%" }}
+                onChange={onActivityChange}
+              >
+                {renderActivityOptions(activity)}
+              </Select>
             </div>
           </div>
-          {/*activity ends */}
-          <div style={{ display: "flex", marginBottom: "25px" }}>
-            <div
-              style={{
-                width: "140px",
-                fontWeight: 600
-              }}
-            >
-              Parameter
-              <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
-            </div>
-            <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-              <div>
-                <Select
-                  placeholder="Select Parameter"
-                  style={{ width: "100%" }}
-                  onChange={onParameterChange}
-                >
-                  {renderParameterOptions(parameter)}
-                </Select>
-              </div>
+        </div>
+        {/*activity ends */}
+        <div style={{ display: "flex", marginBottom: "25px" }}>
+          <div
+            style={{
+              width: "140px",
+              fontWeight: 600
+            }}
+          >
+            Parameter
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+          </div>
+          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+            <div>
+              <Select
+                placeholder="Select Parameter"
+                style={{ width: "100%" }}
+                onChange={onParameterChange}
+              >
+                {renderParameterOptions(parameter)}
+              </Select>
             </div>
           </div>
-          <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
-            <Button type="primary" onClick={() => createNew()}>
-              Add LI
-            </Button>
-          </div>
-        </Card>
-      ) : null}
+        </div>
+        <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
+          <Button type="primary" onClick={() => createNew()}>
+            Add LI
+          </Button>
+        </div>
+      </Card>
+      {/*) : null}*/}
     </div>
   );
 };
