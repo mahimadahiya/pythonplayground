@@ -75,12 +75,13 @@ const Create = props => {
     setIsIconFileUplaoded(false);
     setIsIconFileChanged(true);
     setFileIconSrc("");
+    setMediaIconFile(null);
   };
 
   const discardIconMediaChange = () => {
     setIsIconFileChanged(false);
     setIsIconFileUplaoded(true);
-    // setFileIconSrc(episodeDetails.assets.episode_icon);
+    setFileIconSrc(seriesDetails.assets.series_icon);
   };
 
   const filechangeBackgroundHandler = event => {
@@ -98,12 +99,13 @@ const Create = props => {
     setIsBackgroundFileUplaoded(false);
     setIsBackgroundFileChanged(true);
     setFileBackgroundSrc("");
+    setMediaBackgroundFile(null);
   };
 
   const discardBackgroundMediaChange = () => {
     setIsBackgroundFileChanged(false);
     setIsBackgroundFileUplaoded(true);
-    //  setFileBackgroundSrc(episodeDetails.assets.episode_icon);
+    setFileBackgroundSrc(seriesDetails.assets.series_background);
   };
 
   const onNameChange = event => {
@@ -311,6 +313,7 @@ const Create = props => {
                   type="file"
                   style={{ display: "none" }}
                   accept="image/*"
+                  //value={fileIconSrc}
                   onChange={filechangeIconHandler}
                 />
                 <span

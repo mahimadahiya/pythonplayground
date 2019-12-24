@@ -56,6 +56,7 @@ const Edit = props => {
     setIsFileChanged(true);
     setIsFileUplaoded(false);
     setFileSrc("");
+    setMediaFile(null);
   };
 
   {
@@ -226,6 +227,7 @@ const Edit = props => {
                   type="file"
                   style={{ display: "none" }}
                   accept="image/*"
+                  // value={fileSrc}
                   onChange={filechangeHandler}
                 />
                 <span
