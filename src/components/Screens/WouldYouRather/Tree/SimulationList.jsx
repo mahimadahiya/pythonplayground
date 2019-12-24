@@ -30,7 +30,7 @@ const SimulationList = props => {
     };
 
     fetchList();
-  }, [user.Authorization]);
+  }, [user.Authorization, props.selectedParameterId]);
 
   return (
     <div>

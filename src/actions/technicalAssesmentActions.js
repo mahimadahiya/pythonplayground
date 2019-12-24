@@ -1,6 +1,5 @@
 import adminPanelApi from "../apis/adminPanel";
 import qs from "querystring";
-import { async } from "q";
 
 function clean(obj) {
   for (var propName in obj) {

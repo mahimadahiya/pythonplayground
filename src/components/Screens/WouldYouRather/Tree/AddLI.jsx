@@ -65,24 +65,23 @@ const AddLI = props => {
     }
 
     let formValues = {};
-    {
-      formValues = {
-        wyr_episode_id: props.selectedEpisodeId,
-        activity_id: activityId,
-        entity_id: entityId
-      };
 
-      try {
-        setLoading(true);
-        await wyrTreeActivityCreate(user.Authorization, formValues);
-        setLoading(false);
-        message.success("LI Created");
-        props.setAddLIModalShow(false);
-        props.submitCreateNewActivity(props.selectedTechnicalId);
-      } catch (error) {
-        setLoading(false);
-        props.setAddLIModalShow(false);
-      }
+    formValues = {
+      wyr_episode_id: props.selectedEpisodeId,
+      activity_id: activityId,
+      entity_id: entityId
+    };
+
+    try {
+      setLoading(true);
+      await wyrTreeActivityCreate(user.Authorization, formValues);
+      setLoading(false);
+      message.success("LI Created");
+      props.setAddLIModalShow(false);
+      props.submitCreateNewActivity(props.selectedTechnicalId);
+    } catch (error) {
+      setLoading(false);
+      props.setAddLIModalShow(false);
     }
   };
 

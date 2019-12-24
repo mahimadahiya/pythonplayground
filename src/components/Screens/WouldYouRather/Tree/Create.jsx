@@ -19,7 +19,7 @@ const Create = props => {
     //let fileType = event.target.files[0].type;
     setMediaFile(event.target.files[0]);
     var reader = new FileReader();
-    var url = reader.readAsDataURL(event.target.files[0]);
+    // var url = reader.readAsDataURL(event.target.files[0]);
     reader.onloadend = e => {
       setIsFileUplaoded(true);
       setFileSrc(reader.result);

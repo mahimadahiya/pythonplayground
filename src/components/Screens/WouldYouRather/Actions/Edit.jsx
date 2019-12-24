@@ -135,7 +135,7 @@ const Edit = props => {
       }
     }
     var reader = new FileReader();
-    var url = reader.readAsDataURL(event.target.files[0]);
+    //  var url = reader.readAsDataURL(event.target.files[0]);
     reader.onloadend = e => {
       setIsFileUplaoded(true);
       setFileSrc(reader.result);

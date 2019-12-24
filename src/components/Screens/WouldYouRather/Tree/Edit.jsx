@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Select, Input, Icon, Button, message } from "antd";
+import { Card, Input, Icon, Button, message } from "antd";
 import { wyrTreeUpdate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
@@ -14,7 +14,7 @@ const Edit = props => {
   const [isFileUplaoded, setIsFileUplaoded] = useState(false);
   const [fileSrc, setFileSrc] = useState("");
   const [mediaFile, setMediaFile] = useState(null);
-  const [visibility, setVisibility] = useState("");
+  // const [visibility, setVisibility] = useState("");
   const [episodeId, setEpisodeId] = useState(null);
   const [isFileChanged, setIsFileChanged] = useState(false);
 
@@ -105,23 +105,21 @@ const Edit = props => {
 
     let formValues = {};
 
-    {
-      formValues = {
-        episode_icon: mediaFile
-      };
+    formValues = {
+      episode_icon: mediaFile
+    };
 
-      try {
-        // console.log(formValues);
-        setLoading(true);
-        await wyrTreeUpdate(user.Authorization, episodeId, formValues);
-        setLoading(false);
-        message.success("Episode Updated");
-        props.setEditModalShow(false);
-        props.submitEditEpisode(techincalService);
-      } catch (error) {
-        setLoading(false);
-        props.setEditModalShow(false);
-      }
+    try {
+      // console.log(formValues);
+      setLoading(true);
+      await wyrTreeUpdate(user.Authorization, episodeId, formValues);
+      setLoading(false);
+      message.success("Episode Updated");
+      props.setEditModalShow(false);
+      props.submitEditEpisode(techincalService);
+    } catch (error) {
+      setLoading(false);
+      props.setEditModalShow(false);
     }
   };
 

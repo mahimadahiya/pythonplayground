@@ -189,7 +189,7 @@ const TechnicalAssesmentDetails = props => {
       }
     };
     callDetailsApi();
-  }, [search, loadAgain]);
+  }, [AuthToken, search, loadAgain]);
 
   const closeCreateNewModal = () => {
     setCreateNewModalShow(false);

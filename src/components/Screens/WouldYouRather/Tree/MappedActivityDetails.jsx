@@ -136,6 +136,8 @@ const MappedActivityDetails = props => {
             }
           }
         ];
+      default:
+        return null;
     }
   };
 

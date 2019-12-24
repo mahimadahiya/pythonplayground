@@ -104,12 +104,13 @@ const TechnicalAssesmentIndex = () => {
             record.id === undefined ? (
               "-"
             ) : (
-              <a
+              <Button
+                type="link"
                 onClick={() => onDetailsPageClick(record)}
                 // href={`/techAss/detail/${record.id}`}
               >
                 {record.id}
-              </a>
+              </Button>
             )}
           </div>
         );

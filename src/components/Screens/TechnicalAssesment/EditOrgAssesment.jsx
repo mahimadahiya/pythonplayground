@@ -25,7 +25,7 @@ const EditOrgAssesment = props => {
   const [popupCount, setPopupCount] = useState(1);
   const [guideLineData, setGuideLineData] = useState([{ id: 1, title: "" }]);
   const [popupData, setPopupData] = useState([{ id: 1, title: "" }]);
-  const [showPopup, setShowPopup] = useState();
+  // const [showPopup, setShowPopup] = useState();
 
   const selectedData = props.selectedOrgDetails;
   const selectedGuidelineData = selectedData.guidelines.guidelines;
@@ -181,7 +181,7 @@ const EditOrgAssesment = props => {
   };
 
   const onShowPopupChange = e => {
-    setShowPopup(e.target.value);
+    // setShowPopup(e.target.value);
   };
   const onResumableChange = val => {
     // console.log(val);

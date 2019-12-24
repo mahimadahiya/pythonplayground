@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Input, message, Form } from "antd";
 import { useSelector } from "react-redux";
 import { editTechnicalAssesment } from "../../../actions";
@@ -10,10 +10,10 @@ const Edit = props => {
   const { getFieldDecorator } = props.form;
   const details = props.selectedDetails;
   //console.log(details);
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
 
   const onEditNameChange = e => {
-    setName(e.target.value);
+    // setName(e.target.value);
   };
 
   const onSubmit = e => {
