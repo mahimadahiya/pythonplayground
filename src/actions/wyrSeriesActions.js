@@ -27,3 +27,19 @@ export const wyrSeriesCreate = async (authToken, formValues) => {
   );
   return response.data;
 };
+
+/* delete  */
+export const wyrSeriesDelete = async (authToken, selected_id) => {
+  const response = await adminPanelApi(authToken).delete(
+    `/v1/admin/wyr/series/${selected_id}/`
+  );
+  return response;
+};
+
+/* status update  */
+export const wyrSeriesStatusUpdate = async (authToken, actionId) => {
+  const response = await adminPanelApi(authToken).put(
+    `/v1/admin/wyr/series/${actionId}/`
+  );
+  return response;
+};

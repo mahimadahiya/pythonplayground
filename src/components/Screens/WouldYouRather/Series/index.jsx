@@ -11,7 +11,11 @@ import {
 } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { wyrSeriesList } from "../../../../actions";
+import {
+  wyrSeriesList,
+  wyrSeriesDelete,
+  wyrSeriesStatusUpdate
+} from "../../../../actions";
 import Create from "./Create";
 //import Edit from "./Edit";
 //import EpisodeParameterMap from "./MapParameters";
@@ -93,7 +97,7 @@ const WyrSeriesIndex = props => {
                   title="Are you sure you want to change status to Live ?"
                   okText="Yes"
                   cancelText="No"
-                  //onConfirm={() => changeCurrentActionStatus(record)}
+                  onConfirm={() => changeCurrentActionStatus(record)}
                 >
                   <Button
                     style={{
@@ -112,7 +116,7 @@ const WyrSeriesIndex = props => {
                   title="Are you sure you want to change status to Draft ?"
                   okText="Yes"
                   cancelText="No"
-                  // onConfirm={() => changeCurrentActionStatus(record)}
+                  onConfirm={() => changeCurrentActionStatus(record)}
                 >
                   <Button
                     style={{
@@ -181,7 +185,7 @@ const WyrSeriesIndex = props => {
             title="Are you sure you want to delete ?"
             okText="Yes"
             cancelText="No"
-            //  onConfirm={() => onDelete(record)}
+            onConfirm={() => onDelete(record)}
           >
             <Button
               type="link"
@@ -230,6 +234,33 @@ const WyrSeriesIndex = props => {
 
   const closeCreateNewSeriesModal = () => {
     setCreateNewModalShow(false);
+  };
+
+  const onDelete = async item => {
+    try {
+      let selectedId = item.id;
+      setLoading(true);
+      await wyrSeriesDelete(user.Authorization, selectedId);
+      message.success("Series Deleted");
+      setLoading(false);
+      onChangeFetchList(selectedTechnicalId);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const changeCurrentActionStatus = async data => {
+    let actionId = data.id;
+    setLoading(true);
+    try {
+      await wyrSeriesStatusUpdate(user.Authorization, actionId);
+      message.success("Status Updated");
+      setLoading(false);
+      onChangeFetchList(selectedTechnicalId);
+    } catch (error) {
+      message.warning("Internal Server Error!!");
+      setLoading(false);
+    }
   };
 
   return (

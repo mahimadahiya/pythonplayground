@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 const AddLI = props => {
   const user = useSelector(state => state.userAuth);
   const [loading, setLoading] = useState(false);
+  const [loadAgain, setLoadAgain] = useState(false);
   const [activity, setActivity] = useState([]);
   const [parameter, setParameter] = useState([]);
   const [activityId, setActivityId] = useState(null);
@@ -21,7 +22,7 @@ const AddLI = props => {
       setActivity(response.data.result);
     };
     callActivityData();
-  }, []);
+  }, [loadAgain]);
 
   const renderActivityOptions = activity => {
     return activity.map(activity => {
@@ -78,7 +79,9 @@ const AddLI = props => {
       setLoading(false);
       message.success("LI Created");
       props.setAddLIModalShow(false);
+
       props.submitCreateNewActivity(props.selectedTechnicalId);
+      setLoadAgain(!loadAgain);
     } catch (error) {
       setLoading(false);
       props.setAddLIModalShow(false);
@@ -93,6 +96,8 @@ const AddLI = props => {
           selectedTechnicalId={props.selectedTechnicalId}
           submitCreateNewActivity={props.submitCreateNewActivity}
           closeMapLIModal={props.closeMapLIModal}
+          loadAgain={loadAgain}
+          setLoadAgain={setLoadAgain}
         />
       </div>
       {selectedEpisodeDetails.mapped_activity.length < 3 ? (

@@ -37,7 +37,7 @@ const MappedActivityList = props => {
     setMappedActivityLoading(true);
     setMappedList(props.selectedEpisodeDetails.mapped_activity);
     setMappedActivityLoading(false);
-  }, [loadAgain]);
+  }, [loadAgain, props.loadAgain]);
 
   const onDetailsClick = data => {
     setSelectedActivityDetails(data);
@@ -135,6 +135,7 @@ const MappedActivityList = props => {
       message.success("Activity Deleted");
       setMappedActivityLoading(false);
       props.submitCreateNewActivity(props.selectedTechnicalId);
+      props.setLoadAgain(!props.loadAgain);
       props.closeMapLIModal();
     } catch (error) {
       setMappedActivityLoading(false);
