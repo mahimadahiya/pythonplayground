@@ -66,6 +66,7 @@ import RolePlayDetails from "../Screens/RolePlay/RolePlayDetails";
 import WyrActionIndex from "../Screens/WouldYouRather/Actions";
 import WyrScenarioIndex from "../Screens/WouldYouRather/Scenarios";
 import WyrTreeIndex from "../Screens/WouldYouRather/Tree";
+import WyrSeriesIndex from "../Screens/WouldYouRather/Series";
 
 //technical assesment
 import TechnicalAssesmentIndex from "../Screens/TechnicalAssesment/TechnicalAssesmentIndex";
@@ -104,6 +105,13 @@ class Routing extends React.Component {
       <div>
         <React.Fragment>
           <Switch>
+            <PrivateRoute
+              path="/wyr/series"
+              component={WyrSeriesIndex}
+              user={user}
+              exact
+              accessGroup={[1]}
+            />
             <PrivateRoute
               path="/wyr/scenario"
               component={WyrScenarioIndex}

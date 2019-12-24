@@ -199,6 +199,8 @@ import {
   getMappingActivityEntityList
 } from "./wyrTreeAction";
 
+import { wyrSeriesList, wyrSeriesCreate } from "./wyrSeriesActions";
+
 import {
   getTechnicalAssesmentList,
   createNewTechnicalService,
@@ -363,6 +365,9 @@ export {
   wyrTreeActivityCreate,
   wyrTreeActivityDelete,
   wyrTreeActivityUpdate,
+  // wyr seies
+  wyrSeriesList,
+  wyrSeriesCreate,
   //technical assesment
   getTechnicalAssesmentList,
   createNewTechnicalService,

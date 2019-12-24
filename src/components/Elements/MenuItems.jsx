@@ -280,6 +280,17 @@ const list = [
     label: "Would You Rather",
     subMenu: [
       {
+        key: "wyr-series",
+        label: "Series",
+        menuList: [
+          {
+            key: "/wyr/series",
+            label: "List",
+            onClick: () => history.push("/wyr/series")
+          }
+        ]
+      },
+      {
         key: "wyr-actions",
         label: "Actions",
         menuList: [

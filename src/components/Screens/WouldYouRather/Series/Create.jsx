@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Select, Input, Icon, Button, message } from "antd";
-import { wyrTreeCreate } from "../../../../actions";
+import { wyrSeriesCreate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const Create = props => {
@@ -10,25 +10,46 @@ const Create = props => {
   const [techincalService, setTechincalService] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [isFileUplaoded, setIsFileUplaoded] = useState(false);
-  const [fileSrc, setFileSrc] = useState("");
-  const [mediaFile, setMediaFile] = useState(null);
-  const [visibility, setVisibility] = useState("");
+  const [isIconFileUplaoded, setIsIconFileUplaoded] = useState(false);
+  const [fileIconSrc, setFileIconSrc] = useState("");
+  const [mediaIconFile, setMediaIconFile] = useState(null);
+  const [isBackgroundFileUplaoded, setIsBackgroundFileUplaoded] = useState(
+    false
+  );
+  const [fileBackgroundSrc, setFileBackgroundSrc] = useState("");
+  const [mediaBackgroundFile, setMediaBackgroundFile] = useState(null);
 
-  const filechangeHandler = event => {
+  const filechangeIconHandler = event => {
     //let fileType = event.target.files[0].type;
-    setMediaFile(event.target.files[0]);
-    var reader = new FileReader();
-    var url = reader.readAsDataURL(event.target.files[0]);
-    reader.onloadend = e => {
-      setIsFileUplaoded(true);
-      setFileSrc(reader.result);
+    setMediaIconFile(event.target.files[0]);
+    var readerIcon = new FileReader();
+    var url = readerIcon.readAsDataURL(event.target.files[0]);
+    readerIcon.onloadend = e => {
+      setIsIconFileUplaoded(true);
+      setFileIconSrc(readerIcon.result);
+      // console.log(readerIcon.result);
     };
   };
 
-  const reuploadMedia = () => {
-    setIsFileUplaoded(false);
-    setFileSrc("");
+  const reuploadIconMedia = () => {
+    setIsIconFileUplaoded(false);
+    setFileIconSrc("");
+  };
+
+  const filechangeBackgroundHandler = event => {
+    //let fileType = event.target.files[0].type;
+    setMediaBackgroundFile(event.target.files[0]);
+    var readerBack = new FileReader();
+    var url = readerBack.readAsDataURL(event.target.files[0]);
+    readerBack.onloadend = e => {
+      setIsBackgroundFileUplaoded(true);
+      setFileBackgroundSrc(readerBack.result);
+    };
+  };
+
+  const reuploadBackgroundMedia = () => {
+    setIsBackgroundFileUplaoded(false);
+    setFileBackgroundSrc("");
   };
 
   const onNameChange = event => {
@@ -71,22 +92,21 @@ const Create = props => {
       return;
     }
     if (
-      mediaFile === null ||
-      mediaFile === undefined ||
-      mediaFile === "" ||
-      mediaFile === " "
+      mediaIconFile === null ||
+      mediaIconFile === undefined ||
+      mediaIconFile === "" ||
+      mediaIconFile === " "
     ) {
-      message.warning("Please select Episode Icon");
+      message.warning("Please select Series Background Icon");
       return;
     }
-
     if (
-      visibility === null ||
-      visibility === undefined ||
-      visibility === "" ||
-      visibility === " "
+      mediaBackgroundFile === null ||
+      mediaBackgroundFile === undefined ||
+      mediaBackgroundFile === "" ||
+      mediaBackgroundFile === " "
     ) {
-      message.warning("Please select Episode Icon");
+      message.warning("Please select Series Background Icon");
       return;
     }
 
@@ -97,17 +117,17 @@ const Create = props => {
         technical_service_id: techincalService,
         name: name,
         description: description,
-        visibility: visibility,
-        episode_icon: mediaFile
+        series_icon: mediaIconFile,
+        series_background: mediaBackgroundFile
       };
 
       try {
         setLoading(true);
-        await wyrTreeCreate(user.Authorization, formValues);
+        await wyrSeriesCreate(user.Authorization, formValues);
         setLoading(false);
-        message.success("Episode Created");
+        message.success("Series Created");
         props.setCreateNewModalShow(false);
-        props.submitCreateNewEpisode(techincalService);
+        props.submitCreateNewSeries(techincalService);
       } catch (error) {
         setLoading(false);
         props.setCreateNewModalShow(false);
@@ -165,7 +185,7 @@ const Create = props => {
             <div>
               <Input
                 type="text"
-                placeholder="Episode Name"
+                placeholder="Serise Name"
                 style={
                   name === null
                     ? {
@@ -200,7 +220,7 @@ const Create = props => {
             <div>
               <Input
                 type="text"
-                placeholder="Episode Name"
+                placeholder="Serise Description"
                 style={
                   description === null
                     ? {
@@ -220,7 +240,7 @@ const Create = props => {
           </div>
         </div>
         {/* Description ends*/}
-        {/* Episode Icon starts*/}
+        {/* Series Icon starts*/}
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -228,16 +248,16 @@ const Create = props => {
               fontWeight: 600
             }}
           >
-            Media Upload
+            Icon Upload
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            {isFileUplaoded === false ? (
+            {isIconFileUplaoded === false ? (
               <label>
                 <Input
                   type="file"
                   style={{ display: "none" }}
                   accept="image/*"
-                  onChange={filechangeHandler}
+                  onChange={filechangeIconHandler}
                 />
                 <span
                   style={{
@@ -259,19 +279,23 @@ const Create = props => {
             ) : (
               <div style={{ maxWidth: "100%" }}>
                 <div style={{ marginBottom: "20px", textAlign: "right" }}>
-                  <Button type="danger" onClick={() => reuploadMedia()}>
+                  <Button type="danger" onClick={() => reuploadIconMedia()}>
                     Change Media
                   </Button>
                 </div>
                 <div>
-                  <img src={fileSrc} alt="icon" style={{ maxWidth: "60%" }} />
+                  <img
+                    src={fileIconSrc}
+                    alt="icon"
+                    style={{ maxWidth: "60%" }}
+                  />
                 </div>
               </div>
             )}
           </div>
         </div>
-        {/* Episode Icon ends*/}
-        {/* Visibility starts*/}
+        {/* Series Icon ends*/}
+        {/* Series Background starts*/}
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -279,30 +303,60 @@ const Create = props => {
               fontWeight: 600
             }}
           >
-            Visibility
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+            Background Upload
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Select
-                style={{ width: "100%" }}
-                placeholder="Select Visibility"
-                onChange={value => setVisibility(value)}
-              >
-                <Select.Option value="public">Public</Select.Option>
-                <Select.Option value="private">Private</Select.Option>
-              </Select>
-            </div>
-            {visibility === undefined ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
+            {isBackgroundFileUplaoded === false ? (
+              <label>
+                <Input
+                  type="file"
+                  style={{ display: "none" }}
+                  accept="image/*"
+                  onChange={filechangeBackgroundHandler}
+                />
+                <span
+                  style={{
+                    border: "1px solid #1890ff",
+                    background: "#fff",
+                    color: "#1890ff",
+                    fontWeight: 400,
+                    cursor: "pointer",
+                    fontSize: "14px",
+                    padding: "6.5px 15px",
+                    borderRadius: "4px",
+                    lineHeight: "1.499"
+                  }}
+                >
+                  <Icon type="upload" style={{ paddingRight: "5px" }} />
+                  Upload
+                </span>
+              </label>
+            ) : (
+              <div style={{ maxWidth: "100%" }}>
+                <div style={{ marginBottom: "20px", textAlign: "right" }}>
+                  <Button
+                    type="danger"
+                    onClick={() => reuploadBackgroundMedia()}
+                  >
+                    Change Media
+                  </Button>
+                </div>
+                <div>
+                  <img
+                    src={fileBackgroundSrc}
+                    alt="icon"
+                    style={{ maxWidth: "60%" }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
-        {/* Visibility ends*/}
+        {/* Series Background ends*/}
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>
-            Create New Episode
+            Create New Series
           </Button>
         </div>
       </Card>
