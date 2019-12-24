@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Select, Input, Icon, Button, message } from "antd";
-import { wyrSeriesCreate } from "../../../../actions";
+import { wyrSeriesUpdate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const Create = props => {
+  const seriesDetails = props.seriesDetails;
+  console.log(seriesDetails);
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
@@ -16,8 +18,46 @@ const Create = props => {
   const [isBackgroundFileUplaoded, setIsBackgroundFileUplaoded] = useState(
     false
   );
+  const [isBackgroundFileChanged, setIsBackgroundFileChanged] = useState(false);
+  const [isIconFileChanged, setIsIconFileChanged] = useState(false);
   const [fileBackgroundSrc, setFileBackgroundSrc] = useState("");
   const [mediaBackgroundFile, setMediaBackgroundFile] = useState(null);
+  const [seriesId, setSeriesId] = useState(null);
+
+  useEffect(() => {
+    // console.log(actionDetails);
+
+    if (seriesDetails && Object.keys(seriesDetails).length !== 0) {
+      setSeriesId(seriesDetails.id);
+      setName(seriesDetails.name);
+      setDescription(seriesDetails.description);
+      setTechincalService(seriesDetails.technical_service_id);
+      if (
+        seriesDetails.assets.series_icon !== null ||
+        seriesDetails.assets.series_icon !== undefined ||
+        seriesDetails.assets.series_icon !== "" ||
+        seriesDetails.assets.series_icon !== " "
+      ) {
+        setIsIconFileChanged(false);
+        setIsIconFileUplaoded(true);
+        setFileIconSrc(seriesDetails.assets.series_icon);
+        //setFileSrc(seriesDetails.assets.episode_icon);
+      }
+      if (
+        seriesDetails.assets.series_background !== null ||
+        seriesDetails.assets.series_background !== undefined ||
+        seriesDetails.assets.series_background !== "" ||
+        seriesDetails.assets.series_background !== " "
+      ) {
+        setIsBackgroundFileChanged(false);
+        setIsBackgroundFileUplaoded(true);
+        setFileBackgroundSrc(seriesDetails.assets.series_background);
+        //setFileSrc(seriesDetails.assets.episode_icon);
+      }
+    }
+
+    return () => {};
+  }, [seriesDetails]);
 
   const filechangeIconHandler = event => {
     //let fileType = event.target.files[0].type;
@@ -33,7 +73,14 @@ const Create = props => {
 
   const reuploadIconMedia = () => {
     setIsIconFileUplaoded(false);
+    setIsIconFileChanged(true);
     setFileIconSrc("");
+  };
+
+  const discardIconMediaChange = () => {
+    setIsIconFileChanged(false);
+    setIsIconFileUplaoded(true);
+    // setFileIconSrc(episodeDetails.assets.episode_icon);
   };
 
   const filechangeBackgroundHandler = event => {
@@ -49,7 +96,14 @@ const Create = props => {
 
   const reuploadBackgroundMedia = () => {
     setIsBackgroundFileUplaoded(false);
+    setIsBackgroundFileChanged(true);
     setFileBackgroundSrc("");
+  };
+
+  const discardBackgroundMediaChange = () => {
+    setIsBackgroundFileChanged(false);
+    setIsBackgroundFileUplaoded(true);
+    //  setFileBackgroundSrc(episodeDetails.assets.episode_icon);
   };
 
   const onNameChange = event => {
@@ -92,16 +146,6 @@ const Create = props => {
     }
 
     if (
-      techincalService === null ||
-      techincalService === undefined ||
-      techincalService === "" ||
-      techincalService === " "
-    ) {
-      setTechincalService(undefined);
-      message.warning("Please select techincal service");
-      return;
-    }
-    if (
       mediaIconFile === null ||
       mediaIconFile === undefined ||
       mediaIconFile === "" ||
@@ -124,7 +168,6 @@ const Create = props => {
 
     {
       formValues = {
-        technical_service_id: techincalService,
         name: name,
         description: description,
         series_icon: mediaIconFile,
@@ -133,14 +176,14 @@ const Create = props => {
 
       try {
         setLoading(true);
-        await wyrSeriesCreate(user.Authorization, formValues);
+        await wyrSeriesUpdate(user.Authorization, seriesId, formValues);
         setLoading(false);
-        message.success("Series Created");
-        props.setCreateNewModalShow(false);
-        props.submitCreateNewSeries(techincalService);
+        message.success("Series Updated");
+        props.setEditModalShow(false);
+        props.submitEditSeries(techincalService);
       } catch (error) {
         setLoading(false);
-        props.setCreateNewModalShow(false);
+        props.setEditModalShow(false);
       }
     }
   };
@@ -161,22 +204,19 @@ const Create = props => {
             }}
           >
             Technical Service
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+            {/* <span style={{ color: "red", paddingLeft: "4px" }}>*</span> */}
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Select
-                style={{ width: "100%" }}
-                placeholder="Select technical service"
-                onChange={value => setTechincalService(value)}
-              >
-                <Select.Option value={1}>Behavioral Module</Select.Option>
-                <Select.Option value={2}>Functional Module</Select.Option>
-              </Select>
-            </div>
-            {techincalService === undefined ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
+            <Input
+              type="text"
+              style={{ color: "#777777" }}
+              value={
+                techincalService === 1
+                  ? "Behavioral Module"
+                  : "Functional Module"
+              }
+              disabled
+            />
           </div>
         </div>
         {/* technical service id ends*/}
@@ -196,6 +236,7 @@ const Create = props => {
               <Input
                 type="text"
                 placeholder="Serise Name"
+                value={name}
                 style={
                   name === null
                     ? {
@@ -231,6 +272,7 @@ const Create = props => {
               <Input
                 type="text"
                 placeholder="Serise Description"
+                value={description}
                 style={
                   description === null
                     ? {
@@ -251,6 +293,8 @@ const Create = props => {
         </div>
         {/* Description ends*/}
         {/* Series Icon starts*/}
+
+        {/* Episode Icon starts*/}
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -293,6 +337,16 @@ const Create = props => {
                     Change Media
                   </Button>
                 </div>
+                {isIconFileChanged === true ? (
+                  <div style={{ marginTop: "30px", textAlign: "right" }}>
+                    <Button
+                      type="danger"
+                      onClick={() => discardIconMediaChange()}
+                    >
+                      Discard Media Change
+                    </Button>
+                  </div>
+                ) : null}
                 <div>
                   <img
                     src={fileIconSrc}
@@ -304,8 +358,11 @@ const Create = props => {
             )}
           </div>
         </div>
+        {/* Episode Icon ends*/}
+
         {/* Series Icon ends*/}
         {/* Series Background starts*/}
+
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -351,6 +408,16 @@ const Create = props => {
                     Change Media
                   </Button>
                 </div>
+                {isBackgroundFileChanged === true ? (
+                  <div style={{ marginTop: "30px", textAlign: "right" }}>
+                    <Button
+                      type="danger"
+                      onClick={() => discardBackgroundMediaChange()}
+                    >
+                      Discard Media Change
+                    </Button>
+                  </div>
+                ) : null}
                 <div>
                   <img
                     src={fileBackgroundSrc}
@@ -362,11 +429,12 @@ const Create = props => {
             )}
           </div>
         </div>
+
         {/* Series Background ends*/}
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>
-            Create New Series
+            Update Series
           </Button>
         </div>
       </Card>

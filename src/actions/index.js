@@ -206,7 +206,8 @@ import {
   wyrSeriesDelete,
   wyrSeriesStatusUpdate,
   wyrSeriesMapParameters,
-  deleteMappedSeriesParameter
+  deleteMappedSeriesParameter,
+  wyrSeriesUpdate
 } from "./wyrSeriesActions";
 
 import {
@@ -381,6 +382,7 @@ export {
   wyrSeriesStatusUpdate,
   wyrSeriesMapParameters,
   deleteMappedSeriesParameter,
+  wyrSeriesUpdate,
   //technical assesment
   getTechnicalAssesmentList,
   createNewTechnicalService,

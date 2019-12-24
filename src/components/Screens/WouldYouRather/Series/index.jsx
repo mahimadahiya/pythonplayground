@@ -17,7 +17,7 @@ import {
   wyrSeriesStatusUpdate
 } from "../../../../actions";
 import Create from "./Create";
-//import Edit from "./Edit";
+import Edit from "./Edit";
 import SeriesParameterMap from "./MapParameters";
 
 const WyrSeriesIndex = props => {
@@ -27,9 +27,11 @@ const WyrSeriesIndex = props => {
   const [selectedTechnicalId, setSelectedTechnicalId] = useState(null);
   const [list, setList] = useState([]);
   const [paramActionId, setParamActionId] = useState(null);
+  const [updateSeriesDetails, setUpdateSeriesDetails] = useState([]);
 
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
   const [showMapParametersModal, setShowMapParametersModal] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   const columnName = [
     {
@@ -177,7 +179,7 @@ const WyrSeriesIndex = props => {
           <Divider type="vertical" />
           <Button
             type="link"
-            // onClick={() => onEdit(record)}
+            onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
@@ -275,6 +277,15 @@ const WyrSeriesIndex = props => {
     onChangeFetchList(selectedTechnicalId);
   };
 
+  const onEdit = data => {
+    setUpdateSeriesDetails(data);
+    setEditModalShow(true);
+  };
+
+  const closeEditEpisodeModal = () => {
+    setEditModalShow(false);
+  };
+
   return (
     <div>
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
@@ -359,6 +370,22 @@ const WyrSeriesIndex = props => {
         />
       ) : null}
       {/* mapping parameters end */}
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Edit Episode"
+        closable={true}
+        footer={null}
+        onCancel={closeEditEpisodeModal}
+        visible={editModalShow}
+        destroyOnClose={true}
+      >
+        <Edit
+          submitEditSeries={submitCreateNewSeries}
+          selectedTechnicalId={selectedTechnicalId}
+          setEditModalShow={setEditModalShow}
+          seriesDetails={updateSeriesDetails}
+        />
+      </Modal>
     </div>
   );
 };
