@@ -32,7 +32,8 @@ export const wyrTreeUpdate = async (authToken, id, formValues) => {
   formData.append("episode_icon", formValues.episode_icon);
 
   const response = await adminPanelApi(authToken).put(
-    `/v1/admin/wyr/tree/${id}`
+    `/v1/admin/wyr/tree/${id}`,
+    formData
   );
 
   return response;
