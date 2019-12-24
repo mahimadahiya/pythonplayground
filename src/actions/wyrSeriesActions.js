@@ -43,3 +43,21 @@ export const wyrSeriesStatusUpdate = async (authToken, actionId) => {
   );
   return response;
 };
+
+/* map parameters */
+export const wyrSeriesMapParameters = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/wyr/series_parameter/",
+    qs.stringify(values)
+  );
+  return response;
+};
+
+/* delete mapped parameter */
+
+export const deleteMappedSeriesParameter = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).delete(
+    `/v1/admin/wyr/series_parameter/${id}/`
+  );
+  return response;
+};

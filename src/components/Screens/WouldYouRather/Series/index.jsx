@@ -18,7 +18,7 @@ import {
 } from "../../../../actions";
 import Create from "./Create";
 //import Edit from "./Edit";
-//import EpisodeParameterMap from "./MapParameters";
+import SeriesParameterMap from "./MapParameters";
 
 const WyrSeriesIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -26,8 +26,10 @@ const WyrSeriesIndex = props => {
   const [loading, setLoading] = useState(false);
   const [selectedTechnicalId, setSelectedTechnicalId] = useState(null);
   const [list, setList] = useState([]);
+  const [paramActionId, setParamActionId] = useState(null);
 
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
+  const [showMapParametersModal, setShowMapParametersModal] = useState(false);
 
   const columnName = [
     {
@@ -152,7 +154,7 @@ const WyrSeriesIndex = props => {
             <span>
               <Button
                 type="link"
-                // onClick={() => onMappingParameters(record)}
+                onClick={() => onMappingParameters(record)}
                 style={{ padding: 0, marginRight: "10px" }}
               >
                 Map Parameters
@@ -263,6 +265,16 @@ const WyrSeriesIndex = props => {
     }
   };
 
+  const onMappingParameters = data => {
+    setParamActionId(data.id);
+    setShowMapParametersModal(true);
+  };
+
+  const onCloseParametersModal = () => {
+    setShowMapParametersModal(false);
+    onChangeFetchList(selectedTechnicalId);
+  };
+
   return (
     <div>
       <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
@@ -333,6 +345,20 @@ const WyrSeriesIndex = props => {
         />
       </Modal>
       {/* create new modal end  */}
+      {/* mapping Parameters start */}
+      {showMapParametersModal === true ? (
+        <SeriesParameterMap
+          visible={showMapParametersModal}
+          onCancel={onCloseParametersModal}
+          onValuesSubmit={onCloseParametersModal}
+          selectedTechnicalId={selectedTechnicalId}
+          actionId={paramActionId}
+          // loadAgain={loadAgain}
+          // setLoadAgain={setLoadAgain}
+          setShowMapParametersModal={setShowMapParametersModal}
+        />
+      ) : null}
+      {/* mapping parameters end */}
     </div>
   );
 };
