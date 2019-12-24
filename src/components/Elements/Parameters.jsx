@@ -39,6 +39,7 @@ const Parameters = forwardRef((props, ref) => {
     <Select
       placeholder="Select a parameter"
       onChange={props.onChange}
+      onDeselect={props.onDeselect}
       mode={props.mode}
       style={{ width: "100%" }}
       showSearch

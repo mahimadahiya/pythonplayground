@@ -196,7 +196,8 @@ import {
   wyrTreeActivityDelete,
   wyrTreeActivityUpdate,
   getStimulationList,
-  getMappingActivityEntityList
+  getMappingActivityEntityList,
+  deleteMappedParameter
 } from "./wyrTreeAction";
 
 import {
@@ -370,7 +371,8 @@ export {
   wyrTreeActivityCreate,
   wyrTreeActivityDelete,
   wyrTreeActivityUpdate,
-  // wyr seies
+  deleteMappedParameter,
+  // wyr series
   wyrSeriesList,
   wyrSeriesCreate,
   wyrSeriesDelete,

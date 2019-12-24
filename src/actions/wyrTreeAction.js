@@ -124,3 +124,12 @@ export const getMappingActivityEntityList = async (authToken, parameter_id) => {
   );
   return response;
 };
+
+/* delete mapped parameter */
+
+export const deleteMappedParameter = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).delete(
+    `/v1/admin/wyr/tree/map/parameter/${id}`
+  );
+  return response;
+};

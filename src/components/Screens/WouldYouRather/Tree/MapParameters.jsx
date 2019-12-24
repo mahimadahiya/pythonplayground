@@ -3,18 +3,24 @@ import { useSelector } from "react-redux";
 import { Modal, Card, Form, message } from "antd";
 import MButton from "../../../Elements/MButton";
 import Parameters from "../../../Elements/Parameters";
-import { wyrTreeMapParameters, wyrTreeList } from "../../../../actions";
+import {
+  wyrTreeMapParameters,
+  wyrTreeList,
+  deleteMappedParameter
+} from "../../../../actions";
 import "./index";
 
 const EpisodeParameterMap = props => {
   const user = useSelector(state => state.userAuth);
 
   const actionId = props.actionId;
+  // console.log(props);
   const technical_service_id = props.selectedTechnicalId;
   //console.log(props);
   const [cardLoading, setCardLoading] = useState(false);
   // const [parameters, setParameters] = useState([]);
   const [selectedParameters, setSelectedParameters] = useState([]);
+  const [alreadyMappedParameters, setAlreadyMappedParameters] = useState([]);
 
   useEffect(() => {
     const fetchAlreadyMappedList = async () => {
@@ -24,6 +30,7 @@ const EpisodeParameterMap = props => {
           user.Authorization,
           technical_service_id
         );
+        // console.log(response.data.result.wyr_episode_list);
         let tempList = [];
 
         for (let i = 0; i < response.data.result.wyr_episode_list.length; i++) {
@@ -49,6 +56,31 @@ const EpisodeParameterMap = props => {
         }
         //console.log(tempList);
         setSelectedParameters(tempList);
+
+        let map_parameters = [];
+        for (let i = 0; i < response.data.result.wyr_episode_list.length; i++) {
+          if (response.data.result.wyr_episode_list[i].id === actionId) {
+            if (
+              response.data.result.wyr_episode_list[i].mapped_parameter.length >
+              0
+            ) {
+              for (
+                let j = 0;
+                j <
+                response.data.result.wyr_episode_list[i].mapped_parameter
+                  .length;
+                j++
+              ) {
+                map_parameters.push(
+                  response.data.result.wyr_episode_list[i].mapped_parameter[j]
+                );
+              }
+            }
+          }
+        }
+        // console.log(map_parameters);
+        setAlreadyMappedParameters(map_parameters);
+
         setCardLoading(false);
       } catch (error) {
         setCardLoading(false);
@@ -93,6 +125,19 @@ const EpisodeParameterMap = props => {
     // setParameters(value);
   };
 
+  const onDeselectingParameter = async e => {
+    // console.log(e);
+    const gameName = alreadyMappedParameters.find(item => {
+      if (item.parameter_id === e) {
+        return item;
+      }
+    });
+    // console.log(gameName.id);
+    try {
+      await deleteMappedParameter(user.Authorization, gameName.id);
+    } catch (error) {}
+  };
+
   const { getFieldDecorator } = props.form;
   return (
     <div>
@@ -117,6 +162,7 @@ const EpisodeParameterMap = props => {
                 <Parameters
                   mode="multiple"
                   onChange={onParameterChange}
+                  onDeselect={e => onDeselectingParameter(e)}
                   categories={[null]}
                 />
               )}
