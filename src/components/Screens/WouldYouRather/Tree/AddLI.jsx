@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Card, Select, Button, message } from "antd";
-import { getActivityList, wyrTreeActivityCreate } from "../../../../actions";
+import {
+  getActivityList,
+  wyrTreeActivityCreate,
+  getChapterList
+} from "../../../../actions";
 import MappedActivityList from "./MappedActivityList";
 import { useSelector } from "react-redux";
+import MappedFmActivityList from "./MappedFmActivityList";
 
 const AddLI = props => {
+  //console.log(props.selectedEpisodeDetails.mapped_fm_course);
+  const technicalServiceId = props.selectedEpisodeDetails.technical_service_id;
+  const courseId =
+    props.selectedEpisodeDetails.mapped_fm_course.length !== 0
+      ? props.selectedEpisodeDetails.mapped_fm_course[0].fm_course_id
+      : null;
   const user = useSelector(state => state.userAuth);
   const [loading, setLoading] = useState(false);
   const [loadAgain, setLoadAgain] = useState(false);
   const [activity, setActivity] = useState([]);
   const [parameter, setParameter] = useState([]);
+  const [chapters, setChapters] = useState([]);
   const [activityId, setActivityId] = useState(null);
   const [entityId, setEntityId] = useState(null);
 
@@ -18,8 +30,17 @@ const AddLI = props => {
   useEffect(() => {
     setParameter(selectedEpisodeDetails.mapped_parameter);
     const callActivityData = async () => {
-      const response = await getActivityList(user.Authorization);
-      setActivity(response.data.result);
+      try {
+        const response = await getActivityList(user.Authorization);
+        setActivity(response.data.result);
+
+        const chapterResponse = await getChapterList(
+          user.Authorization,
+          courseId
+        );
+        //  console.log(chapterResponse.data.result);
+        setChapters(chapterResponse.data.result.chapter_list);
+      } catch (error) {}
     };
     callActivityData();
   }, [loadAgain]);
@@ -47,12 +68,27 @@ const AddLI = props => {
     });
   };
 
+  const renderCourseOptions = chapters => {
+    return chapters.map(chapters => {
+      return (
+        <Select.Option key={chapters.id} value={chapters.id}>
+          {chapters.name}
+        </Select.Option>
+      );
+    });
+  };
+
   const onActivityChange = val => {
     setActivityId(val);
   };
 
   const onParameterChange = val => {
     setEntityId(val);
+  };
+
+  const onCourseChange = val => {
+    setEntityId(val);
+    console.log(val);
   };
 
   const createNew = async () => {
@@ -91,14 +127,25 @@ const AddLI = props => {
   return (
     <div>
       <div style={{ marginBottom: "30px" }}>
-        <MappedActivityList
-          selectedEpisodeDetails={selectedEpisodeDetails}
-          selectedTechnicalId={props.selectedTechnicalId}
-          submitCreateNewActivity={props.submitCreateNewActivity}
-          closeMapLIModal={props.closeMapLIModal}
-          loadAgain={loadAgain}
-          setLoadAgain={setLoadAgain}
-        />
+        {technicalServiceId === 1 ? (
+          <MappedActivityList
+            selectedEpisodeDetails={selectedEpisodeDetails}
+            selectedTechnicalId={props.selectedTechnicalId}
+            submitCreateNewActivity={props.submitCreateNewActivity}
+            closeMapLIModal={props.closeMapLIModal}
+            loadAgain={loadAgain}
+            setLoadAgain={setLoadAgain}
+          />
+        ) : (
+          <MappedFmActivityList
+            selectedEpisodeDetails={selectedEpisodeDetails}
+            selectedTechnicalId={props.selectedTechnicalId}
+            submitCreateNewActivity={props.submitCreateNewActivity}
+            closeMapLIModal={props.closeMapLIModal}
+            loadAgain={loadAgain}
+            setLoadAgain={setLoadAgain}
+          />
+        )}
       </div>
       {/*{selectedEpisodeDetails.mapped_activity.length < 3 ? (*/}
       <Card
@@ -130,28 +177,54 @@ const AddLI = props => {
           </div>
         </div>
         {/*activity ends */}
-        <div style={{ display: "flex", marginBottom: "25px" }}>
-          <div
-            style={{
-              width: "140px",
-              fontWeight: 600
-            }}
-          >
-            Parameter
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
-          </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Select
-                placeholder="Select Parameter"
-                style={{ width: "100%" }}
-                onChange={onParameterChange}
-              >
-                {renderParameterOptions(parameter)}
-              </Select>
+        {/* parameter starts*/}
+        {technicalServiceId === 1 ? (
+          <div style={{ display: "flex", marginBottom: "25px" }}>
+            <div
+              style={{
+                width: "140px",
+                fontWeight: 600
+              }}
+            >
+              Parameter
+              <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+            </div>
+            <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+              <div>
+                <Select
+                  placeholder="Select Parameter"
+                  style={{ width: "100%" }}
+                  onChange={onParameterChange}
+                >
+                  {renderParameterOptions(parameter)}
+                </Select>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div style={{ display: "flex", marginBottom: "25px" }}>
+            <div
+              style={{
+                width: "140px",
+                fontWeight: 600
+              }}
+            >
+              Chapters
+              <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+            </div>
+            <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+              <div>
+                <Select
+                  placeholder="Select Course"
+                  style={{ width: "100%" }}
+                  onChange={onCourseChange}
+                >
+                  {renderCourseOptions(chapters)}
+                </Select>
+              </div>
+            </div>
+          </div>
+        )}
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>
             Add LI

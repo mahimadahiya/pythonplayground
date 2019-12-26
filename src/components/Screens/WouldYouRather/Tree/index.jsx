@@ -20,6 +20,7 @@ import Create from "./Create";
 import Edit from "./Edit";
 import EpisodeParameterMap from "./MapParameters";
 import AddLI from "./AddLI";
+import EpisodeMapCourse from "./MapCourse";
 
 const WyrTreeIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -38,6 +39,9 @@ const WyrTreeIndex = props => {
 
   const [selectedEpisodeId, setSelectedEpisodeId] = useState(null);
   const [selectedEpisodeDetails, setSelectedEpisodeDetails] = useState([]);
+
+  const [showMapCoursesModal, setShowMapCoursesModal] = useState(false);
+  const [courseActionId, setCourseActionId] = useState(null);
 
   const columnName = [
     {
@@ -171,7 +175,7 @@ const WyrTreeIndex = props => {
             <span>
               <Button
                 type="link"
-                // onClick={() => onMappingCourses(record)}
+                onClick={() => onMappingCourses(record)}
                 style={{ padding: 0, marginRight: "10px" }}
               >
                 Map Courses
@@ -238,6 +242,16 @@ const WyrTreeIndex = props => {
 
   const onCloseParametersModal = () => {
     setShowMapParametersModal(false);
+    onChangeFetchList(selectedTechnicalId);
+  };
+
+  const onMappingCourses = data => {
+    setCourseActionId(data.id);
+    setShowMapCoursesModal(true);
+  };
+
+  const onCloseCoursesModal = () => {
+    setShowMapCoursesModal(false);
     onChangeFetchList(selectedTechnicalId);
   };
 
@@ -443,6 +457,18 @@ const WyrTreeIndex = props => {
           loadAgain={loadAgain}
           setLoadAgain={setLoadAgain}
           setShowMapParametersModal={setShowMapParametersModal}
+        />
+      ) : null}
+      {/* mapping parameters end */}
+
+      {/* mapping courses start */}
+      {showMapCoursesModal === true ? (
+        <EpisodeMapCourse
+          visible={showMapCoursesModal}
+          onCancel={onCloseCoursesModal}
+          onValuesSubmit={onCloseCoursesModal}
+          selectedTechnicalId={selectedTechnicalId}
+          actionId={courseActionId}
         />
       ) : null}
       {/* mapping parameters end */}

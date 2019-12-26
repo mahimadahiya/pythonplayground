@@ -292,7 +292,7 @@ const WyrSeriesIndex = props => {
         <Card
           style={{ borderRadius: "5px" }}
           bodyStyle={{ borderRadius: "5px" }}
-          title={<span style={{ fontSize: "20px" }}>Series</span>}
+          title={<span style={{ fontSize: "20px" }}>SERIES</span>}
         >
           <div style={{ textAlign: "right", marginBottom: "40px" }}>
             <Button type="primary" onClick={() => createNew()}>

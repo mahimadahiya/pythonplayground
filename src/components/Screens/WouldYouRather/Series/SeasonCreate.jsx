@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import { Card, Select, Input, Icon, Button, message } from "antd";
-import { wyrTreeCreate } from "../../../../actions";
+import { wyrSeasonCreate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
-const Create = props => {
+const SeasonCreate = props => {
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
-  const [techincalService, setTechincalService] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [isFileUplaoded, setIsFileUplaoded] = useState(false);
   const [fileSrc, setFileSrc] = useState("");
   const [mediaFile, setMediaFile] = useState(null);
-  const [visibility, setVisibility] = useState("");
 
   const filechangeHandler = event => {
     //let fileType = event.target.files[0].type;
@@ -61,32 +59,22 @@ const Create = props => {
     }
 
     if (
-      techincalService === null ||
-      techincalService === undefined ||
-      techincalService === "" ||
-      techincalService === " "
+      description === null ||
+      description === undefined ||
+      description === "" ||
+      description === " "
     ) {
-      setTechincalService(undefined);
-      message.warning("Please select techincal service");
+      message.warning("Please enter Description");
       return;
     }
+
     if (
       mediaFile === null ||
       mediaFile === undefined ||
       mediaFile === "" ||
       mediaFile === " "
     ) {
-      message.warning("Please select Episode Icon");
-      return;
-    }
-
-    if (
-      visibility === null ||
-      visibility === undefined ||
-      visibility === "" ||
-      visibility === " "
-    ) {
-      message.warning("Please select Episode Icon");
+      message.warning("Please select Season Icon");
       return;
     }
 
@@ -94,20 +82,19 @@ const Create = props => {
 
     {
       formValues = {
-        technical_service_id: techincalService,
         name: name,
         description: description,
-        visibility: visibility,
-        episode_icon: mediaFile
+        season_icon: mediaFile,
+        wyr_series_id: props.seriesId
       };
 
       try {
         setLoading(true);
-        await wyrTreeCreate(user.Authorization, formValues);
+        await wyrSeasonCreate(user.Authorization, formValues);
         setLoading(false);
-        message.success("Episode Created");
+        message.success("Season Created");
         props.setCreateNewModalShow(false);
-        props.submitCreateNewEpisode(techincalService);
+        props.setLoadAgain(!props.loadAgain);
       } catch (error) {
         setLoading(false);
         props.setCreateNewModalShow(false);
@@ -122,34 +109,6 @@ const Create = props => {
         loading={loading}
         bordered={false}
       >
-        {/* technical service id starts*/}
-        <div style={{ display: "flex", marginBottom: "25px" }}>
-          <div
-            style={{
-              width: "140px",
-              fontWeight: 600
-            }}
-          >
-            Technical Service
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
-          </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Select
-                style={{ width: "100%" }}
-                placeholder="Select technical service"
-                onChange={value => setTechincalService(value)}
-              >
-                <Select.Option value={1}>Behavioral Module</Select.Option>
-                <Select.Option value={2}>Functional Module</Select.Option>
-              </Select>
-            </div>
-            {techincalService === undefined ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
-          </div>
-        </div>
-        {/* technical service id ends*/}
         {/* Name starts*/}
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
@@ -165,7 +124,7 @@ const Create = props => {
             <div>
               <Input
                 type="text"
-                placeholder="Episode Name"
+                placeholder="Season Name"
                 style={
                   name === null
                     ? {
@@ -200,7 +159,7 @@ const Create = props => {
             <div>
               <Input
                 type="text"
-                placeholder="Episode Name"
+                placeholder="Season Description"
                 style={
                   description === null
                     ? {
@@ -220,7 +179,7 @@ const Create = props => {
           </div>
         </div>
         {/* Description ends*/}
-        {/* Episode Icon starts*/}
+        {/* season Icon starts*/}
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -270,39 +229,11 @@ const Create = props => {
             )}
           </div>
         </div>
-        {/* Episode Icon ends*/}
-        {/* Visibility starts*/}
-        <div style={{ display: "flex", marginBottom: "25px" }}>
-          <div
-            style={{
-              width: "140px",
-              fontWeight: 600
-            }}
-          >
-            Visibility
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
-          </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Select
-                style={{ width: "100%" }}
-                placeholder="Select Visibility"
-                onChange={value => setVisibility(value)}
-              >
-                <Select.Option value="public">Public</Select.Option>
-                <Select.Option value="private">Private</Select.Option>
-              </Select>
-            </div>
-            {visibility === undefined ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
-          </div>
-        </div>
-        {/* Visibility ends*/}
+        {/* season Icon ends*/}
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>
-            Create New Episode
+            Create New Season
           </Button>
         </div>
       </Card>
@@ -310,4 +241,4 @@ const Create = props => {
   );
 };
 
-export default Create;
+export default SeasonCreate;

@@ -1,4 +1,5 @@
 import adminPanelApi from "../apis/adminPanel";
+import selfService from "../apis/selfService";
 import qs from "querystring";
 
 export const wyrTreeList = async (authToken, technical_service_id) => {
@@ -131,6 +132,38 @@ export const getMappingActivityEntityList = async (authToken, parameter_id) => {
 export const deleteMappedParameter = async (authToken, id) => {
   const response = await adminPanelApi(authToken).delete(
     `/v1/admin/wyr/tree/map/parameter/${id}`
+  );
+  return response;
+};
+
+/* Course list */
+
+export const getCourseList = async authToken => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/fm/course/");
+  return response;
+};
+
+/* Chapter List */
+
+export const getChapterList = async (authToken, fm_course_id) => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/fm/chapter/", {
+    params: {
+      fm_course_id
+    }
+  });
+  return response;
+};
+
+/* episode activity list for fm */
+
+export const getEpisodeActivityListForFm = async (authToken, chapter_id) => {
+  const response = await adminPanelApi(authToken).get(
+    "/v1/admin/wyr/episode_activity/",
+    {
+      params: {
+        chapter_id
+      }
+    }
   );
   return response;
 };

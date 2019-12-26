@@ -7,17 +7,21 @@ import {
   Divider,
   Popconfirm,
   message,
+  Icon,
   Modal
 } from "antd";
 import { useSelector } from "react-redux";
 import { wyrSeasonsList } from "../../../../actions";
+import SeasonCreate from "./SeasonCreate";
 
 const SeasonIndex = props => {
   const seriesId = props.selectedSeriesDetailsForSeason.id;
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
+  const [loadAgain, setLoadAgain] = useState(false);
   const [list, setList] = useState([]);
+  const [createNewModalShow, setCreateNewModalShow] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -32,7 +36,7 @@ const SeasonIndex = props => {
       }
     };
     callDataApi();
-  }, [user.Authorization, seriesId]);
+  }, [user.Authorization, seriesId, loadAgain]);
 
   const columnName = [
     {
@@ -182,19 +186,42 @@ const SeasonIndex = props => {
     }
   ];
 
+  const goBackToSeriesScreen = () => {
+    props.setScreenType("seriesScreen");
+  };
+
+  const createNew = () => {
+    setCreateNewModalShow(true);
+  };
+
+  const closeCreateNewSeasonModal = () => {
+    setCreateNewModalShow(false);
+  };
+
   return (
     <div>
       <Card
         style={{ borderRadius: "5px" }}
         bodyStyle={{ borderRadius: "5px" }}
-        title={<span style={{ fontSize: "20px" }}>Seasons</span>}
+        title={
+          <div style={{ display: "flex" }}>
+            <div style={{ width: "50%" }}>
+              <span style={{ fontSize: "20px" }}>SEASONS</span>
+            </div>
+            <div style={{ width: "50%", textAlign: "right" }}>
+              <Button
+                style={{ fontWeight: 900 }}
+                onClick={goBackToSeriesScreen}
+              >
+                <Icon type="arrow-left" /> Back
+              </Button>
+            </div>
+          </div>
+        }
       >
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
-          <Button
-            type="primary"
-            // onClick={() => createNew()}
-          >
-            Create New Season
+          <Button type="primary" onClick={() => createNew()}>
+            Create New season
           </Button>
         </div>
         <div>
@@ -207,6 +234,25 @@ const SeasonIndex = props => {
           />
         </div>
       </Card>
+
+      {/* create new modal starts */}
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Create New Season"
+        closable={true}
+        footer={null}
+        onCancel={closeCreateNewSeasonModal}
+        visible={createNewModalShow}
+        destroyOnClose={true}
+      >
+        <SeasonCreate
+          setCreateNewModalShow={setCreateNewModalShow}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+          seriesId={seriesId}
+        />
+      </Modal>
+      {/* create new modal end  */}
     </div>
   );
 };

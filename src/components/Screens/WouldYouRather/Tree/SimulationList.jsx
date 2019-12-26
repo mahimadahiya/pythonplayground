@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Select } from "antd";
-import { getMappingActivityEntityList } from "../../../../actions";
+import {
+  getMappingActivityEntityList,
+  getEpisodeActivityListForFm
+} from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const renderOptions = simulation => {
@@ -21,11 +24,21 @@ const SimulationList = props => {
   useEffect(() => {
     const fetchList = async () => {
       try {
-        const response = await getMappingActivityEntityList(
-          user.Authorization,
-          props.selectedParameterId
-        );
-        setSimulation(response.data.result.simulation);
+        if (props.selectedTechnicalId === 1) {
+          const response = await getMappingActivityEntityList(
+            user.Authorization,
+            props.selectedParameterId
+          );
+          setSimulation(response.data.result.simulation);
+        } else {
+          const response = await getEpisodeActivityListForFm(
+            user.Authorization,
+            props.courseId
+          );
+          if (response.data.result.simulation) {
+            setSimulation(response.data.result.simulation);
+          }
+        }
       } catch (error) {}
     };
 

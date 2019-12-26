@@ -133,7 +133,7 @@ const Create = props => {
 
   const createNew = async () => {
     if (name === null || name === undefined || name === "" || name === " ") {
-      message.warning("Please enter action");
+      message.warning("Please enter Name");
       return;
     }
 

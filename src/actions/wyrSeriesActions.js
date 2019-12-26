@@ -87,3 +87,19 @@ export const wyrSeasonsList = async (authToken, wyr_series_id) => {
   });
   return response;
 };
+
+/*create season */
+
+export const wyrSeasonCreate = async (authToken, formValues) => {
+  let formData = new FormData();
+  formData.append("name", formValues.name);
+  formData.append("description", formValues.description);
+  formData.append("season_icon", formValues.season_icon);
+  formData.append("seriesId", formValues.seriesId);
+
+  const response = await adminPanelApi(authToken).post(
+    `/v1/admin/wyr/season/`,
+    formData
+  );
+  return response.data;
+};

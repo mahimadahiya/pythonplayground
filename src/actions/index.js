@@ -197,7 +197,10 @@ import {
   wyrTreeActivityUpdate,
   getStimulationList,
   getMappingActivityEntityList,
-  deleteMappedParameter
+  deleteMappedParameter,
+  getCourseList,
+  getChapterList,
+  getEpisodeActivityListForFm
 } from "./wyrTreeAction";
 
 import {
@@ -208,7 +211,8 @@ import {
   wyrSeriesMapParameters,
   deleteMappedSeriesParameter,
   wyrSeriesUpdate,
-  wyrSeasonsList
+  wyrSeasonsList,
+  wyrSeasonCreate
 } from "./wyrSeriesActions";
 
 import {
@@ -376,6 +380,9 @@ export {
   wyrTreeActivityDelete,
   wyrTreeActivityUpdate,
   deleteMappedParameter,
+  getCourseList,
+  getChapterList,
+  getEpisodeActivityListForFm,
   // wyr series
   wyrSeriesList,
   wyrSeriesCreate,
@@ -385,6 +392,7 @@ export {
   deleteMappedSeriesParameter,
   wyrSeriesUpdate,
   wyrSeasonsList,
+  wyrSeasonCreate,
   //technical assesment
   getTechnicalAssesmentList,
   createNewTechnicalService,

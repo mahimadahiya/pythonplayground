@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Select } from "antd";
-import { getMappingActivityEntityList } from "../../../../actions";
+import {
+  getMappingActivityEntityList,
+  getEpisodeActivityListForFm
+} from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const ArticleList = props => {
@@ -34,11 +37,19 @@ const ArticleList = props => {
   useEffect(() => {
     const fetchList = async () => {
       try {
-        const response = await getMappingActivityEntityList(
-          user.Authorization,
-          props.selectedParameterId
-        );
-        setArticles(response.data.result.article);
+        if (props.selectedTechnicalId === 1) {
+          const response = await getMappingActivityEntityList(
+            user.Authorization,
+            props.selectedParameterId
+          );
+          setArticles(response.data.result.article);
+        } else {
+          const response = await getEpisodeActivityListForFm(
+            user.Authorization,
+            props.courseId
+          );
+          setArticles(response.data.result.article);
+        }
       } catch (error) {}
     };
 
