@@ -22,6 +22,7 @@ const Create = props => {
   const filechangeIconHandler = event => {
     //let fileType = event.target.files[0].type;
     setMediaIconFile(event.target.files[0]);
+    // console.log(event.target.files[0]);
     var readerIcon = new FileReader();
     var url = readerIcon.readAsDataURL(event.target.files[0]);
     readerIcon.onloadend = e => {

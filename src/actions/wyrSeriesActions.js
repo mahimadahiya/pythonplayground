@@ -76,3 +76,14 @@ export const deleteMappedSeriesParameter = async (authToken, id) => {
   );
   return response;
 };
+
+/* Seasons Api starts */
+
+export const wyrSeasonsList = async (authToken, wyr_series_id) => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/wyr/season/", {
+    params: {
+      wyr_series_id
+    }
+  });
+  return response;
+};

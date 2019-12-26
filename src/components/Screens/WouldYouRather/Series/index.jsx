@@ -10,7 +10,6 @@ import {
   Modal
 } from "antd";
 import { useSelector } from "react-redux";
-import moment from "moment";
 import {
   wyrSeriesList,
   wyrSeriesDelete,
@@ -19,6 +18,7 @@ import {
 import Create from "./Create";
 import Edit from "./Edit";
 import SeriesParameterMap from "./MapParameters";
+import SeasonIndex from "./SeasonIndex";
 
 const WyrSeriesIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -33,17 +33,27 @@ const WyrSeriesIndex = props => {
   const [showMapParametersModal, setShowMapParametersModal] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
 
+  const [screenType, setScreenType] = useState("seriesScreen");
+  const [
+    selectedSeriesDetailsForSeason,
+    setSelectedSeriesDetailsForSeason
+  ] = useState([]);
+
   const columnName = [
     {
       title: "ID",
-      dataIndex: "id",
+      // dataIndex: "id",
       key: "id",
       render: record => {
         return (
           <div>
-            {record === null || record === "" || record === undefined
-              ? "-"
-              : record}
+            {record === null || record === "" || record === undefined ? (
+              "-"
+            ) : (
+              <Button type="link" onClick={() => onGoToSeasonPage(record)}>
+                {record.id}
+              </Button>
+            )}
           </div>
         );
       }
@@ -62,22 +72,6 @@ const WyrSeriesIndex = props => {
         );
       }
     },
-    /*  
-    {
-      title: "Created At",
-      dataIndex: "created_at",
-      key: "created_at",
-      render: record => {
-        return (
-          <div>
-            {record === null || record === "" || record === undefined
-              ? "-"
-              : moment(record).format("DD-MM-YYYY")}
-          </div>
-        );
-      }
-    },
-    */
     {
       title: "Status",
       dataIndex: "status",
@@ -203,6 +197,12 @@ const WyrSeriesIndex = props => {
     }
   ];
 
+  const onGoToSeasonPage = data => {
+    // console.log(data);
+    setSelectedSeriesDetailsForSeason(data);
+    setScreenType("seasonScreen");
+  };
+
   const onChangeFetchList = async value => {
     if (value === undefined || value === null) {
       setSelectedTechnicalId(null);
@@ -288,57 +288,74 @@ const WyrSeriesIndex = props => {
 
   return (
     <div>
-      <Card style={{ borderRadius: "5px" }} bodyStyle={{ borderRadius: "5px" }}>
-        <div style={{ textAlign: "right", marginBottom: "40px" }}>
-          <Button type="primary" onClick={() => createNew()}>
-            Create New Series
-          </Button>
-        </div>
-        <div style={{ width: "100%", display: "flex" }}>
-          <div
-            style={{
-              width: "calc(100% - 450px)",
-              textAlign: "left",
-              fontWeight: 600,
-              fontSize: "16px"
-            }}
-          >
-            {selectedTechnicalId === 1 ? "Behavioral Module" : null}
-            {selectedTechnicalId === 2 ? "Functional Module" : null}
+      {screenType === "seriesScreen" ? (
+        <Card
+          style={{ borderRadius: "5px" }}
+          bodyStyle={{ borderRadius: "5px" }}
+          title={<span style={{ fontSize: "20px" }}>Series</span>}
+        >
+          <div style={{ textAlign: "right", marginBottom: "40px" }}>
+            <Button type="primary" onClick={() => createNew()}>
+              Create New Series
+            </Button>
           </div>
-          <div style={{ width: "450px", textAlign: "right" }}>
-            <Select
-              style={{ maxWidth: "300px", width: "100%" }}
-              placeholder="Select technical service"
-              value={selectedTechnicalId}
-              onChange={onChangeFetchList}
-              allowClear={true}
+          <div style={{ width: "100%", display: "flex" }}>
+            <div
+              style={{
+                width: "calc(100% - 450px)",
+                textAlign: "left",
+                fontWeight: 600,
+                fontSize: "16px"
+              }}
             >
-              <Select.Option value={null} disabled>
-                Select technical service
-              </Select.Option>
-              <Select.Option value={1}>Behavioral Module</Select.Option>
-              <Select.Option value={2}>Functional Module</Select.Option>
-            </Select>
-          </div>
-        </div>
-
-        <div style={{ margin: "40px 0px", textAlign: "center" }}>
-          {selectedTechnicalId === null ? (
-            <div style={{ fontWeight: 500 }}>
-              Select technical service from dropdown to view list
+              {selectedTechnicalId === 1 ? "Behavioral Module" : null}
+              {selectedTechnicalId === 2 ? "Functional Module" : null}
             </div>
-          ) : (
-            <Table
-              loading={loading}
-              dataSource={list}
-              columns={columnName}
-              rowKey={row => row.id}
-              pagination={false}
-            />
-          )}
-        </div>
-      </Card>
+            <div style={{ width: "450px", textAlign: "right" }}>
+              <Select
+                style={{ maxWidth: "300px", width: "100%" }}
+                placeholder="Select technical service"
+                value={selectedTechnicalId}
+                onChange={onChangeFetchList}
+                allowClear={true}
+              >
+                <Select.Option value={null} disabled>
+                  Select technical service
+                </Select.Option>
+                <Select.Option value={1}>Behavioral Module</Select.Option>
+                <Select.Option value={2}>Functional Module</Select.Option>
+              </Select>
+            </div>
+          </div>
+
+          <div style={{ margin: "40px 0px", textAlign: "center" }}>
+            {selectedTechnicalId === null ? (
+              <div style={{ fontWeight: 500 }}>
+                Select technical service from dropdown to view list
+              </div>
+            ) : (
+              <Table
+                loading={loading}
+                dataSource={list}
+                columns={columnName}
+                rowKey={row => row.id}
+                pagination={false}
+              />
+            )}
+          </div>
+        </Card>
+      ) : null}
+
+      {/*season starts */}
+
+      {screenType === "seasonScreen" ? (
+        <SeasonIndex
+          selectedSeriesDetailsForSeason={selectedSeriesDetailsForSeason}
+          setScreenType={setScreenType}
+        />
+      ) : null}
+
+      {/*season ends */}
 
       {/* create new modal starts */}
       <Modal

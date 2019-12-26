@@ -146,6 +146,7 @@ const Create = props => {
       message.warning("Please enter Description");
       return;
     }
+    /* 
 
     if (
       mediaIconFile === null ||
@@ -165,6 +166,8 @@ const Create = props => {
       message.warning("Please select Series Background Icon");
       return;
     }
+
+    */
 
     let formValues = {};
 
@@ -237,7 +240,7 @@ const Create = props => {
             <div>
               <Input
                 type="text"
-                placeholder="Serise Name"
+                placeholder="Series Name"
                 value={name}
                 style={
                   name === null
@@ -273,7 +276,7 @@ const Create = props => {
             <div>
               <Input
                 type="text"
-                placeholder="Serise Description"
+                placeholder="Series Description"
                 value={description}
                 style={
                   description === null
