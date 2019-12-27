@@ -11,16 +11,10 @@ import {
   Modal
 } from "antd";
 import { useSelector } from "react-redux";
-import {
-  wyrSeasonsList,
-  wyrSeasonDelete,
-  wyrSeasonStatusUpdate
-} from "../../../../actions";
-import SeasonCreate from "./SeasonCreate";
-import SeasonUpdate from "./SeasonUpdate";
+import { wyrSeasonsEpisodeList } from "../../../../actions";
 
-const SeasonIndex = props => {
-  const seriesId = props.selectedSeriesDetailsForSeason.id;
+const EpisodeIndex = props => {
+  const seasonId = props.selectedSeasonId;
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
@@ -34,16 +28,19 @@ const SeasonIndex = props => {
     setLoading(true);
     const callDataApi = async () => {
       try {
-        const response = await wyrSeasonsList(user.Authorization, seriesId);
-        // console.log(response.data.result);
-        setList(response.data.result.wyr_season_list);
+        const response = await wyrSeasonsEpisodeList(
+          user.Authorization,
+          seasonId
+        );
+        //console.log(response.data.result);
+        setList(response.data.result.wyr_episode_list);
         setLoading(false);
       } catch (error) {
         setLoading(false);
       }
     };
     callDataApi();
-  }, [user.Authorization, seriesId, loadAgain]);
+  }, [user.Authorization, seasonId, loadAgain]);
 
   const columnName = [
     {
@@ -56,7 +53,10 @@ const SeasonIndex = props => {
             {record === null || record === "" || record === undefined ? (
               "-"
             ) : (
-              <Button type="link" onClick={() => onGoToEpisodePage(record)}>
+              <Button
+                type="link"
+                // onClick={() => onGoToEpisodePage(record)}
+              >
                 {record.id}
               </Button>
             )}
@@ -65,7 +65,7 @@ const SeasonIndex = props => {
       }
     },
     {
-      title: "Series",
+      title: "Episode",
       dataIndex: "name",
       key: "name",
       render: record => {
@@ -101,7 +101,7 @@ const SeasonIndex = props => {
                   title="Are you sure you want to change status to Live ?"
                   okText="Yes"
                   cancelText="No"
-                  onConfirm={() => changeCurrentActionStatus(record)}
+                  // onConfirm={() => changeCurrentActionStatus(record)}
                 >
                   <Button
                     style={{
@@ -120,7 +120,7 @@ const SeasonIndex = props => {
                   title="Are you sure you want to change status to Draft ?"
                   okText="Yes"
                   cancelText="No"
-                  onConfirm={() => changeCurrentActionStatus(record)}
+                  // onConfirm={() => changeCurrentActionStatus(record)}
                 >
                   <Button
                     style={{
@@ -154,7 +154,7 @@ const SeasonIndex = props => {
         <span>
           <Button
             type="link"
-            onClick={() => onEdit(record)}
+            // onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
@@ -164,7 +164,7 @@ const SeasonIndex = props => {
             title="Are you sure you want to delete ?"
             okText="Yes"
             cancelText="No"
-            onConfirm={() => onDelete(record)}
+            //  onConfirm={() => onDelete(record)}
           >
             <Button
               type="link"
@@ -178,59 +178,8 @@ const SeasonIndex = props => {
     }
   ];
 
-  const goBackToSeriesScreen = () => {
-    props.setScreenType("seriesScreen");
-  };
-
-  const onGoToEpisodePage = data => {
-    // console.log(data.id);
-    props.setSelectedSeasonId(data.id);
-    props.setScreenType("episodeScreen");
-  };
-
-  const createNew = () => {
-    setCreateNewModalShow(true);
-  };
-
-  const closeCreateNewSeasonModal = () => {
-    setCreateNewModalShow(false);
-  };
-
-  const changeCurrentActionStatus = async data => {
-    let actionId = data.id;
-    setLoading(true);
-    try {
-      await wyrSeasonStatusUpdate(user.Authorization, actionId);
-      message.success("Status Updated");
-      setLoading(false);
-      setLoadAgain(!loadAgain);
-    } catch (error) {
-      message.warning("Internal Server Error!!");
-      setLoading(false);
-    }
-  };
-
-  const onDelete = async item => {
-    try {
-      let selectedId = item.id;
-      setLoading(true);
-      await wyrSeasonDelete(user.Authorization, selectedId);
-      message.success("Season Deleted");
-      setLoading(false);
-      setLoadAgain(!loadAgain);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
-
-  const onEdit = data => {
-    // console.log(data);
-    setUpdateSeasonDetails(data);
-    setEditModalShow(true);
-  };
-
-  const closeEditSeasonModal = () => {
-    setEditModalShow(false);
+  const goBackToSeasonScreen = () => {
+    props.setScreenType("seasonScreen");
   };
 
   return (
@@ -241,12 +190,12 @@ const SeasonIndex = props => {
         title={
           <div style={{ display: "flex" }}>
             <div style={{ width: "50%" }}>
-              <span style={{ fontSize: "20px" }}>SEASONS</span>
+              <span style={{ fontSize: "20px" }}>EPISODE</span>
             </div>
             <div style={{ width: "50%", textAlign: "right" }}>
               <Button
                 style={{ fontWeight: 900 }}
-                onClick={goBackToSeriesScreen}
+                onClick={goBackToSeasonScreen}
               >
                 <Icon type="arrow-left" /> Back
               </Button>
@@ -255,8 +204,11 @@ const SeasonIndex = props => {
         }
       >
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
-          <Button type="primary" onClick={() => createNew()}>
-            Create New season
+          <Button
+            type="primary"
+            // onClick={() => createNew()}
+          >
+            Create New Episode
           </Button>
         </div>
         <div>
@@ -269,44 +221,8 @@ const SeasonIndex = props => {
           />
         </div>
       </Card>
-
-      {/* create new modal starts */}
-      <Modal
-        style={{ minWidth: "600px" }}
-        title="Create New Season"
-        closable={true}
-        footer={null}
-        onCancel={closeCreateNewSeasonModal}
-        visible={createNewModalShow}
-        destroyOnClose={true}
-      >
-        <SeasonCreate
-          setCreateNewModalShow={setCreateNewModalShow}
-          setLoadAgain={setLoadAgain}
-          loadAgain={loadAgain}
-          seriesId={seriesId}
-        />
-      </Modal>
-      {/* create new modal end  */}
-
-      <Modal
-        style={{ minWidth: "600px" }}
-        title="Edit Season"
-        closable={true}
-        footer={null}
-        onCancel={closeEditSeasonModal}
-        visible={editModalShow}
-        destroyOnClose={true}
-      >
-        <SeasonUpdate
-          setEditModalShow={setEditModalShow}
-          seasonDetails={updateSeasonDetails}
-          loadAgain={loadAgain}
-          setLoadAgain={setLoadAgain}
-        />
-      </Modal>
     </div>
   );
 };
 
-export default SeasonIndex;
+export default EpisodeIndex;

@@ -133,3 +133,14 @@ export const wyrSeasonUpdate = async (authToken, id, formValues) => {
   );
   return response.data;
 };
+
+/* episode list  */
+
+export const wyrSeasonsEpisodeList = async (authToken, wyr_season_id) => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/wyr/tree", {
+    params: {
+      wyr_season_id
+    }
+  });
+  return response;
+};

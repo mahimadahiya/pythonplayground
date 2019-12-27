@@ -19,6 +19,7 @@ import Create from "./Create";
 import Edit from "./Edit";
 import SeriesParameterMap from "./MapParameters";
 import SeasonIndex from "./SeasonIndex";
+import EpisodeIndex from "./EpisodeIndex";
 
 const WyrSeriesIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -38,6 +39,7 @@ const WyrSeriesIndex = props => {
     selectedSeriesDetailsForSeason,
     setSelectedSeriesDetailsForSeason
   ] = useState([]);
+  const [selectedSeasonId, setSelectedSeasonId] = useState(null);
 
   const columnName = [
     {
@@ -352,10 +354,19 @@ const WyrSeriesIndex = props => {
         <SeasonIndex
           selectedSeriesDetailsForSeason={selectedSeriesDetailsForSeason}
           setScreenType={setScreenType}
+          setSelectedSeasonId={setSelectedSeasonId}
         />
       ) : null}
 
       {/*season ends */}
+      {/*episode starts */}
+      {screenType === "episodeScreen" ? (
+        <EpisodeIndex
+          selectedSeasonId={selectedSeasonId}
+          setScreenType={setScreenType}
+        />
+      ) : null}
+      {/*episode ends */}
 
       {/* create new modal starts */}
       <Modal
@@ -389,7 +400,7 @@ const WyrSeriesIndex = props => {
       {/* mapping parameters end */}
       <Modal
         style={{ minWidth: "600px" }}
-        title="Edit Season"
+        title="Edit Series"
         closable={true}
         footer={null}
         onCancel={closeEditEpisodeModal}
