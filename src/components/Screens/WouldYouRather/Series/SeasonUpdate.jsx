@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Card, Select, Input, Icon, Button, message } from "antd";
-import { wyrSeasonCreate } from "../../../../actions";
+import React, { useState, useEffect } from "react";
+import { Card, Input, Icon, Button, message } from "antd";
+import { wyrSeasonUpdate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
-const SeasonCreate = props => {
+const SeasonUpdate = props => {
+  const seasonDetails = props.seasonDetails;
   const user = useSelector(state => state.userAuth);
-  // console.log(props);
 
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
@@ -13,6 +13,28 @@ const SeasonCreate = props => {
   const [isFileUplaoded, setIsFileUplaoded] = useState(false);
   const [fileSrc, setFileSrc] = useState("");
   const [mediaFile, setMediaFile] = useState(null);
+  const [seasonId, setSeasonId] = useState(null);
+  const [isFileChanged, setIsFileChanged] = useState(false);
+
+  useEffect(() => {
+    // console.log(actionDetails);
+
+    if (seasonDetails && Object.keys(seasonDetails).length !== 0) {
+      setSeasonId(seasonDetails.id);
+      setName(seasonDetails.name);
+      setDescription(seasonDetails.description);
+      if (
+        seasonDetails.assets.season_icon !== null ||
+        seasonDetails.assets.season_icon !== undefined ||
+        seasonDetails.assets.season_icon !== "" ||
+        seasonDetails.assets.season_icon !== " "
+      ) {
+        setIsFileChanged(false);
+        setIsFileUplaoded(true);
+        setFileSrc(seasonDetails.assets.season_icon);
+      }
+    }
+  }, [seasonDetails]);
 
   const filechangeHandler = event => {
     //let fileType = event.target.files[0].type;
@@ -26,8 +48,10 @@ const SeasonCreate = props => {
   };
 
   const reuploadMedia = () => {
+    setIsFileChanged(true);
     setIsFileUplaoded(false);
     setFileSrc("");
+    setMediaFile(null);
   };
 
   const onNameChange = event => {
@@ -53,6 +77,12 @@ const SeasonCreate = props => {
     }
   };
 
+  const discardMediaChange = () => {
+    setIsFileChanged(false);
+    setIsFileUplaoded(true);
+    setFileSrc(seasonDetails.assets.season_icon);
+  };
+
   const createNew = async () => {
     if (name === null || name === undefined || name === "" || name === " ") {
       message.warning("Please enter Name");
@@ -69,37 +99,25 @@ const SeasonCreate = props => {
       return;
     }
 
-    if (
-      mediaFile === null ||
-      mediaFile === undefined ||
-      mediaFile === "" ||
-      mediaFile === " "
-    ) {
-      message.warning("Please select Season Icon");
-      return;
-    }
-
     let formValues = {};
 
-    {
-      formValues = {
-        name: name,
-        description: description,
-        season_icon: mediaFile,
-        wyr_series_id: props.seriesId
-      };
+    formValues = {
+      name: name,
+      description: description,
+      season_icon: mediaFile
+    };
 
-      try {
-        setLoading(true);
-        await wyrSeasonCreate(user.Authorization, formValues);
-        setLoading(false);
-        message.success("Season Created");
-        props.setCreateNewModalShow(false);
-        props.setLoadAgain(!props.loadAgain);
-      } catch (error) {
-        setLoading(false);
-        props.setCreateNewModalShow(false);
-      }
+    try {
+      // console.log(formValues);
+      setLoading(true);
+      await wyrSeasonUpdate(user.Authorization, seasonId, formValues);
+      setLoading(false);
+      message.success("Season Updated");
+      props.setEditModalShow(false);
+      props.setLoadAgain(!props.loadAgain);
+    } catch (error) {
+      setLoading(false);
+      props.setEditModalShow(false);
     }
   };
 
@@ -125,23 +143,14 @@ const SeasonCreate = props => {
             <div>
               <Input
                 type="text"
+                value={name}
                 placeholder="Season Name"
-                style={
-                  name === null
-                    ? {
-                        width: "100%",
-                        border: "0.5px solid red"
-                      }
-                    : {
-                        width: "100%"
-                      }
-                }
+                style={{
+                  width: "100%"
+                }}
                 onChange={onNameChange}
               />
             </div>
-            {name === null ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
           </div>
         </div>
         {/* Name ends*/}
@@ -160,27 +169,18 @@ const SeasonCreate = props => {
             <div>
               <Input
                 type="text"
+                value={description}
                 placeholder="Season Description"
-                style={
-                  description === null
-                    ? {
-                        width: "100%",
-                        border: "0.5px solid red"
-                      }
-                    : {
-                        width: "100%"
-                      }
-                }
+                style={{
+                  width: "100%"
+                }}
                 onChange={onDescriptionChange}
               />
             </div>
-            {description === null ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
           </div>
         </div>
         {/* Description ends*/}
-        {/* season Icon starts*/}
+        {/* Season Icon starts*/}
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -197,6 +197,7 @@ const SeasonCreate = props => {
                   type="file"
                   style={{ display: "none" }}
                   accept="image/*"
+                  // value={fileSrc}
                   onChange={filechangeHandler}
                 />
                 <span
@@ -223,6 +224,13 @@ const SeasonCreate = props => {
                     Change Media
                   </Button>
                 </div>
+                {isFileChanged === true ? (
+                  <div style={{ marginTop: "30px", textAlign: "right" }}>
+                    <Button type="danger" onClick={() => discardMediaChange()}>
+                      Discard Media Change
+                    </Button>
+                  </div>
+                ) : null}
                 <div>
                   <img src={fileSrc} alt="icon" style={{ maxWidth: "60%" }} />
                 </div>
@@ -230,11 +238,11 @@ const SeasonCreate = props => {
             )}
           </div>
         </div>
-        {/* season Icon ends*/}
+        {/* Season Icon ends*/}
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>
-            Create New Season
+            Update Season
           </Button>
         </div>
       </Card>
@@ -242,4 +250,4 @@ const SeasonCreate = props => {
   );
 };
 
-export default SeasonCreate;
+export default SeasonUpdate;

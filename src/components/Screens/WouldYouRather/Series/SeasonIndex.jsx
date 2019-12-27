@@ -11,8 +11,13 @@ import {
   Modal
 } from "antd";
 import { useSelector } from "react-redux";
-import { wyrSeasonsList } from "../../../../actions";
+import {
+  wyrSeasonsList,
+  wyrSeasonDelete,
+  wyrSeasonStatusUpdate
+} from "../../../../actions";
 import SeasonCreate from "./SeasonCreate";
+import SeasonUpdate from "./SeasonUpdate";
 
 const SeasonIndex = props => {
   const seriesId = props.selectedSeriesDetailsForSeason.id;
@@ -22,13 +27,15 @@ const SeasonIndex = props => {
   const [loadAgain, setLoadAgain] = useState(false);
   const [list, setList] = useState([]);
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
+  const [updateSeasonDetails, setUpdateSeasonDetails] = useState([]);
 
   useEffect(() => {
     setLoading(true);
     const callDataApi = async () => {
       try {
         const response = await wyrSeasonsList(user.Authorization, seriesId);
-        console.log(response.data.result);
+        // console.log(response.data.result);
         setList(response.data.result.wyr_season_list);
         setLoading(false);
       } catch (error) {
@@ -97,7 +104,7 @@ const SeasonIndex = props => {
                   title="Are you sure you want to change status to Live ?"
                   okText="Yes"
                   cancelText="No"
-                  // onConfirm={() => changeCurrentActionStatus(record)}
+                  onConfirm={() => changeCurrentActionStatus(record)}
                 >
                   <Button
                     style={{
@@ -116,7 +123,7 @@ const SeasonIndex = props => {
                   title="Are you sure you want to change status to Draft ?"
                   okText="Yes"
                   cancelText="No"
-                  // onConfirm={() => changeCurrentActionStatus(record)}
+                  onConfirm={() => changeCurrentActionStatus(record)}
                 >
                   <Button
                     style={{
@@ -162,7 +169,7 @@ const SeasonIndex = props => {
           <Divider type="vertical" />
           <Button
             type="link"
-            // onClick={() => onEdit(record)}
+            onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
@@ -172,7 +179,7 @@ const SeasonIndex = props => {
             title="Are you sure you want to delete ?"
             okText="Yes"
             cancelText="No"
-            // onConfirm={() => onDelete(record)}
+            onConfirm={() => onDelete(record)}
           >
             <Button
               type="link"
@@ -196,6 +203,43 @@ const SeasonIndex = props => {
 
   const closeCreateNewSeasonModal = () => {
     setCreateNewModalShow(false);
+  };
+
+  const changeCurrentActionStatus = async data => {
+    let actionId = data.id;
+    setLoading(true);
+    try {
+      await wyrSeasonStatusUpdate(user.Authorization, actionId);
+      message.success("Status Updated");
+      setLoading(false);
+      setLoadAgain(!loadAgain);
+    } catch (error) {
+      message.warning("Internal Server Error!!");
+      setLoading(false);
+    }
+  };
+
+  const onDelete = async item => {
+    try {
+      let selectedId = item.id;
+      setLoading(true);
+      await wyrSeasonDelete(user.Authorization, selectedId);
+      message.success("Season Deleted");
+      setLoading(false);
+      setLoadAgain(!loadAgain);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const onEdit = data => {
+    console.log(data);
+    setUpdateSeasonDetails(data);
+    setEditModalShow(true);
+  };
+
+  const closeEditSeasonModal = () => {
+    setEditModalShow(false);
   };
 
   return (
@@ -253,6 +297,23 @@ const SeasonIndex = props => {
         />
       </Modal>
       {/* create new modal end  */}
+
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Edit Season"
+        closable={true}
+        footer={null}
+        onCancel={closeEditSeasonModal}
+        visible={editModalShow}
+        destroyOnClose={true}
+      >
+        <SeasonUpdate
+          setEditModalShow={setEditModalShow}
+          seasonDetails={updateSeasonDetails}
+          loadAgain={loadAgain}
+          setLoadAgain={setLoadAgain}
+        />
+      </Modal>
     </div>
   );
 };
