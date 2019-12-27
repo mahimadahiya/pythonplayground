@@ -233,7 +233,7 @@ const SeasonIndex = props => {
   };
 
   const onEdit = data => {
-    console.log(data);
+    // console.log(data);
     setUpdateSeasonDetails(data);
     setEditModalShow(true);
   };

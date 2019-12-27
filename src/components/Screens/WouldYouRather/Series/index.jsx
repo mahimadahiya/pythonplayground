@@ -360,7 +360,7 @@ const WyrSeriesIndex = props => {
       {/* create new modal starts */}
       <Modal
         style={{ minWidth: "600px" }}
-        title="Create New Episode"
+        title="Create New Series"
         closable={true}
         footer={null}
         onCancel={closeCreateNewSeriesModal}
@@ -389,7 +389,7 @@ const WyrSeriesIndex = props => {
       {/* mapping parameters end */}
       <Modal
         style={{ minWidth: "600px" }}
-        title="Edit Episode"
+        title="Edit Season"
         closable={true}
         footer={null}
         onCancel={closeEditEpisodeModal}
