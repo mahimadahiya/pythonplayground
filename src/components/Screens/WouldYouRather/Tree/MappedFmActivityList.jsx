@@ -11,6 +11,7 @@ import {
 } from "antd";
 import { wyrTreeActivityDelete } from "../../../../actions";
 import UpdateMappedFmActivity from "./UpdateMappedFmActivity";
+import MappedActivityDetails from "./MappedActivityDetails";
 
 import { useSelector } from "react-redux";
 
@@ -28,6 +29,7 @@ const MappedFmActivityList = props => {
     selectedMappedActivityDetails,
     setSelectedMappedActivityDetails
   ] = useState([]);
+  const [selectedActivityDetails, setSelectedActivityDetails] = useState([]);
 
   const [loadAgain, setLoadAgain] = useState(false);
 
@@ -74,7 +76,7 @@ const MappedFmActivityList = props => {
         <span>
           <Button
             type="link"
-            // onClick={() => onDetailsClick(record)}
+            onClick={() => onDetailsClick(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Details
@@ -132,6 +134,15 @@ const MappedFmActivityList = props => {
     props.submitCreateNewActivity(props.selectedTechnicalId);
   };
 
+  const closeLiDetailsModal = () => {
+    setLiDetailsModalShow(false);
+  };
+
+  const onDetailsClick = data => {
+    setSelectedActivityDetails(data);
+    setLiDetailsModalShow(true);
+  };
+
   return (
     <div>
       <Card
@@ -164,6 +175,20 @@ const MappedFmActivityList = props => {
           selectedTechnicalId={props.selectedTechnicalId}
           loadAgain={loadAgain}
           closeMapLIModal={props.closeMapLIModal}
+        />
+      </Modal>
+
+      <Modal
+        style={{ minWidth: "600px" }}
+        title="Li Details"
+        closable={true}
+        footer={null}
+        onCancel={closeLiDetailsModal}
+        visible={liDetailsModalShow}
+        destroyOnClose={true}
+      >
+        <MappedActivityDetails
+          selectedActivityDetails={selectedActivityDetails}
         />
       </Modal>
     </div>
