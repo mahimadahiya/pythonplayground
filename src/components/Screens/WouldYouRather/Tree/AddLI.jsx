@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import MappedFmActivityList from "./MappedFmActivityList";
 
 const AddLI = props => {
-  //console.log(props.selectedEpisodeDetails);
+  //console.log(props.selectedEpisodeDetails.mapped_activity);
   const technicalServiceId = props.selectedEpisodeDetails.technical_service_id;
   const courseId =
     props.selectedEpisodeDetails.mapped_fm_course.length !== 0
@@ -148,7 +148,6 @@ const AddLI = props => {
       setLoading(false);
       message.success("LI Created");
       props.setAddLIModalShow(false);
-
       props.submitCreateNewActivity(props.selectedTechnicalId);
       setLoadAgain(!loadAgain);
     } catch (error) {

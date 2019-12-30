@@ -16,7 +16,7 @@ import MappedActivityDetails from "./MappedActivityDetails";
 import UpdateMappedActivity from "./UpdateMappedActivity";
 
 const MappedActivityList = props => {
-  // console.log(props);
+  //console.log("mappedactivity", props);
   const user = useSelector(state => state.userAuth);
   const [mappedActivityLoading, setMappedActivityLoading] = useState(false);
   const [mappedList, setMappedList] = useState([]);
@@ -32,13 +32,13 @@ const MappedActivityList = props => {
     setSelectedMappedActivityDetails
   ] = useState([]);
 
-  const [loadAgain, setLoadAgain] = useState(false);
+  const [listLoadAgain, setListLoadAgain] = useState(false);
 
   useEffect(() => {
     setMappedActivityLoading(true);
     setMappedList(props.selectedEpisodeDetails.mapped_activity);
     setMappedActivityLoading(false);
-  }, [loadAgain, props.loadAgain]);
+  }, [listLoadAgain, props.loadAgain]);
 
   const onDetailsClick = data => {
     setSelectedActivityDetails(data);
@@ -137,6 +137,7 @@ const MappedActivityList = props => {
       setMappedActivityLoading(false);
       props.submitCreateNewActivity(props.selectedTechnicalId);
       props.setLoadAgain(!props.loadAgain);
+      setListLoadAgain(!listLoadAgain);
       props.closeMapLIModal();
     } catch (error) {
       setMappedActivityLoading(false);
@@ -185,8 +186,8 @@ const MappedActivityList = props => {
           <UpdateMappedActivity
             selectedMappedActivityDetails={selectedMappedActivityDetails}
             setMappedActivityUpdateModalShow={setMappedActivityUpdateModalShow}
-            setLoadAgain={setLoadAgain}
-            loadAgain={loadAgain}
+            //  setLoadAgain={setLoadAgain}
+            // loadAgain={loadAgain}
             closeMapLIModal={props.closeMapLIModal}
             selectedTechnicalId={props.selectedTechnicalId}
           />
