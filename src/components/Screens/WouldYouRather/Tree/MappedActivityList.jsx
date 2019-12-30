@@ -16,6 +16,7 @@ import MappedActivityDetails from "./MappedActivityDetails";
 import UpdateMappedActivity from "./UpdateMappedActivity";
 
 const MappedActivityList = props => {
+  // console.log(props);
   const user = useSelector(state => state.userAuth);
   const [mappedActivityLoading, setMappedActivityLoading] = useState(false);
   const [mappedList, setMappedList] = useState([]);
@@ -171,24 +172,26 @@ const MappedActivityList = props => {
           selectedActivityDetails={selectedActivityDetails}
         />
       </Modal>
-
-      <Modal
-        style={{ minWidth: "600px" }}
-        title="Update Mapped Activity"
-        closable={true}
-        footer={null}
-        onCancel={closeMappedActivityUpdateModal}
-        visible={mappedActivityUpdateModalShow}
-        destroyOnClose={true}
-      >
-        <UpdateMappedActivity
-          selectedMappedActivityDetails={selectedMappedActivityDetails}
-          setMappedActivityUpdateModalShow={setMappedActivityUpdateModalShow}
-          setLoadAgain={setLoadAgain}
-          loadAgain={loadAgain}
-          closeMapLIModal={props.closeMapLIModal}
-        />
-      </Modal>
+      {mappedActivityUpdateModalShow === true ? (
+        <Modal
+          style={{ minWidth: "600px" }}
+          title="Update Mapped Activity"
+          closable={true}
+          footer={null}
+          onCancel={closeMappedActivityUpdateModal}
+          visible={mappedActivityUpdateModalShow}
+          destroyOnClose={true}
+        >
+          <UpdateMappedActivity
+            selectedMappedActivityDetails={selectedMappedActivityDetails}
+            setMappedActivityUpdateModalShow={setMappedActivityUpdateModalShow}
+            setLoadAgain={setLoadAgain}
+            loadAgain={loadAgain}
+            closeMapLIModal={props.closeMapLIModal}
+            selectedTechnicalId={props.selectedTechnicalId}
+          />
+        </Modal>
+      ) : null}
     </div>
   );
 };

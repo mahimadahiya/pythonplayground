@@ -18,6 +18,8 @@ import GameList from "./GamesList";
 import { useSelector } from "react-redux";
 
 const UpdateMappedActivity = props => {
+  // console.log(props);
+  const selectedTechnicalId = props.selectedTechnicalId;
   const user = useSelector(state => state.userAuth);
   const [mappedEntityArticle, setMappedEntityArticle] = useState([]);
   const [numberOfAttempts, setNumberOfAttempts] = useState([]);
@@ -129,7 +131,8 @@ const UpdateMappedActivity = props => {
           </div>
         );
       }
-    },
+    }
+    /* 
     {
       title: "Actions",
       key: "action",
@@ -151,6 +154,7 @@ const UpdateMappedActivity = props => {
         </span>
       )
     }
+    */
   ];
 
   const renderInputOptions = details => {
@@ -179,6 +183,7 @@ const UpdateMappedActivity = props => {
                   selectedParameterId={
                     props.selectedMappedActivityDetails.parameter_id
                   }
+                  selectedTechnicalId={selectedTechnicalId}
                 />
               </div>
             </div>
@@ -205,6 +210,7 @@ const UpdateMappedActivity = props => {
                   selectedParameterId={
                     props.selectedMappedActivityDetails.parameter_id
                   }
+                  selectedTechnicalId={selectedTechnicalId}
                 />
               </div>
             </div>
@@ -233,6 +239,7 @@ const UpdateMappedActivity = props => {
                       props.selectedMappedActivityDetails.parameter_id
                     }
                     normalGameList={normalGameList}
+                    selectedTechnicalId={selectedTechnicalId}
                   />
                 </div>
               </div>

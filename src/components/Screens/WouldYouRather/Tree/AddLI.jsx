@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import MappedFmActivityList from "./MappedFmActivityList";
 
 const AddLI = props => {
-  //console.log(props.selectedEpisodeDetails.mapped_fm_course);
+  //console.log(props.selectedEpisodeDetails);
   const technicalServiceId = props.selectedEpisodeDetails.technical_service_id;
   const courseId =
     props.selectedEpisodeDetails.mapped_fm_course.length !== 0
@@ -88,7 +88,7 @@ const AddLI = props => {
 
   const onCourseChange = val => {
     setEntityId(val);
-    console.log(val);
+    // console.log(val);
   };
 
   const createNew = async () => {
@@ -99,6 +99,39 @@ const AddLI = props => {
     if (entityId === null || entityId === undefined) {
       message.warning("Please Select Parameter");
       return;
+    }
+
+    for (
+      let i = 0;
+      i < props.selectedEpisodeDetails.mapped_activity.length;
+      i++
+    ) {
+      if (
+        props.selectedEpisodeDetails.mapped_activity[i].parameter_id ===
+          entityId &&
+        props.selectedEpisodeDetails.mapped_activity[i].activity_id ===
+          activityId
+      ) {
+        message.warning("Activity with this Parameter is already selected");
+        return;
+      } else {
+      }
+    }
+    for (
+      let i = 0;
+      i < props.selectedEpisodeDetails.mapped_fm_activity.length;
+      i++
+    ) {
+      if (
+        props.selectedEpisodeDetails.mapped_fm_activity[i].chapter_id ===
+          entityId &&
+        props.selectedEpisodeDetails.mapped_fm_activity[i].activity_id ===
+          activityId
+      ) {
+        message.warning("Activity with this Chapter is already selected");
+        return;
+      } else {
+      }
     }
 
     let formValues = {};

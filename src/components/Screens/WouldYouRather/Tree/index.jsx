@@ -334,7 +334,6 @@ const WyrTreeIndex = props => {
 
   const closeMapLIModal = () => {
     setAddLIModalShow(false);
-    onChangeFetchList(selectedTechnicalId);
   };
 
   return (
@@ -392,58 +391,64 @@ const WyrTreeIndex = props => {
       </Card>
 
       {/* create new modal starts */}
-      <Modal
-        style={{ minWidth: "600px" }}
-        title="Create New Episode"
-        closable={true}
-        footer={null}
-        onCancel={closeCreateNewEpisodeModal}
-        visible={createNewModalShow}
-        destroyOnClose={true}
-      >
-        <Create
-          submitCreateNewEpisode={submitCreateNewEpisode}
-          setCreateNewModalShow={setCreateNewModalShow}
-        />
-      </Modal>
+      {createNewModalShow === true ? (
+        <Modal
+          style={{ minWidth: "600px" }}
+          title="Create New Episode"
+          closable={true}
+          footer={null}
+          onCancel={closeCreateNewEpisodeModal}
+          visible={createNewModalShow}
+          destroyOnClose={true}
+        >
+          <Create
+            submitCreateNewEpisode={submitCreateNewEpisode}
+            setCreateNewModalShow={setCreateNewModalShow}
+          />
+        </Modal>
+      ) : null}
       {/* create new modal end  */}
       {/* Update modal starts */}
-      <Modal
-        style={{ minWidth: "600px" }}
-        title="Edit Episode"
-        closable={true}
-        footer={null}
-        onCancel={closeEditEpisodeModal}
-        visible={editModalShow}
-        destroyOnClose={true}
-      >
-        <Edit
-          submitEditEpisode={submitEditEpisode}
-          selectedTechnicalId={selectedTechnicalId}
-          setEditModalShow={setEditModalShow}
-          episodeDetails={updateEpisodeDetails}
-        />
-      </Modal>
+      {editModalShow === true ? (
+        <Modal
+          style={{ minWidth: "600px" }}
+          title="Edit Episode"
+          closable={true}
+          footer={null}
+          onCancel={closeEditEpisodeModal}
+          visible={editModalShow}
+          destroyOnClose={true}
+        >
+          <Edit
+            submitEditEpisode={submitEditEpisode}
+            selectedTechnicalId={selectedTechnicalId}
+            setEditModalShow={setEditModalShow}
+            episodeDetails={updateEpisodeDetails}
+          />
+        </Modal>
+      ) : null}
       {/* Update modal ends */}
       {/* Map LI modal starts */}
-      <Modal
-        style={{ minWidth: "600px" }}
-        title="Add Learning Interventions"
-        closable={true}
-        footer={null}
-        onCancel={closeMapLIModal}
-        visible={addLIModalShow}
-        destroyOnClose={true}
-      >
-        <AddLI
-          selectedEpisodeId={selectedEpisodeId}
-          setAddLIModalShow={setAddLIModalShow}
-          selectedEpisodeDetails={selectedEpisodeDetails}
-          submitCreateNewActivity={submitCreateNewActivity}
-          selectedTechnicalId={selectedTechnicalId}
-          closeMapLIModal={closeMapLIModal}
-        />
-      </Modal>
+      {addLIModalShow === true ? (
+        <Modal
+          style={{ minWidth: "600px" }}
+          title="Add Learning Interventions"
+          closable={true}
+          footer={null}
+          onCancel={closeMapLIModal}
+          visible={addLIModalShow}
+          destroyOnClose={true}
+        >
+          <AddLI
+            selectedEpisodeId={selectedEpisodeId}
+            setAddLIModalShow={setAddLIModalShow}
+            selectedEpisodeDetails={selectedEpisodeDetails}
+            submitCreateNewActivity={submitCreateNewActivity}
+            selectedTechnicalId={selectedTechnicalId}
+            closeMapLIModal={closeMapLIModal}
+          />
+        </Modal>
+      ) : null}
       {/* Map LI modal ends */}
 
       {/* mapping Parameters start */}

@@ -14,11 +14,8 @@ const SeriesParameterMap = props => {
   const user = useSelector(state => state.userAuth);
 
   const actionId = props.actionId;
-  // console.log(props);
   const technical_service_id = props.selectedTechnicalId;
-  //console.log(props);
   const [cardLoading, setCardLoading] = useState(false);
-  // const [parameters, setParameters] = useState([]);
   const [selectedParameters, setSelectedParameters] = useState([]);
   const [alreadyMappedParameters, setAlreadyMappedParameters] = useState([]);
 
@@ -30,7 +27,6 @@ const SeriesParameterMap = props => {
           user.Authorization,
           technical_service_id
         );
-        console.log(response.data.result);
         let tempList = [];
 
         for (let i = 0; i < response.data.result.wyr_series_list.length; i++) {
@@ -53,7 +49,6 @@ const SeriesParameterMap = props => {
             }
           }
         }
-        //console.log(tempList);
         setSelectedParameters(tempList);
 
         let map_parameters = [];
@@ -76,7 +71,6 @@ const SeriesParameterMap = props => {
             }
           }
         }
-        // console.log(map_parameters);
         setAlreadyMappedParameters(map_parameters);
 
         setCardLoading(false);
@@ -86,8 +80,6 @@ const SeriesParameterMap = props => {
     };
     fetchAlreadyMappedList();
   }, [user.Authorization, actionId, technical_service_id]);
-
-  //console.log(selectedParameters);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -124,13 +116,11 @@ const SeriesParameterMap = props => {
   };
 
   const onDeselectingParameter = async e => {
-    // console.log(e);
     const para_list = alreadyMappedParameters.find(item => {
       if (item.parameter_id === e) {
         return item;
       }
     });
-    // console.log(gameName.id);
     try {
       await deleteMappedSeriesParameter(user.Authorization, para_list.id);
     } catch (error) {}

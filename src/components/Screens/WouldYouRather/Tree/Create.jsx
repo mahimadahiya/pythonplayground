@@ -229,6 +229,7 @@ const Create = props => {
             }}
           >
             Media Upload
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
             {isFileUplaoded === false ? (
