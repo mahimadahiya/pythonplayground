@@ -365,6 +365,7 @@ const WyrSeriesIndex = props => {
         <EpisodeIndex
           selectedSeasonId={selectedSeasonId}
           setScreenType={setScreenType}
+          selectedTechnicalId={selectedTechnicalId}
         />
       ) : null}
       {/*episode ends */}

@@ -12,8 +12,10 @@ import {
 } from "antd";
 import { useSelector } from "react-redux";
 import { wyrSeasonsEpisodeList } from "../../../../actions";
+import EpisodeCreate from "./EpisodeCreate";
 
 const EpisodeIndex = props => {
+  // console.log(props.selectedTechnicalId);
   const seasonId = props.selectedSeasonId;
   const user = useSelector(state => state.userAuth);
 
@@ -178,8 +180,16 @@ const EpisodeIndex = props => {
     }
   ];
 
+  const createNew = () => {
+    setCreateNewModalShow(true);
+  };
+
   const goBackToSeasonScreen = () => {
     props.setScreenType("seasonScreen");
+  };
+
+  const closeCreateNewEpisodeModal = () => {
+    setCreateNewModalShow(false);
   };
 
   return (
@@ -204,10 +214,7 @@ const EpisodeIndex = props => {
         }
       >
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
-          <Button
-            type="primary"
-            // onClick={() => createNew()}
-          >
+          <Button type="primary" onClick={() => createNew()}>
             Create New Episode
           </Button>
         </div>
@@ -221,6 +228,27 @@ const EpisodeIndex = props => {
           />
         </div>
       </Card>
+
+      {/* create new modal starts */}
+      {createNewModalShow === true ? (
+        <Modal
+          style={{ minWidth: "600px" }}
+          title="Create New Episode"
+          closable={true}
+          footer={null}
+          onCancel={closeCreateNewEpisodeModal}
+          visible={createNewModalShow}
+          destroyOnClose={true}
+        >
+          <EpisodeCreate
+            setCreateNewModalShow={setCreateNewModalShow}
+            techincalServiceId={props.selectedTechnicalId}
+            setLoadAgain={setLoadAgain}
+            loadAgain={loadAgain}
+          />
+        </Modal>
+      ) : null}
+      {/* create new modal end  */}
     </div>
   );
 };
