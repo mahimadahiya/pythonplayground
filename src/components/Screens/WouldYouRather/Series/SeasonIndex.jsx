@@ -342,6 +342,8 @@ const SeasonIndex = props => {
           selectedTechnicalId={selectedTechnicalId}
           setMapEpisodesModalShow={setMapEpisodesModalShow}
           selectedSeasonId={selectedSeasonId}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
         />
       ) : null}
       {/* map episodes ends */}

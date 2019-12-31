@@ -62,6 +62,7 @@ const EpisodeList = props => {
         style={{ width: "100%" }}
         showSearch
         value={props.value}
+        onDeselect={props.onDeselect}
         allowClear
         filterOption={(val, option) => filterArticles(val, option, epoisodes)}
       >

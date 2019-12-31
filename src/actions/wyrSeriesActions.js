@@ -144,3 +144,13 @@ export const wyrSeasonsEpisodeList = async (authToken, wyr_season_id) => {
   });
   return response;
 };
+
+/* map episodes with season */
+
+export const wyrMapSeasonEpisode = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/wyr/season_episode/",
+    qs.stringify(values)
+  );
+  return response;
+};

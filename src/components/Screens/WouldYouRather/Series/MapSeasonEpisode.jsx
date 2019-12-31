@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Modal, Card, Form, message } from "antd";
 import MButton from "../../../Elements/MButton";
-import { wyrSeasonsEpisodeList } from "../../../../actions";
+import {
+  wyrSeasonsEpisodeList,
+  wyrMapSeasonEpisode
+} from "../../../../actions";
 import EpisodeList from "./EpisodeList";
 import "./index";
 
@@ -41,19 +44,17 @@ const MapSeasonEpisode = props => {
   }, [user.Authorization]);
 
   const onSubmit = e => {
-    /* 
     e.preventDefault();
     props.form.validateFields(async (err, formValues) => {
       if (!err) {
         const values = {
-          wyr_series_id: actionId,
-          // parameter_id_list: JSON.stringify(parameters)
-          parameter_list: JSON.stringify(formValues.parameter)
+          wyr_season_id: selectedSeasonId,
+          wyr_episode_list: JSON.stringify(formValues.episodes)
         };
 
         setCardLoading(true);
         try {
-          const response = await wyrSeriesMapParameters(
+          const response = await wyrMapSeasonEpisode(
             user.Authorization,
             values
           );
@@ -62,14 +63,13 @@ const MapSeasonEpisode = props => {
             message.success("Mapped successfully");
           }
           props.setLoadAgain(!props.loadAgain);
-          props.setShowMapParametersModal(false);
+          props.setMapEpisodesModalShow(false);
           setCardLoading(false);
         } catch (error) {
           setCardLoading(false);
         }
       }
     });
-    */
   };
 
   const onEpisodeChange = value => {
