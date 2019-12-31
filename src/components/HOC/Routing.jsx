@@ -112,6 +112,7 @@ class Routing extends React.Component {
               exact
               accessGroup={[1]}
             />
+            {/* 
             <PrivateRoute
               path="/wyr/scenario"
               component={WyrScenarioIndex}
@@ -126,6 +127,7 @@ class Routing extends React.Component {
               exact
               accessGroup={[1]}
             />
+            */}
             <PrivateRoute
               path="/wyr/episode"
               component={WyrTreeIndex}

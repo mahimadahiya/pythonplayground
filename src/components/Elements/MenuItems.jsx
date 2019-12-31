@@ -290,6 +290,7 @@ const list = [
           }
         ]
       },
+      /* 
       {
         key: "wyr-actions",
         label: "Actions",
@@ -312,6 +313,7 @@ const list = [
           }
         ]
       },
+      */
       {
         key: "wyr-episode",
         label: "Episode",

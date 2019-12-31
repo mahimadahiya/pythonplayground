@@ -61,6 +61,16 @@ const EpisodeCreate = props => {
     }
 
     if (
+      description === null ||
+      description === undefined ||
+      description === "" ||
+      description === " "
+    ) {
+      message.warning("Please enter description");
+      return;
+    }
+
+    if (
       mediaFile === null ||
       mediaFile === undefined ||
       mediaFile === "" ||
@@ -162,7 +172,7 @@ const EpisodeCreate = props => {
             <div>
               <Input
                 type="text"
-                placeholder="Episode Name"
+                placeholder="Episode Description"
                 style={
                   description === null
                     ? {
