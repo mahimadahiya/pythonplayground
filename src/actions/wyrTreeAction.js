@@ -167,3 +167,14 @@ export const getEpisodeActivityListForFm = async (authToken, chapter_id) => {
   );
   return response;
 };
+
+/* scene list for epiodes */
+
+export const getWyrEpisodeSceneList = async (authToken, wyr_episode_id) => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/wyr/scene", {
+    params: {
+      wyr_episode_id
+    }
+  });
+  return response;
+};

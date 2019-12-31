@@ -21,6 +21,7 @@ import Edit from "./Edit";
 import EpisodeParameterMap from "./MapParameters";
 import AddLI from "./AddLI";
 import EpisodeMapCourse from "./MapCourse";
+import history from "../../../../history";
 
 const WyrTreeIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -210,10 +211,37 @@ const WyrTreeIndex = props => {
               Delete
             </Button>
           </Popconfirm>
+          <Divider type="vertical" />
+          <a
+            style={{
+              padding: "6px 12px",
+              background: "#1990FF",
+              borderRadius: "5px",
+              color: "#fff",
+              fontWeight: 400
+            }}
+            href={`/wyr/scene/EpId/${record.id}`}
+          >
+            Scene
+          </a>
+          {/* 
+          <Button
+            type="primary"
+            onClick={() => onGoToScenePage(record)}
+            style={{ marginRight: "10px" }}
+          >
+            Scene
+          </Button>
+          */}
         </span>
       )
     }
   ];
+
+  const onGoToScenePage = data => {
+    let id = data.id;
+    history.push(`/wyr/episode/scene/${id}`);
+  };
 
   const onChangeFetchList = async value => {
     if (value === undefined || value === null) {

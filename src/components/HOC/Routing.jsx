@@ -67,6 +67,7 @@ import WyrActionIndex from "../Screens/WouldYouRather/Actions";
 import WyrScenarioIndex from "../Screens/WouldYouRather/Scenarios";
 import WyrTreeIndex from "../Screens/WouldYouRather/Tree";
 import WyrSeriesIndex from "../Screens/WouldYouRather/Series";
+import SceneIndex from "../Screens/WouldYouRather/Tree/SceneIndex";
 
 //technical assesment
 import TechnicalAssesmentIndex from "../Screens/TechnicalAssesment/TechnicalAssesmentIndex";
@@ -134,6 +135,13 @@ class Routing extends React.Component {
               user={user}
               exact
               accessGroup={[1]}
+            />
+            <PrivateRoute
+              path="/wyr/scene/EpId/:id"
+              component={SceneIndex}
+              user={user}
+              accessGroup={[1]}
+              exact
             />
             <PrivateRoute
               path="/techAss"

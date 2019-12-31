@@ -200,7 +200,8 @@ import {
   deleteMappedParameter,
   getCourseList,
   getChapterList,
-  getEpisodeActivityListForFm
+  getEpisodeActivityListForFm,
+  getWyrEpisodeSceneList
 } from "./wyrTreeAction";
 
 import {
@@ -388,6 +389,7 @@ export {
   getCourseList,
   getChapterList,
   getEpisodeActivityListForFm,
+  getWyrEpisodeSceneList,
   // wyr series
   wyrSeriesList,
   wyrSeriesCreate,
