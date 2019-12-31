@@ -16,7 +16,7 @@ import MappedActivityDetails from "./MappedActivityDetails";
 import UpdateMappedActivity from "./UpdateMappedActivity";
 
 const MappedActivityList = props => {
-  //console.log("mappedactivity", props);
+  // console.log(props);
   const user = useSelector(state => state.userAuth);
   const [mappedActivityLoading, setMappedActivityLoading] = useState(false);
   const [mappedList, setMappedList] = useState([]);

@@ -44,18 +44,14 @@ const WyrSeriesIndex = props => {
   const columnName = [
     {
       title: "ID",
-      // dataIndex: "id",
+      dataIndex: "id",
       key: "id",
       render: record => {
         return (
           <div>
-            {record === null || record === "" || record === undefined ? (
-              "-"
-            ) : (
-              <Button type="link" onClick={() => onGoToSeasonPage(record)}>
-                {record.id}
-              </Button>
-            )}
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record}
           </div>
         );
       }
@@ -194,6 +190,13 @@ const WyrSeriesIndex = props => {
               Delete
             </Button>
           </Popconfirm>
+          <Button
+            type="primary"
+            onClick={() => onGoToSeasonPage(record)}
+            style={{ marginRight: "10px" }}
+          >
+            Seasons
+          </Button>
         </span>
       )
     }
@@ -355,6 +358,7 @@ const WyrSeriesIndex = props => {
           selectedSeriesDetailsForSeason={selectedSeriesDetailsForSeason}
           setScreenType={setScreenType}
           setSelectedSeasonId={setSelectedSeasonId}
+          selectedTechnicalId={selectedTechnicalId}
         />
       ) : null}
 

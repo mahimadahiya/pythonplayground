@@ -18,16 +18,22 @@ import {
 } from "../../../../actions";
 import SeasonCreate from "./SeasonCreate";
 import SeasonUpdate from "./SeasonUpdate";
+import MapSeasonEpisode from "./MapSeasonEpisode";
 
 const SeasonIndex = props => {
   const seriesId = props.selectedSeriesDetailsForSeason.id;
+  const selectedTechnicalId = props.selectedTechnicalId;
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
   const [loadAgain, setLoadAgain] = useState(false);
   const [list, setList] = useState([]);
+  const [selectedSeasonId, setSelectedSeasonId] = useState(null);
+
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
+  const [mapEpisodesModalShow, setMapEpisodesModalShow] = useState(false);
+
   const [updateSeasonDetails, setUpdateSeasonDetails] = useState([]);
 
   useEffect(() => {
@@ -48,18 +54,14 @@ const SeasonIndex = props => {
   const columnName = [
     {
       title: "ID",
-      // dataIndex: "id",
+      dataIndex: "id",
       key: "id",
       render: record => {
         return (
           <div>
-            {record === null || record === "" || record === undefined ? (
-              "-"
-            ) : (
-              <Button type="link" onClick={() => onGoToEpisodePage(record)}>
-                {record.id}
-              </Button>
-            )}
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record}
           </div>
         );
       }
@@ -154,6 +156,14 @@ const SeasonIndex = props => {
         <span>
           <Button
             type="link"
+            onClick={() => onMapEpisode(record)}
+            style={{ padding: 0, marginRight: "10px" }}
+          >
+            Map Episode
+          </Button>
+          <Divider type="vertical" />
+          <Button
+            type="link"
             onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
@@ -173,6 +183,14 @@ const SeasonIndex = props => {
               Delete
             </Button>
           </Popconfirm>
+          <Divider type="vertical" />
+          <Button
+            type="primary"
+            onClick={() => onGoToEpisodePage(record)}
+            style={{ marginRight: "10px" }}
+          >
+            Episodes
+          </Button>
         </span>
       )
     }
@@ -231,6 +249,15 @@ const SeasonIndex = props => {
 
   const closeEditSeasonModal = () => {
     setEditModalShow(false);
+  };
+
+  const onMapEpisode = data => {
+    setSelectedSeasonId(data.id);
+    setMapEpisodesModalShow(true);
+  };
+
+  const closeMapEpisodesModal = () => {
+    setMapEpisodesModalShow(false);
   };
 
   return (
@@ -305,6 +332,19 @@ const SeasonIndex = props => {
           setLoadAgain={setLoadAgain}
         />
       </Modal>
+
+      {/* map episodes start */}
+      {mapEpisodesModalShow === true ? (
+        <MapSeasonEpisode
+          visible={mapEpisodesModalShow}
+          onCancel={closeMapEpisodesModal}
+          onValuesSubmit={closeMapEpisodesModal}
+          selectedTechnicalId={selectedTechnicalId}
+          setMapEpisodesModalShow={setMapEpisodesModalShow}
+          selectedSeasonId={selectedSeasonId}
+        />
+      ) : null}
+      {/* map episodes ends */}
     </div>
   );
 };
