@@ -7,16 +7,21 @@ import {
   Divider,
   Popconfirm,
   message,
-  Modal
+  Modal,
+  Icon
 } from "antd";
 import { useSelector } from "react-redux";
 import { getWyrEpisodeSceneList } from "../../../../actions";
+import SceneCreate from "./SceneCreate";
+import history from "../../../../history";
 
 const SceneIndex = props => {
   const user = useSelector(state => state.userAuth);
 
   const [sceneList, setSceneList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [createNewModalShow, setCreateNewModalShow] = useState(false);
+  const [loadAgain, setLoadAgain] = useState(false);
 
   const columnName = [
     {
@@ -96,19 +101,43 @@ const SceneIndex = props => {
     return () => {
       setSceneList([]);
     };
-  }, [props.match.params.id]);
+  }, [props.match.params.id, loadAgain]);
+
+  const goBackToEpisodeList = () => {
+    history.push("/wyr/episode");
+  };
+
+  const createNew = () => {
+    setCreateNewModalShow(true);
+  };
+
+  const closeCreateNewSceneModal = () => {
+    setCreateNewModalShow(false);
+  };
 
   return (
     <div>
       <Card
         title={
-          <span style={{ fontSize: "22px", fontWeight: 700 }}>
-            Episode/Scene
-          </span>
+          <div style={{ display: "flex" }}>
+            <div style={{ fontSize: "22px", fontWeight: 700, width: "50%" }}>
+              Episode/Scene
+            </div>
+            <div style={{ width: "50%", textAlign: "right" }}>
+              <Button style={{ fontWeight: 900 }} onClick={goBackToEpisodeList}>
+                <Icon type="arrow-left" /> Back
+              </Button>
+            </div>
+          </div>
         }
         style={{ borderRadius: "5px" }}
         bodyStyle={{ borderRadius: "5px" }}
       >
+        <div style={{ textAlign: "right", marginBottom: "40px" }}>
+          <Button type="primary" onClick={() => createNew()}>
+            Create New Scene
+          </Button>
+        </div>
         <Table
           loading={loading}
           dataSource={sceneList}
@@ -117,6 +146,27 @@ const SceneIndex = props => {
           pagination={false}
         />
       </Card>
+
+      {/* create new modal starts */}
+      {createNewModalShow === true ? (
+        <Modal
+          style={{ minWidth: "600px" }}
+          title="Create New Scene"
+          closable={true}
+          footer={null}
+          onCancel={closeCreateNewSceneModal}
+          visible={createNewModalShow}
+          destroyOnClose={true}
+        >
+          <SceneCreate
+            episodeId={props.match.params.id}
+            setCreateNewModalShow={setCreateNewModalShow}
+            setLoadAgain={setLoadAgain}
+            loadAgain={loadAgain}
+          />
+        </Modal>
+      ) : null}
+      {/* create new modal end  */}
     </div>
   );
 };

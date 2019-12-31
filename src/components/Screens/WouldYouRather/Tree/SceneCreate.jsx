@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Select, Input, Icon, Button, message } from "antd";
-import {} from "../../../../actions";
+import { wyrEpisodeSceneCreate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const Create = props => {
@@ -66,7 +66,15 @@ const Create = props => {
     };
 
     try {
-    } catch (error) {}
+      setLoading(true);
+      await wyrEpisodeSceneCreate(user.Authorization, formValues);
+      setLoading(false);
+      message.success("Scene Created");
+      props.setCreateNewModalShow(false);
+      props.setLoadAgain(!props.loadAgain);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -93,7 +101,7 @@ const Create = props => {
                 type="text"
                 placeholder="name"
                 style={
-                  action === null
+                  name === null
                     ? {
                         width: "100%",
                         border: "0.5px solid red"
@@ -175,7 +183,7 @@ const Create = props => {
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>
-            Create New Action
+            Create New Scene
           </Button>
         </div>
       </Card>

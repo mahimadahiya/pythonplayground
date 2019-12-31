@@ -178,3 +178,13 @@ export const getWyrEpisodeSceneList = async (authToken, wyr_episode_id) => {
   });
   return response;
 };
+
+/* scene create for epiodes */
+
+export const wyrEpisodeSceneCreate = async (authToken, values) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/wyr/scene",
+    qs.stringify(values)
+  );
+  return response;
+};

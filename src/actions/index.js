@@ -201,7 +201,8 @@ import {
   getCourseList,
   getChapterList,
   getEpisodeActivityListForFm,
-  getWyrEpisodeSceneList
+  getWyrEpisodeSceneList,
+  wyrEpisodeSceneCreate
 } from "./wyrTreeAction";
 
 import {
@@ -390,6 +391,7 @@ export {
   getChapterList,
   getEpisodeActivityListForFm,
   getWyrEpisodeSceneList,
+  wyrEpisodeSceneCreate,
   // wyr series
   wyrSeriesList,
   wyrSeriesCreate,
