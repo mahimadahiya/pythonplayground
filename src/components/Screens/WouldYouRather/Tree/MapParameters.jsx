@@ -176,14 +176,12 @@ const EpisodeParameterMap = props => {
                 rules: [{ required: true }],
                 initialValue: selectedParameters
               })(
-                <Spin spinning={parameterListLoading}>
-                  <Parameters
-                    mode="multiple"
-                    onChange={onParameterChange}
-                    onDeselect={e => onDeselectingParameter(e)}
-                    categories={category}
-                  />
-                </Spin>
+                <Parameters
+                  mode="multiple"
+                  onChange={onParameterChange}
+                  onDeselect={e => onDeselectingParameter(e)}
+                  categories={category}
+                />
               )}
             </Form.Item>
 
