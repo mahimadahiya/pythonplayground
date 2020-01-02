@@ -147,12 +147,12 @@ const AddLI = props => {
       await wyrTreeActivityCreate(user.Authorization, formValues);
       setLoading(false);
       message.success("LI Created");
-      props.setAddLIModalShow(false);
+      // props.setAddLIModalShow(false);
       props.submitCreateNewActivity(props.selectedTechnicalId);
       setLoadAgain(!loadAgain);
     } catch (error) {
       setLoading(false);
-      props.setAddLIModalShow(false);
+      //  props.setAddLIModalShow(false);
     }
   };
 

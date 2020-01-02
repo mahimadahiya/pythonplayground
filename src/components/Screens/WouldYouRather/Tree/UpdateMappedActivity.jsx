@@ -455,8 +455,8 @@ const UpdateMappedActivity = props => {
       );
       message.success("Entity Mapped Succesfully");
       props.setMappedActivityUpdateModalShow(false);
-      props.closeMapLIModal();
-      props.setLoadAgain(!props.loadAgain);
+      // props.closeMapLIModal();
+      props.setListLoadAgain(!props.listLoadAgain);
     } catch (error) {
       props.setMappedActivityUpdateModalShow(false);
     }

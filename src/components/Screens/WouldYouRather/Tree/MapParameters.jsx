@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Modal, Card, Form, message } from "antd";
+import { Modal, Card, Form, message, Spin } from "antd";
 import MButton from "../../../Elements/MButton";
 import Parameters from "../../../Elements/Parameters";
+import Categories from "../../../Elements/Categories";
 import {
   wyrTreeMapParameters,
   wyrTreeList,
@@ -18,13 +19,17 @@ const EpisodeParameterMap = props => {
   const technical_service_id = props.selectedTechnicalId;
   //console.log(props);
   const [cardLoading, setCardLoading] = useState(false);
+  const [parameterListLoading, setParameterListLoading] = useState(false);
   // const [parameters, setParameters] = useState([]);
+
+  const [category, setCategory] = useState([]);
   const [selectedParameters, setSelectedParameters] = useState([]);
   const [alreadyMappedParameters, setAlreadyMappedParameters] = useState([]);
 
   useEffect(() => {
     const fetchAlreadyMappedList = async () => {
       setCardLoading(true);
+
       try {
         const response = await wyrTreeList(
           user.Authorization,
@@ -121,6 +126,12 @@ const EpisodeParameterMap = props => {
     });
   };
 
+  const onCategoryChange = value => {
+    setParameterListLoading(true);
+    setCategory(value);
+    setParameterListLoading(false);
+  };
+
   const onParameterChange = value => {
     // setParameters(value);
   };
@@ -142,7 +153,7 @@ const EpisodeParameterMap = props => {
   return (
     <div>
       <Modal
-        title="Map Parameters"
+        title="Map Competencies"
         visible={props.visible}
         onCancel={props.onCancel}
         destroyOnClose={true}
@@ -154,17 +165,25 @@ const EpisodeParameterMap = props => {
           loading={cardLoading}
         >
           <Form onSubmit={onSubmit}>
-            <Form.Item label="Parameters">
+            <Form.Item label="Categories">
+              {getFieldDecorator("categories", {
+                rules: [{ required: true }]
+              })(<Categories onChange={onCategoryChange} />)}
+            </Form.Item>
+
+            <Form.Item label="Competencies">
               {getFieldDecorator("parameter", {
                 rules: [{ required: true }],
                 initialValue: selectedParameters
               })(
-                <Parameters
-                  mode="multiple"
-                  onChange={onParameterChange}
-                  onDeselect={e => onDeselectingParameter(e)}
-                  categories={[null]}
-                />
+                <Spin spinning={parameterListLoading}>
+                  <Parameters
+                    mode="multiple"
+                    onChange={onParameterChange}
+                    onDeselect={e => onDeselectingParameter(e)}
+                    categories={category}
+                  />
+                </Spin>
               )}
             </Form.Item>
 

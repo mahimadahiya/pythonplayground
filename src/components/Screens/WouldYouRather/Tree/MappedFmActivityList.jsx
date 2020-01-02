@@ -9,7 +9,7 @@ import {
   message,
   Modal
 } from "antd";
-import { wyrTreeActivityDelete } from "../../../../actions";
+import { wyrTreeActivityDelete, wyrTreeList } from "../../../../actions";
 import UpdateMappedFmActivity from "./UpdateMappedFmActivity";
 import MappedActivityDetails from "./MappedActivityDetails";
 
@@ -31,13 +31,46 @@ const MappedFmActivityList = props => {
   ] = useState([]);
   const [selectedActivityDetails, setSelectedActivityDetails] = useState([]);
 
-  const [loadAgain, setLoadAgain] = useState(false);
+  const [listLoadAgain, setListLoadAgain] = useState(false);
 
   useEffect(() => {
-    setMappedActivityLoading(true);
-    setMappedList(props.selectedEpisodeDetails.mapped_fm_activity);
-    setMappedActivityLoading(false);
-  }, [loadAgain, props.loadAgain]);
+    const callDetailsData = async () => {
+      setMappedActivityLoading(true);
+      try {
+        const response = await wyrTreeList(
+          user.Authorization,
+          props.selectedTechnicalId
+        );
+        //  console.log(response.data.result.wyr_episode_list);
+        let tempList = [];
+        for (let i = 0; i < response.data.result.wyr_episode_list.length; i++) {
+          if (
+            response.data.result.wyr_episode_list[i].id ===
+            props.selectedEpisodeDetails.id
+          ) {
+            for (
+              let j = 0;
+              j <
+              response.data.result.wyr_episode_list[i].mapped_fm_activity
+                .length;
+              j++
+            ) {
+              tempList.push(
+                response.data.result.wyr_episode_list[i].mapped_fm_activity[j]
+              );
+            }
+          }
+        }
+        // console.log(tempList);
+        setMappedList(tempList);
+        setMappedActivityLoading(false);
+      } catch (error) {
+        setMappedActivityLoading(false);
+      }
+    };
+    callDetailsData();
+    // setMappedList(props.selectedEpisodeDetails.mapped_activity);
+  }, [listLoadAgain, props.loadAgain]);
 
   const columnName = [
     {
@@ -117,7 +150,6 @@ const MappedFmActivityList = props => {
       setMappedActivityLoading(false);
       props.submitCreateNewActivity(props.selectedTechnicalId);
       props.setLoadAgain(!props.loadAgain);
-      props.closeMapLIModal();
     } catch (error) {
       setMappedActivityLoading(false);
     }
@@ -171,9 +203,9 @@ const MappedFmActivityList = props => {
         <UpdateMappedFmActivity
           selectedMappedActivityDetails={selectedMappedActivityDetails}
           setMappedActivityUpdateModalShow={setMappedActivityUpdateModalShow}
-          setLoadAgain={setLoadAgain}
           selectedTechnicalId={props.selectedTechnicalId}
-          loadAgain={loadAgain}
+          setListLoadAgain={setListLoadAgain}
+          listLoadAgain={listLoadAgain}
           closeMapLIModal={props.closeMapLIModal}
         />
       </Modal>
