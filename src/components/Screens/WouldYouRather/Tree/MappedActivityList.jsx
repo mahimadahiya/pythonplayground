@@ -139,7 +139,7 @@ const MappedActivityList = props => {
             onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
-            Update
+            Map
           </Button>
           <Divider type="vertical" />
           <Popconfirm

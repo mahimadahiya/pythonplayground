@@ -507,7 +507,7 @@ const UpdateMappedActivity = props => {
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => onUpdateLi()}>
-            Update LI
+            Map LI
           </Button>
         </div>
       </Card>
