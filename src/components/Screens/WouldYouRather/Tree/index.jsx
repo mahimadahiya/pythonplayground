@@ -91,6 +91,7 @@ const WyrTreeIndex = props => {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      width: 160,
       render: (text, record) => {
         // return <div>{record === 1 ? "Draft" : "Live"}</div>;
         return (
@@ -168,7 +169,7 @@ const WyrTreeIndex = props => {
                 onClick={() => onMappingParameters(record)}
                 style={{ padding: 0, marginRight: "10px" }}
               >
-                Map Parameters
+                Map Competencies
               </Button>
               <Divider type="vertical" />
             </span>
@@ -362,7 +363,7 @@ const WyrTreeIndex = props => {
 
   const closeMapLIModal = () => {
     setAddLIModalShow(false);
-    onChangeFetchList(selectedTechnicalId);
+    // onChangeFetchList(selectedTechnicalId);
   };
 
   return (
