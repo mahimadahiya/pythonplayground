@@ -15,12 +15,9 @@ const EpisodeParameterMap = props => {
   const user = useSelector(state => state.userAuth);
 
   const actionId = props.actionId;
-  // console.log(props);
   const technical_service_id = props.selectedTechnicalId;
-  //console.log(props);
   const [cardLoading, setCardLoading] = useState(false);
   const [parameterListLoading, setParameterListLoading] = useState(false);
-  // const [parameters, setParameters] = useState([]);
 
   const [category, setCategory] = useState([]);
   const [selectedParameters, setSelectedParameters] = useState([]);
@@ -35,7 +32,6 @@ const EpisodeParameterMap = props => {
           user.Authorization,
           technical_service_id
         );
-        // console.log(response.data.result.wyr_episode_list);
         let tempList = [];
 
         for (let i = 0; i < response.data.result.wyr_episode_list.length; i++) {
@@ -59,7 +55,6 @@ const EpisodeParameterMap = props => {
             }
           }
         }
-        //console.log(tempList);
         setSelectedParameters(tempList);
 
         let map_parameters = [];
@@ -83,7 +78,6 @@ const EpisodeParameterMap = props => {
             }
           }
         }
-        // console.log(map_parameters);
         setAlreadyMappedParameters(map_parameters);
 
         setCardLoading(false);
@@ -94,15 +88,12 @@ const EpisodeParameterMap = props => {
     fetchAlreadyMappedList();
   }, [user.Authorization, actionId, technical_service_id]);
 
-  //console.log(selectedParameters);
-
   const onSubmit = e => {
     e.preventDefault();
     props.form.validateFields(async (err, formValues) => {
       if (!err) {
         const values = {
           wyr_tree_id: actionId,
-          // parameter_id_list: JSON.stringify(parameters)
           parameter_list: JSON.stringify(formValues.parameter)
         };
 
@@ -137,13 +128,11 @@ const EpisodeParameterMap = props => {
   };
 
   const onDeselectingParameter = async e => {
-    // console.log(e);
     const gameName = alreadyMappedParameters.find(item => {
       if (item.parameter_id === e) {
         return item;
       }
     });
-    // console.log(gameName.id);
     try {
       await deleteMappedParameter(user.Authorization, gameName.id);
     } catch (error) {}
@@ -167,7 +156,7 @@ const EpisodeParameterMap = props => {
           <Form onSubmit={onSubmit}>
             <Form.Item label="Categories">
               {getFieldDecorator("categories", {
-                rules: [{ required: true }]
+                // rules: [{ required: true }]
               })(<Categories onChange={onCategoryChange} />)}
             </Form.Item>
 
