@@ -188,3 +188,22 @@ export const wyrEpisodeSceneCreate = async (authToken, values) => {
   );
   return response;
 };
+
+/* scene delete */
+
+export const wyrEpisodeSceneDelete = async (authToken, id) => {
+  const response = await adminPanelApi(authToken).delete(
+    `/v1/admin/wyr/scene/${id}`
+  );
+  return response;
+};
+
+/* scene update */
+
+export const wyrEpisodeSceneUpdate = async (authToken, id, values) => {
+  const response = await adminPanelApi(authToken).put(
+    `/v1/admin/wyr/scene/${id}`,
+    qs.stringify(values)
+  );
+  return response;
+};

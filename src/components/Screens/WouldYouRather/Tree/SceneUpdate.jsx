@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Select, Input, Icon, Button, message } from "antd";
-import { wyrEpisodeSceneCreate } from "../../../../actions";
+import { wyrEpisodeSceneUpdate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
-const SceneCreate = props => {
-  const episodeId = props.episodeId;
+const SceneUpdate = props => {
+  // console.log(props.sceneDetails);
+  const sceneDetails = props.sceneDetails;
+  const SceneId = sceneDetails.id;
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
@@ -13,8 +15,12 @@ const SceneCreate = props => {
 
   // formValues
   const [name, setName] = useState("");
-  const [techincalService, setTechincalService] = useState(null);
   const [complexity, setComplexity] = useState(null);
+
+  useEffect(() => {
+    setName(sceneDetails.name);
+    setComplexity(sceneDetails.complexity);
+  }, [SceneId]);
 
   const onNameChange = event => {
     if (
@@ -35,17 +41,6 @@ const SceneCreate = props => {
     }
 
     if (
-      techincalService === null ||
-      techincalService === undefined ||
-      techincalService === "" ||
-      techincalService === " "
-    ) {
-      setTechincalService(undefined);
-      message.warning("Please select techincal service");
-      return;
-    }
-
-    if (
       complexity === null ||
       complexity === undefined ||
       complexity === "" ||
@@ -60,17 +55,15 @@ const SceneCreate = props => {
 
     formValues = {
       name: name,
-      technical_service_id: techincalService,
-      complexity: complexity,
-      wyr_tree_id: episodeId
+      complexity: complexity
     };
 
     try {
       setLoading(true);
-      await wyrEpisodeSceneCreate(user.Authorization, formValues);
+      await wyrEpisodeSceneUpdate(user.Authorization, SceneId, formValues);
       setLoading(false);
-      message.success("Scene Created");
-      props.setCreateNewModalShow(false);
+      message.success("Scene Updated");
+      props.setEditModalShow(false);
       props.setLoadAgain(!props.loadAgain);
     } catch (error) {
       setLoading(false);
@@ -100,6 +93,7 @@ const SceneCreate = props => {
               <Input
                 type="text"
                 placeholder="name"
+                value={sceneDetails.name}
                 style={
                   name === null
                     ? {
@@ -133,18 +127,16 @@ const SceneCreate = props => {
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
             <div>
-              <Select
-                style={{ width: "100%" }}
-                placeholder="Select technical service"
-                onChange={value => setTechincalService(value)}
-              >
-                <Select.Option value={1}>Behavioral Module</Select.Option>
-                <Select.Option value={2}>Functional Module</Select.Option>
-              </Select>
+              <Input
+                value={
+                  sceneDetails.technical_service_id === 1
+                    ? "Behavioral Module"
+                    : "Functional Module"
+                }
+                type="text"
+                disabled
+              />
             </div>
-            {techincalService === undefined ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
           </div>
         </div>
         {/* techincalService ends */}
@@ -165,6 +157,7 @@ const SceneCreate = props => {
               <Select
                 style={{ width: "100%" }}
                 placeholder="Select Complexity"
+                defaultValue={sceneDetails.complexity}
                 onChange={value => setComplexity(value)}
               >
                 {complexityList.map((item, i) => (
@@ -183,7 +176,7 @@ const SceneCreate = props => {
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>
-            Create New Scene
+            Update Scene
           </Button>
         </div>
       </Card>
@@ -191,4 +184,4 @@ const SceneCreate = props => {
   );
 };
 
-export default SceneCreate;
+export default SceneUpdate;

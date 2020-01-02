@@ -11,9 +11,13 @@ import {
   Icon
 } from "antd";
 import { useSelector } from "react-redux";
-import { getWyrEpisodeSceneList } from "../../../../actions";
+import {
+  getWyrEpisodeSceneList,
+  wyrEpisodeSceneDelete
+} from "../../../../actions";
 import SceneCreate from "./SceneCreate";
 import history from "../../../../history";
+import SceneUpdate from "./SceneUpdate";
 
 const SceneIndex = props => {
   const user = useSelector(state => state.userAuth);
@@ -22,6 +26,8 @@ const SceneIndex = props => {
   const [loading, setLoading] = useState(false);
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
   const [loadAgain, setLoadAgain] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
+  const [updateSceneDetails, setUpdateSceneDetails] = useState([]);
 
   const columnName = [
     {
@@ -59,7 +65,7 @@ const SceneIndex = props => {
         <span>
           <Button
             type="link"
-            // onClick={() => onEdit(record)}
+            onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
@@ -69,7 +75,7 @@ const SceneIndex = props => {
             title="Are you sure you want to delete ?"
             okText="Yes"
             cancelText="No"
-            // onConfirm={() => onDelete(record)}
+            onConfirm={() => onDelete(record)}
           >
             <Button
               type="link"
@@ -113,6 +119,28 @@ const SceneIndex = props => {
 
   const closeCreateNewSceneModal = () => {
     setCreateNewModalShow(false);
+  };
+
+  const onEdit = data => {
+    setUpdateSceneDetails(data);
+    setEditModalShow(true);
+  };
+
+  const closeEditEpisodeModal = () => {
+    setEditModalShow(false);
+  };
+
+  const onDelete = async item => {
+    try {
+      let selectedId = item.id;
+      setLoading(true);
+      await wyrEpisodeSceneDelete(user.Authorization, selectedId);
+      message.success("Scene Deleted");
+      setLoadAgain(!loadAgain);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -167,6 +195,28 @@ const SceneIndex = props => {
         </Modal>
       ) : null}
       {/* create new modal end  */}
+
+      {/* Update modal starts */}
+      {editModalShow === true ? (
+        <Modal
+          style={{ minWidth: "600px" }}
+          title="Edit Episode"
+          closable={true}
+          footer={null}
+          onCancel={closeEditEpisodeModal}
+          visible={editModalShow}
+          destroyOnClose={true}
+        >
+          <SceneUpdate
+            episodeId={props.match.params.id}
+            setEditModalShow={setEditModalShow}
+            sceneDetails={updateSceneDetails}
+            setLoadAgain={setLoadAgain}
+            loadAgain={loadAgain}
+          />
+        </Modal>
+      ) : null}
+      {/* Update modal ends */}
     </div>
   );
 };

@@ -202,7 +202,9 @@ import {
   getChapterList,
   getEpisodeActivityListForFm,
   getWyrEpisodeSceneList,
-  wyrEpisodeSceneCreate
+  wyrEpisodeSceneCreate,
+  wyrEpisodeSceneDelete,
+  wyrEpisodeSceneUpdate
 } from "./wyrTreeAction";
 
 import {
@@ -392,6 +394,8 @@ export {
   getEpisodeActivityListForFm,
   getWyrEpisodeSceneList,
   wyrEpisodeSceneCreate,
+  wyrEpisodeSceneDelete,
+  wyrEpisodeSceneUpdate,
   // wyr series
   wyrSeriesList,
   wyrSeriesCreate,
