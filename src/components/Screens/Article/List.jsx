@@ -346,7 +346,7 @@ const ArticleList = props => {
             <Col span={8} style={{ padding: "0 24px" }}>
               <Form.Item label="Categories">
                 {getFieldDecorator("categories", { initalValue: categoryId })(
-                  <Categories onChange={onCategoryChange} mode="single" />
+                  <Categories onChange={onCategoryChange} mode="default" />
                 )}
               </Form.Item>
             </Col>

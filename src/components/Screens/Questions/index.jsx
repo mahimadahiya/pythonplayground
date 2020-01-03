@@ -463,7 +463,7 @@ class QuestionList extends React.Component {
                   })(
                     <Categories
                       onChange={this.onCategoryChange}
-                      mode="single"
+                      mode="default"
                     />
                   )}
                 </Form.Item>

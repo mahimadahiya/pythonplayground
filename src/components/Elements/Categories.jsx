@@ -38,7 +38,7 @@ const Categories = forwardRef((props, ref) => {
   return (
     <div>
       <Select
-        mode="multiple"
+        mode={props.mode}
         placeholder="Select a category"
         onChange={props.onChange}
         showSearch

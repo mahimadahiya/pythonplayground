@@ -157,7 +157,7 @@ const EpisodeParameterMap = props => {
             <Form.Item label="Categories">
               {getFieldDecorator("categories", {
                 // rules: [{ required: true }]
-              })(<Categories onChange={onCategoryChange} />)}
+              })(<Categories onChange={onCategoryChange} mode="multipe" />)}
             </Form.Item>
 
             <Form.Item label="Competencies">
