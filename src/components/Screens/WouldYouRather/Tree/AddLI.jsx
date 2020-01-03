@@ -218,7 +218,7 @@ const AddLI = props => {
                 fontWeight: 600
               }}
             >
-              Parameter
+              Competencies
               <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
             </div>
             <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>

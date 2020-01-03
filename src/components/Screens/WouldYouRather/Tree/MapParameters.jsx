@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Modal, Card, Form, message, Spin } from "antd";
+import { Modal, Card, Form, message, Icon } from "antd";
 import MButton from "../../../Elements/MButton";
 import Parameters from "../../../Elements/Parameters";
 import Categories from "../../../Elements/Categories";
@@ -17,9 +17,8 @@ const EpisodeParameterMap = props => {
   const actionId = props.actionId;
   const technical_service_id = props.selectedTechnicalId;
   const [cardLoading, setCardLoading] = useState(false);
-  const [parameterListLoading, setParameterListLoading] = useState(false);
 
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState(null);
   const [selectedParameters, setSelectedParameters] = useState([]);
   const [alreadyMappedParameters, setAlreadyMappedParameters] = useState([]);
 
@@ -118,9 +117,7 @@ const EpisodeParameterMap = props => {
   };
 
   const onCategoryChange = value => {
-    setParameterListLoading(true);
     setCategory(value);
-    setParameterListLoading(false);
   };
 
   const onParameterChange = value => {
@@ -152,31 +149,7 @@ const EpisodeParameterMap = props => {
           bodyStyle={{ padding: "0px" }}
           bordered={false}
           loading={cardLoading}
-        >
-          <Form onSubmit={onSubmit}>
-            <Form.Item label="Categories">
-              {getFieldDecorator("categories", {
-                // rules: [{ required: true }]
-              })(<Categories onChange={onCategoryChange} mode="multiple" />)}
-            </Form.Item>
-
-            <Form.Item label="Competencies">
-              {getFieldDecorator("parameter", {
-                rules: [{ required: true }],
-                initialValue: selectedParameters
-              })(
-                <Parameters
-                  mode="multiple"
-                  onChange={onParameterChange}
-                  onDeselect={e => onDeselectingParameter(e)}
-                  categories={category}
-                />
-              )}
-            </Form.Item>
-
-            <MButton>Submit</MButton>
-          </Form>
-        </Card>
+        ></Card>
       </Modal>
     </div>
   );
