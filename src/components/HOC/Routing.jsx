@@ -137,7 +137,7 @@ class Routing extends React.Component {
               accessGroup={[1]}
             />
             <PrivateRoute
-              path="/wyr/scene/EpId/:id"
+              path="/wyr/scene/EpId/:id/:techId"
               component={SceneIndex}
               user={user}
               accessGroup={[1]}

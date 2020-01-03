@@ -13,7 +13,7 @@ const SceneCreate = props => {
 
   // formValues
   const [name, setName] = useState("");
-  const [techincalService, setTechincalService] = useState(null);
+  // const [techincalService, setTechincalService] = useState(null);
   const [complexity, setComplexity] = useState(null);
 
   const onNameChange = event => {
@@ -34,16 +34,16 @@ const SceneCreate = props => {
       return;
     }
 
-    if (
-      techincalService === null ||
-      techincalService === undefined ||
-      techincalService === "" ||
-      techincalService === " "
-    ) {
-      setTechincalService(undefined);
-      message.warning("Please select techincal service");
-      return;
-    }
+    // if (
+    //   techincalService === null ||
+    //   techincalService === undefined ||
+    //   techincalService === "" ||
+    //   techincalService === " "
+    // ) {
+    //   setTechincalService(undefined);
+    //   message.warning("Please select techincal service");
+    //   return;
+    // }
 
     if (
       complexity === null ||
@@ -60,7 +60,8 @@ const SceneCreate = props => {
 
     formValues = {
       name: name,
-      technical_service_id: techincalService,
+      // technical_service_id: techincalService,
+      technical_service_id: props.technicalServiceId,
       complexity: complexity,
       wyr_tree_id: episodeId
     };
@@ -121,7 +122,7 @@ const SceneCreate = props => {
         {/* name ends */}
 
         {/* techincalService starts */}
-        <div style={{ display: "flex", marginBottom: "25px" }}>
+        {/* <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
               width: "140px",
@@ -146,7 +147,7 @@ const SceneCreate = props => {
               <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
             ) : null}
           </div>
-        </div>
+        </div> */}
         {/* techincalService ends */}
 
         {/* Complexity starts */}

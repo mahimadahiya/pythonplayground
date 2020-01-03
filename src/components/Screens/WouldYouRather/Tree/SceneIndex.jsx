@@ -187,6 +187,7 @@ const SceneIndex = props => {
           destroyOnClose={true}
         >
           <SceneCreate
+            technicalServiceId={props.match.params.techId}
             episodeId={props.match.params.id}
             setCreateNewModalShow={setCreateNewModalShow}
             setLoadAgain={setLoadAgain}

@@ -226,7 +226,7 @@ const WyrTreeIndex = props => {
               color: "#fff",
               fontWeight: 400
             }}
-            href={`/wyr/scene/EpId/${record.id}`}
+            href={`/wyr/scene/EpId/${record.id}/${record.technical_service_id}`}
           >
             Scene
           </a>
