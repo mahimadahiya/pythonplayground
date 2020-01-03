@@ -26,10 +26,13 @@ const EpisodeParameterMap = props => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth);
   const categories = useSelector(state => state.category.categories);
+  // console.log(categories);
 
   const actionId = props.actionId;
   const technical_service_id = props.selectedTechnicalId;
   const [cardLoading, setCardLoading] = useState(false);
+
+  const [parameters, setParameters] = useState([]);
 
   const [selectedParameters, setSelectedParameters] = useState([]);
   const [alreadyMappedParameters, setAlreadyMappedParameters] = useState([]);
@@ -51,13 +54,13 @@ const EpisodeParameterMap = props => {
       key: "category_name"
     },
     {
-      title: "Parameters",
+      title: "Parameters id",
       key: "parameters",
       dataIndex: "parameters",
       render: parameters => (
         <span>
           {parameters.map(param => {
-            return <Tag key={param.id}>{param.name}</Tag>;
+            return <Tag key={param.id}>{param.id}</Tag>;
           })}
         </span>
       )
@@ -169,7 +172,7 @@ const EpisodeParameterMap = props => {
 
   const onParameterChange = value => {
     console.log(value);
-    // setParameters(value);
+    setParameters(value);
   };
 
   const onDeselectingParameter = async e => {
@@ -184,25 +187,29 @@ const EpisodeParameterMap = props => {
   };
 
   const addComptency = () => {
+    const categoryName = categories.find(item => {
+      if (item.id === selectedCategory) {
+        return item;
+      }
+    });
+    //console.log(categoryName.name);
+    let parameter_id_list = [];
+    for (let i = 0; i < parameters.length; i++) {
+      parameter_id_list = [...parameter_id_list, { id: parameters[i] }];
+    }
+    console.log(parameter_id_list);
+
     let tempList = {
       category_id: selectedCategory,
-      category_name: "xyz",
-      parameters: [
-        {
-          id: 1,
-          name: "param 1"
-        },
-        {
-          id: 2,
-          name: "param 2"
-        }
-      ]
+      category_name: categoryName.name,
+      parameters: parameter_id_list
     };
-
+    console.log(tempList);
     setFinalSelectedList([...finalSelectedList, tempList]);
     // set parameter list to null
     setIsDisabled(true);
     setSelectedCategory(null);
+    parameter_id_list = [];
   };
 
   const addNewCategory = () => {
@@ -225,11 +232,13 @@ const EpisodeParameterMap = props => {
           loading={cardLoading}
         >
           <div style={{ textAlign: "right", marginBottom: "20px" }}>
-            <Icon
-              onClick={addNewCategory}
-              type="plus"
-              style={{ color: "blue", fontSize: "16px", cursor: "pointer" }}
-            ></Icon>
+            <Button onClick={addNewCategory}>
+              Add More Category
+              <Icon
+                type="plus"
+                //  style={{ color: "blue", fontSize: "16px", cursor: "pointer" }}
+              />
+            </Button>
           </div>
 
           <Form>
@@ -243,7 +252,8 @@ const EpisodeParameterMap = props => {
             >
               <Form.Item>
                 {getFieldDecorator("competency", {
-                  rules: [{ required: true }]
+                  rules: [{ required: true }],
+                  initialValue: selectedCategory
                 })(
                   <Select
                     mode={"default"}
@@ -251,8 +261,8 @@ const EpisodeParameterMap = props => {
                     onChange={onCategoryChange}
                     showSearch
                     allowClear
-                    defaultValue={selectedCategory}
-                    value={selectedCategory}
+                    // defaultValue={selectedCategory}
+                    // value={selectedCategory}
                     disabled={isDisabled === true ? true : false}
                   >
                     {categories.map(category => {
