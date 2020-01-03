@@ -65,7 +65,7 @@ const SceneIndex = props => {
         <span>
           <Button
             type="link"
-            onClick={() => onEdit(record)}
+            // onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
@@ -75,7 +75,7 @@ const SceneIndex = props => {
             title="Are you sure you want to delete ?"
             okText="Yes"
             cancelText="No"
-            onConfirm={() => onDelete(record)}
+            // onConfirm={() => onDelete(record)}
           >
             <Button
               type="link"

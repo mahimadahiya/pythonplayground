@@ -167,7 +167,12 @@ const WyrTreeIndex = props => {
               <Button
                 type="link"
                 // onClick={() => onMappingParameters(record)}
-                style={{ padding: 0, marginRight: "10px", color: "grey" }}
+                style={{
+                  padding: 0,
+                  marginRight: "10px",
+                  color: "grey",
+                  cursor: "not-allowed"
+                }}
               >
                 Map Competencies
               </Button>
