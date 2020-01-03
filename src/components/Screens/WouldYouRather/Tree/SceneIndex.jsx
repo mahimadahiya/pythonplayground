@@ -200,7 +200,7 @@ const SceneIndex = props => {
       {editModalShow === true ? (
         <Modal
           style={{ minWidth: "600px" }}
-          title="Edit Episode"
+          title="Edit Scene"
           closable={true}
           footer={null}
           onCancel={closeEditEpisodeModal}
