@@ -70,7 +70,7 @@ const MappedActivityList = props => {
     };
     callDetailsData();
     // setMappedList(props.selectedEpisodeDetails.mapped_activity);
-  }, [listLoadAgain, props.loadAgain]);
+  }, [listLoadAgain, props.addLiLoadAgain]);
 
   const onDetailsClick = data => {
     setSelectedActivityDetails(data);
@@ -168,7 +168,7 @@ const MappedActivityList = props => {
       message.success("Activity Deleted");
       setMappedActivityLoading(false);
       props.submitCreateNewActivity(props.selectedTechnicalId);
-      props.setLoadAgain(!props.loadAgain);
+      props.setAddLiLLoadAgain(!props.addLiLoadAgain);
       setListLoadAgain(!listLoadAgain);
       // props.closeMapLIModal();
     } catch (error) {

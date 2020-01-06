@@ -20,9 +20,11 @@ const SimulationList = props => {
   const user = useSelector(state => state.userAuth);
 
   const [simulation, setSimulation] = useState([]);
+  const [selectonLoading, setSelectonLoading] = useState(false);
 
   useEffect(() => {
     const fetchList = async () => {
+      setSelectonLoading(true);
       try {
         if (props.selectedTechnicalId === 1) {
           const response = await getMappingActivityEntityList(
@@ -30,6 +32,7 @@ const SimulationList = props => {
             props.selectedParameterId
           );
           setSimulation(response.data.result.simulation);
+          setSelectonLoading(false);
         } else {
           const response = await getEpisodeActivityListForFm(
             user.Authorization,
@@ -37,9 +40,12 @@ const SimulationList = props => {
           );
           if (response.data.result.simulation) {
             setSimulation(response.data.result.simulation);
+            setSelectonLoading(false);
           }
         }
-      } catch (error) {}
+      } catch (error) {
+        setSelectonLoading(false);
+      }
     };
 
     fetchList();
@@ -50,6 +56,7 @@ const SimulationList = props => {
       <Select
         placeholder="Select a Simulation"
         onChange={props.onChange}
+        loading={selectonLoading}
         mode={props.mode}
         style={{ width: "100%" }}
         showSearch

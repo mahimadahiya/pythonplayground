@@ -10,6 +10,7 @@ const ArticleList = props => {
   const user = useSelector(state => state.userAuth);
 
   const [articles, setArticles] = useState([]);
+  const [selectonLoading, setSelectonLoading] = useState(false);
 
   const renderOptions = articles => {
     return articles.map(articles => {
@@ -36,6 +37,7 @@ const ArticleList = props => {
 
   useEffect(() => {
     const fetchList = async () => {
+      setSelectonLoading(true);
       try {
         if (props.selectedTechnicalId === 1) {
           const response = await getMappingActivityEntityList(
@@ -43,14 +45,18 @@ const ArticleList = props => {
             props.selectedParameterId
           );
           setArticles(response.data.result.article);
+          setSelectonLoading(false);
         } else {
           const response = await getEpisodeActivityListForFm(
             user.Authorization,
             props.courseId
           );
           setArticles(response.data.result.article);
+          setSelectonLoading(false);
         }
-      } catch (error) {}
+      } catch (error) {
+        setSelectonLoading(false);
+      }
     };
 
     fetchList();
@@ -61,6 +67,7 @@ const ArticleList = props => {
       <Select
         placeholder="Select a Article"
         onChange={props.onChange}
+        loading={selectonLoading}
         mode={props.mode}
         style={{ width: "100%" }}
         showSearch

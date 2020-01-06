@@ -107,7 +107,8 @@ const Create = props => {
         setLoading(false);
         message.success("Episode Created");
         props.setCreateNewModalShow(false);
-        props.submitCreateNewEpisode(techincalService);
+        props.setLoadAgain(!props.loadAgain);
+        // props.submitCreateNewEpisode(techincalService);
       } catch (error) {
         setLoading(false);
         props.setCreateNewModalShow(false);
@@ -200,7 +201,7 @@ const Create = props => {
             <div>
               <Input
                 type="text"
-                placeholder="Episode Name"
+                placeholder="Episode Description"
                 style={
                   description === null
                     ? {

@@ -4,9 +4,11 @@ import qs from "querystring";
 
 export const wyrTreeList = async (authToken, technical_service_id) => {
   const response = await adminPanelApi(authToken).get("/v1/admin/wyr/tree", {
+    /* 
     params: {
       technical_service_id: technical_service_id
     }
+    */
   });
   return response;
 };

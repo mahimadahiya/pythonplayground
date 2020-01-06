@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import MappedFmActivityList from "./MappedFmActivityList";
 
 const AddLI = props => {
-  //console.log(props.selectedEpisodeDetails.mapped_activity);
+  //console.log(props.selectedEpisodeDetails.technical_service_id);
   const technicalServiceId = props.selectedEpisodeDetails.technical_service_id;
   const courseId =
     props.selectedEpisodeDetails.mapped_fm_course.length !== 0
@@ -18,7 +18,7 @@ const AddLI = props => {
       : null;
   const user = useSelector(state => state.userAuth);
   const [loading, setLoading] = useState(false);
-  const [loadAgain, setLoadAgain] = useState(false);
+  const [addLiLoadAgain, setAddLiLLoadAgain] = useState(false);
   const [activity, setActivity] = useState([]);
   const [parameter, setParameter] = useState([]);
   const [chapters, setChapters] = useState([]);
@@ -43,7 +43,7 @@ const AddLI = props => {
       } catch (error) {}
     };
     callActivityData();
-  }, [loadAgain]);
+  }, [addLiLoadAgain]);
 
   const renderActivityOptions = activity => {
     return activity.map(activity => {
@@ -149,7 +149,8 @@ const AddLI = props => {
       message.success("LI Created");
       // props.setAddLIModalShow(false);
       props.submitCreateNewActivity(props.selectedTechnicalId);
-      setLoadAgain(!loadAgain);
+      props.setLoadAgain(!props.loadAgain);
+      setAddLiLLoadAgain(!addLiLoadAgain);
     } catch (error) {
       setLoading(false);
       //  props.setAddLIModalShow(false);
@@ -162,11 +163,11 @@ const AddLI = props => {
         {technicalServiceId === 1 ? (
           <MappedActivityList
             selectedEpisodeDetails={selectedEpisodeDetails}
-            selectedTechnicalId={props.selectedTechnicalId}
+            selectedTechnicalId={technicalServiceId}
             submitCreateNewActivity={props.submitCreateNewActivity}
             closeMapLIModal={props.closeMapLIModal}
-            loadAgain={loadAgain}
-            setLoadAgain={setLoadAgain}
+            addLiLoadAgain={addLiLoadAgain}
+            setAddLiLLoadAgain={setAddLiLLoadAgain}
           />
         ) : (
           <MappedFmActivityList
@@ -174,8 +175,8 @@ const AddLI = props => {
             selectedTechnicalId={props.selectedTechnicalId}
             submitCreateNewActivity={props.submitCreateNewActivity}
             closeMapLIModal={props.closeMapLIModal}
-            loadAgain={loadAgain}
-            setLoadAgain={setLoadAgain}
+            addLiLoadAgain={addLiLoadAgain}
+            setAddLiLLoadAgain={setAddLiLLoadAgain}
           />
         )}
       </div>

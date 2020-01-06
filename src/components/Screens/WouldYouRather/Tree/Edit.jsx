@@ -117,7 +117,8 @@ const Edit = props => {
       setLoading(false);
       message.success("Episode Updated");
       props.setEditModalShow(false);
-      props.submitEditEpisode(techincalService);
+      props.setLoadAgain(!props.loadAgain);
+      // props.submitEditEpisode(techincalService);
     } catch (error) {
       setLoading(false);
       props.setEditModalShow(false);

@@ -70,7 +70,7 @@ const MappedFmActivityList = props => {
     };
     callDetailsData();
     // setMappedList(props.selectedEpisodeDetails.mapped_activity);
-  }, [listLoadAgain, props.loadAgain]);
+  }, [listLoadAgain, props.addLiLoadAgain]);
 
   const columnName = [
     {
@@ -149,7 +149,7 @@ const MappedFmActivityList = props => {
       message.success("Activity Deleted");
       setMappedActivityLoading(false);
       props.submitCreateNewActivity(props.selectedTechnicalId);
-      props.setLoadAgain(!props.loadAgain);
+      props.setAddLiLLoadAgain(!props.addLiLoadAgain);
     } catch (error) {
       setMappedActivityLoading(false);
     }

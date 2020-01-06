@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   Card,
@@ -43,6 +43,24 @@ const WyrTreeIndex = props => {
 
   const [showMapCoursesModal, setShowMapCoursesModal] = useState(false);
   const [courseActionId, setCourseActionId] = useState(null);
+
+  useEffect(() => {
+    const callDataApi = async () => {
+      try {
+        setLoading(true);
+        const response = await wyrTreeList(user.Authorization);
+        setList(response.data.result.wyr_episode_list);
+
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    };
+    callDataApi();
+    return () => {
+      setList([]);
+    };
+  }, [user.Authorization, loadAgain]);
 
   const columnName = [
     {
@@ -162,7 +180,7 @@ const WyrTreeIndex = props => {
       key: "action",
       render: record => (
         <span>
-          {selectedTechnicalId === 1 ? (
+          {record.technical_service_id === 1 ? (
             <span>
               <Button
                 type="link"
@@ -230,24 +248,13 @@ const WyrTreeIndex = props => {
           >
             Scene
           </a>
-          {/* 
-          <Button
-            type="primary"
-            onClick={() => onGoToScenePage(record)}
-            style={{ marginRight: "10px" }}
-          >
-            Scene
-          </Button>
-          */}
         </span>
       )
     }
   ];
 
-  const onGoToScenePage = data => {
-    let id = data.id;
-    history.push(`/wyr/episode/scene/${id}`);
-  };
+  {
+    /* 
 
   const onChangeFetchList = async value => {
     if (value === undefined || value === null) {
@@ -269,6 +276,9 @@ const WyrTreeIndex = props => {
     }
   };
 
+  */
+  }
+
   const onMappingParameters = data => {
     setParamActionId(data.id);
     setShowMapParametersModal(true);
@@ -276,7 +286,7 @@ const WyrTreeIndex = props => {
 
   const onCloseParametersModal = () => {
     setShowMapParametersModal(false);
-    onChangeFetchList(selectedTechnicalId);
+    // onChangeFetchList(selectedTechnicalId);
   };
 
   const onMappingCourses = data => {
@@ -286,7 +296,7 @@ const WyrTreeIndex = props => {
 
   const onCloseCoursesModal = () => {
     setShowMapCoursesModal(false);
-    onChangeFetchList(selectedTechnicalId);
+    // onChangeFetchList(selectedTechnicalId);
   };
 
   const changeCurrentActionStatus = async data => {
@@ -295,8 +305,9 @@ const WyrTreeIndex = props => {
     try {
       await wyrTreeStatusUpdate(user.Authorization, actionId);
       message.success("Status Updated");
+      setLoadAgain(!loadAgain);
       setLoading(false);
-      onChangeFetchList(selectedTechnicalId);
+      // onChangeFetchList(selectedTechnicalId);
     } catch (error) {
       message.warning("Internal Server Error!!");
       setLoading(false);
@@ -310,7 +321,8 @@ const WyrTreeIndex = props => {
       await wyrTreeDelete(user.Authorization, selectedId);
       message.success("Episode Deleted");
       setLoading(false);
-      onChangeFetchList(selectedTechnicalId);
+      setLoadAgain(!loadAgain);
+      // onChangeFetchList(selectedTechnicalId);
     } catch (error) {
       setLoading(false);
     }
@@ -329,7 +341,7 @@ const WyrTreeIndex = props => {
       setSelectedTechnicalId(null);
     } else {
       setSelectedTechnicalId(techincalService);
-      onChangeFetchList(techincalService);
+      //  onChangeFetchList(techincalService);
     }
   };
 
@@ -338,7 +350,7 @@ const WyrTreeIndex = props => {
       setSelectedTechnicalId(null);
     } else {
       setSelectedTechnicalId(techincalService);
-      onChangeFetchList(techincalService);
+      // onChangeFetchList(techincalService);
     }
   };
 
@@ -356,7 +368,7 @@ const WyrTreeIndex = props => {
       setSelectedTechnicalId(null);
     } else {
       setSelectedTechnicalId(techId);
-      onChangeFetchList(techId);
+      // onChangeFetchList(techId);
     }
   };
 
@@ -379,6 +391,7 @@ const WyrTreeIndex = props => {
             Create New Episode
           </Button>
         </div>
+        {/* 
         <div style={{ width: "100%", display: "flex" }}>
           <div
             style={{
@@ -408,20 +421,23 @@ const WyrTreeIndex = props => {
           </div>
         </div>
 
+        */}
+
         <div style={{ margin: "40px 0px", textAlign: "center" }}>
+          {/* 
           {selectedTechnicalId === null ? (
             <div style={{ fontWeight: 500 }}>
               Select technical service from dropdown to view list
             </div>
-          ) : (
-            <Table
-              loading={loading}
-              dataSource={list}
-              columns={columnName}
-              rowKey={row => row.id}
-              pagination={false}
-            />
-          )}
+          ) : (*/}
+          <Table
+            loading={loading}
+            dataSource={list}
+            columns={columnName}
+            rowKey={row => row.id}
+            pagination={false}
+          />
+          {/* )} */}
         </div>
       </Card>
 
@@ -439,6 +455,8 @@ const WyrTreeIndex = props => {
           <Create
             submitCreateNewEpisode={submitCreateNewEpisode}
             setCreateNewModalShow={setCreateNewModalShow}
+            setLoadAgain={setLoadAgain}
+            loadAgain={loadAgain}
           />
         </Modal>
       ) : null}
@@ -459,6 +477,8 @@ const WyrTreeIndex = props => {
             selectedTechnicalId={selectedTechnicalId}
             setEditModalShow={setEditModalShow}
             episodeDetails={updateEpisodeDetails}
+            setLoadAgain={setLoadAgain}
+            loadAgain={loadAgain}
           />
         </Modal>
       ) : null}
@@ -481,6 +501,8 @@ const WyrTreeIndex = props => {
             submitCreateNewActivity={submitCreateNewActivity}
             selectedTechnicalId={selectedTechnicalId}
             closeMapLIModal={closeMapLIModal}
+            setLoadAgain={setLoadAgain}
+            loadAgain={loadAgain}
           />
         </Modal>
       ) : null}
@@ -509,6 +531,8 @@ const WyrTreeIndex = props => {
           onValuesSubmit={onCloseCoursesModal}
           selectedTechnicalId={selectedTechnicalId}
           actionId={courseActionId}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
         />
       ) : null}
       {/* mapping parameters end */}
