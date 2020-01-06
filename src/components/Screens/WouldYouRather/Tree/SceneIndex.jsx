@@ -8,12 +8,14 @@ import {
   Popconfirm,
   message,
   Modal,
-  Icon
+  Icon,
+  Descriptions
 } from "antd";
 import { useSelector } from "react-redux";
 import {
   getWyrEpisodeSceneList,
-  wyrEpisodeSceneDelete
+  wyrEpisodeSceneDelete,
+  wyrTreeList
 } from "../../../../actions";
 import SceneCreate from "./SceneCreate";
 import history from "../../../../history";
@@ -28,6 +30,7 @@ const SceneIndex = props => {
   const [loadAgain, setLoadAgain] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [updateSceneDetails, setUpdateSceneDetails] = useState([]);
+  const [episodeDetailsData, setEpisodeDetailsData] = useState([]);
 
   const columnName = [
     {
@@ -98,6 +101,26 @@ const SceneIndex = props => {
           props.match.params.id
         );
         setSceneList(response.data.result.wyr_scene_list);
+
+        const episodeDetailsResponse = await wyrTreeList(user.Authorization);
+        let tempList = [];
+        for (
+          let i = 0;
+          i < episodeDetailsResponse.data.result.wyr_episode_list.length;
+          i++
+        ) {
+          if (
+            episodeDetailsResponse.data.result.wyr_episode_list[i].id ===
+            JSON.parse(props.match.params.id)
+          ) {
+            tempList.push(
+              episodeDetailsResponse.data.result.wyr_episode_list[i]
+            );
+          }
+        }
+        // console.log(tempList);
+        setEpisodeDetailsData(tempList[0]);
+
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -108,6 +131,8 @@ const SceneIndex = props => {
       setSceneList([]);
     };
   }, [props.match.params.id, loadAgain]);
+
+  // console.log("details", episodeDetailsData);
 
   const goBackToEpisodeList = () => {
     history.push("/wyr/episode");
@@ -143,8 +168,31 @@ const SceneIndex = props => {
     }
   };
 
+  const renderFields = data => {
+    return (
+      <>
+        <Descriptions bordered size="small">
+          <Descriptions.Item label="Episode Id">{data.id}</Descriptions.Item>
+          <Descriptions.Item label="Episode Name">
+            {data.name}
+          </Descriptions.Item>
+          <Descriptions.Item label="Description">
+            {data.description}
+          </Descriptions.Item>
+        </Descriptions>
+      </>
+    );
+  };
+
   return (
     <div>
+      <Card
+        loading={loading}
+        style={{ marginBottom: "30px" }}
+        title={<div className="card-title">Episode Details</div>}
+      >
+        {renderFields(episodeDetailsData)}
+      </Card>
       <Card
         title={
           <div style={{ display: "flex" }}>

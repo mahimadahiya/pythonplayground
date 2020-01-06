@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Select, Input, Icon, Button, message } from "antd";
-import { wyrEpisodeSceneCreate } from "../../../../actions";
+import { wyrEpisodeSceneCreate, wyrTreeList } from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const SceneCreate = props => {
   const episodeId = props.episodeId;
+  //console.log(props.technicalServiceId);
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,72 @@ const SceneCreate = props => {
 
   // formValues
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [complexity, setComplexity] = useState(null);
+  const [mappedParameterCourseList, setMappedParameterCourseList] = useState(
+    []
+  );
+  const [parameterCourseId, setParameterCourseId] = useState(null);
+
+  useEffect(() => {
+    const callDataApi = async () => {
+      setLoading(true);
+      try {
+        const episodeDetailsResponse = await wyrTreeList(user.Authorization);
+        let tempList = [];
+        for (
+          let i = 0;
+          i < episodeDetailsResponse.data.result.wyr_episode_list.length;
+          i++
+        ) {
+          if (
+            episodeDetailsResponse.data.result.wyr_episode_list[i].id ===
+            JSON.parse(episodeId)
+          ) {
+            if (
+              episodeDetailsResponse.data.result.wyr_episode_list[i]
+                .technical_service_id === 1
+            ) {
+              for (
+                let j = 0;
+                j <
+                episodeDetailsResponse.data.result.wyr_episode_list[i]
+                  .mapped_parameter.length;
+                j++
+              ) {
+                tempList.push(
+                  episodeDetailsResponse.data.result.wyr_episode_list[i]
+                    .mapped_parameter[j]
+                );
+              }
+            } else {
+              for (
+                let j = 0;
+                j <
+                episodeDetailsResponse.data.result.wyr_episode_list[i]
+                  .mapped_fm_course.length;
+                j++
+              ) {
+                tempList.push(
+                  episodeDetailsResponse.data.result.wyr_episode_list[i]
+                    .mapped_fm_course[j]
+                );
+              }
+            }
+          }
+        }
+        console.log(tempList);
+        setMappedParameterCourseList(tempList);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    };
+    callDataApi();
+    return () => {
+      setMappedParameterCourseList([]);
+    };
+  }, [user.Authorization]);
 
   const onNameChange = event => {
     if (
@@ -27,9 +93,31 @@ const SceneCreate = props => {
     }
   };
 
+  const onDescriptionChange = event => {
+    if (
+      event.target.value === "" ||
+      event.target.value === "" ||
+      event.target.value === undefined
+    ) {
+      setDescription(null);
+    } else {
+      setDescription(event.target.value);
+    }
+  };
+
   const createNew = async () => {
     if (name === null || name === undefined || name === "" || name === " ") {
       message.warning("Please enter name");
+      return;
+    }
+
+    if (
+      description === null ||
+      description === undefined ||
+      description === "" ||
+      description === " "
+    ) {
+      message.warning("Please enter Description");
       return;
     }
 
@@ -46,12 +134,25 @@ const SceneCreate = props => {
 
     let formValues = {};
 
-    formValues = {
-      name: name,
-      technical_service_id: props.technicalServiceId,
-      complexity: complexity,
-      wyr_tree_id: episodeId
-    };
+    if (props.technicalServiceId === "1") {
+      formValues = {
+        name: name,
+        technical_service_id: props.technicalServiceId,
+        complexity: complexity,
+        wyr_tree_id: episodeId,
+        description: description,
+        parameter_id: parameterCourseId
+      };
+    } else {
+      formValues = {
+        name: name,
+        technical_service_id: props.technicalServiceId,
+        complexity: complexity,
+        wyr_tree_id: episodeId,
+        description: description,
+        fm_course_id: parameterCourseId
+      };
+    }
 
     try {
       setLoading(true);
@@ -63,6 +164,26 @@ const SceneCreate = props => {
     } catch (error) {
       setLoading(false);
     }
+  };
+
+  const renderCourseOptions = data => {
+    return data.map(data => {
+      return (
+        <Select.Option key={data.fm_course_id} value={data.fm_course_id}>
+          {data.fm_course__name}
+        </Select.Option>
+      );
+    });
+  };
+
+  const renderParameterOptions = data => {
+    return data.map(data => {
+      return (
+        <Select.Option key={data.parameter_id} value={data.parameter_id}>
+          {data.parameter__name}
+        </Select.Option>
+      );
+    });
   };
 
   return (
@@ -108,6 +229,42 @@ const SceneCreate = props => {
         </div>
         {/* name ends */}
 
+        {/* description starts */}
+        <div style={{ display: "flex", marginBottom: "25px" }}>
+          <div
+            style={{
+              width: "140px",
+              fontWeight: 600
+            }}
+          >
+            Description
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+          </div>
+          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+            <div>
+              <Input
+                type="text"
+                placeholder="description"
+                style={
+                  description === null
+                    ? {
+                        width: "100%",
+                        border: "0.5px solid red"
+                      }
+                    : {
+                        width: "100%"
+                      }
+                }
+                onChange={onDescriptionChange}
+              />
+            </div>
+            {description === null ? (
+              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
+            ) : null}
+          </div>
+        </div>
+        {/* description ends */}
+
         {/* Complexity starts */}
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
@@ -139,6 +296,38 @@ const SceneCreate = props => {
           </div>
         </div>
         {/* Complexity ends */}
+
+        {/* parameter/course starts */}
+        <div style={{ display: "flex", marginBottom: "25px" }}>
+          <div
+            style={{
+              width: "140px",
+              fontWeight: 600
+            }}
+          >
+            {props.technicalServiceId === "1" ? "Parameters" : "Courses"}
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+          </div>
+          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+            <div>
+              <Select
+                placeholder={
+                  props.technicalServiceId === "1"
+                    ? "Select Parameter"
+                    : "Select Course"
+                }
+                style={{ width: "100%" }}
+                loading={loading}
+                onChange={value => setParameterCourseId(value)}
+              >
+                {props.technicalServiceId === "1"
+                  ? renderParameterOptions(mappedParameterCourseList)
+                  : renderCourseOptions(mappedParameterCourseList)}
+              </Select>
+            </div>
+          </div>
+        </div>
+        {/* parameter/course ends */}
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>

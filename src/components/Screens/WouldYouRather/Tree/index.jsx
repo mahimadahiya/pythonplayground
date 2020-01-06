@@ -81,6 +81,7 @@ const WyrTreeIndex = props => {
       title: "Episode",
       dataIndex: "name",
       key: "name",
+      width: 160,
       render: record => {
         return (
           <div>
@@ -95,6 +96,7 @@ const WyrTreeIndex = props => {
       title: "Created At",
       dataIndex: "created_at",
       key: "created_at",
+      width: 160,
       render: record => {
         return (
           <div>
@@ -181,7 +183,7 @@ const WyrTreeIndex = props => {
       render: record => (
         <span>
           {record.technical_service_id === 1 ? (
-            <span>
+            <span style={{}}>
               <Button
                 type="link"
                 // onClick={() => onMappingParameters(record)}
@@ -189,7 +191,8 @@ const WyrTreeIndex = props => {
                   padding: 0,
                   marginRight: "10px",
                   color: "grey",
-                  cursor: "not-allowed"
+                  cursor: "not-allowed",
+                  width: "120px"
                 }}
               >
                 Map Competencies
@@ -197,11 +200,11 @@ const WyrTreeIndex = props => {
               <Divider type="vertical" />
             </span>
           ) : (
-            <span>
+            <span style={{}}>
               <Button
                 type="link"
                 onClick={() => onMappingCourses(record)}
-                style={{ padding: 0, marginRight: "10px" }}
+                style={{ padding: 0, marginRight: "10px", width: "120px" }}
               >
                 Map Courses
               </Button>
@@ -253,32 +256,6 @@ const WyrTreeIndex = props => {
     }
   ];
 
-  {
-    /* 
-
-  const onChangeFetchList = async value => {
-    if (value === undefined || value === null) {
-      setSelectedTechnicalId(null);
-    } else {
-      try {
-        setLoading(true);
-        setSelectedTechnicalId(value);
-        const response = await wyrTreeList(user.Authorization, value);
-        if (response.data.result.wyr_episode_list.length > 0) {
-          setList(response.data.result.wyr_episode_list);
-        } else {
-          setList([]);
-        }
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-      }
-    }
-  };
-
-  */
-  }
-
   const onMappingParameters = data => {
     setParamActionId(data.id);
     setShowMapParametersModal(true);
@@ -286,7 +263,6 @@ const WyrTreeIndex = props => {
 
   const onCloseParametersModal = () => {
     setShowMapParametersModal(false);
-    // onChangeFetchList(selectedTechnicalId);
   };
 
   const onMappingCourses = data => {
@@ -296,7 +272,6 @@ const WyrTreeIndex = props => {
 
   const onCloseCoursesModal = () => {
     setShowMapCoursesModal(false);
-    // onChangeFetchList(selectedTechnicalId);
   };
 
   const changeCurrentActionStatus = async data => {
@@ -307,7 +282,6 @@ const WyrTreeIndex = props => {
       message.success("Status Updated");
       setLoadAgain(!loadAgain);
       setLoading(false);
-      // onChangeFetchList(selectedTechnicalId);
     } catch (error) {
       message.warning("Internal Server Error!!");
       setLoading(false);
@@ -322,7 +296,6 @@ const WyrTreeIndex = props => {
       message.success("Episode Deleted");
       setLoading(false);
       setLoadAgain(!loadAgain);
-      // onChangeFetchList(selectedTechnicalId);
     } catch (error) {
       setLoading(false);
     }
@@ -341,7 +314,6 @@ const WyrTreeIndex = props => {
       setSelectedTechnicalId(null);
     } else {
       setSelectedTechnicalId(techincalService);
-      //  onChangeFetchList(techincalService);
     }
   };
 
@@ -350,7 +322,6 @@ const WyrTreeIndex = props => {
       setSelectedTechnicalId(null);
     } else {
       setSelectedTechnicalId(techincalService);
-      // onChangeFetchList(techincalService);
     }
   };
 
@@ -368,7 +339,6 @@ const WyrTreeIndex = props => {
       setSelectedTechnicalId(null);
     } else {
       setSelectedTechnicalId(techId);
-      // onChangeFetchList(techId);
     }
   };
 
