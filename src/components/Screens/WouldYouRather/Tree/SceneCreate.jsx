@@ -13,7 +13,6 @@ const SceneCreate = props => {
 
   // formValues
   const [name, setName] = useState("");
-  // const [techincalService, setTechincalService] = useState(null);
   const [complexity, setComplexity] = useState(null);
 
   const onNameChange = event => {
@@ -34,17 +33,6 @@ const SceneCreate = props => {
       return;
     }
 
-    // if (
-    //   techincalService === null ||
-    //   techincalService === undefined ||
-    //   techincalService === "" ||
-    //   techincalService === " "
-    // ) {
-    //   setTechincalService(undefined);
-    //   message.warning("Please select techincal service");
-    //   return;
-    // }
-
     if (
       complexity === null ||
       complexity === undefined ||
@@ -60,7 +48,6 @@ const SceneCreate = props => {
 
     formValues = {
       name: name,
-      // technical_service_id: techincalService,
       technical_service_id: props.technicalServiceId,
       complexity: complexity,
       wyr_tree_id: episodeId
@@ -120,35 +107,6 @@ const SceneCreate = props => {
           </div>
         </div>
         {/* name ends */}
-
-        {/* techincalService starts */}
-        {/* <div style={{ display: "flex", marginBottom: "25px" }}>
-          <div
-            style={{
-              width: "140px",
-              fontWeight: 600
-            }}
-          >
-            Technical Service
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
-          </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Select
-                style={{ width: "100%" }}
-                placeholder="Select technical service"
-                onChange={value => setTechincalService(value)}
-              >
-                <Select.Option value={1}>Behavioral Module</Select.Option>
-                <Select.Option value={2}>Functional Module</Select.Option>
-              </Select>
-            </div>
-            {techincalService === undefined ? (
-              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
-            ) : null}
-          </div>
-        </div> */}
-        {/* techincalService ends */}
 
         {/* Complexity starts */}
         <div style={{ display: "flex", marginBottom: "25px" }}>

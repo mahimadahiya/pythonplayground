@@ -93,7 +93,7 @@ const SceneUpdate = props => {
               <Input
                 type="text"
                 placeholder="name"
-                value={sceneDetails.name}
+                value={name}
                 style={
                   name === null
                     ? {
@@ -113,33 +113,6 @@ const SceneUpdate = props => {
           </div>
         </div>
         {/* name ends */}
-
-        {/* techincalService starts */}
-        <div style={{ display: "flex", marginBottom: "25px" }}>
-          <div
-            style={{
-              width: "140px",
-              fontWeight: 600
-            }}
-          >
-            Technical Service
-            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
-          </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
-            <div>
-              <Input
-                value={
-                  sceneDetails.technical_service_id === 1
-                    ? "Behavioral Module"
-                    : "Functional Module"
-                }
-                type="text"
-                disabled
-              />
-            </div>
-          </div>
-        </div>
-        {/* techincalService ends */}
 
         {/* Complexity starts */}
         <div style={{ display: "flex", marginBottom: "25px" }}>
