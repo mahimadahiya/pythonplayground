@@ -53,7 +53,7 @@ const Edit = props => {
       setEpisodeId(episodeDetails.id);
       setName(episodeDetails.name);
       setDescription(episodeDetails.description);
-      setTechincalService(episodeDetails.technical_service_id);
+      setTechincalService(JSON.parse(episodeDetails.technical_service_id));
       if (
         episodeDetails.assets.episode_icon !== null ||
         episodeDetails.assets.episode_icon !== undefined ||
@@ -388,6 +388,7 @@ const Edit = props => {
                 style={{ width: "100%" }}
                 placeholder="Select technical service"
                 defaultValue={techincalService}
+                value={techincalService}
                 onChange={value => setTechincalService(value)}
               >
                 <Select.Option value={1}>Behavioral Module</Select.Option>
