@@ -52,30 +52,6 @@ const Create = props => {
     }
   };
 
-  const onPreDescriptionChange = event => {
-    if (
-      event.target.value === "" ||
-      event.target.value === "" ||
-      event.target.value === undefined
-    ) {
-      setPreDescription(null);
-    } else {
-      setPreDescription(event.target.value);
-    }
-  };
-
-  const onPostDescriptionChange = event => {
-    if (
-      event.target.value === "" ||
-      event.target.value === "" ||
-      event.target.value === undefined
-    ) {
-      setPostDescription(null);
-    } else {
-      setPostDescription(event.target.value);
-    }
-  };
-
   const onTimerChange = event => {
     if (
       event.target.value === "" ||
@@ -168,16 +144,6 @@ const Create = props => {
     }
 
     if (
-      postDescription === null ||
-      postDescription === undefined ||
-      postDescription === "" ||
-      postDescription === " "
-    ) {
-      message.warning("Please select post description");
-      return;
-    }
-
-    if (
       complexity === null ||
       complexity === undefined ||
       complexity === "" ||
@@ -185,16 +151,6 @@ const Create = props => {
     ) {
       setComplexity(undefined);
       message.warning("Please select complexity");
-      return;
-    }
-
-    if (
-      preDescription === null ||
-      preDescription === undefined ||
-      preDescription === "" ||
-      preDescription === " "
-    ) {
-      message.warning("Please select pre description");
       return;
     }
 
@@ -230,9 +186,7 @@ const Create = props => {
         objective: objective,
         technical_service_id: techincalService,
         complexity: complexity,
-        pre_description: preDescription,
-        timer: timer,
-        post_description: JSON.stringify(postDescription)
+        timer: timer
       };
     } else {
       if (mediaFile === null || mediaFile === undefined) {
@@ -243,8 +197,6 @@ const Create = props => {
           objective: objective,
           technical_service_id: techincalService,
           complexity: complexity,
-          pre_description: preDescription,
-          post_description: JSON.stringify(postDescription),
           timer: timer,
           media_type: mediaType,
           media_file: mediaFile
@@ -338,6 +290,7 @@ const Create = props => {
         {/* techincalService ends */}
 
         {/* pre description starts */}
+        {/* 
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -371,10 +324,11 @@ const Create = props => {
             ) : null}
           </div>
         </div>
-
+           */}
         {/* pre description starts */}
 
         {/* post description starts */}
+        {/*
         <div style={{ display: "flex", marginBottom: "25px" }}>
           <div
             style={{
@@ -408,6 +362,7 @@ const Create = props => {
             ) : null}
           </div>
         </div>
+      */}
         {/* post description starts */}
 
         {/* timer starts */}

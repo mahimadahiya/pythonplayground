@@ -22,6 +22,7 @@ import history from "../../../../history";
 import SceneUpdate from "./SceneUpdate";
 
 const SceneIndex = props => {
+  //console.log(props.match.params.techId);
   const user = useSelector(state => state.userAuth);
 
   const [sceneList, setSceneList] = useState([]);
@@ -61,6 +62,42 @@ const SceneIndex = props => {
         );
       }
     },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      render: record => {
+        return (
+          <div>
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record}
+          </div>
+        );
+      }
+    },
+    {
+      title:
+        JSON.parse(props.match.params.techId) === 1 ? "Competency" : "Chapter",
+      dataIndex:
+        JSON.parse(props.match.params.techId) === 1
+          ? "parameter__name"
+          : "chapter__name",
+      key:
+        JSON.parse(props.match.params.techId) === 1
+          ? "parameter__name"
+          : "chapter__name",
+      render: record => {
+        return (
+          <div>
+            {record === null || record === "" || record === undefined
+              ? "-"
+              : record}
+          </div>
+        );
+      }
+    },
+
     {
       title: "Actions",
       key: "action",
@@ -258,6 +295,7 @@ const SceneIndex = props => {
         >
           <SceneUpdate
             episodeId={props.match.params.id}
+            technicalServiceId={props.match.params.techId}
             setEditModalShow={setEditModalShow}
             sceneDetails={updateSceneDetails}
             setLoadAgain={setLoadAgain}

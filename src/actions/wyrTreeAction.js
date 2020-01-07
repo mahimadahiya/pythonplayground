@@ -21,6 +21,8 @@ export const wyrTreeCreate = async (authToken, formValues) => {
   formData.append("description", formValues.description);
   formData.append("episode_icon", formValues.episode_icon);
   formData.append("visibility", formValues.visibility);
+  formData.append("learning_outcome", formValues.learning_outcome);
+  formData.append("take_away", formValues.take_away);
 
   const response = await adminPanelApi(authToken).post(
     "/v1/admin/wyr/tree",
@@ -32,7 +34,11 @@ export const wyrTreeCreate = async (authToken, formValues) => {
 /* edit */
 export const wyrTreeUpdate = async (authToken, id, formValues) => {
   let formData = new FormData();
+  formData.append("name", formValues.name);
+  formData.append("description", formValues.description);
   formData.append("episode_icon", formValues.episode_icon);
+  formData.append("learning_outcome", formValues.learning_outcome);
+  formData.append("take_away", formValues.take_away);
 
   const response = await adminPanelApi(authToken).put(
     `/v1/admin/wyr/tree/${id}`,

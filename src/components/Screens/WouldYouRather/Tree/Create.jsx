@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Select, Input, Icon, Button, message } from "antd";
+import { Card, Select, Input, Icon, Button, message, Row, Col } from "antd";
 import { wyrTreeCreate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
@@ -15,10 +15,22 @@ const Create = props => {
   const [mediaFile, setMediaFile] = useState(null);
   const [visibility, setVisibility] = useState("");
 
+  //learning outcome
+  const [learningOutcomeCount, setLearningOutcomeCount] = useState(1);
+  const [learningOutcome, setLearningOutcome] = useState([
+    { id: 1, title: "" }
+  ]);
+
+  //take away
+  const [takeAwayCount, setTakeAwayCount] = useState(1);
+  const [takeAway, setTakeAway] = useState([{ id: 1, title: "" }]);
+
   const filechangeHandler = event => {
-    //let fileType = event.target.files[0].type;
+    // let file = event.target.files[0];
+
     setMediaFile(event.target.files[0]);
     var reader = new FileReader();
+    // console.log(reader);
     var url = reader.readAsDataURL(event.target.files[0]);
     reader.onloadend = e => {
       setIsFileUplaoded(true);
@@ -54,9 +66,181 @@ const Create = props => {
     }
   };
 
+  // learning outcome  starts
+
+  const onAddLearningOutcomeContent = () => {
+    setLearningOutcomeCount(learningOutcomeCount + 1);
+    setLearningOutcome([
+      ...learningOutcome,
+      {
+        id: learningOutcomeCount + 1,
+        title: ""
+      }
+    ]);
+  };
+
+  const onLearningOutcomeFieldDelete = id => {
+    let learning_outcome_data = learningOutcome;
+    learning_outcome_data = learning_outcome_data.filter((choice, i) => {
+      return choice.id !== id;
+    });
+    setLearningOutcome(learning_outcome_data);
+    setLearningOutcomeCount(learningOutcomeCount - 1);
+  };
+
+  const onInputLearningOutcomeChange = (e, i) => {
+    let learning_outcome_data = [...learningOutcome];
+    learning_outcome_data[i] = {
+      ...learning_outcome_data[i],
+      title: e.target.value
+    };
+    // console.log(learning_outcome_data);
+    setLearningOutcome(learning_outcome_data);
+  };
+
+  const renderLearningOutcomeFields = () => {
+    return learningOutcome.map((col, i) => (
+      <div key={i} style={{ marginBottom: "20px" }}>
+        <Row gutter={24}>
+          <Col span={20}>
+            <Input
+              placeholder="Enter title"
+              onChange={e => onInputLearningOutcomeChange(e, i)}
+              value={learningOutcome[i].title}
+            />
+          </Col>
+
+          <Col span={4} style={{ paddingLeft: 15 }}>
+            <Icon
+              type="minus-circle"
+              onClick={() => onLearningOutcomeFieldDelete(col.id)}
+              theme="twoTone"
+              twoToneColor="red"
+              style={{ fontSize: 30 }}
+            />
+          </Col>
+        </Row>
+      </div>
+    ));
+  };
+
+  // learning outcome  ends
+
+  // take away  starts
+  const onAddTakeAwayContent = () => {
+    setTakeAwayCount(takeAwayCount + 1);
+    setTakeAway([
+      ...takeAway,
+      {
+        id: takeAwayCount + 1,
+        title: ""
+      }
+    ]);
+  };
+
+  const onTakeAwayFieldDelete = id => {
+    let take_away_data = takeAway;
+    take_away_data = take_away_data.filter((choice, i) => {
+      return choice.id !== id;
+    });
+    setTakeAway(take_away_data);
+    setTakeAwayCount(takeAwayCount - 1);
+  };
+
+  const onInputTakeAwayChange = (e, i) => {
+    let take_away_data = [...takeAway];
+    take_away_data[i] = {
+      ...take_away_data[i],
+      title: e.target.value
+    };
+    // console.log(learning_outcome_data);
+    setTakeAway(take_away_data);
+  };
+
+  const renderTakeAwayFields = () => {
+    return takeAway.map((col, i) => (
+      <div key={i} style={{ marginBottom: "20px" }}>
+        <Row gutter={24}>
+          <Col span={20}>
+            <Input
+              placeholder="Enter title"
+              onChange={e => onInputTakeAwayChange(e, i)}
+              value={takeAway[i].title}
+            />
+          </Col>
+
+          <Col span={4} style={{ paddingLeft: 15 }}>
+            <Icon
+              type="minus-circle"
+              onClick={() => onTakeAwayFieldDelete(col.id)}
+              theme="twoTone"
+              twoToneColor="red"
+              style={{ fontSize: 30 }}
+            />
+          </Col>
+        </Row>
+      </div>
+    ));
+  };
+
+  // take away  ends
+
   const createNew = async () => {
+    let finalLearningData = [];
+    for (let i = 0; i < learningOutcome.length; i++) {
+      finalLearningData.push(learningOutcome[i].title);
+    }
+
+    if (finalLearningData.length === 0) {
+      message.warning("Please add Learning Outcome");
+      return;
+    } else {
+      for (let i = 0; i < finalLearningData.length; i++) {
+        if (
+          finalLearningData[i] === "" ||
+          finalLearningData[i] === " " ||
+          finalLearningData[i] === null ||
+          finalLearningData[i] === undefined
+        ) {
+          message.warning("Please fill all Learning Outcomes");
+          return;
+        }
+      }
+    }
+
+    let finalTakeAway = [];
+    for (let i = 0; i < takeAway.length; i++) {
+      finalTakeAway.push(takeAway[i].title);
+    }
+
+    if (finalTakeAway.length === 0) {
+      message.warning("Please add Take Away");
+      return;
+    } else {
+      for (let i = 0; i < finalTakeAway.length; i++) {
+        if (
+          finalTakeAway[i] === "" ||
+          finalTakeAway[i] === " " ||
+          finalTakeAway[i] === null ||
+          finalTakeAway[i] === undefined
+        ) {
+          message.warning("Please fill all Take Aways");
+          return;
+        }
+      }
+    }
+
     if (name === null || name === undefined || name === "" || name === " ") {
       message.warning("Please enter Name");
+      return;
+    }
+    if (
+      description === null ||
+      description === undefined ||
+      description === "" ||
+      description === " "
+    ) {
+      message.warning("Please enter Description");
       return;
     }
 
@@ -92,27 +276,32 @@ const Create = props => {
 
     let formValues = {};
 
-    {
-      formValues = {
-        technical_service_id: techincalService,
-        name: name,
-        description: description,
-        visibility: visibility,
-        episode_icon: mediaFile
-      };
+    formValues = {
+      technical_service_id: techincalService,
+      name: name,
+      description: description,
+      visibility: visibility,
+      episode_icon: mediaFile,
+      learning_outcome: JSON.stringify({
+        text: finalLearningData
+      }),
+      take_away: JSON.stringify({
+        text: finalTakeAway
+      })
+    };
+    //console.log(formValues);
 
-      try {
-        setLoading(true);
-        await wyrTreeCreate(user.Authorization, formValues);
-        setLoading(false);
-        message.success("Episode Created");
-        props.setCreateNewModalShow(false);
-        props.setLoadAgain(!props.loadAgain);
-        // props.submitCreateNewEpisode(techincalService);
-      } catch (error) {
-        setLoading(false);
-        props.setCreateNewModalShow(false);
-      }
+    try {
+      setLoading(true);
+      await wyrTreeCreate(user.Authorization, formValues);
+      setLoading(false);
+      message.success("Episode Created");
+      props.setCreateNewModalShow(false);
+      props.setLoadAgain(!props.loadAgain);
+      // props.submitCreateNewEpisode(techincalService);
+    } catch (error) {
+      setLoading(false);
+      props.setCreateNewModalShow(false);
     }
   };
 
@@ -267,6 +456,14 @@ const Create = props => {
                 </div>
                 <div>
                   <img src={fileSrc} alt="icon" style={{ maxWidth: "60%" }} />
+                  <div style={{ marginTop: "15px" }}>
+                    <span>
+                      Size of Image (width * height) = <b> (653px * 196px) </b>
+                    </span>
+                    <div>
+                      Resolution (DPI) = <b>72</b>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -301,6 +498,68 @@ const Create = props => {
           </div>
         </div>
         {/* Visibility ends*/}
+
+        {/* learning outcome starts*/}
+        <div style={{ display: "flex", marginBottom: "25px" }}>
+          <div
+            style={{
+              width: "140px",
+              fontWeight: 600
+            }}
+          >
+            Learning Outcome
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+          </div>
+          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+            <div style={{ marginBottom: "10px" }}>
+              {renderLearningOutcomeFields()}
+            </div>
+            <Row>
+              <div style={{ textAlign: "center" }}>
+                <Button type="primary" onClick={onAddLearningOutcomeContent}>
+                  Add LO
+                  <Icon
+                    type="plus-circle"
+                    theme="twoTone"
+                    style={{ fontSize: 20 }}
+                  />
+                </Button>
+              </div>
+            </Row>
+          </div>
+        </div>
+
+        {/* learning outcome ends*/}
+
+        {/* take away starts*/}
+        <div style={{ display: "flex", marginBottom: "25px" }}>
+          <div
+            style={{
+              width: "140px",
+              fontWeight: 600
+            }}
+          >
+            Take Away
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
+          </div>
+          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+            <div style={{ marginBottom: "10px" }}>{renderTakeAwayFields()}</div>
+            <Row>
+              <div style={{ textAlign: "center" }}>
+                <Button type="primary" onClick={onAddTakeAwayContent}>
+                  Add TA
+                  <Icon
+                    type="plus-circle"
+                    theme="twoTone"
+                    style={{ fontSize: 20 }}
+                  />
+                </Button>
+              </div>
+            </Row>
+          </div>
+        </div>
+
+        {/* take away ends*/}
 
         <div style={{ margin: "60px 0px 30px 0px", textAlign: "center" }}>
           <Button type="primary" onClick={() => createNew()}>

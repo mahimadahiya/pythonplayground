@@ -280,6 +280,17 @@ const list = [
     label: "Would You Rather",
     subMenu: [
       {
+        key: "wyr-episode",
+        label: "Episode",
+        menuList: [
+          {
+            key: "/wyr/episode",
+            label: "List",
+            onClick: () => history.push("/wyr/episode")
+          }
+        ]
+      },
+      {
         key: "wyr-series",
         label: "Series",
         menuList: [
@@ -302,6 +313,7 @@ const list = [
           }
         ]
       },
+      */
       {
         key: "wyr-scenario",
         label: "Scenarios",
@@ -310,18 +322,6 @@ const list = [
             key: "/wyr/scenario",
             label: "List",
             onClick: () => history.push("/wyr/scenario")
-          }
-        ]
-      },
-      */
-      {
-        key: "wyr-episode",
-        label: "Episode",
-        menuList: [
-          {
-            key: "/wyr/episode",
-            label: "List",
-            onClick: () => history.push("/wyr/episode")
           }
         ]
       }

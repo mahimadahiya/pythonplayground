@@ -41,8 +41,6 @@ export const createNewWyrScenario = async (authToken, formValues) => {
 
   formData.append("technical_service_id", formValues.technical_service_id);
   formData.append("objective", formValues.objective);
-  formData.append("pre_description", formValues.pre_description);
-  formData.append("post_description", formValues.post_description);
   formData.append("complexity", formValues.complexity);
   formData.append("timer", formValues.timer);
 
@@ -64,8 +62,6 @@ export const createNewWyrScenario = async (authToken, formValues) => {
 export const updateWyrScenario = async (authToken, actionId, formValues) => {
   let formData = new FormData();
   formData.append("objective", formValues.objective);
-  formData.append("pre_description", formValues.pre_description);
-  formData.append("post_description", formValues.post_description);
   formData.append("complexity", formValues.complexity);
   formData.append("timer", formValues.timer);
 

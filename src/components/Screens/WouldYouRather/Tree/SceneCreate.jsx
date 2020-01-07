@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Card, Select, Input, Icon, Button, message } from "antd";
-import { wyrEpisodeSceneCreate, wyrTreeList } from "../../../../actions";
+import {
+  wyrEpisodeSceneCreate,
+  wyrTreeList,
+  getChapterList
+} from "../../../../actions";
 import { useSelector } from "react-redux";
 
 const SceneCreate = props => {
@@ -20,6 +24,7 @@ const SceneCreate = props => {
     []
   );
   const [parameterCourseId, setParameterCourseId] = useState(null);
+  const [chapters, setChapters] = useState([]);
 
   useEffect(() => {
     const callDataApi = async () => {
@@ -27,6 +32,7 @@ const SceneCreate = props => {
       try {
         const episodeDetailsResponse = await wyrTreeList(user.Authorization);
         let tempList = [];
+        let courseId = null;
         for (
           let i = 0;
           i < episodeDetailsResponse.data.result.wyr_episode_list.length;
@@ -60,16 +66,24 @@ const SceneCreate = props => {
                   .mapped_fm_course.length;
                 j++
               ) {
-                tempList.push(
+                courseId =
                   episodeDetailsResponse.data.result.wyr_episode_list[i]
-                    .mapped_fm_course[j]
-                );
+                    .mapped_fm_course[j].id;
               }
             }
           }
         }
-        console.log(tempList);
+        console.log(courseId);
         setMappedParameterCourseList(tempList);
+        // console.log(episodeDetailsResponse.data.result.wyr_episode_list);
+
+        const chapterResponse = await getChapterList(
+          user.Authorization,
+          courseId
+        );
+        //  console.log(chapterResponse.data.result);
+        setChapters(chapterResponse.data.result.chapter_list);
+
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -132,6 +146,16 @@ const SceneCreate = props => {
       return;
     }
 
+    if (
+      parameterCourseId === null ||
+      parameterCourseId === undefined ||
+      parameterCourseId === "" ||
+      parameterCourseId === " "
+    ) {
+      message.warning("Please select Parmeter / Chapter");
+      return;
+    }
+
     let formValues = {};
 
     if (props.technicalServiceId === "1") {
@@ -150,7 +174,7 @@ const SceneCreate = props => {
         complexity: complexity,
         wyr_tree_id: episodeId,
         description: description,
-        fm_course_id: parameterCourseId
+        chapter_id: parameterCourseId
       };
     }
 
@@ -169,8 +193,8 @@ const SceneCreate = props => {
   const renderCourseOptions = data => {
     return data.map(data => {
       return (
-        <Select.Option key={data.fm_course_id} value={data.fm_course_id}>
-          {data.fm_course__name}
+        <Select.Option key={data.id} value={data.id}>
+          {data.name}
         </Select.Option>
       );
     });
@@ -322,7 +346,7 @@ const SceneCreate = props => {
               >
                 {props.technicalServiceId === "1"
                   ? renderParameterOptions(mappedParameterCourseList)
-                  : renderCourseOptions(mappedParameterCourseList)}
+                  : renderCourseOptions(chapters)}
               </Select>
             </div>
           </div>
