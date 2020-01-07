@@ -472,6 +472,14 @@ const Edit = props => {
                   <Icon type="upload" style={{ paddingRight: "5px" }} />
                   Upload
                 </span>
+                <div style={{ marginTop: "15px" }}>
+                  <span>
+                    Size of Image (width * height) = <b> (653px * 196px) </b>
+                  </span>
+                  <div>
+                    Resolution (DPI) = <b>72</b>
+                  </div>
+                </div>
               </label>
             ) : (
               <div style={{ maxWidth: "100%" }}>
