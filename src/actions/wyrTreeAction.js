@@ -35,6 +35,7 @@ export const wyrTreeCreate = async (authToken, formValues) => {
 export const wyrTreeUpdate = async (authToken, id, formValues) => {
   let formData = new FormData();
   formData.append("name", formValues.name);
+  formData.append("technical_service_id", formValues.technical_service_id);
   formData.append("description", formValues.description);
   formData.append("episode_icon", formValues.episode_icon);
   formData.append("learning_outcome", formValues.learning_outcome);

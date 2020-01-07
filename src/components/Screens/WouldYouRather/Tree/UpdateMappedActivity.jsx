@@ -131,12 +131,18 @@ const UpdateMappedActivity = props => {
           </div>
         );
       }
-    }
-    /* 
+    },
+
     {
       title: "Actions",
       key: "action",
       render: record => (
+        <span>
+          <Button type="link" style={{ padding: 0, marginRight: "10px" }}>
+            Edit
+          </Button>
+        </span>
+        /* 
         <span>
           <Popconfirm
             title="Are you sure you want to delete ?"
@@ -152,9 +158,9 @@ const UpdateMappedActivity = props => {
             </Button>
           </Popconfirm>
         </span>
+        */
       )
     }
-    */
   ];
 
   const renderInputOptions = details => {

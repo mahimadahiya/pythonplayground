@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Input, Icon, Button, message, Row, Col } from "antd";
+import { Card, Input, Icon, Button, message, Row, Col, Select } from "antd";
 import { wyrTreeUpdate } from "../../../../actions";
 import { useSelector } from "react-redux";
 
@@ -84,6 +84,8 @@ const Edit = props => {
       setTakeAway(recivedTakeAwayData);
     }
   }, [episodeDetails]);
+
+  //console.log(techincalService);
 
   const filechangeHandler = event => {
     //let fileType = event.target.files[0].type;
@@ -309,6 +311,16 @@ const Edit = props => {
       message.warning("Please enter Description");
       return;
     }
+    if (
+      techincalService === null ||
+      techincalService === undefined ||
+      techincalService === "" ||
+      techincalService === " "
+    ) {
+      setTechincalService(undefined);
+      message.warning("Please select techincal service");
+      return;
+    }
 
     /* 
     if (
@@ -325,6 +337,7 @@ const Edit = props => {
     let formValues = {};
 
     formValues = {
+      technical_service_id: techincalService,
       name: name,
       description: description,
       episode_icon: mediaFile,
@@ -367,9 +380,26 @@ const Edit = props => {
             }}
           >
             Technical Service
-            {/* <span style={{ color: "red", paddingLeft: "4px" }}>*</span> */}
+            <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+            <div>
+              <Select
+                style={{ width: "100%" }}
+                placeholder="Select technical service"
+                defaultValue={techincalService}
+                onChange={value => setTechincalService(value)}
+              >
+                <Select.Option value={1}>Behavioral Module</Select.Option>
+                <Select.Option value={2}>Functional Module</Select.Option>
+              </Select>
+            </div>
+            {techincalService === undefined ? (
+              <div style={{ color: "red", marginTop: "5px" }}>* Required</div>
+            ) : null}
+          </div>
+        </div>
+        {/* 
             <Input
               type="text"
               style={{ color: "#777777" }}
@@ -380,8 +410,7 @@ const Edit = props => {
               }
               disabled
             />
-          </div>
-        </div>
+            */}
         {/* technical service id ends*/}
         {/* Name starts*/}
         <div style={{ display: "flex", marginBottom: "25px" }}>
