@@ -134,6 +134,7 @@ const UpdateMappedActivity = props => {
                   onChange={onGameAttemptsChange}
                   placeholder="Number of Attempts"
                   min={1}
+                  step={1}
                   value={record.n_attempt}
                   style={{
                     width: "100%"
@@ -418,6 +419,8 @@ const UpdateMappedActivity = props => {
     setGameTableListLoading(false);
   };
 
+  //game edit
+
   const onGameEdit = data => {
     let game_id = data.id;
     let game_table_data = [...mappedEntityArticle];
@@ -461,7 +464,7 @@ const UpdateMappedActivity = props => {
     setMappedEntityArticle(game_table_data);
   };
 
-  console.log(mappedEntityArticle);
+  //console.log(mappedEntityArticle);
 
   const onDelete = data => {
     for (let i = 0; i < normalGameList.length; i++) {
