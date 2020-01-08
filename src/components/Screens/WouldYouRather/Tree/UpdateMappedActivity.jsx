@@ -28,6 +28,9 @@ const UpdateMappedActivity = props => {
   const [gameName, setGameName] = useState("");
   const [gameTableListLoading, setGameTableListLoading] = useState(false);
 
+  //gamre edit
+  const [isGameEdit, setIsGameEdit] = useState(false);
+
   useEffect(() => {
     const fetchList = async () => {
       setGameTableListLoading(true);
@@ -120,14 +123,32 @@ const UpdateMappedActivity = props => {
     },
     {
       title: "Attempts",
-      dataIndex: "n_attempt",
+      //dataIndex: "n_attempt",
       key: "n_attempt",
       render: record => {
         return (
           <div>
-            {record === null || record === "" || record === undefined
-              ? "-"
-              : record}
+            {record.is_edit ? (
+              <span>
+                <InputNumber
+                  onChange={onGameAttemptsChange}
+                  placeholder="Number of Attempts"
+                  min={1}
+                  value={record.n_attempt}
+                  style={{
+                    width: "100%"
+                  }}
+                />
+              </span>
+            ) : (
+              <span>
+                {record.n_attempt === null ||
+                record.n_attempt === "" ||
+                record.n_attempt === undefined
+                  ? "-"
+                  : record.n_attempt}
+              </span>
+            )}
           </div>
         );
       }
@@ -138,9 +159,23 @@ const UpdateMappedActivity = props => {
       key: "action",
       render: record => (
         <span>
-          <Button type="link" style={{ padding: 0, marginRight: "10px" }}>
-            Edit
-          </Button>
+          {record.is_edit === true ? (
+            <Button
+              type="link"
+              style={{ padding: 0, marginRight: "10px" }}
+              onClick={() => onGameEditSave(record)}
+            >
+              Save
+            </Button>
+          ) : (
+            <Button
+              type="link"
+              style={{ padding: 0, marginRight: "10px" }}
+              onClick={() => onGameEdit(record)}
+            >
+              Edit
+            </Button>
+          )}
         </span>
         /* 
         <span>
@@ -382,6 +417,51 @@ const UpdateMappedActivity = props => {
     setMappedEntityArticle(final_game_list);
     setGameTableListLoading(false);
   };
+
+  const onGameEdit = data => {
+    let game_id = data.id;
+    let game_table_data = [...mappedEntityArticle];
+    for (let i = 0; i < game_table_data.length; i++) {
+      game_table_data[i] = {
+        ...game_table_data[i],
+        is_edit: false
+      };
+      if (game_table_data[i].id === game_id) {
+        game_table_data[i].is_edit = true;
+      }
+    }
+    //console.log(game_table_data);
+    setMappedEntityArticle(game_table_data);
+    // setIsGameEdit(true);
+  };
+  //console.log(mappedEntityArticle);
+
+  const onGameEditSave = data => {
+    let game_id = data.id;
+    let game_table_data = [...mappedEntityArticle];
+    if (
+      numberOfAttempts === null ||
+      numberOfAttempts === undefined ||
+      numberOfAttempts === "" ||
+      numberOfAttempts === ""
+    ) {
+      message.warning("Please enter number of Attempts");
+      return;
+    }
+    for (let i = 0; i < game_table_data.length; i++) {
+      if (game_table_data[i].id === game_id) {
+        game_table_data[i] = {
+          ...game_table_data[i],
+          n_attempt: numberOfAttempts,
+          is_edit: false
+        };
+      }
+    }
+    //console.log(game_table_data);
+    setMappedEntityArticle(game_table_data);
+  };
+
+  console.log(mappedEntityArticle);
 
   const onDelete = data => {
     for (let i = 0; i < normalGameList.length; i++) {
