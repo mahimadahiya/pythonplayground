@@ -186,12 +186,12 @@ const WyrTreeIndex = props => {
             <span style={{}}>
               <Button
                 type="link"
-                onClick={() => onMappingParameters(record)}
+                // onClick={() => onMappingParameters(record)}
                 style={{
                   padding: 0,
                   marginRight: "10px",
-                  // color: "grey",
-                  //cursor: "not-allowed",
+                  color: "grey",
+                  cursor: "not-allowed",
                   width: "120px"
                 }}
               >
