@@ -1,7 +1,7 @@
 import React, { useEffect, forwardRef, useState } from "react";
 import { Select } from "antd";
 import { useSelector } from "react-redux";
-import { fetchAllModules } from '../../actions';
+import { fetchAllModules } from "../../actions";
 
 const Modules = forwardRef((props, ref) => {
   const user = useSelector(state => state.userAuth);
@@ -44,6 +44,7 @@ const Modules = forwardRef((props, ref) => {
       value={props.value}
       allowClear
       showSearch
+      disabled={props.disabled}
       filterOption={(val, option) => filterModules(val, option)}
     >
       {renderModules()}

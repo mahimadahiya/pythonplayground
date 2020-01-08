@@ -13,12 +13,14 @@ import {
 } from "antd";
 import MButton from "../../../Elements/MButton";
 import Parameters from "../../../Elements/Parameters";
-import Categories from "../../../Elements/Categories";
+import Modules from "../../../Elements/Modules";
 import {
   fetchCategories,
   wyrTreeMapParameters,
   wyrTreeList,
-  deleteMappedParameter
+  deleteMappedParameter,
+  fetchAllModules,
+  getAlreadyMappedParameters
 } from "../../../../actions";
 import "./index";
 
@@ -26,6 +28,7 @@ const EpisodeParameterMap = props => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth);
   const categories = useSelector(state => state.category.categories);
+
   // console.log(categories);
 
   const actionId = props.actionId;
@@ -37,30 +40,37 @@ const EpisodeParameterMap = props => {
   const [selectedParameters, setSelectedParameters] = useState([]);
   const [alreadyMappedParameters, setAlreadyMappedParameters] = useState([]);
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedModule, setSelectedModule] = useState(null);
 
   const [finalSelectedList, setFinalSelectedList] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
 
+  //module
+  const [modules, setModules] = useState([]);
+  const [moduleParameters, setModuleParameters] = useState([]);
+
   const columns = [
     {
-      title: "Category Id",
-      dataIndex: "category_id",
-      key: "category_id"
+      title: "Module Id",
+      dataIndex: "module_id",
+      key: "module_id",
+      width: 60
     },
     {
-      title: "Category Name",
-      dataIndex: "category_name",
-      key: "category_name"
+      title: "Module Name",
+      dataIndex: "module_name",
+      key: "module_name",
+      width: 100
     },
     {
       title: "Parameters id",
-      key: "parameters",
-      dataIndex: "parameters",
-      render: parameters => (
+      key: "Actions",
+      // dataIndex: "parameters",
+      width: 200,
+      render: record => (
         <span>
-          {parameters.map(param => {
-            return <Tag key={param.id}>{param.id}</Tag>;
+          {record.parameters.map(param => {
+            return <Tag key={param.parameter_id}>{param.parameter_name}</Tag>;
           })}
         </span>
       )
@@ -72,7 +82,10 @@ const EpisodeParameterMap = props => {
       setCardLoading(true);
 
       try {
-        dispatch(fetchCategories(user.Authorization));
+        // dispatch(fetchCategories(user.Authorization));
+        const moduleResponse = await fetchAllModules(user.Authorization);
+        setModules(moduleResponse);
+        //  console.log(modules);
       } catch (error) {}
 
       try {
@@ -142,7 +155,7 @@ const EpisodeParameterMap = props => {
       if (!err) {
         const values = {
           wyr_tree_id: actionId,
-          parameter_list: JSON.stringify(formValues.parameter)
+          module_wise_parameter: JSON.stringify(finalSelectedList)
         };
 
         setCardLoading(true);
@@ -165,13 +178,21 @@ const EpisodeParameterMap = props => {
     });
   };
 
-  const onCategoryChange = value => {
-    console.log(value);
-    setSelectedCategory(value);
+  const onModuleChange = async value => {
+    //console.log(value);
+    setSelectedModule(value);
+    try {
+      const response = await getAlreadyMappedParameters(
+        user.Authorization,
+        value
+      );
+      // console.log(response.data.result);
+      setModuleParameters(response.data.result);
+    } catch (error) {}
   };
 
   const onParameterChange = value => {
-    console.log(value);
+    // console.log(value);
     setParameters(value);
   };
 
@@ -187,30 +208,58 @@ const EpisodeParameterMap = props => {
   };
 
   const addComptency = () => {
-    const categoryName = categories.find(item => {
-      if (item.id === selectedCategory) {
+    if (
+      selectedModule === null ||
+      selectedModule === undefined ||
+      selectedModule === " " ||
+      selectedModule === ""
+    ) {
+      message.warning("please select Module");
+      return;
+    }
+    if (parameters.length === 0) {
+      message.warning("please select Parameter");
+      return;
+    }
+
+    const moduleName = modules.find(item => {
+      if (item.id === selectedModule) {
         return item;
       }
     });
     //console.log(categoryName.name);
     let parameter_id_list = [];
     for (let i = 0; i < parameters.length; i++) {
-      parameter_id_list = [...parameter_id_list, { id: parameters[i] }];
+      const parameter_data = moduleParameters.find(item => {
+        if (item.parameter_id === parameters[i]) return item;
+      });
+      // console.log("parameter_data", parameter_data);
+      parameter_id_list = [
+        ...parameter_id_list,
+        {
+          parameter_id: parameters[i],
+          parameter_name: parameter_data.parameter__name
+        }
+      ];
     }
-    console.log(parameter_id_list);
+    // console.log(parameter_id_list);
 
     let tempList = {
-      category_id: selectedCategory,
-      category_name: categoryName.name,
+      module_id: selectedModule,
+      module_name: moduleName.name,
       parameters: parameter_id_list
     };
-    console.log(tempList);
+    // console.log(tempList);
     setFinalSelectedList([...finalSelectedList, tempList]);
     // set parameter list to null
     setIsDisabled(true);
-    setSelectedCategory(null);
-    parameter_id_list = [];
+    setSelectedModule(null);
+    /*props.form.setFieldsValue({
+      competency: module
+    });*/
   };
+
+  console.log(finalSelectedList);
 
   const addNewCategory = () => {
     setIsDisabled(false);
@@ -233,7 +282,7 @@ const EpisodeParameterMap = props => {
         >
           <div style={{ textAlign: "right", marginBottom: "20px" }}>
             <Button onClick={addNewCategory}>
-              Add More Category
+              Add More Competencies
               <Icon
                 type="plus"
                 //  style={{ color: "blue", fontSize: "16px", cursor: "pointer" }}
@@ -241,7 +290,7 @@ const EpisodeParameterMap = props => {
             </Button>
           </div>
 
-          <Form>
+          <Form onSubmit={onSubmit}>
             <div
               style={{
                 border: "1px solid #999999",
@@ -251,45 +300,46 @@ const EpisodeParameterMap = props => {
               }}
             >
               <Form.Item>
-                {getFieldDecorator("competency", {
-                  rules: [{ required: true }],
-                  initialValue: selectedCategory
+                {getFieldDecorator("module", {
+                  rules: [{ required: true }]
+                  // initialValue: selectedCategory
                 })(
-                  <Select
-                    mode={"default"}
-                    placeholder="Select a category"
-                    onChange={onCategoryChange}
-                    showSearch
-                    allowClear
-                    // defaultValue={selectedCategory}
-                    // value={selectedCategory}
+                  <Modules
                     disabled={isDisabled === true ? true : false}
-                  >
-                    {categories.map(category => {
-                      return (
-                        <Select.Option key={category.id} value={category.id}>
-                          {category.name}
-                        </Select.Option>
-                      );
-                    })}
-                  </Select>
+                    onChange={onModuleChange}
+                  />
                 )}
               </Form.Item>
 
-              {selectedCategory === null ? (
+              {selectedModule === null ? (
                 <div>Select category to view parameters list</div>
               ) : (
-                <Form.Item label="Parameters">
+                <Form.Item label="Competencies">
                   {getFieldDecorator("parameter", {
                     rules: [{ required: true }]
                     // initialValue: selectedParameters
                   })(
-                    <Parameters
+                    <Select
                       mode="multiple"
+                      placeholder="Select a Parameter"
                       onChange={onParameterChange}
-                      onDeselect={e => onDeselectingParameter(e)}
-                      categories={[selectedCategory]}
-                    />
+                      showSearch
+                      allowClear
+                      // defaultValue={selectedCategory}
+                      // value={selectedCategory}
+                      disabled={isDisabled === true ? true : false}
+                    >
+                      {moduleParameters.map(para => {
+                        return (
+                          <Select.Option
+                            key={para.parameter_id}
+                            value={para.parameter_id}
+                          >
+                            {para.parameter__name}
+                          </Select.Option>
+                        );
+                      })}
+                    </Select>
                   )}
                 </Form.Item>
               )}
@@ -304,12 +354,19 @@ const EpisodeParameterMap = props => {
                 </Button>
               </div>
             </div>
+            <div style={{ textAlign: "center" }}>
+              <MButton>Submit</MButton>
+            </div>
           </Form>
 
           {/* ///////////////////////////////////////////////////////////// */}
 
           {finalSelectedList.length === 0 ? null : (
-            <Table columns={columns} dataSource={finalSelectedList} />
+            <Table
+              columns={columns}
+              dataSource={finalSelectedList}
+              rowKey={row => row.module_id}
+            />
           )}
         </Card>
       </Modal>
