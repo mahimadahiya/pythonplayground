@@ -559,7 +559,7 @@ const Edit = props => {
             <Row>
               <div style={{ textAlign: "center" }}>
                 <Button type="primary" onClick={onAddLearningOutcomeContent}>
-                  Add LO
+                  Add
                   <Icon
                     type="plus-circle"
                     theme="twoTone"
@@ -589,7 +589,7 @@ const Edit = props => {
             <Row>
               <div style={{ textAlign: "center" }}>
                 <Button type="primary" onClick={onAddTakeAwayContent}>
-                  Add TA
+                  Add
                   <Icon
                     type="plus-circle"
                     theme="twoTone"

@@ -525,7 +525,7 @@ const Create = props => {
             <Row>
               <div style={{ textAlign: "center" }}>
                 <Button type="primary" onClick={onAddLearningOutcomeContent}>
-                  Add LO
+                  Add
                   <Icon
                     type="plus-circle"
                     theme="twoTone"
@@ -555,7 +555,7 @@ const Create = props => {
             <Row>
               <div style={{ textAlign: "center" }}>
                 <Button type="primary" onClick={onAddTakeAwayContent}>
-                  Add TA
+                  Add
                   <Icon
                     type="plus-circle"
                     theme="twoTone"
