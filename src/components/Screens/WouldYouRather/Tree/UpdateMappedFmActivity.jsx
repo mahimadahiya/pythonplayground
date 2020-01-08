@@ -154,14 +154,33 @@ const UpdateMappedActivity = props => {
     },
     {
       title: "Attempts",
-      dataIndex: "n_attempt",
+      // dataIndex: "n_attempt",
       key: "n_attempt",
       render: record => {
         return (
           <div>
-            {record === null || record === "" || record === undefined
-              ? "-"
-              : record}
+            {record.is_edit ? (
+              <span>
+                <InputNumber
+                  onChange={onGameAttemptsChange}
+                  placeholder="Number of Attempts"
+                  min={1}
+                  step={1}
+                  value={record.n_attempt}
+                  style={{
+                    width: "100%"
+                  }}
+                />
+              </span>
+            ) : (
+              <span>
+                {record.n_attempt === null ||
+                record.n_attempt === "" ||
+                record.n_attempt === undefined
+                  ? "-"
+                  : record.n_attempt}
+              </span>
+            )}
           </div>
         );
       }
@@ -171,19 +190,23 @@ const UpdateMappedActivity = props => {
       key: "action",
       render: record => (
         <span>
-          <Popconfirm
-            title="Are you sure you want to delete ?"
-            okText="Yes"
-            cancelText="No"
-            // onConfirm={() => onDelete(record)}
-          >
+          {record.is_edit === true ? (
             <Button
               type="link"
-              style={{ color: "red", padding: 0, marginRight: "10px" }}
+              style={{ padding: 0, marginRight: "10px" }}
+              onClick={() => onGameEditSave(record)}
             >
-              Delete
+              Save
             </Button>
-          </Popconfirm>
+          ) : (
+            <Button
+              type="link"
+              style={{ padding: 0, marginRight: "10px" }}
+              onClick={() => onGameEdit(record)}
+            >
+              Edit
+            </Button>
+          )}
         </span>
       )
     }
@@ -408,6 +431,51 @@ const UpdateMappedActivity = props => {
     setNormalGameList(normalGameList);
     setMappedEntityArticle(final_game_list);
     setGameTableListLoading(false);
+  };
+
+  //game edit
+
+  const onGameEdit = data => {
+    let game_id = data.id;
+    let game_table_data = [...mappedEntityArticle];
+    for (let i = 0; i < game_table_data.length; i++) {
+      game_table_data[i] = {
+        ...game_table_data[i],
+        is_edit: false
+      };
+      if (game_table_data[i].id === game_id) {
+        game_table_data[i].is_edit = true;
+      }
+    }
+    //console.log(game_table_data);
+    setMappedEntityArticle(game_table_data);
+    // setIsGameEdit(true);
+  };
+  //console.log(mappedEntityArticle);
+
+  const onGameEditSave = data => {
+    let game_id = data.id;
+    let game_table_data = [...mappedEntityArticle];
+    if (
+      numberOfAttempts === null ||
+      numberOfAttempts === undefined ||
+      numberOfAttempts === "" ||
+      numberOfAttempts === ""
+    ) {
+      message.warning("Please enter number of Attempts");
+      return;
+    }
+    for (let i = 0; i < game_table_data.length; i++) {
+      if (game_table_data[i].id === game_id) {
+        game_table_data[i] = {
+          ...game_table_data[i],
+          n_attempt: numberOfAttempts,
+          is_edit: false
+        };
+      }
+    }
+    //console.log(game_table_data);
+    setMappedEntityArticle(game_table_data);
   };
 
   const onDelete = data => {
