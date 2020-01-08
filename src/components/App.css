@@ -116,3 +116,12 @@ img {
   font-weight: 900;
   font-size: 18px;
 }
+
+.verticalTwoLineEllipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 40px;
+}

@@ -20,6 +20,7 @@ import {
 import SceneCreate from "./SceneCreate";
 import history from "../../../../history";
 import SceneUpdate from "./SceneUpdate";
+import MapScenarioModal from "./MapScenario";
 
 const SceneIndex = props => {
   //console.log(props.match.params.techId);
@@ -32,6 +33,9 @@ const SceneIndex = props => {
   const [editModalShow, setEditModalShow] = useState(false);
   const [updateSceneDetails, setUpdateSceneDetails] = useState([]);
   const [episodeDetailsData, setEpisodeDetailsData] = useState([]);
+
+  const [mapScenarioSceneDetails, setMapScenarioSceneDetails] = useState([]);
+  const [mapScenarioModalShow, setMapScenarioModalShow] = useState(false);
 
   const columnName = [
     {
@@ -69,9 +73,19 @@ const SceneIndex = props => {
       render: record => {
         return (
           <div>
-            {record === null || record === "" || record === undefined
-              ? "-"
-              : record}
+            {record === null || record === "" || record === undefined ? (
+              "-"
+            ) : (
+              <span>
+                <span
+                  style={{ maxWidth: "200px" }}
+                  className="verticalTwoLineEllipsis"
+                >
+                  {record}
+                </span>
+                ...
+              </span>
+            )}
           </div>
         );
       }
@@ -124,6 +138,14 @@ const SceneIndex = props => {
               Delete
             </Button>
           </Popconfirm>
+          <Divider type="vertical" />
+          <Button
+            type="link"
+            style={{ padding: 0, marginRight: "10px" }}
+            onClick={() => onMapScenario(record)}
+          >
+            Map Scenarios
+          </Button>
         </span>
       )
     }
@@ -190,6 +212,15 @@ const SceneIndex = props => {
 
   const closeEditEpisodeModal = () => {
     setEditModalShow(false);
+  };
+
+  const onMapScenario = data => {
+    setMapScenarioSceneDetails(data);
+    setMapScenarioModalShow(true);
+  };
+
+  const closeMapScenarioEpisodeModal = () => {
+    setMapScenarioModalShow(false);
   };
 
   const onDelete = async item => {
@@ -304,6 +335,29 @@ const SceneIndex = props => {
         </Modal>
       ) : null}
       {/* Update modal ends */}
+
+      {/* map scenario modal starts */}
+      {mapScenarioModalShow === true ? (
+        <Modal
+          style={{ minWidth: "600px" }}
+          title="Map Scenario"
+          closable={true}
+          footer={null}
+          onCancel={closeMapScenarioEpisodeModal}
+          visible={mapScenarioModalShow}
+          destroyOnClose={true}
+        >
+          <MapScenarioModal
+            episodeId={props.match.params.id}
+            technicalServiceId={props.match.params.techId}
+            setMapScenarioModalShow={setMapScenarioModalShow}
+            sceneDetails={mapScenarioSceneDetails}
+            setLoadAgain={setLoadAgain}
+            loadAgain={loadAgain}
+          />
+        </Modal>
+      ) : null}
+      {/*  map scenario modal ends */}
     </div>
   );
 };
