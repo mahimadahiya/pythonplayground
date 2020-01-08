@@ -322,17 +322,17 @@ const Edit = props => {
       return;
     }
 
-    /* 
-    if (
-      mediaFile === null ||
-      mediaFile === undefined ||
-      mediaFile === "" ||
-      mediaFile === " "
-    ) {
-      message.warning("Please select Episode Icon");
-      return;
+    if (isFileChanged) {
+      if (
+        mediaFile === null ||
+        mediaFile === undefined ||
+        mediaFile === "" ||
+        mediaFile === " "
+      ) {
+        message.warning("Please select Episode Icon");
+        return;
+      }
     }
-    */
 
     let formValues = {};
 
