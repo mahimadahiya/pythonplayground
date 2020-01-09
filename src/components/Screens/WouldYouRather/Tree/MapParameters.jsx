@@ -254,12 +254,12 @@ const EpisodeParameterMap = props => {
     // set parameter list to null
     setIsDisabled(true);
     setSelectedModule(null);
-    /*props.form.setFieldsValue({
+    props.form.setFieldsValue({
       competency: module
-    });*/
+    });
   };
 
-  console.log(finalSelectedList);
+  // console.log(finalSelectedList);
 
   const addNewCategory = () => {
     setIsDisabled(false);

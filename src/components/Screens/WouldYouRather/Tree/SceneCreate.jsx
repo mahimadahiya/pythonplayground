@@ -372,7 +372,7 @@ const SceneCreate = props => {
                 placeholder={
                   props.technicalServiceId === "1"
                     ? "Select Parameter"
-                    : "Select Course"
+                    : "Select Chapter"
                 }
                 style={{ width: "100%" }}
                 loading={loading}
