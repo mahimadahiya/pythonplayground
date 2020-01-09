@@ -32,7 +32,7 @@ const SceneCreate = props => {
       try {
         const episodeDetailsResponse = await wyrTreeList(user.Authorization);
         let tempList = [];
-        let courseId = null;
+        let courseId = [];
         for (
           let i = 0;
           i < episodeDetailsResponse.data.result.wyr_episode_list.length;
@@ -66,23 +66,56 @@ const SceneCreate = props => {
                   .mapped_fm_course.length;
                 j++
               ) {
-                courseId =
+                courseId.push(
                   episodeDetailsResponse.data.result.wyr_episode_list[i]
-                    .mapped_fm_course[j].id;
+                    .mapped_fm_course[j].fm_course_id
+                );
               }
             }
           }
         }
-        console.log(courseId);
+        // console.log(courseId);
         setMappedParameterCourseList(tempList);
         // console.log(episodeDetailsResponse.data.result.wyr_episode_list);
+        let chapterResponse = [];
+        let final_chapter_data = [];
+        let final_filtered_chapter_data = [];
 
-        const chapterResponse = await getChapterList(
-          user.Authorization,
-          courseId
-        );
-        //  console.log(chapterResponse.data.result);
-        setChapters(chapterResponse.data.result.chapter_list);
+        let courseWiseChapterdata = [];
+        for (let i = 0; i < courseId.length; i++) {
+          let dataResponse = await getChapterList(
+            user.Authorization,
+            courseId[i]
+          );
+          courseWiseChapterdata.push({
+            fm_course_id: courseId[i],
+            chapter_list: dataResponse.data.result.chapter_list
+          });
+        }
+
+        //   console.log(courseWiseChapterdata);
+
+        for (let i = 0; i < courseWiseChapterdata.length; i++) {
+          for (
+            let j = 0;
+            j < courseWiseChapterdata[i].chapter_list.length;
+            j++
+          ) {
+            final_chapter_data.push(courseWiseChapterdata[i].chapter_list[j]);
+          }
+        }
+
+        // console.log("finalData", final_chapter_data);
+
+        //FILTER FOR SIMILAR CHAPTERS
+        for (let i = 0; i < final_chapter_data.length; i++) {
+          if (
+            final_filtered_chapter_data.indexOf(final_chapter_data[i]) === -1
+          ) {
+            final_filtered_chapter_data.push(final_chapter_data[i]);
+          }
+        }
+        setChapters(final_filtered_chapter_data);
 
         setLoading(false);
       } catch (error) {
@@ -94,6 +127,7 @@ const SceneCreate = props => {
       setMappedParameterCourseList([]);
     };
   }, [user.Authorization]);
+  //console.log("chapters", chapters);
 
   const onNameChange = event => {
     if (
@@ -329,7 +363,7 @@ const SceneCreate = props => {
               fontWeight: 600
             }}
           >
-            {props.technicalServiceId === "1" ? "Parameters" : "Courses"}
+            {props.technicalServiceId === "1" ? "Parameters" : "Chapters"}
             <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
           </div>
           <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
