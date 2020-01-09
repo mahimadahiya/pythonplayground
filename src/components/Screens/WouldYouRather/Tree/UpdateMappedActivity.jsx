@@ -30,6 +30,7 @@ const UpdateMappedActivity = props => {
 
   //gamre edit
   const [isGameEdit, setIsGameEdit] = useState(false);
+  const [isNumberAttemptEdited, setIsNumberAttemptEdited] = useState(false);
 
   useEffect(() => {
     const fetchList = async () => {
@@ -135,7 +136,9 @@ const UpdateMappedActivity = props => {
                   placeholder="Number of Attempts"
                   min={1}
                   step={1}
-                  value={record.n_attempt}
+                  value={
+                    isNumberAttemptEdited ? numberOfAttempts : record.n_attempt
+                  }
                   style={{
                     width: "100%"
                   }}
@@ -367,6 +370,7 @@ const UpdateMappedActivity = props => {
 
   const onGameAttemptsChange = e => {
     setNumberOfAttempts(e);
+    setIsNumberAttemptEdited(true);
   };
 
   const onAddGame = () => {
@@ -461,6 +465,7 @@ const UpdateMappedActivity = props => {
       }
     }
     //console.log(game_table_data);
+    setIsNumberAttemptEdited(false);
     setMappedEntityArticle(game_table_data);
   };
 
