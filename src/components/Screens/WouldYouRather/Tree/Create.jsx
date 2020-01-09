@@ -447,11 +447,14 @@ const Create = props => {
                   Upload
                 </span>
                 <div style={{ marginTop: "15px" }}>
-                  <span>
-                    Size of Image (width * height) = <b> (653px * 196px) </b>
-                  </span>
+                  <div>Recommended -</div>
                   <div>
-                    Resolution (DPI) = <b>72</b>
+                    <span>
+                      Size of Image (width * height) = <b> (653px * 196px) </b>
+                    </span>
+                    <div>
+                      Resolution (DPI) = <b>72</b>
+                    </div>
                   </div>
                 </div>
               </label>

@@ -146,7 +146,7 @@ const EpisodeMapCourse = props => {
               })(
                 <Select
                   placeholder="Select courses"
-                  mode="default"
+                  mode="multiple"
                   onChange={onChangeCourse}
                   filterOption={filterCourses}
                 >
