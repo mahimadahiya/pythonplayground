@@ -141,8 +141,8 @@ const SceneIndex = props => {
           <Divider type="vertical" />
           <Button
             type="link"
-            style={{ padding: 0, marginRight: "10px", color: "grey" }}
-            // onClick={() => onMapScenario(record)}
+            style={{ padding: 0, marginRight: "10px" }}
+            onClick={() => onMapScenario(record)}
           >
             Map Scenarios
           </Button>
