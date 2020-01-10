@@ -90,8 +90,11 @@ const RolePlayDetails = props => {
             };
           }
         );
+        for (let i = 0; i < details.result.article_conversation.length; i++) {
+          details.result.article_conversation[i]["class_name"] = "inActive";
+        }
 
-        //  console.log("conversationDetails", details.result.article_conversation);
+        // console.log("conversationDetails", details.result.article_conversation);
         setConversationDetails(details.result.article_conversation);
 
         try {
@@ -185,12 +188,22 @@ const RolePlayDetails = props => {
 
   //move conversation up
 
-  const onMoveUp = key => {
+  const onMoveUp = (key, data) => {
+    // console.log(data);
     if (key === 0) {
       message.warning("Already at the Top");
       return;
     } // disable method when the key its equal to 0
     let items = [...conversationDetails]; // assign props to items for don't repeat my self
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].id === data.id) {
+        items[i]["class_name"] = "conversationAnimation";
+      } else {
+        items[i]["class_name"] = "inActive";
+      }
+    }
+    // console.log(items);
     const index = key - 1; // save in memory index value less than one
     const itemAbove = items[index]; // save in memory items index
     items[key - 1] = items[key]; // match id value with the key object
@@ -199,11 +212,18 @@ const RolePlayDetails = props => {
   };
 
   //move conversation down
-  const onMoveDown = key => {
+  const onMoveDown = (key, data) => {
     let items = [...conversationDetails];
     if (key === items.length - 1) {
       message.warning("Already at the Bottom");
       return;
+    }
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].id === data.id) {
+        items[i]["class_name"] = "conversationAnimation";
+      } else {
+        items[i]["class_name"] = "inActive";
+      }
     }
     const index = key + 1;
     const itemBelow = items[index];
@@ -333,6 +353,7 @@ const RolePlayDetails = props => {
           cursor: "pointer",
           backgroundColor: value.bgColor
         }}
+        className={value.class_name}
       >
         {/* title */}
         <div>
@@ -410,7 +431,7 @@ const RolePlayDetails = props => {
         <div style={{ textAlign: "right" }}>
           <Button
             style={{ marginRight: "10px", fontWeight: "bold" }}
-            onClick={() => onMoveUp(ind)}
+            onClick={() => onMoveUp(ind, value)}
           >
             Move Up
             <Icon
@@ -420,7 +441,7 @@ const RolePlayDetails = props => {
           </Button>
           <Button
             style={{ fontWeight: "bold" }}
-            onClick={() => onMoveDown(ind)}
+            onClick={() => onMoveDown(ind, value)}
           >
             Move Down{" "}
             <Icon

@@ -186,3 +186,35 @@ body > div:nth-child(7) > div > div.ant-modal-wrap > div {
 }
 
 /* background hover overlay ends */
+
+/* ROLE PLAY ANIMATION FOR CONVERSATION DETAILS STARTS*/
+.inActive {
+  border: 1px solid;
+}
+
+.conversationAnimation {
+  transition: 0.5s;
+  animation: moveUpAndDown 2s 1 ease-in-out;
+}
+
+@keyframes moveUpAndDown {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+    background: #22a4ef;
+    color: #fff;
+  }
+  25% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+/* ROLE PLAY ANIMATION FOR CONVERSATION DETAILS ENDS*/
