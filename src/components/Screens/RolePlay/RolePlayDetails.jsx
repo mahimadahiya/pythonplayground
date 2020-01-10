@@ -212,6 +212,7 @@ const RolePlayDetails = props => {
     setConversationDetails(items);
   };
 
+  // DRAG AND DROP CODE
   /* 
   const SortableItemConversation = SortableElement(({ value, key }) => (
     <li
@@ -412,13 +413,20 @@ const RolePlayDetails = props => {
             onClick={() => onMoveUp(ind)}
           >
             Move Up
-            <Icon type="arrow-up" />
+            <Icon
+              style={{ fontSize: "17px", color: "black" }}
+              type="arrow-up"
+            />
           </Button>
           <Button
             style={{ fontWeight: "bold" }}
             onClick={() => onMoveDown(ind)}
           >
-            Move Down <Icon type="arrow-down" />
+            Move Down{" "}
+            <Icon
+              style={{ fontSize: "17px", color: "black" }}
+              type="arrow-down"
+            />
           </Button>
         </div>
       </li>
