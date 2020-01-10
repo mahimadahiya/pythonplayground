@@ -91,10 +91,7 @@ const RolePlayDetails = props => {
           }
         );
 
-        for (let i = 0; i < details.result.article_conversation.length; i++) {
-          details.result.article_conversation[i]["class_text"] = "inActive";
-        }
-        console.log("conversationDetails", details.result.article_conversation);
+        //  console.log("conversationDetails", details.result.article_conversation);
         setConversationDetails(details.result.article_conversation);
 
         try {
