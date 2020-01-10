@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Modal, Button, Card, Popconfirm, message, Divider } from "antd";
+import { Modal, Button, Card, Popconfirm, message, Divider, Icon } from "antd";
 import {
   rolePlayConversationDetails,
   rolePlayConversationChangeStatus,
@@ -11,6 +11,7 @@ import AddConversationModal from "./AddConversationModal";
 import EditConversationModal from "./EditConversationModal";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
+
 import "./index.css";
 import UpdateRp from "./UpdateRp";
 
@@ -27,7 +28,7 @@ const RolePlayDetails = props => {
   const [avatarTwoImage, setAvatarTwoImage] = useState();
 
   const [backgroundImage, setBackgroundImage] = useState();
-  const [conversationDetails, setConversationDetails] = useState();
+  const [conversationDetails, setConversationDetails] = useState([]);
   const [openAddConversationModal, setOpenAddConversationModal] = useState(
     false
   );
@@ -89,6 +90,11 @@ const RolePlayDetails = props => {
             };
           }
         );
+
+        for (let i = 0; i < details.result.article_conversation.length; i++) {
+          details.result.article_conversation[i]["class_text"] = "inActive";
+        }
+        console.log("conversationDetails", details.result.article_conversation);
         setConversationDetails(details.result.article_conversation);
 
         try {
@@ -180,7 +186,34 @@ const RolePlayDetails = props => {
     setShowEditConverseModal(true);
   };
 
-  const SortableItemConversation = SortableElement(({ value }) => (
+  const onMoveUp = key => {
+    if (key === 0) {
+      message.warning("Already at the Top");
+      return;
+    } // disable method when the key its equal to 0
+    let items = [...conversationDetails]; // assign props to items for don't repeat my self
+    const index = key - 1; // save in memory index value less than one
+    const itemAbove = items[index]; // save in memory items index
+    items[key - 1] = items[key]; // match id value with the key object
+    items[key] = itemAbove;
+    setConversationDetails(items);
+  };
+
+  const onMoveDown = key => {
+    let items = [...conversationDetails];
+    if (key === items.length - 1) {
+      message.warning("Already at the Bottom");
+      return;
+    }
+    const index = key + 1;
+    const itemBelow = items[index];
+    items[key + 1] = items[key];
+    items[key] = itemBelow;
+    setConversationDetails(items);
+  };
+
+  /* 
+  const SortableItemConversation = SortableElement(({ value, key }) => (
     <li
       style={{
         display: "inline-block",
@@ -193,7 +226,7 @@ const RolePlayDetails = props => {
         backgroundColor: value.bgColor
       }}
     >
-      {/* title */}
+      //title 
       <div>
         <div style={{ marginBottom: "20px", textAlign: "right" }}>
           <Button
@@ -227,10 +260,12 @@ const RolePlayDetails = props => {
           <span style={{ float: "right" }}>{value.timer} Sec</span>
         </div>
       </div>
-      {/* description */}
+      // description 
       <div>
         <div>{value.text}</div>
         <hr />
+        <Button onClick={key => onMoveUp(key)}>Up</Button>
+        <Button>Down</Button>
 
         {value.extra_points !== null ? (
           <div>
@@ -279,6 +314,110 @@ const RolePlayDetails = props => {
       </ul>
     );
   });
+
+  */
+
+  const renderConversationList = () => {
+    //console.log(data);
+    return conversationDetails.map((value, ind) => (
+      <li
+        key={ind}
+        style={{
+          display: "inline-block",
+          border: "1px solid #999999",
+          borderRadius: "5px",
+          padding: "20px",
+          margin: "10px 0px",
+          width: "100%",
+          cursor: "pointer",
+          backgroundColor: value.bgColor
+        }}
+      >
+        {/* title */}
+        <div>
+          <div style={{ marginBottom: "20px", textAlign: "right" }}>
+            <Button
+              onClick={() => onEditConversation(value.id)}
+              style={{ background: "#F1BC31", color: "#fff" }}
+            >
+              Edit
+            </Button>
+
+            <Divider type="vertical" />
+
+            <Popconfirm
+              onConfirm={() => onDeleteConversation(value.id)}
+              okText="Delete"
+              placement="bottomLeft"
+              title={"Are you sure you want to delete?"}
+            >
+              <Button style={{ background: "red", color: "#fff" }}>
+                Delete
+              </Button>
+            </Popconfirm>
+          </div>
+          <div>
+            <span>
+              {typeLayoutList.map(lay => {
+                return (
+                  <span key={lay.slug}>
+                    {value.type === lay.slug ? <span>{lay.name}</span> : null}
+                  </span>
+                );
+              })}
+            </span>
+            <span style={{ float: "right" }}>{value.timer} Sec</span>
+          </div>
+        </div>
+        {/* description */}
+        <div>
+          <div>{value.text}</div>
+          <hr />
+
+          {value.extra_points !== null ? (
+            <div>
+              {value.extra_points.length !== 0 ? (
+                <div
+                  style={{
+                    color: "#666666",
+                    marginTop: "8px",
+                    fontWeight: 600
+                  }}
+                >
+                  Extra Points
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
+          <div>
+            {value.extra_points !== null ? (
+              <div>
+                {value.extra_points.length !== 0 ? (
+                  <div>
+                    {value.extra_points.map((ep, i) => (
+                      <div key={i}>
+                        {i + 1}. {ep.text}
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <Button style={{ marginRight: "10px" }} onClick={() => onMoveUp(ind)}>
+            <Icon type="arrow-up" />
+          </Button>
+          <Button onClick={() => onMoveDown(ind)}>
+            <Icon type="arrow-down" />
+          </Button>
+        </div>
+      </li>
+    ));
+  };
+
   const onSortEnd = ({ oldIndex, newIndex }) => {
     setConversationDetails(arrayMove(conversationDetails, oldIndex, newIndex));
   };
@@ -481,10 +620,13 @@ const RolePlayDetails = props => {
           Re-arrange to change sequence
         </div>
         <div style={{ margin: "35px" }}>
+          {renderConversationList()}
+          {/* 
           <SortableListConversation
             items={conversationDetails}
             onSortEnd={onSortEnd}
           />
+          */}
 
           <div style={{ textAlign: "center" }}>
             <Button type="primary" onClick={onAddConversationClick}>

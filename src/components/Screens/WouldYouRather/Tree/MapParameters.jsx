@@ -9,13 +9,12 @@ import {
   Select,
   Button,
   Tag,
-  Table
+  Table,
+  Popconfirm
 } from "antd";
 import MButton from "../../../Elements/MButton";
-import Parameters from "../../../Elements/Parameters";
 import Modules from "../../../Elements/Modules";
 import {
-  fetchCategories,
   wyrTreeMapParameters,
   wyrTreeList,
   deleteMappedParameter,
@@ -27,9 +26,6 @@ import "./index";
 const EpisodeParameterMap = props => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth);
-  const categories = useSelector(state => state.category.categories);
-
-  // console.log(categories);
 
   const actionId = props.actionId;
   const technical_service_id = props.selectedTechnicalId;
@@ -64,7 +60,7 @@ const EpisodeParameterMap = props => {
     },
     {
       title: "Parameters id",
-      key: "Actions",
+      key: "parameters",
       // dataIndex: "parameters",
       width: 200,
       render: record => (
@@ -72,6 +68,28 @@ const EpisodeParameterMap = props => {
           {record.parameters.map(param => {
             return <Tag key={param.parameter_id}>{param.parameter_name}</Tag>;
           })}
+        </span>
+      )
+    },
+    {
+      title: "Actions",
+      key: "action",
+      width: 50,
+      render: record => (
+        <span>
+          <Popconfirm
+            title="Are you sure you want to delete ?"
+            okText="Yes"
+            cancelText="No"
+            // onConfirm={() => onDeleteAddedCompetency(record)}
+          >
+            <Button
+              type="link"
+              style={{ color: "red", padding: 0, marginRight: "10px" }}
+            >
+              Delete
+            </Button>
+          </Popconfirm>
         </span>
       )
     }
@@ -82,10 +100,13 @@ const EpisodeParameterMap = props => {
       setCardLoading(true);
 
       try {
-        // dispatch(fetchCategories(user.Authorization));
         const moduleResponse = await fetchAllModules(user.Authorization);
-        setModules(moduleResponse);
-        //  console.log(modules);
+        // setModules(moduleResponse);
+        let extraModuleResponse = moduleResponse;
+        for (let i = 0; i < extraModuleResponse.length; i++) {
+          extraModuleResponse[i]["is_selected"] = false;
+        }
+        setModules(extraModuleResponse);
       } catch (error) {}
 
       try {
@@ -179,21 +200,43 @@ const EpisodeParameterMap = props => {
   };
 
   const onModuleChange = async value => {
-    //console.log(value);
     setSelectedModule(value);
     try {
       const response = await getAlreadyMappedParameters(
         user.Authorization,
         value
       );
-      // console.log(response.data.result);
       setModuleParameters(response.data.result);
     } catch (error) {}
   };
 
   const onParameterChange = value => {
-    // console.log(value);
     setParameters(value);
+  };
+
+  const onDeleteAddedCompetency = data => {
+    // console.log(data);
+    let module_isSelected_details = [...modules];
+
+    for (let i = 0; i < module_isSelected_details.length; i++) {
+      if (module_isSelected_details[i].id === data.module_id) {
+        module_isSelected_details[i] = {
+          ...module_isSelected_details[i],
+          is_selected: false
+        };
+      }
+    }
+    setModules(module_isSelected_details);
+
+    let tempList = [...finalSelectedList];
+
+    for (let i = 0; i < tempList.length; i++) {
+      if (tempList[i].module_id !== data.module_id) {
+        console.log(tempList[i]);
+      }
+    }
+
+    // console.log(tempList);
   };
 
   const onDeselectingParameter = async e => {
@@ -227,13 +270,11 @@ const EpisodeParameterMap = props => {
         return item;
       }
     });
-    //console.log(categoryName.name);
     let parameter_id_list = [];
     for (let i = 0; i < parameters.length; i++) {
       const parameter_data = moduleParameters.find(item => {
         if (item.parameter_id === parameters[i]) return item;
       });
-      // console.log("parameter_data", parameter_data);
       parameter_id_list = [
         ...parameter_id_list,
         {
@@ -242,27 +283,61 @@ const EpisodeParameterMap = props => {
         }
       ];
     }
-    // console.log(parameter_id_list);
+
+    let module_isSelected_details = [...modules];
+
+    for (let i = 0; i < module_isSelected_details.length; i++) {
+      if (module_isSelected_details[i].id === selectedModule) {
+        module_isSelected_details[i] = {
+          ...module_isSelected_details[i],
+          is_selected: true
+        };
+      }
+    }
+    setModules(module_isSelected_details);
 
     let tempList = {
       module_id: selectedModule,
       module_name: moduleName.name,
       parameters: parameter_id_list
     };
-    // console.log(tempList);
     setFinalSelectedList([...finalSelectedList, tempList]);
     // set parameter list to null
     setIsDisabled(true);
     setSelectedModule(null);
+
     props.form.setFieldsValue({
-      competency: module
+      module: null
     });
   };
 
-  // console.log(finalSelectedList);
-
   const addNewCategory = () => {
     setIsDisabled(false);
+  };
+
+  const filterModules = (val, option) => {
+    const filteredList = modules.filter(({ name }) => {
+      if (name.toLowerCase().includes(val) || option.key.includes(val)) {
+        return true;
+      }
+      return false;
+    });
+    for (var i = 0; i < filteredList.length; i++) {
+      if (filteredList[i].id.toString() === option.key) return true;
+    }
+    return false;
+  };
+
+  const renderModules = () => {
+    return modules.map(module => (
+      <Select.Option
+        key={module.id}
+        value={module.id}
+        disabled={module.is_selected}
+      >
+        {module.name}
+      </Select.Option>
+    ));
   };
 
   const { getFieldDecorator } = props.form;
@@ -302,17 +377,24 @@ const EpisodeParameterMap = props => {
               <Form.Item>
                 {getFieldDecorator("module", {
                   rules: [{ required: true }]
-                  // initialValue: selectedCategory
+                  //initialValue: selectedModule
                 })(
-                  <Modules
-                    disabled={isDisabled === true ? true : false}
+                  <Select
+                    placeholder="Select module(s)"
                     onChange={onModuleChange}
-                  />
+                    mode="default"
+                    allowClear
+                    showSearch
+                    disabled={isDisabled === true ? true : false}
+                    filterOption={(val, option) => filterModules(val, option)}
+                  >
+                    {renderModules()}
+                  </Select>
                 )}
               </Form.Item>
 
               {selectedModule === null ? (
-                <div>Select category to view parameters list</div>
+                <div>Select Module to view parameters list</div>
               ) : (
                 <Form.Item label="Competencies">
                   {getFieldDecorator("parameter", {
