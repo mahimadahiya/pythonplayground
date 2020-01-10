@@ -183,6 +183,8 @@ const RolePlayDetails = props => {
     setShowEditConverseModal(true);
   };
 
+  //move conversation up
+
   const onMoveUp = key => {
     if (key === 0) {
       message.warning("Already at the Top");
@@ -196,6 +198,7 @@ const RolePlayDetails = props => {
     setConversationDetails(items);
   };
 
+  //move conversation down
   const onMoveDown = key => {
     let items = [...conversationDetails];
     if (key === items.length - 1) {
@@ -404,11 +407,18 @@ const RolePlayDetails = props => {
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
-          <Button style={{ marginRight: "10px" }} onClick={() => onMoveUp(ind)}>
+          <Button
+            style={{ marginRight: "10px", fontWeight: "bold" }}
+            onClick={() => onMoveUp(ind)}
+          >
+            Move Up
             <Icon type="arrow-up" />
           </Button>
-          <Button onClick={() => onMoveDown(ind)}>
-            <Icon type="arrow-down" />
+          <Button
+            style={{ fontWeight: "bold" }}
+            onClick={() => onMoveDown(ind)}
+          >
+            Move Down <Icon type="arrow-down" />
           </Button>
         </div>
       </li>
