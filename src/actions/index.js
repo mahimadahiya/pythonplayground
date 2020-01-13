@@ -163,7 +163,8 @@ import {
   rolePlayConversationChangeStatus,
   rolePlayConversationDeleteConversation,
   updateRPConversation,
-  fetchRpLayoutList
+  fetchRpLayoutList,
+  deleteRolePlayMappedParameterAndChapter
 } from "./rolePLayActions";
 
 import {
@@ -363,6 +364,7 @@ export {
   rolePlayConversationDeleteConversation,
   updateRPConversation,
   fetchRpLayoutList,
+  deleteRolePlayMappedParameterAndChapter,
   // wyr actions
   wyrActionList,
   wyrActionDelete,

@@ -16,6 +16,7 @@ import {
 import moment from "moment";
 import CreateRolePlayModal from "./CreateRolePlayModal";
 import MapRolePlayParametersModal from "./MapRolePlayParametersModal";
+import MapRolePlayChaptersModal from "./MapRolePlayChaptersModal";
 
 const RolePlay = () => {
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,10 @@ const RolePlay = () => {
   const [
     showMapRolePlayParametersModal,
     setShowMapRolePlayParametersModal
+  ] = useState(false);
+  const [
+    showMapRolePlayChapterModal,
+    setShowMapRolePlayChapterModal
   ] = useState(false);
   const user = useSelector(state => state.userAuth);
   const [loadAgain, setLoadAgain] = useState(false);
@@ -77,7 +82,7 @@ const RolePlay = () => {
     setSearchfilterString(filterString);
     if (filterString) {
       const list = userListData.filter(item =>
-        item.name.toLowerCase().includes(filterString)
+        item.name.toLowerCase().includes(filterString.toLowerCase())
       );
       // console.log(list);
       setList(list);
@@ -97,8 +102,17 @@ const RolePlay = () => {
     setShowMapRolePlayParametersModal(true);
   };
 
+  const onMappingChapters = data => {
+    setRpArticleId(data.id);
+    setShowMapRolePlayChapterModal(true);
+  };
+
   const onCloseRolePlayParametersModal = () => {
     setShowMapRolePlayParametersModal(false);
+  };
+
+  const onCloseRolePlayChapterModal = () => {
+    setShowMapRolePlayChapterModal(false);
   };
 
   const column = [
@@ -164,12 +178,21 @@ const RolePlay = () => {
       key: "Map",
       render: (text, record) => (
         <span>
-          <span
-            onClick={() => onMappingParameters(record)}
-            style={{ cursor: "pointer", color: "#22a4ef" }}
-          >
-            Map Parameters
-          </span>
+          {record.technical_service_id === 1 ? (
+            <span
+              onClick={() => onMappingParameters(record)}
+              style={{ cursor: "pointer", color: "#22a4ef" }}
+            >
+              Map Parameters
+            </span>
+          ) : (
+            <span
+              onClick={() => onMappingChapters(record)}
+              style={{ cursor: "pointer", color: "#22a4ef" }}
+            >
+              Map Chapters
+            </span>
+          )}
           <Divider type="vertical" />
           <Popconfirm
             onConfirm={() => onDeleteRolePlay(record.id)}
@@ -269,6 +292,17 @@ const RolePlay = () => {
           visible={showMapRolePlayParametersModal}
           onCancel={onCloseRolePlayParametersModal}
           onValuesSubmit={onCloseRolePlayParametersModal}
+          rpArticleId={rpArticleId}
+          setLoadAgain={setLoadAgain}
+          loadAgain={loadAgain}
+        />
+      ) : null}
+
+      {showMapRolePlayChapterModal === true ? (
+        <MapRolePlayChaptersModal
+          visible={showMapRolePlayChapterModal}
+          onCancel={onCloseRolePlayChapterModal}
+          onValuesSubmit={onCloseRolePlayChapterModal}
           rpArticleId={rpArticleId}
           setLoadAgain={setLoadAgain}
           loadAgain={loadAgain}

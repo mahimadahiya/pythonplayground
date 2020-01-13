@@ -129,3 +129,15 @@ export const mapRolePlayParameters = async (authToken, values) => {
   );
   return response;
 };
+
+/* delete mapped chapters and parameters */
+
+export const deleteRolePlayMappedParameterAndChapter = async (
+  authToken,
+  id
+) => {
+  const response = await adminPanelApi(authToken).delete(
+    `/v1/admin/rp/article/parameter/delete/${id}`
+  );
+  return response;
+};

@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Modal, Card, Form, message } from "antd";
-import Modules from "../../Elements/Modules";
+import { Modal, Card, Form, message, Select } from "antd";
 import MButton from "../../Elements/MButton";
-import Parameters from "../../Elements/Parameters";
 import {
   mapRolePlayParameters,
+  getChapterList,
   rolePlayArticleParametersList,
   deleteRolePlayMappedParameterAndChapter
 } from "../../../actions";
 import "./index.css";
 
-const MapRolePlayParametersModal = props => {
+const MapRolePlayChaptersModal = props => {
   const user = useSelector(state => state.userAuth);
 
   const rp_article_id = props.rpArticleId;
 
   const [cardLoading, setCardLoading] = useState(false);
-  const [parameters, setParameters] = useState([]);
-  const [selectedParameters, setSelectedParameters] = useState([]);
-  const [mappedParametersDetails, setMappedParametersDetails] = useState([]);
+  const [chapters, setChapters] = useState([]);
+  const [selectedChapters, setSelectedChapters] = useState([]);
+
+  const [mappedChapterDetailList, setMappedChapterDetailList] = useState([]);
 
   useEffect(() => {
     const fetchAlreadyMappedList = async () => {
@@ -29,12 +29,17 @@ const MapRolePlayParametersModal = props => {
           user.Authorization,
           rp_article_id
         );
-        setMappedParametersDetails(response);
+        setMappedChapterDetailList(response);
         let tempList = [];
         for (let i = 0; i < response.length; i++) {
-          tempList.push(response[i].parameter_id);
+          tempList.push(response[i].chapter);
         }
-        setSelectedParameters(tempList);
+        // console.log(response);
+        setSelectedChapters(tempList);
+
+        const chapterResponse = await getChapterList(user.Authorization);
+        //  console.log(chapterResponse.data.result);
+        setChapters(chapterResponse.data.result.chapter_list);
         setCardLoading(false);
       } catch (error) {
         setCardLoading(false);
@@ -50,7 +55,7 @@ const MapRolePlayParametersModal = props => {
         const values = {
           rp_article_id: rp_article_id,
           // parameter_id_list: JSON.stringify(parameters)
-          parameter_id_list: JSON.stringify(formValues.parameter)
+          chapter_id_list: JSON.stringify(formValues.chapter)
         };
 
         setCardLoading(true);
@@ -72,19 +77,29 @@ const MapRolePlayParametersModal = props => {
     });
   };
 
-  const onParameterChange = value => {
-    setParameters(value);
+  const renderChapterOptions = chapters => {
+    return chapters.map(chapters => {
+      return (
+        <Select.Option key={chapters.id} value={chapters.id}>
+          {chapters.name}
+        </Select.Option>
+      );
+    });
   };
 
-  const onDeletingAlreadyMappedParameter = async e => {
-    // console.log(e);
+  const onChapterChange = value => {
+    // setChapters(value);
+  };
 
-    let temp_detail_list = mappedParametersDetails.find(Item => {
-      if (Item.parameter_id === e) {
+  const onDeletingAlreadyMappedChapter = async e => {
+    //console.log(e);
+
+    let temp_detail_list = mappedChapterDetailList.find(Item => {
+      if (Item.chapter === e) {
         return Item;
       }
     });
-    //  console.log(temp_detail_list.id);
+    //console.log(temp_detail_list.id);
     try {
       await deleteRolePlayMappedParameterAndChapter(
         user.Authorization,
@@ -97,7 +112,7 @@ const MapRolePlayParametersModal = props => {
   return (
     <div>
       <Modal
-        title="Map Parameters"
+        title="Map Chapters"
         visible={props.visible}
         onCancel={props.onCancel}
         destroyOnClose={true}
@@ -114,17 +129,20 @@ const MapRolePlayParametersModal = props => {
             <Modules  onChange={moduleChange}  />
             )}
         </Form.Item> */}
-            <Form.Item label="Parameters">
-              {getFieldDecorator("parameter", {
+            <Form.Item label="Chapters">
+              {getFieldDecorator("chapter", {
                 rules: [{ required: true }],
-                initialValue: selectedParameters
+                initialValue: selectedChapters
               })(
-                <Parameters
+                <Select
+                  placeholder="Select Chapter"
+                  style={{ width: "100%" }}
                   mode="multiple"
-                  onChange={onParameterChange}
-                  onDeselect={onDeletingAlreadyMappedParameter}
-                  categories={[null]}
-                />
+                  onDeselect={onDeletingAlreadyMappedChapter}
+                  //onChange={onChapterChange}
+                >
+                  {renderChapterOptions(chapters)}
+                </Select>
               )}
             </Form.Item>
 
@@ -136,4 +154,4 @@ const MapRolePlayParametersModal = props => {
   );
 };
 
-export default Form.create()(MapRolePlayParametersModal);
+export default Form.create()(MapRolePlayChaptersModal);
