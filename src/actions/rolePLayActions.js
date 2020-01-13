@@ -141,3 +141,15 @@ export const deleteRolePlayMappedParameterAndChapter = async (
   );
   return response;
 };
+
+/* saving conversation sequence */
+
+export const saveConversationSequence = async (authToken, formValues) => {
+  const response = await adminPanelApi(authToken).post(
+    "/v1/admin/rp/article/conversation/sequence/update/",
+
+    qs.stringify(formValues)
+  );
+  //console.log(response);
+  return response.data;
+};

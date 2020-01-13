@@ -5,7 +5,8 @@ import {
   rolePlayConversationDetails,
   rolePlayConversationChangeStatus,
   rolePlayConversationDeleteConversation,
-  fetchRpLayoutList
+  fetchRpLayoutList,
+  saveConversationSequence
 } from "../../../actions";
 import AddConversationModal from "./AddConversationModal";
 import EditConversationModal from "./EditConversationModal";
@@ -146,6 +147,40 @@ const RolePlayDetails = props => {
       setLoading(false);
       await rolePlayConversationChangeStatus(user.Authorization, formValues);
       message.success("Role Play status changed.");
+      setLoadAgain(!loadAgain);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  //sequence save starts
+
+  const onRolePlaySequenceSave = async () => {
+    if (conversationDetails.length === 0) {
+      message.warning("Please add conversation");
+      return;
+    }
+    let tempList = [];
+    tempList = conversationDetails.map((item, i) => {
+      return {
+        id: item.id,
+        sequence: i + 1
+      };
+    });
+
+    // console.log(conversationDetails);
+    //console.log(tempList);
+
+    let formValues = {
+      sequence_details: JSON.stringify(tempList),
+      rp_article_id: rolePlayId
+    };
+
+    setLoading(true);
+    try {
+      setLoading(false);
+      await saveConversationSequence(user.Authorization, formValues);
+      message.success("Role Play Sequence Saved.");
       setLoadAgain(!loadAgain);
     } catch (error) {
       setLoading(false);
@@ -654,8 +689,17 @@ const RolePlayDetails = props => {
         <div style={{ textAlign: "center", background: "lightblue" }}>
           <h3 style={{ lineHeight: "44px" }}>Sequence</h3>
         </div>
-        <div style={{ margin: "30px 20px", fontWeight: 600 }}>
-          Re-arrange to change sequence
+        <div style={{ display: "flex" }}>
+          <div style={{ width: "45%", margin: "30px 20px", fontWeight: 600 }}>
+            Re-arrange to change sequence
+          </div>
+          <div
+            style={{ width: "45%", margin: "30px 20px", textAlign: "right" }}
+          >
+            <Button onClick={onRolePlaySequenceSave} type="primary">
+              Save Sequence
+            </Button>
+          </div>
         </div>
         <div style={{ margin: "35px" }}>
           {renderConversationList()}
