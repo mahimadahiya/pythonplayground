@@ -195,6 +195,7 @@ body > div:nth-child(7) > div > div.ant-modal-wrap > div {
 .conversationAnimation {
   transition: 0.5s;
   animation: moveUpAndDown 2s 1 ease-in-out;
+  animation-play-state: running;
 }
 
 @keyframes moveUpAndDown {

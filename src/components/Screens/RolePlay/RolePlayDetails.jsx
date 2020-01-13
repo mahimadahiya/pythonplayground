@@ -11,7 +11,7 @@ import AddConversationModal from "./AddConversationModal";
 import EditConversationModal from "./EditConversationModal";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
-
+import FlipMove from "react-flip-move";
 import "./index.css";
 import UpdateRp from "./UpdateRp";
 
@@ -133,6 +133,9 @@ const RolePlayDetails = props => {
       };
     });
 
+    // console.log(conversationDetails);
+    //console.log(tempList);
+
     let formValues = {
       sequence_details: JSON.stringify(tempList),
       rp_article_id: rolePlayId
@@ -189,12 +192,12 @@ const RolePlayDetails = props => {
   //move conversation up
 
   const onMoveUp = (key, data) => {
-    // console.log(data);
+    //console.log(data);
     if (key === 0) {
       message.warning("Already at the Top");
       return;
     } // disable method when the key its equal to 0
-    let items = [...conversationDetails]; // assign props to items for don't repeat my self
+    let items = [...conversationDetails]; // assign data to items for don't repeat my self
 
     for (let i = 0; i < items.length; i++) {
       if (items[i].id === data.id) {
@@ -203,7 +206,7 @@ const RolePlayDetails = props => {
         items[i]["class_name"] = "inActive";
       }
     }
-    // console.log(items);
+    //console.log(items);
     const index = key - 1; // save in memory index value less than one
     const itemAbove = items[index]; // save in memory items index
     items[key - 1] = items[key]; // match id value with the key object
@@ -339,7 +342,6 @@ const RolePlayDetails = props => {
   */
 
   const renderConversationList = () => {
-    //console.log(data);
     return conversationDetails.map((value, ind) => (
       <li
         key={ind}

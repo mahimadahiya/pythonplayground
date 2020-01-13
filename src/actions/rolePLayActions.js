@@ -20,6 +20,7 @@ export const addRolePlay = async (authToken, formValues) => {
   formData.append("background_file", formValues.backImage);
   formData.append("description", formValues.description);
   formData.append("post_description", formValues.postDescription);
+  formData.append("technical_service_id", formValues.technical_service_id);
   response = await adminPanelApi(authToken).post(
     "/v1/admin/rp/article/create/",
     formData

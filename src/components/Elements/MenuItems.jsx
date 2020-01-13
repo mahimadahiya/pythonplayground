@@ -274,6 +274,7 @@ const list = [
     ],
     accessGroup: [1]
   },
+  /* 
   {
     key: "wyr",
     icon: "branches",
@@ -301,7 +302,7 @@ const list = [
           }
         ]
       },
-      /* 
+       
       {
         key: "wyr-actions",
         label: "Actions",
@@ -313,7 +314,7 @@ const list = [
           }
         ]
       },
-      */
+      
       {
         key: "wyr-scenario",
         label: "Scenarios",
@@ -328,6 +329,8 @@ const list = [
     ],
     accessGroup: [1]
   },
+  */
+
   {
     key: "tech-assesment",
     icon: "tool",
@@ -340,22 +343,20 @@ const list = [
       }
     ],
     accessGroup: [1]
-  }
-  /*
+  },
   {
-    key: "cms",
-    icon: "tool",
-    label: "Cms",
+    key: "wyr",
+    icon: "branches",
+    label: "Would You Rather",
     menuList: [
       {
-        key: "/cms",
-        label: "List",
-        onClick: () => history.push("/cms")
+        key: "wyr-series",
+        label: "Series",
+        onClick: () => history.push("/wyr/series")
       }
     ],
     accessGroup: [1]
   }
-  */
 ];
 
 const subMenuList = userAccessGroup => {

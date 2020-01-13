@@ -10,9 +10,9 @@ import {
   Icon,
   Row,
   Col,
-  Card
+  Card,
+  Select
 } from "antd";
-
 
 import "./index.css";
 
@@ -36,6 +36,8 @@ const CreateRolePlayModal = props => {
   const [backgroundImage, setBackgroundImage] = useState();
   const [backgroundSource, setBackgroundSource] = useState();
   const [isBackgroundUploaded, setIsBackgroundUploaded] = useState(false);
+
+  const [technicalService, setTechnicalService] = useState(null);
 
   const user = useSelector(state => state.userAuth);
   const onNameChange = event => {
@@ -144,9 +146,18 @@ const CreateRolePlayModal = props => {
       return;
     }
     if (
+      technicalService === null ||
+      technicalService === "" ||
+      technicalService === " " ||
+      technicalService === undefined
+    ) {
+      message.warning("Please Select TechnicalService ");
+      return;
+    }
+    if (
       avatarName1 === null ||
-      avatarName1 === ""   ||
-      avatarName1 === " "  ||
+      avatarName1 === "" ||
+      avatarName1 === " " ||
       avatarName1 === undefined
     ) {
       message.warning("Please Fill Avatar 1 Name ");
@@ -154,8 +165,8 @@ const CreateRolePlayModal = props => {
     }
     if (
       avatarImage1 === null ||
-      avatarImage1 === ""   ||
-      avatarImage1 === " "  ||
+      avatarImage1 === "" ||
+      avatarImage1 === " " ||
       avatarImage1 === undefined
     ) {
       message.warning("Please Upload Avatar 1 Image ");
@@ -163,8 +174,8 @@ const CreateRolePlayModal = props => {
     }
     if (
       avatarName2 === null ||
-      avatarName2 === ""   ||
-      avatarName2 === " "  ||
+      avatarName2 === "" ||
+      avatarName2 === " " ||
       avatarName2 === undefined
     ) {
       message.warning("Please Fill Avatar 2 Name ");
@@ -172,8 +183,8 @@ const CreateRolePlayModal = props => {
     }
     if (
       avatarImage2 === null ||
-      avatarImage2 === ""   ||
-      avatarImage2 === " "  ||
+      avatarImage2 === "" ||
+      avatarImage2 === " " ||
       avatarImage2 === undefined
     ) {
       message.warning("Please Upload Avatar 2 Image ");
@@ -181,8 +192,8 @@ const CreateRolePlayModal = props => {
     }
     if (
       backgroundImage === null ||
-      backgroundImage === ""   ||
-      backgroundImage === " "  ||
+      backgroundImage === "" ||
+      backgroundImage === " " ||
       backgroundImage === undefined
     ) {
       message.warning("Please Upload Background Image ");
@@ -196,7 +207,8 @@ const CreateRolePlayModal = props => {
       rightAvatarImage: avatarImage2,
       backImage: backgroundImage,
       description: Description,
-      postDescription: PostDescription
+      postDescription: PostDescription,
+      technical_service_id: technicalService
     };
     setLoader(true);
     try {
@@ -220,6 +232,52 @@ const CreateRolePlayModal = props => {
         footer={false}
       >
         <Card loading={loader}>
+          {/* technical service id starts*/}
+          <div style={{ display: "flex", marginBottom: "25px" }}>
+            <div
+              style={{
+                width: "140px",
+                fontWeight: 600
+              }}
+            >
+              Technical Service
+            </div>
+            <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+              <div>
+                <Select
+                  style={{ maxWidth: "450px", width: "100%" }}
+                  placeholder="Select technical service"
+                  onChange={value => setTechnicalService(value)}
+                >
+                  <Select.Option value={1}>Behavioral Module</Select.Option>
+                  <Select.Option value={2}>Functional Module</Select.Option>
+                </Select>
+              </div>
+            </div>
+          </div>
+          {/* technical service id ends*/}
+          <div style={{ display: "flex", marginBottom: "25px" }}>
+            <div
+              style={{
+                width: "140px",
+                fontWeight: 600
+              }}
+            >
+              Title
+            </div>
+            <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+              <div>
+                <Input
+                  style={{
+                    width: "100%"
+                  }}
+                  onChange={onNameChange}
+                  placeholder="Title"
+                />
+              </div>
+            </div>
+          </div>
+          {/* 
           <div
             style={{
               fontWeight: 600,
@@ -234,6 +292,7 @@ const CreateRolePlayModal = props => {
               placeholder="Title"
             />
           </div>
+          */}
           <Divider type="horizontal" />
 
           <div

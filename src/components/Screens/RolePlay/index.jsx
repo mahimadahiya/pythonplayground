@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { rolePlayList, deleteRolePLay } from "../../../actions";
 import { useSelector } from "react-redux";
-import { Table, Card, Row, Button, Divider, Popconfirm, message } from "antd";
+import {
+  Table,
+  Card,
+  Row,
+  Button,
+  Divider,
+  Popconfirm,
+  message,
+  Col,
+  Input,
+  Icon
+} from "antd";
 import moment from "moment";
 import CreateRolePlayModal from "./CreateRolePlayModal";
 import MapRolePlayParametersModal from "./MapRolePlayParametersModal";
@@ -9,6 +20,7 @@ import MapRolePlayParametersModal from "./MapRolePlayParametersModal";
 const RolePlay = () => {
   const [loading, setLoading] = useState(true);
   const [List, setList] = useState([]);
+  const [userListData, setUserListData] = useState([]);
   const [showCreateRolePlayModal, setShowCreateRolePlayModal] = useState(false);
   const [
     showMapRolePlayParametersModal,
@@ -18,6 +30,7 @@ const RolePlay = () => {
   const [loadAgain, setLoadAgain] = useState(false);
 
   const [rpArticleId, setRpArticleId] = useState(null);
+  const [SearchfilterString, setSearchfilterString] = useState("");
 
   useEffect(() => {
     const fetchList = async () => {
@@ -47,15 +60,33 @@ const RolePlay = () => {
               return 1;
             return 0;
           });
-
+        setUserListData(response.rp_article_details);
         setList(response.rp_article_details);
         setLoading(false);
       } catch (error) {
         setLoading(false);
       }
+      setSearchfilterString("");
     };
     fetchList();
   }, [user, loadAgain]);
+
+  //serach starts
+
+  const SearchValFromTable = filterString => {
+    setSearchfilterString(filterString);
+    if (filterString) {
+      const list = userListData.filter(item =>
+        item.name.toLowerCase().includes(filterString)
+      );
+      // console.log(list);
+      setList(list);
+    } else {
+      setList(userListData);
+    }
+  };
+
+  //serach ends
 
   const onCloseRolePLayModal = () => {
     setShowCreateRolePlayModal(false);
@@ -71,6 +102,37 @@ const RolePlay = () => {
   };
 
   const column = [
+    {
+      title: "",
+      key: "key",
+      render: (text, record) => (
+        <span>
+          {record.technical_service_id === 1 ? (
+            <span
+              style={{
+                background: "#604482",
+                borderRadius: 5,
+                color: "#fff",
+                padding: "8px 23px"
+              }}
+            >
+              BM
+            </span>
+          ) : (
+            <span
+              style={{
+                background: "#ff8e32",
+                borderRadius: 5,
+                color: "#fff",
+                padding: "8px 23px"
+              }}
+            >
+              Fm
+            </span>
+          )}
+        </span>
+      )
+    },
     {
       title: "ID",
       dataIndex: "id",
@@ -152,16 +214,34 @@ const RolePlay = () => {
         title={<div className="card-title">Role-Play List</div>}
       >
         <Row style={{ marginBottom: 20 }}>
-          <Button
-            style={{ float: "right" }}
-            shape="round"
-            type="primary"
-            onClick={() => {
-              setShowCreateRolePlayModal(true);
-            }}
-          >
-            Create Role-Play
-          </Button>
+          <Col span={12}>
+            <div>
+              <Input
+                placeholder="Search by Name"
+                prefix={
+                  <Icon type="search" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                value={SearchfilterString}
+                allowClear
+                onChange={e =>
+                  SearchValFromTable(e.target.value ? e.target.value : null)
+                }
+                style={{ width: 350, marginBottom: "30px" }}
+              />
+            </div>
+          </Col>
+          <Col span={12}>
+            <Button
+              style={{ float: "right" }}
+              shape="round"
+              type="primary"
+              onClick={() => {
+                setShowCreateRolePlayModal(true);
+              }}
+            >
+              Create Role-Play
+            </Button>
+          </Col>
         </Row>
         <Row>
           <Table
