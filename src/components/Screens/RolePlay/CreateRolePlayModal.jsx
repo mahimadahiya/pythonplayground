@@ -30,8 +30,8 @@ const CreateRolePlayModal = props => {
   const [avatarTwoSource, setAvatarTwoSource] = useState();
   const [isAvatarTwoUploaded, setIsAvatarTwoUploaded] = useState(false);
 
-  const [Description, setDescription] = useState();
-  const [PostDescription, SetPostDescription] = useState();
+  const [Description, setDescription] = useState("");
+  const [PostDescription, SetPostDescription] = useState("");
 
   const [backgroundImage, setBackgroundImage] = useState();
   const [backgroundSource, setBackgroundSource] = useState();
