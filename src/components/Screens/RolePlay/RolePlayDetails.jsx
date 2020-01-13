@@ -16,6 +16,8 @@ import FlipMove from "react-flip-move";
 import "./index.css";
 import UpdateRp from "./UpdateRp";
 
+import { CSSTransition } from "react-transition-group";
+
 const RolePlayDetails = props => {
   const user = useSelector(state => state.userAuth);
   const [loading, setLoading] = useState(true);
@@ -36,13 +38,14 @@ const RolePlayDetails = props => {
 
   const [editConverseDetails, setEditConverseDetails] = useState({});
   const [showEditConverseModal, setShowEditConverseModal] = useState(false);
-
   const [typeLayoutList, setTypeLayoutList] = useState([]);
-
   const [status, setStatus] = useState(null);
-
   const [showUpdateRolePlayModal, setShowUpdateRolePlayModal] = useState(false);
   const [changeTypeRp, setChangeTypeRp] = useState("");
+
+  const [isSequenceChanged, setIsSequenceChanged] = useState(true);
+
+  //const [transition, setTransition] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -232,6 +235,7 @@ const RolePlayDetails = props => {
       message.warning("Already at the Top");
       return;
     } // disable method when the key its equal to 0
+    setIsSequenceChanged(false);
     let items = [...conversationDetails]; // assign data to items for don't repeat my self
 
     for (let i = 0; i < items.length; i++) {
@@ -241,6 +245,7 @@ const RolePlayDetails = props => {
         items[i]["class_name"] = "inActive";
       }
     }
+
     //console.log(items);
     const index = key - 1; // save in memory index value less than one
     const itemAbove = items[index]; // save in memory items index
@@ -256,6 +261,7 @@ const RolePlayDetails = props => {
       message.warning("Already at the Bottom");
       return;
     }
+    setIsSequenceChanged(false);
     for (let i = 0; i < items.length; i++) {
       if (items[i].id === data.id) {
         items[i]["class_name"] = "conversationAnimation";
@@ -263,6 +269,7 @@ const RolePlayDetails = props => {
         items[i]["class_name"] = "inActive";
       }
     }
+
     const index = key + 1;
     const itemBelow = items[index];
     items[key + 1] = items[key];
@@ -696,19 +703,33 @@ const RolePlayDetails = props => {
           <div
             style={{ width: "45%", margin: "30px 20px", textAlign: "right" }}
           >
-            <Button onClick={onRolePlaySequenceSave} type="primary">
+            <Button
+              disabled={isSequenceChanged}
+              onClick={onRolePlaySequenceSave}
+              type="primary"
+            >
               Save Sequence
             </Button>
           </div>
         </div>
         <div style={{ margin: "35px" }}>
           {renderConversationList()}
+
           {/* 
           <SortableListConversation
             items={conversationDetails}
             onSortEnd={onSortEnd}
           />
           */}
+          <div style={{ margin: "30px 20px", textAlign: "right" }}>
+            <Button
+              disabled={isSequenceChanged}
+              onClick={onRolePlaySequenceSave}
+              type="primary"
+            >
+              Save Sequence
+            </Button>
+          </div>
 
           <div style={{ textAlign: "center" }}>
             <Button type="primary" onClick={onAddConversationClick}>
