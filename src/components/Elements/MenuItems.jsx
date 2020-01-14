@@ -274,62 +274,6 @@ const list = [
     ],
     accessGroup: [1]
   },
-  /* 
-  {
-    key: "wyr",
-    icon: "branches",
-    label: "Would You Rather",
-    subMenu: [
-      {
-        key: "wyr-episode",
-        label: "Episode",
-        menuList: [
-          {
-            key: "/wyr/episode",
-            label: "List",
-            onClick: () => history.push("/wyr/episode")
-          }
-        ]
-      },
-      {
-        key: "wyr-series",
-        label: "Series",
-        menuList: [
-          {
-            key: "/wyr/series",
-            label: "List",
-            onClick: () => history.push("/wyr/series")
-          }
-        ]
-      },
-       
-      {
-        key: "wyr-actions",
-        label: "Actions",
-        menuList: [
-          {
-            key: "/wyr/actions",
-            label: "List",
-            onClick: () => history.push("/wyr/actions")
-          }
-        ]
-      },
-      
-      {
-        key: "wyr-scenario",
-        label: "Scenarios",
-        menuList: [
-          {
-            key: "/wyr/scenario",
-            label: "List",
-            onClick: () => history.push("/wyr/scenario")
-          }
-        ]
-      }
-    ],
-    accessGroup: [1]
-  },
-  */
 
   {
     key: "tech-assesment",

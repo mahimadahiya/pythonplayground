@@ -62,16 +62,12 @@ import NotAuthorized from "../Screens/Dashboard/NotFound";
 import RolePlay from "../Screens/RolePlay";
 import RolePlayDetails from "../Screens/RolePlay/RolePlayDetails";
 
-// Would you rather
-//OLD CODE START
-import WyrActionIndex from "../Screens/WouldYouRather/Actions";
-import WyrScenarioIndex from "../Screens/WouldYouRather/Scenarios";
-import WyrTreeIndex from "../Screens/WouldYouRather/Tree";
-import SceneIndex from "../Screens/WouldYouRather/Tree/SceneIndex";
-//OLD CODE START
+// Would you rather STARTS
 
 //NEW CODE
 import SeriesIndex from "../Screens/WYR/Series";
+
+// Would you rather ENDS
 
 //technical assesment
 import TechnicalAssesmentIndex from "../Screens/TechnicalAssesment/TechnicalAssesmentIndex";
@@ -117,36 +113,7 @@ class Routing extends React.Component {
               exact
               accessGroup={[1]}
             />
-            <PrivateRoute
-              path="/wyr/scenario"
-              component={WyrScenarioIndex}
-              user={user}
-              exact
-              accessGroup={[1]}
-            />
-            {/* 
-            <PrivateRoute
-              path="/wyr/actions"
-              component={WyrActionIndex}
-              user={user}
-              exact
-              accessGroup={[1]}
-            />
-            */}
-            <PrivateRoute
-              path="/wyr/episode"
-              component={WyrTreeIndex}
-              user={user}
-              exact
-              accessGroup={[1]}
-            />
-            <PrivateRoute
-              path="/wyr/scene/EpId/:id/:techId"
-              component={SceneIndex}
-              user={user}
-              accessGroup={[1]}
-              exact
-            />
+
             <PrivateRoute
               path="/techAss"
               component={TechnicalAssesmentIndex}
