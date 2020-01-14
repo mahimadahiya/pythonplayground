@@ -401,26 +401,36 @@ const RolePlayDetails = props => {
       >
         {/* title */}
         <div>
-          <div style={{ marginBottom: "20px", textAlign: "right" }}>
-            <Button
-              onClick={() => onEditConversation(value.id)}
-              style={{ background: "#F1BC31", color: "#fff" }}
-            >
-              Edit
-            </Button>
+          <div style={{ display: "flex" }}>
+            <div style={{ width: "50%" }}>
+              <span style={{ fontSize: "17px", fontWeight: 700 }}>
+                {value.title}
+              </span>
+            </div>
 
-            <Divider type="vertical" />
-
-            <Popconfirm
-              onConfirm={() => onDeleteConversation(value.id)}
-              okText="Delete"
-              placement="bottomLeft"
-              title={"Are you sure you want to delete?"}
+            <div
+              style={{ width: "50%", marginBottom: "20px", textAlign: "right" }}
             >
-              <Button style={{ background: "red", color: "#fff" }}>
-                Delete
+              <Button
+                onClick={() => onEditConversation(value.id)}
+                style={{ background: "#F1BC31", color: "#fff" }}
+              >
+                Edit
               </Button>
-            </Popconfirm>
+
+              <Divider type="vertical" />
+
+              <Popconfirm
+                onConfirm={() => onDeleteConversation(value.id)}
+                okText="Delete"
+                placement="bottomLeft"
+                title={"Are you sure you want to delete?"}
+              >
+                <Button style={{ background: "red", color: "#fff" }}>
+                  Delete
+                </Button>
+              </Popconfirm>
+            </div>
           </div>
           <div>
             <span>
@@ -561,6 +571,7 @@ const RolePlayDetails = props => {
         <div style={{ textAlign: "center", background: "lightblue" }}>
           <h3 style={{ lineHeight: "44px" }}>Role Play</h3>
         </div>
+
         <div
           style={{
             margin: "20px",
@@ -570,12 +581,21 @@ const RolePlayDetails = props => {
         >
           <div
             style={{
-              maxWidth: "900px",
+              maxWidth: "700px",
               margin: "auto",
               position: "relative"
             }}
             className="avatarBackground"
           >
+            <img
+              src={backgroundImage}
+              alt="backgroundImage"
+              style={{
+                maxWidth: "100%",
+                width: "100%"
+              }}
+            />
+
             <div className="HoverBgOverlayBtn">
               <Button
                 style={{
@@ -589,18 +609,10 @@ const RolePlayDetails = props => {
               </Button>
             </div>
 
-            <img
-              src={backgroundImage}
-              alt="backgroundImage"
-              style={{
-                maxWidth: "100%"
-              }}
-            />
-
             <div
               style={{
                 position: "absolute",
-                bottom: "20px",
+                bottom: "10px",
                 width: "100%"
               }}
             >
@@ -621,7 +633,7 @@ const RolePlayDetails = props => {
                     <img
                       src={avatarOneImage}
                       style={{
-                        maxHeight: "30vh"
+                        maxHeight: "100px"
                       }}
                       alt="leftAvatar"
                     />
@@ -641,7 +653,7 @@ const RolePlayDetails = props => {
                   </div>
                   <div
                     className="avatarImage"
-                    style={{ margin: "10px auto", padding: "10px 0px" }}
+                    style={{ margin: "10px auto", padding: "0px 0px" }}
                   >
                     <div
                       className="avatarName "
@@ -650,12 +662,13 @@ const RolePlayDetails = props => {
                       {avatarOneName}
                     </div>
                     <div className="HoverOverlay"></div>
-                    <div className="HoverOverlayBtn">
+                    <div className="HoverOverlayBtn" style={{ top: "5px" }}>
                       <Button
                         style={{
                           background: "#001529",
                           border: "none",
-                          color: "#fff"
+                          color: "#fff",
+                          height: "25px"
                         }}
                         onClick={() => updateRPDetail("avatar_left_name")}
                       >
@@ -678,7 +691,7 @@ const RolePlayDetails = props => {
                     <img
                       src={avatarTwoImage}
                       style={{
-                        maxHeight: "30vh"
+                        maxHeight: "100px"
                       }}
                       alt="rightAvatar"
                     />
@@ -698,7 +711,7 @@ const RolePlayDetails = props => {
                   </div>
                   <div
                     className="avatarImage"
-                    style={{ margin: "10px auto", padding: "10px 0px" }}
+                    style={{ margin: "10px auto", padding: "0px 0px" }}
                   >
                     <div
                       className="avatarName "
@@ -707,12 +720,13 @@ const RolePlayDetails = props => {
                       {avatarTwoName}
                     </div>
                     <div className="HoverOverlay"></div>
-                    <div className="HoverOverlayBtn">
+                    <div className="HoverOverlayBtn" style={{ top: "5px" }}>
                       <Button
                         style={{
                           background: "#001529",
                           border: "none",
-                          color: "#fff"
+                          color: "#fff",
+                          height: "25px"
                         }}
                         onClick={() => updateRPDetail("avatar_right_name")}
                       >
@@ -726,6 +740,7 @@ const RolePlayDetails = props => {
             </div>
           </div>
         </div>
+
         <div style={{ textAlign: "center", background: "lightblue" }}>
           <h3 style={{ lineHeight: "44px" }}>Sequence</h3>
         </div>

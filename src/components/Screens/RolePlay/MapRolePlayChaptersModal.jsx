@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Modal, Card, Form, message, Select, Tooltip } from "antd";
+import { Modal, Card, Form, message, Select, Tooltip, Spin } from "antd";
 import MButton from "../../Elements/MButton";
 import {
   mapRolePlayParameters,
@@ -21,7 +21,7 @@ const MapRolePlayChaptersModal = props => {
   const [chapters, setChapters] = useState([]);
   const [selectedChapters, setSelectedChapters] = useState([]);
   const [courseList, setCourseList] = useState([]);
-  const [courseId, setCourseId] = useState(null);
+  const [courseId, setCourseId] = useState([]);
 
   const [mappedChapterDetailList, setMappedChapterDetailList] = useState([]);
   const [parameterSelectDisabled, setParameterSelectDisabled] = useState(true);
@@ -45,12 +45,27 @@ const MapRolePlayChaptersModal = props => {
         // console.log(response);
         setSelectedChapters(tempList);
 
-        const chapterResponse = await getChapterList(
-          user.Authorization,
-          courseId
-        );
-        //  console.log(chapterResponse.data.result);
-        setChapters(chapterResponse.data.result.chapter_list);
+        let tempListForChapterResponse = [];
+        let finalListForChapter = [];
+        for (let i = 0; i < courseId.length; i++) {
+          tempListForChapterResponse[i] = await getChapterList(
+            user.Authorization,
+            courseId[i]
+          );
+          // console.log(tempListForChapterResponse[i].data.result);
+          for (
+            let j = 0;
+            j < tempListForChapterResponse[i].data.result.chapter_list.length;
+            j++
+          ) {
+            finalListForChapter.push(
+              tempListForChapterResponse[i].data.result.chapter_list[j]
+            );
+          }
+        }
+
+        // console.log(finalListForChapter);
+        setChapters(finalListForChapter);
         setCardLoading(false);
       } catch (error) {
         setCardLoading(false);
@@ -116,6 +131,9 @@ const MapRolePlayChaptersModal = props => {
     setCourseId(value);
     setLoadAgain(!loadAgain);
     setParameterSelectDisabled(false);
+    if (value.length === 0) {
+      setParameterSelectDisabled(true);
+    }
   };
 
   const filterCourses = (val, option) => {
@@ -176,7 +194,7 @@ const MapRolePlayChaptersModal = props => {
               })(
                 <Select
                   placeholder="Select courses"
-                  mode="default"
+                  mode="multiple"
                   onChange={onChangeCourse}
                   //filterOption={filterCourses}
                 >
@@ -184,24 +202,26 @@ const MapRolePlayChaptersModal = props => {
                 </Select>
               )}
             </Form.Item>
-            <Form.Item label="Chapters">
-              {getFieldDecorator("chapter", {
-                rules: [{ required: true }],
-                initialValue: selectedChapters
-              })(
-                <Select
-                  placeholder="Select Chapter"
-                  style={{ width: "100%" }}
-                  mode="multiple"
-                  onDeselect={onDeletingAlreadyMappedChapter}
-                  loading={cardLoading}
-                  disabled={parameterSelectDisabled}
-                  //onChange={onChapterChange}
-                >
-                  {renderChapterOptions(chapters)}
-                </Select>
-              )}
-            </Form.Item>
+            <Spin spinning={cardLoading}>
+              <Form.Item label="Chapters">
+                {getFieldDecorator("chapter", {
+                  rules: [{ required: true }],
+                  initialValue: selectedChapters
+                })(
+                  <Select
+                    placeholder="Select Chapter"
+                    style={{ width: "100%" }}
+                    mode="multiple"
+                    onDeselect={onDeletingAlreadyMappedChapter}
+                    // loading={cardLoading}
+                    disabled={parameterSelectDisabled}
+                    //onChange={onChapterChange}
+                  >
+                    {renderChapterOptions(chapters)}
+                  </Select>
+                )}
+              </Form.Item>
+            </Spin>
 
             <MButton>Submit</MButton>
           </Form>

@@ -62,14 +62,15 @@ const EditConversationModal = props => {
           }
         ]);
       }
-    } else {
+    }
+    /*else {
       setExtraPoints([
         {
           id: 1,
           point: ""
         }
       ]);
-    }
+    } */
 
     return () => {
       SetType("");

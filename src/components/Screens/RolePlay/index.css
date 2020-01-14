@@ -123,7 +123,7 @@ body > div:nth-child(7) > div > div.ant-modal-wrap > div {
 
 /* avatar image hover overlay starts */
 .avatarImageContainer {
-  margin: 20px auto;
+  margin: 10px auto;
   padding: 12px;
   border-radius: 5px;
   text-align: center;
