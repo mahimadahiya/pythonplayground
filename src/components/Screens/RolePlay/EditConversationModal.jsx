@@ -95,7 +95,7 @@ const EditConversationModal = props => {
   };
 
   const onTimerChange = event => {
-    if (event.target.value < 5) {
+    if (event.target.value < 5 || event.target.value % 1 !== 0) {
       setTimerError(true);
     } else {
       setTimerError(false);
@@ -118,7 +118,9 @@ const EditConversationModal = props => {
 
   const onUpdateConversation = async () => {
     if (timerError === true) {
-      message.warning("Timer cannot be less than 5 sec");
+      message.warning(
+        "Timer cannot be less than 5 sec and cannot be a decimal"
+      );
       return;
     }
     if (type === null || type === "" || type === " " || type === undefined) {
@@ -287,7 +289,7 @@ const EditConversationModal = props => {
               </div>
               {timerError === true ? (
                 <div style={{ color: "red" }}>
-                  * Timer cannot not be less than 5 secs
+                  * Timer cannot not be less than 5 secs and cannot be a decimal
                 </div>
               ) : null}
             </div>
