@@ -17,6 +17,7 @@ import flashReducer from "./flashReducer";
 import articleReducer from "./articleReducer";
 import traitReducer from "./traitReducer";
 import masterReducer from "./masterReducer";
+import wyrReducer from "./wyrReducer";
 
 export default combineReducers({
   userAuth: authReducer,
@@ -36,5 +37,6 @@ export default combineReducers({
   flashcard: flashReducer,
   article: articleReducer,
   trait: traitReducer,
-  master: masterReducer
+  master: masterReducer,
+  wyr: wyrReducer
 });

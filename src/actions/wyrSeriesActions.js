@@ -1,14 +1,11 @@
 import adminPanelApi from "../apis/adminPanel";
+import * as ACTION_TYPE from "./actionTypes";
 import qs from "querystring";
 
 /* series list api */
 
 export const wyrSeriesList = async (authToken, technical_service_id) => {
-  const response = await adminPanelApi(authToken).get("/v1/admin/wyr/series/", {
-    params: {
-      technical_service_id: technical_service_id
-    }
-  });
+  const response = await adminPanelApi(authToken).get("/v1/admin/wyr/series/");
   return response;
 };
 
@@ -153,4 +150,14 @@ export const wyrMapSeasonEpisode = async (authToken, values) => {
     qs.stringify(values)
   );
   return response;
+};
+
+//ACTIONS FOR SERIES
+
+export const fetchSeriesList = authToken => async dispatch => {
+  const response = await adminPanelApi(authToken).get("/v1/admin/wyr/series/");
+  dispatch({
+    type: ACTION_TYPE.FETCH_SERIES_LIST,
+    payload: response.data
+  });
 };

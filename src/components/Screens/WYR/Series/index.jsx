@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   Card,
@@ -9,14 +9,30 @@ import {
   message,
   Modal
 } from "antd";
-import { useSelector } from "react-redux";
-import {
-  wyrSeriesList,
-  wyrSeriesDelete,
-  wyrSeriesStatusUpdate
-} from "../../../../actions";
+import { useSelector, useDispatch } from "react-redux";
+import { wyrSeriesList } from "../../../../actions";
 
 const SeriesIndex = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.userAuth);
+
+  const [loading, setLoading] = useState(false);
+  const [seriesList, setSeriesList] = useState([]);
+
+  useEffect(() => {
+    const callData = async () => {
+      setLoading(true);
+      try {
+        const response = await wyrSeriesList(user.Authorization);
+        // console.log(response.data.result.wyr_series_list);
+        setSeriesList(response.data.result.wyr_series_list);
+      } catch (error) {}
+      setLoading(false);
+    };
+    callData();
+  }, [user]);
+  //console.log(series);
+
   //TABLE COLUMN START
   const columnName = [
     {
@@ -183,10 +199,18 @@ const SeriesIndex = () => {
         bodyStyle={{ borderRadius: "5px" }}
         title={<span style={{ fontSize: "20px" }}>SERIES</span>}
       >
+        <div style={{ textAlign: "right", marginBottom: "40px" }}>
+          <Button
+            type="primary"
+            // onClick={() => createNew()}
+          >
+            Create New Series
+          </Button>
+        </div>
         <div>
           <Table
-            // loading={loading}
-            // dataSource={list}
+            loading={loading}
+            dataSource={seriesList}
             columns={columnName}
             rowKey={row => row.id}
             pagination={false}

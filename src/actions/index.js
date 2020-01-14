@@ -223,7 +223,9 @@ import {
   wyrSeasonStatusUpdate,
   wyrSeasonUpdate,
   wyrSeasonsEpisodeList,
-  wyrMapSeasonEpisode
+  wyrMapSeasonEpisode,
+  //new actions
+  fetchSeriesList
 } from "./wyrSeriesActions";
 
 import {
@@ -415,6 +417,8 @@ export {
   wyrSeasonUpdate,
   wyrSeasonsEpisodeList,
   wyrMapSeasonEpisode,
+  //series new
+  fetchSeriesList,
   //technical assesment
   getTechnicalAssesmentList,
   createNewTechnicalService,
