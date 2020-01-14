@@ -17,6 +17,7 @@ import moment from "moment";
 import CreateRolePlayModal from "./CreateRolePlayModal";
 import MapRolePlayParametersModal from "./MapRolePlayParametersModal";
 import MapRolePlayChaptersModal from "./MapRolePlayChaptersModal";
+import history from "../../../history";
 
 const RolePlay = () => {
   const [loading, setLoading] = useState(true);
@@ -152,7 +153,7 @@ const RolePlay = () => {
       dataIndex: "id",
       key: "id",
       render: id => {
-        return <a href={`/role-play/details/${id}`}>{id}</a>;
+        return <span>{id}</span>;
       }
     },
     {
@@ -218,8 +219,9 @@ const RolePlay = () => {
     }
   ];
 
-  const goToConersation = () => {
+  const goToConersation = data => {
     // <a href={`/role-play/details/${id}`}>{id}</a>
+    history.push(`/role-play/details/${data.id}`);
   };
 
   const onDeleteRolePlay = async id => {
