@@ -120,6 +120,7 @@ const RolePlay = () => {
     {
       title: "",
       key: "key",
+      width: 100,
       render: (text, record) => (
         <span>
           {record.technical_service_id === 1 ? (
@@ -152,6 +153,7 @@ const RolePlay = () => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      width: 50,
       render: id => {
         return <span>{id}</span>;
       }
@@ -160,7 +162,7 @@ const RolePlay = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      width: "60%",
+      width: 200,
       render: text => {
         return <div style={{ minHeight: "60px" }}>{text}</div>;
       }
@@ -169,6 +171,7 @@ const RolePlay = () => {
       title: "Created At",
       dataIndex: "created_at",
       key: "created_at",
+      width: 100,
       render: date => {
         return moment(date).format("YYYY-MM-DD");
       }
@@ -177,19 +180,27 @@ const RolePlay = () => {
       title: "Actions",
       dataIndex: "Map",
       key: "Map",
+      width: 200,
       render: (text, record) => (
         <span>
           {record.technical_service_id === 1 ? (
             <span
               onClick={() => onMappingParameters(record)}
-              style={{ cursor: "pointer", color: "#22a4ef" }}
+              style={{
+                cursor: "pointer",
+                color: "#22a4ef"
+              }}
             >
               Map Parameters
             </span>
           ) : (
             <span
               onClick={() => onMappingChapters(record)}
-              style={{ cursor: "pointer", color: "#22a4ef" }}
+              style={{
+                cursor: "pointer",
+                color: "#22a4ef",
+                paddingRight: "13px"
+              }}
             >
               Map Chapters
             </span>
@@ -202,7 +213,12 @@ const RolePlay = () => {
             title={"Are you sure you want to delete?"}
           >
             <Button
-              style={{ color: "#fff", background: "red", border: "none" }}
+              style={{
+                color: "#fff",
+                background: "red",
+                border: "none",
+                marginTop: "5px"
+              }}
             >
               Delete
             </Button>
