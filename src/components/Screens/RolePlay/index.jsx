@@ -201,15 +201,26 @@ const RolePlay = () => {
             title={"Are you sure you want to delete?"}
           >
             <Button
-              style={{ color: "red", background: "#fff", border: "none" }}
+              style={{ color: "#fff", background: "red", border: "none" }}
             >
               Delete
             </Button>
           </Popconfirm>
+          <Divider type="vertical" />
+          <span
+            onClick={() => goToConersation(record)}
+            style={{ cursor: "pointer", color: "#22a4ef" }}
+          >
+            Conversation
+          </span>
         </span>
       )
     }
   ];
+
+  const goToConersation = () => {
+    // <a href={`/role-play/details/${id}`}>{id}</a>
+  };
 
   const onDeleteRolePlay = async id => {
     if (id === null || id === undefined || id === "") {

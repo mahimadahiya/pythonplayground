@@ -440,7 +440,8 @@ const RolePlayDetails = props => {
           <div>{value.text}</div>
           <hr />
 
-          {value.extra_points !== null ? (
+          {value.extra_points === null ? null : Object.keys(value.extra_points)
+              .length === 0 ? null : (
             <div>
               {value.extra_points.length !== 0 ? (
                 <div
@@ -454,9 +455,40 @@ const RolePlayDetails = props => {
                 </div>
               ) : null}
             </div>
-          ) : null}
+          )}
 
-          <div>
+          {value.extra_points === null ? null : Object.keys(value.extra_points)
+              .length === 0 ? null : (
+            <div>
+              {value.extra_points.length !== 0 ? (
+                <div>
+                  {value.extra_points.map((ep, i) => (
+                    <div key={i}>
+                      {i + 1}. {ep.text}
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          )}
+
+          {/* {value.extra_points !== null ? (
+            <div>
+              {value.extra_points.length !== 0 ? (
+                <div
+                  style={{
+                    color: "#666666",
+                    marginTop: "8px",
+                    fontWeight: 600
+                  }}
+                >
+                  Extra Points
+                </div>
+              ) : null}
+            </div>
+          ) : null} */}
+
+          {/* <div>
             {value.extra_points !== null ? (
               <div>
                 {value.extra_points.length !== 0 ? (
@@ -470,8 +502,9 @@ const RolePlayDetails = props => {
                 ) : null}
               </div>
             ) : null}
-          </div>
+          </div> */}
         </div>
+
         <div style={{ textAlign: "right" }}>
           <Button
             style={{ marginRight: "10px", fontWeight: "bold" }}
