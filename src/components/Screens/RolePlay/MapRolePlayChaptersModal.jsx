@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Modal, Card, Form, message, Select } from "antd";
+import { Modal, Card, Form, message, Select, Tooltip } from "antd";
 import MButton from "../../Elements/MButton";
 import {
   mapRolePlayParameters,
@@ -24,6 +24,7 @@ const MapRolePlayChaptersModal = props => {
   const [courseId, setCourseId] = useState(null);
 
   const [mappedChapterDetailList, setMappedChapterDetailList] = useState([]);
+  const [parameterSelectDisabled, setParameterSelectDisabled] = useState(true);
 
   useEffect(() => {
     const fetchAlreadyMappedList = async () => {
@@ -114,6 +115,7 @@ const MapRolePlayChaptersModal = props => {
   const onChangeCourse = value => {
     setCourseId(value);
     setLoadAgain(!loadAgain);
+    setParameterSelectDisabled(false);
   };
 
   const filterCourses = (val, option) => {
@@ -193,6 +195,7 @@ const MapRolePlayChaptersModal = props => {
                   mode="multiple"
                   onDeselect={onDeletingAlreadyMappedChapter}
                   loading={cardLoading}
+                  disabled={parameterSelectDisabled}
                   //onChange={onChapterChange}
                 >
                   {renderChapterOptions(chapters)}
