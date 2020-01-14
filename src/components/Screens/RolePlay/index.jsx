@@ -180,31 +180,26 @@ const RolePlay = () => {
       title: "Actions",
       dataIndex: "Map",
       key: "Map",
-      width: 200,
+      width: 230,
       render: (text, record) => (
         <span>
           {record.technical_service_id === 1 ? (
-            <span
-              onClick={() => onMappingParameters(record)}
-              style={{
-                cursor: "pointer",
-                color: "#22a4ef"
-              }}
-            >
+            <Button onClick={() => onMappingParameters(record)} type="primary">
               Map Parameters
-            </span>
+            </Button>
           ) : (
-            <span
-              onClick={() => onMappingChapters(record)}
-              style={{
-                cursor: "pointer",
-                color: "#22a4ef",
-                paddingRight: "13px"
-              }}
-            >
+            <Button type="primary" onClick={() => onMappingChapters(record)}>
               Map Chapters
-            </span>
+            </Button>
           )}
+          <Divider type="vertical" />
+          <Button
+            type="primary"
+            onClick={() => goToConersation(record)}
+            style={{ marginTop: "5px" }}
+          >
+            Conversation
+          </Button>
           <Divider type="vertical" />
           <Popconfirm
             onConfirm={() => onDeleteRolePlay(record.id)}
@@ -223,13 +218,6 @@ const RolePlay = () => {
               Delete
             </Button>
           </Popconfirm>
-          <Divider type="vertical" />
-          <span
-            onClick={() => goToConersation(record)}
-            style={{ cursor: "pointer", color: "#22a4ef" }}
-          >
-            Conversation
-          </span>
         </span>
       )
     }
