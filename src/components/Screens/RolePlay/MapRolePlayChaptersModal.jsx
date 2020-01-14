@@ -6,7 +6,8 @@ import {
   mapRolePlayParameters,
   getChapterList,
   rolePlayArticleParametersList,
-  deleteRolePlayMappedParameterAndChapter
+  deleteRolePlayMappedParameterAndChapter,
+  getCourseList
 } from "../../../actions";
 import "./index.css";
 
@@ -16,8 +17,11 @@ const MapRolePlayChaptersModal = props => {
   const rp_article_id = props.rpArticleId;
 
   const [cardLoading, setCardLoading] = useState(false);
+  const [loadAgain, setLoadAgain] = useState(false);
   const [chapters, setChapters] = useState([]);
   const [selectedChapters, setSelectedChapters] = useState([]);
+  const [courseList, setCourseList] = useState([]);
+  const [courseId, setCourseId] = useState(null);
 
   const [mappedChapterDetailList, setMappedChapterDetailList] = useState([]);
 
@@ -25,6 +29,9 @@ const MapRolePlayChaptersModal = props => {
     const fetchAlreadyMappedList = async () => {
       setCardLoading(true);
       try {
+        const courseData = await getCourseList(user.Authorization);
+        setCourseList(courseData.data.result.fm_course_list);
+
         const response = await rolePlayArticleParametersList(
           user.Authorization,
           rp_article_id
@@ -37,7 +44,10 @@ const MapRolePlayChaptersModal = props => {
         // console.log(response);
         setSelectedChapters(tempList);
 
-        const chapterResponse = await getChapterList(user.Authorization);
+        const chapterResponse = await getChapterList(
+          user.Authorization,
+          courseId
+        );
         //  console.log(chapterResponse.data.result);
         setChapters(chapterResponse.data.result.chapter_list);
         setCardLoading(false);
@@ -46,7 +56,7 @@ const MapRolePlayChaptersModal = props => {
       }
     };
     fetchAlreadyMappedList();
-  }, [user.Authorization, rp_article_id]);
+  }, [user.Authorization, rp_article_id, loadAgain]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -87,8 +97,36 @@ const MapRolePlayChaptersModal = props => {
     });
   };
 
+  const renderCourses = () => {
+    return courseList.map((course, i) => {
+      return (
+        <Select.Option key={i} value={course.id}>
+          {course.name}
+        </Select.Option>
+      );
+    });
+  };
+
   const onChapterChange = value => {
     // setChapters(value);
+  };
+
+  const onChangeCourse = value => {
+    setCourseId(value);
+    setLoadAgain(!loadAgain);
+  };
+
+  const filterCourses = (val, option) => {
+    const filteredList = courseId.filter(({ name }) => {
+      if (name.toLowerCase().includes(val) || option.key.includes(val)) {
+        return true;
+      }
+      return false;
+    });
+    for (var i = 0; i < filteredList.length; i++) {
+      if (filteredList[i].id.toString() === option.key) return true;
+    }
+    return false;
   };
 
   const onDeletingAlreadyMappedChapter = async e => {
@@ -121,7 +159,7 @@ const MapRolePlayChaptersModal = props => {
         <Card
           bodyStyle={{ padding: "0px" }}
           bordered={false}
-          loading={cardLoading}
+          //loading={cardLoading}
         >
           <Form onSubmit={onSubmit}>
             {/* <Form.Item label="Modules">
@@ -129,6 +167,21 @@ const MapRolePlayChaptersModal = props => {
             <Modules  onChange={moduleChange}  />
             )}
         </Form.Item> */}
+
+            <Form.Item label="Courses">
+              {getFieldDecorator("course", {
+                rules: [{ required: true }]
+              })(
+                <Select
+                  placeholder="Select courses"
+                  mode="default"
+                  onChange={onChangeCourse}
+                  //filterOption={filterCourses}
+                >
+                  {renderCourses()}
+                </Select>
+              )}
+            </Form.Item>
             <Form.Item label="Chapters">
               {getFieldDecorator("chapter", {
                 rules: [{ required: true }],
@@ -139,6 +192,7 @@ const MapRolePlayChaptersModal = props => {
                   style={{ width: "100%" }}
                   mode="multiple"
                   onDeselect={onDeletingAlreadyMappedChapter}
+                  loading={cardLoading}
                   //onChange={onChapterChange}
                 >
                   {renderChapterOptions(chapters)}
