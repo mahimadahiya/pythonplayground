@@ -45,27 +45,34 @@ const MapRolePlayChaptersModal = props => {
         // console.log(response);
         setSelectedChapters(tempList);
 
-        let tempListForChapterResponse = [];
-        let finalListForChapter = [];
-        for (let i = 0; i < courseId.length; i++) {
-          tempListForChapterResponse[i] = await getChapterList(
-            user.Authorization,
-            courseId[i]
-          );
-          // console.log(tempListForChapterResponse[i].data.result);
-          for (
-            let j = 0;
-            j < tempListForChapterResponse[i].data.result.chapter_list.length;
-            j++
-          ) {
-            finalListForChapter.push(
-              tempListForChapterResponse[i].data.result.chapter_list[j]
+        if (courseId.length === 0) {
+          const chapterResponseTemp = await getChapterList(user.Authorization);
+
+          setChapters(chapterResponseTemp.data.result.chapter_list);
+        } else {
+          let tempListForChapterResponse = [];
+          let finalListForChapter = [];
+          for (let i = 0; i < courseId.length; i++) {
+            tempListForChapterResponse[i] = await getChapterList(
+              user.Authorization,
+              courseId[i]
             );
+            // console.log(tempListForChapterResponse[i].data.result);
+            for (
+              let j = 0;
+              j < tempListForChapterResponse[i].data.result.chapter_list.length;
+              j++
+            ) {
+              finalListForChapter.push(
+                tempListForChapterResponse[i].data.result.chapter_list[j]
+              );
+            }
           }
+
+          // console.log(finalListForChapter);
+          setChapters(finalListForChapter);
         }
 
-        // console.log(finalListForChapter);
-        setChapters(finalListForChapter);
         setCardLoading(false);
       } catch (error) {
         setCardLoading(false);
