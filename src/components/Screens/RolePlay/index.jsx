@@ -188,7 +188,11 @@ const RolePlay = () => {
               Map Parameters
             </Button>
           ) : (
-            <Button type="primary" onClick={() => onMappingChapters(record)}>
+            <Button
+              style={{ padding: "0px 22px" }}
+              type="primary"
+              onClick={() => onMappingChapters(record)}
+            >
               Map Chapters
             </Button>
           )}
