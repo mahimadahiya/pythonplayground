@@ -97,6 +97,7 @@ const EditConversationModal = props => {
   const onTimerChange = event => {
     if (event.target.value < 5 || event.target.value % 1 !== 0) {
       setTimerError(true);
+      SetTimer(event.target.value);
     } else {
       setTimerError(false);
       SetTimer(event.target.value);
