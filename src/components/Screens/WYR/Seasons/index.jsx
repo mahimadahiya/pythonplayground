@@ -240,7 +240,6 @@ const SeasonIndex = () => {
         return item;
       }
     });
-    // console.log(tempSeries.name);
     setSelectedSeriesName(tempSeries.name);
 
     setLoadAgain(!loadAgain);
