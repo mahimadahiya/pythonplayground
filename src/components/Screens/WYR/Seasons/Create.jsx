@@ -113,15 +113,17 @@ const Create = props => {
         <div
           style={{
             marginBottom: "30px",
-            padding: "10px",
-            background: "#1890FF",
-            color: "#fff",
+            padding: "5px",
+            //  background: "#1890FF",
             borderRadius: "5px"
+            // border: "1px solid black"
           }}
         >
-          <span style={{ fontSize: "17px" }}>Series id : {props.seriesId}</span>
-          <span style={{ fontSize: "17px", marginLeft: "25px" }}>
-            Series name : {props.seriesName}
+          <span style={{ fontSize: "17px" }}>
+            <span style={{ fontWeight: 700, fontSize: "19px" }}>
+              Selected Series Name :
+            </span>
+            <span> {props.seriesName}</span>
           </span>
         </div>
 

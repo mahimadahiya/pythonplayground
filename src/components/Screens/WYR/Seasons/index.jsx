@@ -281,7 +281,7 @@ const SeasonIndex = () => {
                   onClick={() => createNew()}
                   disabled={isCreateNewDisable}
                 >
-                  Create New season <Icon type="plus" />
+                  Create New season <Icon type="plus-circle" />
                 </Button>
               </Tooltip>
             </span>

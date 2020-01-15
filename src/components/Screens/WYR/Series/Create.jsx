@@ -221,7 +221,13 @@ const Create = props => {
             Icon Upload
             <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
           </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+          <div
+            style={{
+              width: "calc(100% - 160px)",
+              marginLeft: "20px",
+              marginTop: "12px"
+            }}
+          >
             {isIconFileUplaoded === false ? (
               <label>
                 <Input
@@ -277,7 +283,13 @@ const Create = props => {
             Background Upload
             <span style={{ color: "red", paddingLeft: "4px" }}>*</span>
           </div>
-          <div style={{ width: "calc(100% - 160px)", marginLeft: "20px" }}>
+          <div
+            style={{
+              width: "calc(100% - 160px)",
+              marginLeft: "20px",
+              marginTop: "12px"
+            }}
+          >
             {isBackgroundFileUplaoded === false ? (
               <label>
                 <Input

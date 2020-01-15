@@ -7,7 +7,8 @@ import {
   Divider,
   Popconfirm,
   message,
-  Modal
+  Modal,
+  Icon
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -258,7 +259,7 @@ const SeriesIndex = () => {
       >
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
           <Button type="primary" onClick={() => createNew()}>
-            Create New Series
+            Create New Series <Icon type="plus-circle" />
           </Button>
         </div>
         <div>
