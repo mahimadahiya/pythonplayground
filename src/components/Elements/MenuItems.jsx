@@ -297,6 +297,11 @@ const list = [
         key: "wyr-series",
         label: "Series",
         onClick: () => history.push("/wyr/series")
+      },
+      {
+        key: "wyr-seasons",
+        label: "Season",
+        onClick: () => history.push("/wyr/seasons")
       }
     ],
     accessGroup: [1]

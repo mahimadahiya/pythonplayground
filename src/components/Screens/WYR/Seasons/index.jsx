@@ -7,45 +7,51 @@ import {
   Divider,
   Popconfirm,
   message,
-  Modal
+  Modal,
+  Icon,
+  Tooltip,
+  Spin
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  wyrSeriesList,
-  wyrSeriesDelete,
-  wyrSeriesStatusUpdate
+  wyrSeasonList,
+  wyrSeasonStatusUpdate,
+  wyrSeasonDelete,
+  wyrSeriesList
 } from "../../../../actions";
 import Create from "./Create";
-import Edit from "./Edit";
 
-const SeriesIndex = () => {
-  const dispatch = useDispatch();
+const SeasonIndex = () => {
   const user = useSelector(state => state.userAuth);
 
   const [loading, setLoading] = useState(false);
   const [loadAgain, setLoadAgain] = useState(false);
+  const [seasonList, setSeasonList] = useState([]);
   const [seriesList, setSeriesList] = useState([]);
-
-  //create
+  const [selectedSeriesId, setSelectedSeriesId] = useState(null);
+  const [isCreateNewDisable, setIsCreateNewDisable] = useState(true);
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
-
-  //edit
-  const [editModalShow, setEditModalShow] = useState(false);
-  const [updateSeriesDetails, setUpdateSeriesDetails] = useState([]);
+  const [selectedSeriesName, setSelectedSeriesName] = useState("");
 
   useEffect(() => {
     const callData = async () => {
       setLoading(true);
       try {
-        const response = await wyrSeriesList(user.Authorization);
-        setSeriesList(response.data.result.wyr_series_list);
+        const response = await wyrSeasonList(
+          user.Authorization,
+          selectedSeriesId
+        );
+        setSeasonList(response.data.result.wyr_season_list);
+
+        const seriesResponse = await wyrSeriesList(user.Authorization);
+        setSeriesList(seriesResponse.data.result.wyr_series_list);
       } catch (error) {}
       setLoading(false);
     };
     callData();
   }, [loadAgain]);
 
-  //TABLE COLUMN START
+  //TABLE COLUMNS STARTS
   const columnName = [
     {
       title: "ID",
@@ -62,7 +68,7 @@ const SeriesIndex = () => {
       }
     },
     {
-      title: "Series",
+      title: "Season",
       dataIndex: "name",
       key: "name",
       render: record => {
@@ -149,35 +155,9 @@ const SeriesIndex = () => {
       key: "action",
       render: record => (
         <span>
-          {/* 
-          selectedTechnicalId === 1 ? (
-            <span>
-              <Button
-                type="link"
-                //onClick={() => onMappingParameters(record)}
-                style={{ padding: 0, marginRight: "10px" }}
-              >
-                Map Parameters
-              </Button>
-              <Divider type="vertical" />
-            </span>
-          ) : (
-            <span>
-              <Button
-                type="link"
-                // onClick={() => onMappingCourses(record)}
-                style={{ padding: 0, marginRight: "10px" }}
-              >
-                Map Courses
-              </Button>
-              <Divider type="vertical" />
-            </span>
-          )
-        */}
-
           <Button
             type="link"
-            onClick={() => onEdit(record)}
+            //onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
@@ -197,49 +177,24 @@ const SeriesIndex = () => {
             </Button>
           </Popconfirm>
           <Divider type="vertical" />
-          <Button type="primary">Seasons</Button>
+          <Button
+            type="primary"
+            // onClick={() => onGoToEpisodePage(record)}
+            style={{ marginRight: "10px" }}
+          >
+            Episodes
+          </Button>
         </span>
       )
     }
   ];
-
-  //TABLE COLUMN ENDS
-
-  const createNew = () => {
-    setCreateNewModalShow(true);
-  };
-
-  const closeCreateNewSeriesModal = () => {
-    setCreateNewModalShow(false);
-  };
-
-  const onEdit = data => {
-    setUpdateSeriesDetails(data);
-    setEditModalShow(true);
-  };
-
-  const closeEditEpisodeModal = () => {
-    setEditModalShow(false);
-  };
-
-  const onDelete = async item => {
-    try {
-      let selectedId = item.id;
-      setLoading(true);
-      await wyrSeriesDelete(user.Authorization, selectedId);
-      message.success("Series Deleted");
-      setLoading(false);
-      setLoadAgain(!loadAgain);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
+  //TABLE COLUMNS ENDS
 
   const changeCurrentActionStatus = async data => {
     let actionId = data.id;
     setLoading(true);
     try {
-      await wyrSeriesStatusUpdate(user.Authorization, actionId);
+      await wyrSeasonStatusUpdate(user.Authorization, actionId);
       message.success("Status Updated");
       setLoading(false);
       setLoadAgain(!loadAgain);
@@ -249,22 +204,93 @@ const SeriesIndex = () => {
     }
   };
 
+  const onDelete = async item => {
+    try {
+      let selectedId = item.id;
+      setLoading(true);
+      await wyrSeasonDelete(user.Authorization, selectedId);
+      message.success("Season Deleted");
+      setLoading(false);
+      setLoadAgain(!loadAgain);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const renderSeries = () => {
+    return seriesList.map((series, i) => {
+      return (
+        <Select.Option key={i} value={series.id}>
+          {series.name}
+        </Select.Option>
+      );
+    });
+  };
+
+  const onChangeSeries = val => {
+    setSelectedSeriesId(val);
+    setIsCreateNewDisable(false);
+    const tempSeries = seriesList.find(item => {
+      if (item.id === val) {
+        return item;
+      }
+    });
+    // console.log(tempSeries.name);
+    setSelectedSeriesName(tempSeries.name);
+
+    setLoadAgain(!loadAgain);
+  };
+
+  const createNew = () => {
+    setCreateNewModalShow(true);
+  };
+
+  const closeCreateNewSeasonModal = () => {
+    setCreateNewModalShow(false);
+  };
+
   return (
     <div>
       <Card
         style={{ borderRadius: "5px" }}
         bodyStyle={{ borderRadius: "5px" }}
-        title={<span style={{ fontSize: "20px" }}>SERIES</span>}
+        title={<span style={{ fontSize: "20px" }}>Seasons</span>}
       >
         <div style={{ textAlign: "right", marginBottom: "40px" }}>
-          <Button type="primary" onClick={() => createNew()}>
-            Create New Series
-          </Button>
+          <Spin spinning={loading}>
+            <span>
+              <Select
+                placeholder="Select Series"
+                mode="default"
+                style={{ width: "200px", marginRight: "15px" }}
+                onChange={onChangeSeries}
+              >
+                {renderSeries()}
+              </Select>
+            </span>
+            <span>
+              <Tooltip
+                title={
+                  isCreateNewDisable === true
+                    ? "Select Series to Create New Season"
+                    : null
+                }
+              >
+                <Button
+                  type="primary"
+                  onClick={() => createNew()}
+                  disabled={isCreateNewDisable}
+                >
+                  Create New season <Icon type="plus" />
+                </Button>
+              </Tooltip>
+            </span>
+          </Spin>
         </div>
         <div>
           <Table
             loading={loading}
-            dataSource={seriesList}
+            dataSource={seasonList}
             columns={columnName}
             rowKey={row => row.id}
             pagination={false}
@@ -276,10 +302,10 @@ const SeriesIndex = () => {
       {createNewModalShow === true ? (
         <Modal
           style={{ minWidth: "600px" }}
-          title="Create New Series"
+          title="Create New Season"
           closable={true}
           footer={null}
-          onCancel={closeCreateNewSeriesModal}
+          onCancel={closeCreateNewSeasonModal}
           visible={createNewModalShow}
           destroyOnClose={true}
         >
@@ -287,34 +313,14 @@ const SeriesIndex = () => {
             setCreateNewModalShow={setCreateNewModalShow}
             setLoadAgain={setLoadAgain}
             loadAgain={loadAgain}
+            seriesId={selectedSeriesId}
+            seriesName={selectedSeriesName}
           />
         </Modal>
       ) : null}
       {/* create new modal end  */}
-
-      {/*EDIT MODAL STARTS */}
-      {editModalShow === true ? (
-        <Modal
-          style={{ minWidth: "600px" }}
-          title="Edit Series"
-          closable={true}
-          footer={null}
-          onCancel={closeEditEpisodeModal}
-          visible={editModalShow}
-          destroyOnClose={true}
-        >
-          <Edit
-            setEditModalShow={setEditModalShow}
-            seriesDetails={updateSeriesDetails}
-            setLoadAgain={setLoadAgain}
-            loadAgain={loadAgain}
-          />
-        </Modal>
-      ) : null}
-
-      {/*EDIT MODAL ENDS */}
     </div>
   );
 };
 
-export default SeriesIndex;
+export default SeasonIndex;

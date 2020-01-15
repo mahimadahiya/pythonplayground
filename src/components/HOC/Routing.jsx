@@ -66,6 +66,7 @@ import RolePlayDetails from "../Screens/RolePlay/RolePlayDetails";
 
 //NEW CODE
 import SeriesIndex from "../Screens/WYR/Series";
+import SeasonIndex from "../Screens/WYR/Seasons";
 
 // Would you rather ENDS
 
@@ -109,6 +110,13 @@ class Routing extends React.Component {
             <PrivateRoute
               path="/wyr/series"
               component={SeriesIndex}
+              user={user}
+              exact
+              accessGroup={[1]}
+            />
+            <PrivateRoute
+              path="/wyr/seasons"
+              component={SeasonIndex}
               user={user}
               exact
               accessGroup={[1]}

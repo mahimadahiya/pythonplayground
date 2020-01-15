@@ -218,15 +218,22 @@ import {
   deleteMappedSeriesParameter,
   wyrSeriesUpdate,
   wyrSeasonsList,
-  wyrSeasonCreate,
-  wyrSeasonDelete,
-  wyrSeasonStatusUpdate,
+  //wyrSeasonCreate,
+  //wyrSeasonDelete,
+  //wyrSeasonStatusUpdate,
   wyrSeasonUpdate,
   wyrSeasonsEpisodeList,
   wyrMapSeasonEpisode,
   //new actions
   fetchSeriesList
 } from "./wyrSeriesActions";
+
+import {
+  wyrSeasonList,
+  wyrSeasonStatusUpdate,
+  wyrSeasonDelete,
+  wyrSeasonCreate
+} from "./wyrSeasonActions";
 
 import {
   getTechnicalAssesmentList,
@@ -411,14 +418,19 @@ export {
   deleteMappedSeriesParameter,
   wyrSeriesUpdate,
   wyrSeasonsList,
-  wyrSeasonCreate,
-  wyrSeasonDelete,
-  wyrSeasonStatusUpdate,
+  //wyrSeasonCreate,
+  // wyrSeasonDelete,
+  // wyrSeasonStatusUpdate,
   wyrSeasonUpdate,
   wyrSeasonsEpisodeList,
   wyrMapSeasonEpisode,
   //series new
   fetchSeriesList,
+  //wyr Season
+  wyrSeasonList,
+  wyrSeasonStatusUpdate,
+  wyrSeasonDelete,
+  wyrSeasonCreate,
   //technical assesment
   getTechnicalAssesmentList,
   createNewTechnicalService,

@@ -12,7 +12,6 @@ export const wyrSeriesList = async (authToken, technical_service_id) => {
 /* create  */
 export const wyrSeriesCreate = async (authToken, formValues) => {
   let formData = new FormData();
-  formData.append("technical_service_id", formValues.technical_service_id);
   formData.append("name", formValues.name);
   formData.append("description", formValues.description);
   formData.append("series_icon", formValues.series_icon);
@@ -83,22 +82,6 @@ export const wyrSeasonsList = async (authToken, wyr_series_id) => {
     }
   });
   return response;
-};
-
-/*create season */
-
-export const wyrSeasonCreate = async (authToken, formValues) => {
-  let formData = new FormData();
-  formData.append("name", formValues.name);
-  formData.append("description", formValues.description);
-  formData.append("season_icon", formValues.season_icon);
-  formData.append("wyr_series_id", formValues.wyr_series_id);
-
-  const response = await adminPanelApi(authToken).post(
-    `/v1/admin/wyr/season/`,
-    formData
-  );
-  return response.data;
 };
 
 /* season delete  */
