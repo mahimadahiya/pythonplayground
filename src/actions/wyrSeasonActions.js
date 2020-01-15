@@ -44,3 +44,17 @@ export const wyrSeasonDelete = async (authToken, selected_id) => {
   );
   return response;
 };
+
+/*Update season */
+export const wyrSeasonUpdate = async (authToken, id, formValues) => {
+  let formData = new FormData();
+  formData.append("name", formValues.name);
+  formData.append("description", formValues.description);
+  formData.append("season_icon", formValues.season_icon);
+
+  const response = await adminPanelApi(authToken).put(
+    `/v1/admin/wyr/season/${id}/`,
+    formData
+  );
+  return response.data;
+};
