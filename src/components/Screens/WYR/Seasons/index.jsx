@@ -20,6 +20,7 @@ import {
   wyrSeriesList
 } from "../../../../actions";
 import Create from "./Create";
+import Edit from "./Edit";
 
 const SeasonIndex = () => {
   const user = useSelector(state => state.userAuth);
@@ -30,8 +31,12 @@ const SeasonIndex = () => {
   const [seriesList, setSeriesList] = useState([]);
   const [selectedSeriesId, setSelectedSeriesId] = useState(null);
   const [isCreateNewDisable, setIsCreateNewDisable] = useState(true);
+  //create
   const [createNewModalShow, setCreateNewModalShow] = useState(false);
   const [selectedSeriesName, setSelectedSeriesName] = useState("");
+  //edit
+  const [updateSeasonDetails, setUpdateSeasonDetails] = useState([]);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   useEffect(() => {
     const callData = async () => {
@@ -157,7 +162,7 @@ const SeasonIndex = () => {
         <span>
           <Button
             type="link"
-            //onClick={() => onEdit(record)}
+            onClick={() => onEdit(record)}
             style={{ padding: 0, marginRight: "10px" }}
           >
             Update
@@ -249,6 +254,16 @@ const SeasonIndex = () => {
     setCreateNewModalShow(false);
   };
 
+  const onEdit = data => {
+    // console.log(data);
+    setUpdateSeasonDetails(data);
+    setEditModalShow(true);
+  };
+
+  const closeEditSeasonModal = () => {
+    setEditModalShow(false);
+  };
+
   return (
     <div>
       <Card
@@ -319,6 +334,26 @@ const SeasonIndex = () => {
         </Modal>
       ) : null}
       {/* create new modal end  */}
+      {/* Update modal starts  */}
+      {editModalShow === true ? (
+        <Modal
+          style={{ minWidth: "600px" }}
+          title="Edit Season"
+          closable={true}
+          footer={null}
+          onCancel={closeEditSeasonModal}
+          visible={editModalShow}
+          destroyOnClose={true}
+        >
+          <Edit
+            setEditModalShow={setEditModalShow}
+            seasonDetails={updateSeasonDetails}
+            loadAgain={loadAgain}
+            setLoadAgain={setLoadAgain}
+          />
+        </Modal>
+      ) : null}
+      {/* Update modal starts  */}
     </div>
   );
 };
